@@ -3,7 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 import java.util.List;
 
 public abstract class Entity {
-    private int hp, speed;
+    private int hp;
+    private int speed;
     private boolean alive;
     protected int positionX, positionY;
     private final List<HitBox> hitBox;
