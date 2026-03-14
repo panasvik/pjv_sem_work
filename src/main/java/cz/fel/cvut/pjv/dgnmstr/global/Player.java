@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.item.Weapon;
 
 import java.util.List;
 
+//UNDONE
 public class Player {
     private List<ArmorPiece> armor;
     private Weapon weapon;

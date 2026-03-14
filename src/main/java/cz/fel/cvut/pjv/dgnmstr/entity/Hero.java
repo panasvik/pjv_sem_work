@@ -1,8 +1,5 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
-import cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece;
-import cz.fel.cvut.pjv.dgnmstr.item.Item;
-import cz.fel.cvut.pjv.dgnmstr.item.Weapon;
 
 import java.util.List;
 

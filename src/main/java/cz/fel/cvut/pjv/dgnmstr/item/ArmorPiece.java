@@ -1,7 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.item;
 
 public class ArmorPiece extends Item {
-    private int hp, armor, dexterity, speed;
+    private final int hp, armor, dexterity, speed;
     private String name;
 
     public ArmorPiece(int hp, int armor, int dexterity, int speed) {

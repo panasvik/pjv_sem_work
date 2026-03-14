@@ -2,8 +2,8 @@ package cz.fel.cvut.pjv.dgnmstr.item;
 
 public class Weapon extends Item {
 
-    private int damage, dexterity, range;
-    private WeaponType type;
+    private final int damage, dexterity, range;
+    private final WeaponType type;
 
     public Weapon(int damage, int dexterity, int range, WeaponType type) {
         this.damage = damage;
