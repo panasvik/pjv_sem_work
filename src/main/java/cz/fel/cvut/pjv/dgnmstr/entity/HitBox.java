@@ -11,18 +11,28 @@ public class HitBox {
     }
 
     public boolean isHitMelee(PlayerCursorPos dataPlCsr) {
-        double deltaX = dataPlCsr.cursorX() - dataPlCsr.playerX();
-        double deltaY = dataPlCsr.cursorY() - dataPlCsr.playerY();
-        double k = deltaY / deltaX;
-        double estimatedY = k * (this.posX - dataPlCsr.playerX()) + dataPlCsr.playerY();
-        double distance = this.posY - estimatedY;
-        double cos = 1 / Math.sqrt(Math.pow(k, 2) + 1);
-        return Math.abs(distance) * cos <= this.radius;
+        double deltaXHB = dataPlCsr.cursorX() - this.posX;
+        double deltaYHB = dataPlCsr.cursorY() - this.posY;
+        double tgB = deltaYHB / deltaXHB;
+
+        double distanceHB = Math.sqrt(deltaXHB * deltaXHB + deltaYHB * deltaYHB);
+        if (distanceHB > dataPlCsr.range()) { // range check
+            return false;
+        }
+        // within range
+        double deltaXCsr = dataPlCsr.cursorX() - dataPlCsr.playerX();
+        double deltaYCsr = dataPlCsr.cursorY() - dataPlCsr.playerY();
+        double tgA = deltaYCsr / deltaXCsr;
+        double tgDelta = (tgA - tgB) / (1 + tgA * tgB);
+        return Math.abs(tgDelta) <= 1;
+        // is hit when tg is within +- 1, or when angle is between +- 45 deg.
 
     }
 
-    public boolean isHitRanged(Projectile proj) {
-        double distance = Math.sqrt(Math.pow(this.posX - getPosX(), 2) + Math.pow(this.posY - getPosY(), 2));
+    public boolean isHitProjectile(Projectile proj) {
+        double deltaX = this.posX - getPosX();
+        double deltaY = this.posY - getPosY();
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance <= proj.getRadius();
     }
 
