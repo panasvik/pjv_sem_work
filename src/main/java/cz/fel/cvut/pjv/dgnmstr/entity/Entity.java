@@ -25,8 +25,24 @@ public abstract class Entity {
         return hp;
     }
 
-    public abstract void takeDamage(int damage);
+    public final void takeDamage(int damage, Entity source) {
+        if (damage <= 0) return;
+        if (handleParry(source)) return;
+        damage = applyDefence(damage);
+        this.hp -= damage;
+        onDamageTaken(damage, source);
+        if (this.hp <= 0) {
+            die();
+        }
+    }
 
+    protected abstract void onDamageTaken(int amount, Entity source);
+
+    protected boolean handleParry(Entity source) {
+        return !(source instanceof CanAttack);
+    }
+
+    protected abstract int applyDefence(int damage);
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -44,7 +60,7 @@ public abstract class Entity {
         this.speed = speed;
     }
 
-    public void kill() {
+    public void die() {
         this.alive = false;
         this.hp = 0;
     }
