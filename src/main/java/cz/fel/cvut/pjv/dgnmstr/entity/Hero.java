@@ -52,7 +52,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend {
 
     private boolean dextCheck() {
         double chance = Sigmoid.sigmoid(this.dexterity * this.dexterity);
-        double random = Sigmoid.sigmoid(Math.random());
+        double random = Math.random();
         return random < chance;
     }
 
