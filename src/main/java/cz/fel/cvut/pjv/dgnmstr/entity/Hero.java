@@ -12,8 +12,8 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend {
     private int reach;
 
 
-    public Hero(int maxHP, int hp, int speed, int positionX, int positionY, List<HitBox> hitBox) {
-        super(maxHP, hp, speed, positionX, positionY, hitBox);
+    public Hero(int maxHP, int hp, int speed, int positionX, int positionY) {
+        super(maxHP, hp, speed, positionX, positionY);
     }
 
 

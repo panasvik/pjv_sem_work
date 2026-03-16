@@ -8,16 +8,14 @@ public abstract class Entity {
     private int speed;
     private boolean alive;
     protected int positionX, positionY;
-    private final List<HitBox> hitBox;
 
-    public Entity(int maxHP, int hp, int speed, int positionX, int positionY, List<HitBox> hitBox) {
+    public Entity(int maxHP, int hp, int speed, int positionX, int positionY) {
         this.maxHP = maxHP;
         this.hp = hp;
         this.speed = speed;
         this.alive = true;
         this.positionX = positionX;
         this.positionY = positionY;
-        this.hitBox = hitBox;
 
     }
 
@@ -65,11 +63,16 @@ public abstract class Entity {
         this.hp = 0;
     }
 
-    public List<HitBox> getHitBox() {
-        return hitBox;
-    }
 
     public int getMaxHP() {
         return maxHP;
+    }
+
+    public int getX() {
+        return positionX;
+    }
+
+    public int getY() {
+        return positionY;
     }
 }
