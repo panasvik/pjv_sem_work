@@ -5,9 +5,9 @@ import javafx.stage.WindowEvent;
 public class ArmorPiece extends Item {
     private final int hp, defence, dexterity, speed;
     private String name;
-    private WeaponType type;
+    private ArmorPieceType type;
 
-    public ArmorPiece(int hp, int defence, int dexterity, int speed, WeaponType type) {
+    public ArmorPiece(int hp, int defence, int dexterity, int speed, ArmorPieceType type) {
         this.hp = hp;
         this.defence = defence;
         this.dexterity = dexterity;
@@ -33,5 +33,9 @@ public class ArmorPiece extends Item {
 
     public String getName() {
         return name;
+    }
+
+    public ArmorPieceType getType() {
+        return type;
     }
 }

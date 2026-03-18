@@ -49,10 +49,6 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return damage;
     }
 
-    @Override
-    protected void onDamageTaken(int amount, Entity source) {
-        return;
-    }
 
     @Override
     public int getDamage() {
