@@ -12,12 +12,21 @@ import java.util.List;
 
 public class Warrior extends Hero implements CanAttackMelee {
     private static final double cos45 = 0.707;
+    private static final int HFULimit = 5;
+    private static final int damageMul = 5;
+    private static final int ultRange = 2;
+    private int hitsForUlt;
     public Warrior(PlaterStats stats, double posX, double posY, Level level) {
         super(stats.hp(), stats.speed(), posX, posY,
                 stats.damage(), stats.dexterity(), stats.defence(), stats.range(),
                 Role.WARRIOR, Faction.HERO, level);
+        this.hitsForUlt = 0;
     }
 
+    @Override
+    protected void onDamageTaken(int amount, Entity source) {
+        this.hitsForUlt = 0;
+    }
 
 
     @Override
@@ -50,13 +59,23 @@ public class Warrior extends Hero implements CanAttackMelee {
         for (Entity e : entitiesAround) {
             if (this.isEnemy(e) && isInAngle(e, getLookX(), getLookY())) {
                 e.takeDamage(getDamage(), this);
+                hitsForUlt++;
             }
         }
     }
 
     @Override
     public void useUltimate() {
-
+        if (hitsForUlt < HFULimit) {
+            return;
+        }
+        List<Entity> entitiesAround = getLevel().getEntitiesAround(this, getReach() * ultRange);
+        for (Entity e : entitiesAround) {
+            if (this.isEnemy(e) && isInAngle(e, getLookX(), getLookY())) {
+                e.takeDamage(getDamage() * damageMul, this);
+                hitsForUlt++;
+            }
+        }
     }
 
 
