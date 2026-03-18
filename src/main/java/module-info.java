@@ -4,6 +4,7 @@ module cz.fel.cvut.pjv.dgnmstr.dungeonmaster {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires com.fasterxml.jackson.databind;
 
     opens cz.fel.cvut.pjv.dgnmstr.dungeonmaster to javafx.fxml;
     exports cz.fel.cvut.pjv.dgnmstr.dungeonmaster;
