@@ -1,26 +1,35 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.global.PlaterStats;
+import cz.fel.cvut.pjv.dgnmstr.global.Role;
 import cz.fel.cvut.pjv.dgnmstr.global.Sigmoid;
+import cz.fel.cvut.pjv.dgnmstr.item.Weapon;
 
 import java.util.List;
 
-public abstract class Hero extends Entity implements CanAttack, CanDefend {
+public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUltimate {
     private int damage;
     private int dexterity;
     private int defence;
     private int reach;
+    private Role role;
 
 
-    public Hero(int maxHP, int hp, int speed, int positionX, int positionY) {
-        super(maxHP, hp, speed, positionX, positionY);
+    public Hero(int hp, int speed, double positionX, double positionY, int damage, int dexterity, int defence, int reach, Role role, Faction faction, Level level) {
+        super(hp, speed, positionX, positionY, faction, level);
+        this.damage = damage;
+        this.dexterity = dexterity;
+        this.defence = defence;
+        this.reach = reach;
+        this.role = role;
     }
-
 
     @Override
     protected boolean handleParry(Entity source) {
         if (!(source instanceof CanAttack)) {
-            return true;
+            return false;
         }
         if (dextCheck()) {
             source.takeDamage(this.damage, this);
@@ -40,10 +49,6 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend {
         return damage;
     }
 
-    @Override
-    protected void onDamageTaken(int amount, Entity source) {
-        return;
-    }
 
     @Override
     public int getDamage() {
@@ -60,4 +65,45 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend {
         return getSpeed() > damage;
     }
 
+    public int getReach() {
+        return reach;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    protected void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    protected void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    protected void setDefence(int defence) {
+        this.defence = defence;
+    }
+
+    protected void setReach(int reach) {
+        this.reach = reach;
+    }
+
+    protected int getDexterity() {
+        return dexterity;
+    }
+
+    protected int getDefence() {
+        return defence;
+    }
+
+    public void syncStats(PlaterStats stats) {
+        this.setMaxHP(stats.hp());
+        this.setDamage(stats.damage());
+        this.setDexterity(stats.dexterity());
+        this.setDefence(stats.defence());
+        this.setReach(stats.range());
+        this.setSpeed(stats.speed());
+        setHp(Math.min(getHp(), getMaxHP()));
+    }
 }

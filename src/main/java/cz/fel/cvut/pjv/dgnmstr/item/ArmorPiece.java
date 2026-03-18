@@ -1,22 +1,26 @@
 package cz.fel.cvut.pjv.dgnmstr.item;
 
-public class ArmorPiece extends Item {
-    private final int hp, armor, dexterity, speed;
-    private String name;
+import javafx.stage.WindowEvent;
 
-    public ArmorPiece(int hp, int armor, int dexterity, int speed) {
+public class ArmorPiece extends Item {
+    private final int hp, defence, dexterity, speed;
+    private String name;
+    private ArmorPieceType type;
+
+    public ArmorPiece(int hp, int defence, int dexterity, int speed, ArmorPieceType type) {
         this.hp = hp;
-        this.armor = armor;
+        this.defence = defence;
         this.dexterity = dexterity;
         this.speed = speed;
+        this.type = type;
     }
 
     public int getHp() {
         return hp;
     }
 
-    public int getArmor() {
-        return armor;
+    public int getDefence() {
+        return defence;
     }
 
     public int getDexterity() {
@@ -29,5 +33,9 @@ public class ArmorPiece extends Item {
 
     public String getName() {
         return name;
+    }
+
+    public ArmorPieceType getType() {
+        return type;
     }
 }
