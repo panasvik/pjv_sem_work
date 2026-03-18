@@ -1,21 +1,27 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
-import java.util.List;
+
+import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 public abstract class Entity {
-    private final int maxHP;
+    private int maxHP;
     private int hp;
     private int speed;
     private boolean alive;
-    protected int positionX, positionY;
+    private double positionX, positionY;
+    private double lookX, lookY;
+    private final Faction faction;
+    private final Level level;
 
-    public Entity(int maxHP, int hp, int speed, int positionX, int positionY) {
-        this.maxHP = maxHP;
+    public Entity(int hp, int speed, double positionX, double positionY, Faction faction, Level level) {
+        this.maxHP = hp;
         this.hp = hp;
         this.speed = speed;
         this.alive = true;
         this.positionX = positionX;
         this.positionY = positionY;
+        this.faction = faction;
+        this.level = level;
 
     }
 
@@ -43,7 +49,7 @@ public abstract class Entity {
     protected abstract int applyDefence(int damage);
 
     public void setHp(int hp) {
-        this.hp = hp;
+        this.hp = Math.max(0, Math.min(hp, this.maxHP));
     }
 
     public boolean isAlive() {
@@ -68,11 +74,45 @@ public abstract class Entity {
         return maxHP;
     }
 
-    public int getX() {
+    public double getX() {
         return positionX;
     }
 
-    public int getY() {
+    public double getY() {
         return positionY;
+    }
+
+    public void setPos(int x, int y) {
+        this.positionX = x;
+        this.positionY = y;
+    }
+
+    public boolean isEnemy(Entity other) {
+        if (other == this) return false;
+        if (this.faction == Faction.NEUTRAL) {
+            return false;
+        }
+        return this.faction != other.faction;
+    }
+
+    public void setLookTarget(double targetX, double targetY) {
+        this.lookX = targetX;
+        this.lookY = targetY;
+    }
+
+    public double getLookX() {
+        return lookX;
+    }
+
+    public double getLookY() {
+        return lookY;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    protected void setMaxHP(int maxHP) {
+        this.maxHP = Math.max(0, maxHP);
     }
 }

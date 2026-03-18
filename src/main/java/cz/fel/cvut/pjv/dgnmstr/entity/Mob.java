@@ -1,5 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+
 import java.util.List;
 
 public abstract class Mob extends Entity implements CanAttack {
@@ -7,8 +9,8 @@ public abstract class Mob extends Entity implements CanAttack {
     private final int reach;
     private final int gold;
 
-    public Mob(int maxHP, int hp, int speed, int positionX, int positionY, int damage, int reach, int gold) {
-        super(maxHP, hp, speed, positionX, positionY);
+    public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level) {
+        super(hp, speed, positionX, positionY, faction, level);
         this.damage = damage;
         this.reach = reach;
         this.gold = gold;
