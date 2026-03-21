@@ -14,4 +14,6 @@ public enum Role {
     public WeaponType getWeaponType() {
         return type;
     }
+
+
 }
