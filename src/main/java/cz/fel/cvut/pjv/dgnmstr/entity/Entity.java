@@ -88,7 +88,6 @@ public abstract class Entity {
     }
 
     public boolean isEnemy(Entity other) {
-        if (other == this) return false;
         if (this.faction == Faction.NEUTRAL) {
             return false;
         }

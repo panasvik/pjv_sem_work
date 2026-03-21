@@ -1,7 +1,9 @@
-package cz.fel.cvut.pjv.dgnmstr.global;
+package cz.fel.cvut.pjv.dgnmstr.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.fel.cvut.pjv.dgnmstr.entity.PlayerCursorPos;
+import cz.fel.cvut.pjv.dgnmstr.entity.Role;
 import cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece;
 import cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceType;
 import cz.fel.cvut.pjv.dgnmstr.item.Item;
@@ -72,7 +74,7 @@ public class PlayerProfile {
 
 
     @JsonIgnore
-    public PlaterStats getPlayerStats() {
+    public PlayerStats getPlayerStats() {
         int damage = (weapon != null) ? weapon.getDamage() : 0;
         int range = (weapon != null) ? weapon.getRange() : 0;
         int dexterity = (weapon != null) ? weapon.getDexterity() : 0;
@@ -84,7 +86,7 @@ public class PlayerProfile {
             speed += piece.getSpeed();
             hp += piece.getHp();
         }
-        return new PlaterStats(damage, defence, hp, range, dexterity, speed);
+        return new PlayerStats(damage, defence, hp, range, dexterity, speed);
     }
 
 

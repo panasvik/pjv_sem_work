@@ -2,12 +2,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.global.PlaterStats;
-import cz.fel.cvut.pjv.dgnmstr.global.Role;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.global.Sigmoid;
-import cz.fel.cvut.pjv.dgnmstr.item.Weapon;
-
-import java.util.List;
 
 public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUltimate {
     private int damage;
@@ -97,7 +93,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return defence;
     }
 
-    public void syncStats(PlaterStats stats) {
+    public void syncStats(PlayerStats stats) {
         this.setMaxHP(stats.hp());
         this.setDamage(stats.damage());
         this.setDexterity(stats.dexterity());
