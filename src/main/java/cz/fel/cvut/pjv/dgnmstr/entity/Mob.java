@@ -35,4 +35,17 @@ public abstract class Mob extends Entity implements CanAttack {
     public int getGold() {
         return gold;
     }
+
+    @Override
+    public void die() {
+        super.die();
+        int dropGold = (int)(this.getGold() * (Math.random() + 0.5));
+
+        if (getLevel() != null){
+            getLevel().removeEntity(this);
+
+            getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold));
+        }
+
+    }
 }
