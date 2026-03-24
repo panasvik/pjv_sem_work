@@ -30,7 +30,7 @@ public class Inventory {
     }
 
     public void rejectAddition(Item item) {
-        System.out.println("Этот предмет нельзя положить в инвентарь!");
+        System.out.println("Unable to add to inventory");
     }
 
 

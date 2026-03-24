@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class Item {
     private String name;
     private int price;
-    // Другие общие поля: вес, цена, id и т.д.
 
     public Item(String name, int price) {
         this.name = name;
