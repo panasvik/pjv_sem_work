@@ -107,9 +107,35 @@ public class Arena {
     }
 
     private void spawnInitialMobs() {
-        //TODO
-    }
+        // 1. Собираем все разрешенные точки спавна на этой арене
+        List<Position> validSpawnPoints = new ArrayList<>();
 
+        for (int x = (int) startX; x < startX + width; x++) {
+            for (int y = (int) startY; y < startY + height; y++) {
+                if (level.getTile(x, y) == TileType.SPAWN_FLOOR) {
+                    validSpawnPoints.add(new Position(x, y));
+                }
+            }
+        }
+
+        if (validSpawnPoints.isEmpty()) {
+            System.err.println("No SPAWN_FLOOR (*) in file. Mobs will not spawn!");
+            return;
+        }
+
+        int mobsToSpawn = Math.min(10, validSpawnPoints.size());
+
+        for (int i = 0; i < mobsToSpawn; i++) {
+            int randomIndex = (int) (Math.random() * validSpawnPoints.size());
+            Position spot = validSpawnPoints.get(randomIndex);
+
+            validSpawnPoints.remove(randomIndex);
+
+            // Mob mob = new Orc(spot[0], spot[1], level);
+            // activeMobs.add(mob);
+            // level.addEntity(mob);
+        }
+    }
     private void spawnMiniBoss() {
         //TODO
     }

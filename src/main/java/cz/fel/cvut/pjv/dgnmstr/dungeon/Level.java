@@ -51,7 +51,7 @@ public class Level {
 
     public void addPlayer(Hero player) {
         this.players.add(player);
-        this.allEntities.add(player); // Игрок - это тоже Entity, он нужен для физики!
+        this.allEntities.add(player);
         this.playersAlive = players.size();
     }
 
@@ -86,7 +86,7 @@ public class Level {
         }
 
         for (Entity entity : allEntities) {
-            // entity.update();
+            entity.update();
         }
     }
 
@@ -149,5 +149,12 @@ public class Level {
         }
 
         return map[gridX][gridY] == TileType.EXIT;
+    }
+
+    public TileType getTile(int x, int y) {
+        if (x < 0 || y < 0 || x >= width || y >= height) {
+            return TileType.WALL; // За границами карты считаем, что там стена
+        }
+        return map[x][y];
     }
 }
