@@ -8,6 +8,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Hero;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState.*;
 import static java.util.stream.StreamSupport.stream;
 
 public class Level {
@@ -20,12 +21,22 @@ public class Level {
     private TileType[][] map;
     private int width;
     private int height;
+    private LevelState state;
 
 
     public Level() {
         this.allEntities = new ArrayList<>();
         this.players = new ArrayList<>();
         this.arenas = new ArrayList<>();
+        this.state = NOT_STARTED;
+
+    }
+
+    public void startLevel() {
+        this.state = LevelState.PLAYING;
+        this.playersAlive = players.size();
+
+        System.out.println("Level started");
     }
 
     public void setMap(TileType[][] map, int width, int height) {
@@ -63,28 +74,22 @@ public class Level {
         double dy = a.getY() - b.getY();
         return dx * dx + dy * dy;
     }
-
-    public void playerDies() {
-        playersAlive--;
-        if (playersAlive == 0) this.gameOver();
-    }
-
-    public void gameOver() {
-
-    }
-
     public void update() {
+
+        if (state != LevelState.PLAYING) {
+            return;
+        }
+
         allEntities.removeIf(entity -> !entity.isAlive());
         for (Arena arena: arenas) {
             arena.update(players);
         }
 
         for (Entity entity : allEntities) {
-            // entity.update(); // Раскомментируй, когда добавишь update() в Entity
+            // entity.update();
         }
     }
 
-    // Проверка, можно ли физически встать на заданные координаты
     public boolean isWalkable(double targetX, double targetY) {
         int gridX = (int) targetX;
         int gridY = (int) targetY;
@@ -109,17 +114,40 @@ public class Level {
         return true;
     }
 
-    public double[] findFreeSpot(double startX, double startY, double rectWidth, double rectHeight) {
-        int maxAttempts = 50;
-        for (int i = 0; i < maxAttempts; i++) {
-            double randomX = startX + (Math.random() * rectWidth);
-            double randomY = startY + (Math.random() * rectHeight);
+    public void playerDies(Hero deadPlayer) {
+        deadPlayer.die();
+        playersAlive--;
+        System.out.println("Player dead, active players:" + playersAlive);
 
-            if (isWalkable(randomX, randomY)) {
-                return new double[]{randomX, randomY};
-            }
+        if (playersAlive <= 0) {
+            gameOver();
+        } else {
+            allEntities.remove(deadPlayer);
+        }
+    }
+
+    private void gameOver() {
+        this.state = LevelState.GAME_OVER;
+        System.out.println("GAME OVER!");
+
+        // GameManager.getInstance().showGameOverScreen();
+    }
+
+    private void levelComplete() {
+        this.state = LevelState.VICTORY;
+        System.out.println("VICTORY!");
+
+        // GameManager.getInstance().showVictoryScreen(players);
+    }
+
+    private boolean isAtExit(double x, double y) {
+        int gridX = (int) x;
+        int gridY = (int) y;
+
+        if (gridX < 0 || gridY < 0 || gridX >= width || gridY >= height) {
+            return false;
         }
 
-        return new double[]{startX + rectWidth / 2, startY + rectHeight / 2};
+        return map[gridX][gridY] == TileType.EXIT;
     }
 }
