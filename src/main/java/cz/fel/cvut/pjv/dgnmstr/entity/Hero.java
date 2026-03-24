@@ -57,6 +57,11 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return random < chance;
     }
 
+    @Override
+    public void die() {
+        super.die();
+    }
+
     private boolean speedCheck() {
         return getSpeed() > damage;
     }
