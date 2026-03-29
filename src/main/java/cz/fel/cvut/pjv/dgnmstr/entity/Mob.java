@@ -46,6 +46,19 @@ public abstract class Mob extends Entity implements CanAttack {
 
             getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold));
         }
+    }
 
+    public void moveToward(Entity target) {
+        if(target == null|| !this.isAlive()) return;
+
+        double dx = target.getX() - this.getX();
+        double dy = target.getY() - this.getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance > 0) {
+            double moveX = (dx / distance) * this.getSpeed();
+            double moveY = (dy / distance) * this.getSpeed();
+
+            this.setPos((int)(this.getX() + moveX), (int)(this.getY() + moveY));
+        }
     }
 }
