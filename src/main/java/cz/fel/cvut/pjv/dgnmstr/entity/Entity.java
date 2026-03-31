@@ -115,4 +115,6 @@ public abstract class Entity {
     protected void setMaxHP(int maxHP) {
         this.maxHP = Math.max(0, maxHP);
     }
+
+    public boolean isEthereal() {return false;}
 }
