@@ -3,7 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 public enum Stats {
     ZOMBIE(70, 10, 20, 5, 50),
     GHOST(50, 15, 15, 5, 100),
-    EVIL_WIZARD (30, 10, 25, 40, 150); //reach má být neomezen nezapomenout
+    EVIL_WIZARD (30, 10, 25, 40, 150),//reach má být neomezen nezapomenout
+    ANYSEK_THE_BEHEMOTH(1000, 10, 40, 10, 500);
 
     private final int hp;
     private final int speed;
