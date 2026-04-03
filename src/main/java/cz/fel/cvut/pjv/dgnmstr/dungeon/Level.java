@@ -16,19 +16,22 @@ public class Level {
     private final List<Hero> players;
     private final List<Arena> arenas;
 
-    public int playersAlive;
+    private int playersAlive;
 
     private TileType[][] map;
     private int width;
     private int height;
     private LevelState state;
+    private final DifficultyStats difficulty;
+    public static final int TILE_SIZE = 32;
 
-
-    public Level() {
+    public Level(DifficultyStats difficulty) {
         this.allEntities = new ArrayList<>();
         this.players = new ArrayList<>();
         this.arenas = new ArrayList<>();
         this.state = NOT_STARTED;
+        this.difficulty = difficulty;
+
 
     }
 
@@ -59,8 +62,6 @@ public class Level {
         this.arenas.add(arena);
     }
 
-
-
     public List<Entity> getEntitiesAround(Entity center, double range) {
         double rangeSquared = range * range;
         return allEntities.stream()
@@ -75,7 +76,6 @@ public class Level {
         return dx * dx + dy * dy;
     }
     public void update() {
-
         if (state != LevelState.PLAYING) {
             return;
         }
@@ -129,14 +129,12 @@ public class Level {
     private void gameOver() {
         this.state = LevelState.GAME_OVER;
         System.out.println("GAME OVER!");
-
         // GameManager.getInstance().showGameOverScreen();
     }
 
     private void levelComplete() {
         this.state = LevelState.VICTORY;
         System.out.println("VICTORY!");
-
         // GameManager.getInstance().showVictoryScreen(players);
     }
 
@@ -153,8 +151,20 @@ public class Level {
 
     public TileType getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height) {
-            return TileType.WALL; // За границами карты считаем, что там стена
+            return TileType.WALL;
         }
         return map[x][y];
+    }
+
+    public DifficultyStats getDifficulty() {
+        return difficulty;
+    }
+
+    public int getPlayersAlive() {
+        return playersAlive;
+    }
+
+    public LevelState getState() {
+        return state;
     }
 }

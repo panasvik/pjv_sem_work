@@ -15,13 +15,14 @@ public class DungeonGenerator {
 
     private final Random random = new Random();
 
-    public Level generate() {
-        Level level = new Level();
+    public Level generate(DifficultyStats difficulty) {
+        Level level = new Level(difficulty);
 
         int totalWidth = (ARENA_SIZE * 3) + (CORRIDOR_LENGTH * 2);
         int totalHeight = ARENA_SIZE;
 
         TileType[][] map = new TileType[totalWidth][totalHeight];
+        level.setMap(map, totalWidth, totalHeight);
 
         for (int x = 0; x < totalWidth; x++) {
             for (int y = 0; y < totalHeight; y++) {
@@ -35,7 +36,7 @@ public class DungeonGenerator {
 
             ArenaType type = getRandomArenaType();
 
-            pasteArena(map, currentX, 0, ArenaType.GOBLIN_CAMP);
+            pasteArena(map, currentX, 0, type);
 
             Arena arena = new Arena(currentX, 0, level);
             level.addArena(arena);
@@ -50,8 +51,6 @@ public class DungeonGenerator {
 
         int exitY = ARENA_SIZE / 2;
         map[totalWidth - 1][exitY] = TileType.EXIT;
-
-        level.setMap(map, totalWidth, totalHeight);
 
         return level;
     }

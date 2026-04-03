@@ -4,6 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.Mob;
+import cz.fel.cvut.pjv.dgnmstr.entity.Chest;
+import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +13,21 @@ import java.util.List;
 public class Arena {
     private ArenaState state = ArenaState.NOT_STARTED;
 
-    private final double startX;
-    private final double startY;
-    private final double width = 64.0;
-    private final double height = 64.0;
+    private final int startX;
+    private final int startY;
+    private final int width = 64;
+    private final int height = 64;
 
     private final Level level;
 
     private final List<Mob> activeMobs = new ArrayList<>();
     private final List<Entity> grates = new ArrayList<>(); // Решетки на входах
 
-    public Arena(double startX, double startY, Level level) {
+    public Arena(int startX, int startY, Level level) {
         this.startX = startX;
         this.startY = startY;
         this.level = level;
+        spawnChests();
     }
 
     public void update(List<Hero> players) {
@@ -51,7 +54,6 @@ public class Arena {
             closeGrates();
             teleportOtherPlayers(firstPlayerToEnter, players);
             spawnInitialMobs();
-            System.out.println("Fight started");
         }
     }
 
@@ -78,8 +80,8 @@ public class Arena {
 
     private void closeGrates() {
 
-        int corridorStartY = (int) (startY + (height / 2) - 3);
-        int corridorEndY = (int) (startY + (height / 2) + 3);
+        int corridorStartY = (startY + (height / 2) - 3);
+        int corridorEndY = (startY + (height / 2) + 3);
 
         for (int y = corridorStartY; y <= corridorEndY; y++) {
             Grate leftGrate = new Grate(startX, y, level);
@@ -101,19 +103,34 @@ public class Arena {
     private void teleportOtherPlayers(Hero firstPlayer, List<Hero> players) {
         for (Hero player : players) {
             if (player != firstPlayer && player.isAlive()) {
-                player.setPos((int) firstPlayer.getX() + 1, (int) firstPlayer.getY());
+                player.setPos( firstPlayer.getX() + Level.TILE_SIZE, firstPlayer.getY());
             }
         }
     }
 
-    private void spawnInitialMobs() {
-        // 1. Собираем все разрешенные точки спавна на этой арене
-        List<Position> validSpawnPoints = new ArrayList<>();
 
-        for (int x = (int) startX; x < startX + width; x++) {
-            for (int y = (int) startY; y < startY + height; y++) {
+    private void spawnMobs(int cap, List<TilePosition> validSpawnPoints) {
+        int mobsToSpawn = Math.min(cap, validSpawnPoints.size());
+
+        for (int i = 0; i < mobsToSpawn; i++) {
+            int randomIndex = (int) (Math.random() * validSpawnPoints.size());
+            TilePosition spot = validSpawnPoints.get(randomIndex);
+            validSpawnPoints.remove(randomIndex);
+            double worldX = (spot.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+            double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+            // Mob mob = new Zombie(...);
+            // activeMobs.add(mob);
+            // level.addEntity(mob);
+        }
+    }
+
+    private void spawnInitialMobs() {
+        List<TilePosition> validSpawnPoints = new ArrayList<>();
+
+        for (int x =  startX; x < startX + width; x++) {
+            for (int y = startY; y < startY + height; y++) {
                 if (level.getTile(x, y) == TileType.SPAWN_FLOOR) {
-                    validSpawnPoints.add(new Position(x, y));
+                    validSpawnPoints.add(new TilePosition(x, y));
                 }
             }
         }
@@ -123,26 +140,34 @@ public class Arena {
             return;
         }
 
-        int mobsToSpawn = Math.min(10, validSpawnPoints.size());
-
-        for (int i = 0; i < mobsToSpawn; i++) {
-            int randomIndex = (int) (Math.random() * validSpawnPoints.size());
-            Position spot = validSpawnPoints.get(randomIndex);
-
-            validSpawnPoints.remove(randomIndex);
-
-            // Mob mob = new Orc(spot[0], spot[1], level);
-            // activeMobs.add(mob);
-            // level.addEntity(mob);
-        }
+        spawnMobs(level.getDifficulty().getInitCap(), validSpawnPoints);
     }
+
     private void spawnMiniBoss() {
         //TODO
     }
 
-    private boolean isInsideArena(double x, double y) {
-        return x >= startX && x <= (startX + width) &&
-                y >= startY && y <= (startY + height);
+    private boolean isInsideArena(double playerWorldX, double playerWorldY) {
+        int playerGridX = (int) (playerWorldX / Level.TILE_SIZE);
+        int playerGridY = (int) (playerWorldY / Level.TILE_SIZE);
+
+        return playerGridX >= this.startX && playerGridX < (this.startX + this.width) &&
+                playerGridY >= this.startY && playerGridY < (this.startY + this.height);
+    }
+
+    private void spawnChests() {
+        for (int x = startX; x < startX + width; x++) {
+            for (int y = startY; y < startY + height; y++) {
+
+                if (level.getTile(x, y) == TileType.CHEST_FLOOR) {
+                    double worldX = (x * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+                    double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+
+                    Chest chest = new Chest(worldX, worldY, level, new Inventory());
+                    level.addEntity(chest);
+                }
+            }
+        }
     }
 
     public ArenaState getState() {

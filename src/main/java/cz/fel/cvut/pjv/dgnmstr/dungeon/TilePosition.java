@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
-public record Position(
+public record TilePosition(
         int x,
         int y
 ) {
