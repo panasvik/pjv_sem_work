@@ -82,7 +82,7 @@ public abstract class Entity {
         return positionY;
     }
 
-    public void setPos(int x, int y) {
+    public void setPos(double x, double y) {
         this.positionX = x;
         this.positionY = y;
     }
