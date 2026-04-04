@@ -5,9 +5,9 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import java.util.List;
 
 public abstract class Mob extends Entity implements CanAttack {
-    private int damage;
-    private int reach;
-    private int gold;
+    private final int damage;
+    private final int reach;
+    private final int gold;
 
     public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level) {
         super(hp, speed, positionX, positionY, faction, level);
@@ -46,5 +46,39 @@ public abstract class Mob extends Entity implements CanAttack {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    @Override
+    public void die() {
+        super.die();
+        int dropGold = (int)(this.getGold() * (Math.random() + 0.5));
+
+        if (getLevel() != null){
+            getLevel().removeEntity(this);
+
+            getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold));
+        }
+    }
+
+    public void moveToward(Entity target) {
+        if(target == null|| !this.isAlive()) return;
+
+        double dx = target.getX() - this.getX();
+        double dy = target.getY() - this.getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance > 0) {
+            double moveX = (dx / distance) * this.getSpeed();
+            double moveY = (dy / distance) * this.getSpeed();
+
+            this.setPos((int)(this.getX() + moveX), (int)(this.getY() + moveY));
+        }
+    }
+
+    protected void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    protected void setReach(int reach) {
+        this.reach = reach;
     }
 }

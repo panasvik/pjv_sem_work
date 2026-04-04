@@ -4,6 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Fence;
 import cz.fel.cvut.pjv.dgnmstr.entity.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.Hero;
+import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Level {
     private final List<Entity> allEntities;
     private final List<Hero> players;
     private final List<Arena> arenas;
+    private List<Projectile> projectiles;
 
     private int playersAlive;
 
@@ -31,6 +34,7 @@ public class Level {
         this.arenas = new ArrayList<>();
         this.state = NOT_STARTED;
         this.difficulty = difficulty;
+        this.projectiles = new ArrayList<>();
 
 
     }
@@ -65,15 +69,32 @@ public class Level {
     public List<Entity> getEntitiesAround(Entity center, double range) {
         double rangeSquared = range * range;
         return allEntities.stream()
-                                .filter(other -> other != center)
-                                .filter(other -> calculateDistanceSquared(center, other) <= rangeSquared)
-                                .toList();
+                                .filter(other -> other != center) // 1. Исключаем самого себя
+                                .filter(other -> MyMath.calculateDistanceSquared(center, other) <= rangeSquared) // 2. Проверяем дистанцию
+                                .toList(); // 3. Собираем в список (Java 16+)
     }
 
-    private double calculateDistanceSquared(Entity a, Entity b) {
-        double dx = a.getX() - b.getX();
-        double dy = a.getY() - b.getY();
-        return dx * dx + dy * dy;
+    public void  addEntity(Entity entity) {
+        if(entity != null && !allEntities.contains(entity)) {
+            allEntities.add(entity);
+        }
+    }
+    public void  removeEntity(Entity entity) {
+        if (entity != null) {
+            allEntities.remove(entity);
+        }
+    }
+
+    public LevelState getState() {
+        return state;
+    }
+
+    public DifficultyStats getDifficulty() {
+        return difficulty;
+    }
+
+    public void addProjectile(Projectile p) {
+        projectiles.add(p);
     }
     public void update() {
         if (state != LevelState.PLAYING) {
