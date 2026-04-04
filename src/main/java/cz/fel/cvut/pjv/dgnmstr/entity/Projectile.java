@@ -1,21 +1,31 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
 public class Projectile {
-    private int posX;
-    private int posY;
     private final int radius;
+    private final Entity master;
+    private final int damage;
+    private double deltaX;
+    private double deltaY;
+    private double posX;
+    private double posY;
+    private double velocity;
 
-    public Projectile(int radius, int posY, int posX) {
+    public Projectile(int radius, double posY, double posX, Entity master, int damage, double deltaX, double deltaY, double velocity) {
         this.radius = radius;
         this.posY = posY;
         this.posX = posX;
+        this.master = master;
+        this.damage = damage;
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
+        this.velocity = velocity;
     }
 
-    public int getPosX() {
+    public double getPosX() {
         return posX;
     }
 
-    public int getPosY() {
+    public double getPosY() {
         return posY;
     }
 
@@ -23,9 +33,32 @@ public class Projectile {
         return radius;
     }
 
-    public void setPos(int posX, int posY) {
+    public void setPos(double posX, double posY) {
         this.posY = posY;
         this.posX = posX;
     }
 
+    public Entity getMaster() {
+        return master;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public double getDeltaX() {
+        return deltaX;
+    }
+
+    public double getDeltaY() {
+        return deltaY;
+    }
+
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public void ExplodeOn(Entity target) {
+        target.takeDamage(damage, master);
+    }
 }
