@@ -1,4 +1,4 @@
-package cz.fel.cvut.pjv.dgnmstr.dungeonmaster;
+package cz.fel.cvut.pjv.dgnmstr;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

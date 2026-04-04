@@ -75,7 +75,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                cz.fel.cvut.pjv.dgnmstr.dungeonmaster/cz.fel.cvut.pjv.dgnmstr.dungeonmaster.GameApp
+                                cz.fel.cvut.pjv.dgnmstr.dungeonmaster/cz.fel.cvut.pjv.dgnmstr.GameApp
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
