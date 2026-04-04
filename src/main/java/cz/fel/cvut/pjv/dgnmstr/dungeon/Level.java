@@ -1,14 +1,30 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
+import cz.fel.cvut.pjv.dgnmstr.entity.Hero;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState.NOT_STARTED;
 import static java.util.stream.StreamSupport.stream;
 
 public class Level {
     public List<Entity> allEntities = new ArrayList<>();
+    private LevelState state;
+    private final DifficultyStats difficulty;
+    private List<Hero> players;
+
+    public Level(DifficultyStats difficulty) {
+        this.allEntities = new ArrayList<>();
+        this.players = new ArrayList<>();
+        this.state = NOT_STARTED;
+        this.difficulty = difficulty;
+
+
+    }
+
+
     public List<Entity> getEntitiesAround(Entity center, double range) {
         double rangeSquared = range * range;
         return allEntities.stream()
@@ -31,5 +47,13 @@ public class Level {
         if (entity != null) {
             allEntities.remove(entity);
         }
+    }
+
+    public LevelState getState() {
+        return state;
+    }
+
+    public DifficultyStats getDifficulty() {
+        return difficulty;
     }
 }

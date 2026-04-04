@@ -1,10 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
-public enum Stats {
+public enum MobStats {
     ZOMBIE(70, 10, 20, 5, 50),
     GHOST(50, 15, 15, 5, 100),
-    EVIL_WIZARD (30, 10, 25, 40, 150),//reach má být neomezen nezapomenout
-    ANYSEK_THE_BEHEMOTH(1000, 10, 40, 10, 500);
+    EVIL_WIZARD (30, 10, 25, 40, 150);//reach má být neomezen nezapomenout
 
     private final int hp;
     private final int speed;
@@ -12,7 +11,7 @@ public enum Stats {
     private final int reach;
     private final int gold;
 
-    Stats(int hp, int speed, int damage, int reach, int gold) {
+    MobStats(int hp, int speed, int damage, int reach, int gold) {
         this.hp = hp;
         this.speed = speed;
         this.damage = damage;
