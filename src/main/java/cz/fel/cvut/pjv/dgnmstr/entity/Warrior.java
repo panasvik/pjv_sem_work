@@ -2,6 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
+import cz.fel.cvut.pjv.dgnmstr.entity.Role.*;
 
 import java.util.List;
 

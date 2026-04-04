@@ -17,10 +17,12 @@ public class PlayerProfile {
     private Weapon weapon;
     private Inventory inventory;
     private Role role;
+    private int gold;
 
     public PlayerProfile() {
         this.armor = new EnumMap<>(ArmorPieceType.class);
         this.inventory = new Inventory();
+        this.gold = 0;
     }
 
     public PlayerProfile(Role role) {
@@ -88,7 +90,7 @@ public class PlayerProfile {
             speed += piece.getSpeed();
             hp += piece.getHp();
         }
-        return new PlayerStats(damage, defence, hp, range, dexterity, speed);
+        return new PlayerStats(damage, defence, hp, range, dexterity, speed, gold);
     }
 
     public Inventory getInventory() {

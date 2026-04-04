@@ -6,6 +6,7 @@ public record PlayerStats(
         int hp,
         int range,
         int dexterity,
-        int speed
+        int speed,
+        int gold
 ) {
 }

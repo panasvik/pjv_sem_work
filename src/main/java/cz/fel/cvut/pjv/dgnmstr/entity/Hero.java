@@ -1,9 +1,10 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
 
+
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.global.PlayerStats;
-import cz.fel.cvut.pjv.dgnmstr.global.Role;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
+import cz.fel.cvut.pjv.dgnmstr.entity.Role;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUltimate {
@@ -12,6 +13,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     private int defence;
     private int reach;
     private Role role;
+    private int gold;
 
 
     public Hero(int hp, int speed, double positionX, double positionY, int damage, int dexterity, int defence, int reach, Role role, Faction faction, Level level) {
@@ -21,6 +23,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.defence = defence;
         this.reach = reach;
         this.role = role;
+        this.gold = 0;
     }
 
     @Override
@@ -94,6 +97,14 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return defence;
     }
 
+    public void addGold(int amount) {
+        gold += amount;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
     public void syncStats(PlayerStats stats) {
         this.setMaxHP(stats.hp());
         this.setDamage(stats.damage());
@@ -101,6 +112,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.setDefence(stats.defence());
         this.setReach(stats.range());
         this.setSpeed(stats.speed());
+        this.gold = stats.gold();
         setHp(Math.min(getHp(), getMaxHP()));
     }
 }
