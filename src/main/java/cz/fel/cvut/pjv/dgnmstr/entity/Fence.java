@@ -17,4 +17,8 @@ public class Fence extends Entity {
     protected int applyDefence(int damage) {
         return damage;
     }
+
+    public boolean isSolid() {
+        return true;
+    }
 }

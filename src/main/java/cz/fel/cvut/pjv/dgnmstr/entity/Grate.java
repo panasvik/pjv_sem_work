@@ -17,4 +17,8 @@ public class Grate extends Entity {
     protected int applyDefence(int damage) {
         return 0;
     }
+
+    public boolean isSolid() {
+        return true;
+    }
 }

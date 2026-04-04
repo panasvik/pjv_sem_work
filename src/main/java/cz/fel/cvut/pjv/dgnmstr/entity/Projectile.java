@@ -10,7 +10,7 @@ public class Projectile {
     private double posY;
     private double velocity;
 
-    public Projectile(int radius, double posY, double posX, Entity master, int damage, double deltaX, double deltaY, double velocity) {
+    public Projectile(int radius, double posX, double posY, Entity master, int damage, double deltaX, double deltaY, double velocity) {
         this.radius = radius;
         this.posY = posY;
         this.posX = posX;
@@ -58,8 +58,12 @@ public class Projectile {
         return velocity;
     }
 
-    public void ExplodeOn(Entity target) {
+    public void explodeOn(Entity target) {
         target.takeDamage(damage, master);
         master.getLevel().removeProjectile(this);
+    }
+
+    public void update() {
+
     }
 }

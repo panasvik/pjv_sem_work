@@ -118,4 +118,8 @@ public abstract class Entity {
     public void update() {}
 
     public boolean isEthereal() {return false;}
+
+    public boolean isSolid() {
+        return false;
+    }
 }

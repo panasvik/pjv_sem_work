@@ -102,35 +102,14 @@ public class Level {
             arena.update(players);
         }
 
-        for (Entity entity : allEntities) {
+        for (Entity entity : new ArrayList<>(allEntities)) {
             entity.update();
         }
+
+        for (Projectile p : new ArrayList<>(projectiles)) {
+            p.update();
+        }
     }
-
-    public boolean isWalkable(double targetX, double targetY) {
-        int gridX = (int) targetX;
-        int gridY = (int) targetY;
-        if (gridX < 0 || gridY < 0 || gridX >= width || gridY >= height) {
-            return false;
-        }
-        if (map[gridX][gridY] == TileType.WALL) {
-            return false;
-        }
-        for (Entity e : allEntities) {
-            if (e.isAlive()) {
-                if ((int) e.getX() == gridX && (int) e.getY() == gridY) {
-
-                    if (e instanceof Grate ||
-                            e instanceof Fence) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
     public void playerDies(Hero deadPlayer) {
         deadPlayer.die();
         playersAlive--;
@@ -155,9 +134,35 @@ public class Level {
         // GameManager.getInstance().showVictoryScreen(players);
     }
 
-    private boolean isAtExit(double x, double y) {
-        int gridX = (int) x;
-        int gridY = (int) y;
+    public boolean isWalkable(double targetWorldX, double targetWorldY) {
+        int gridX = (int) (targetWorldX / TILE_SIZE);
+        int gridY = (int) (targetWorldY / TILE_SIZE);
+
+        if (gridX < 0 || gridY < 0 || gridX >= width || gridY >= height) {
+            return false;
+        }
+        if (map[gridX][gridY] == TileType.WALL) {
+            return false;
+        }
+
+        for (Entity e : allEntities) {
+            if (e.isAlive()) {
+                int eGridX = (int) (e.getX() / TILE_SIZE);
+                int eGridY = (int) (e.getY() / TILE_SIZE);
+
+                if (eGridX == gridX && eGridY == gridY) {
+                    if (e.isSolid()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isAtExit(double worldX, double worldY) {
+        int gridX = (int) (worldX / TILE_SIZE);
+        int gridY = (int) (worldY / TILE_SIZE);
 
         if (gridX < 0 || gridY < 0 || gridX >= width || gridY >= height) {
             return false;
@@ -165,7 +170,6 @@ public class Level {
 
         return map[gridX][gridY] == TileType.EXIT;
     }
-
     public TileType getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height) {
             return TileType.WALL;
@@ -181,5 +185,9 @@ public class Level {
     public void removeProjectile(Projectile p) {
         if (p == null) return;
         projectiles.remove(p);
+    }
+
+    public List<Hero> getPlayers() {
+        return players;
     }
 }

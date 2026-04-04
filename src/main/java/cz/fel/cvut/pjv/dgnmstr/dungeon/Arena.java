@@ -1,10 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
-import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Grate;
-import cz.fel.cvut.pjv.dgnmstr.entity.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.Mob;
-import cz.fel.cvut.pjv.dgnmstr.entity.Chest;
+import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.ArrayList;
@@ -19,14 +15,15 @@ public class Arena {
     private final int height = 64;
 
     private final Level level;
-
+    private final ArenaType type;
     private final List<Mob> activeMobs = new ArrayList<>();
     private final List<Entity> grates = new ArrayList<>(); // Решетки на входах
 
-    public Arena(int startX, int startY, Level level) {
+    public Arena(int startX, int startY, Level level, ArenaType type) {
         this.startX = startX;
         this.startY = startY;
         this.level = level;
+        this.type = type;
         spawnChests();
     }
 
@@ -79,20 +76,21 @@ public class Arena {
 
 
     private void closeGrates() {
-
         int corridorStartY = (startY + (height / 2) - 3);
         int corridorEndY = (startY + (height / 2) + 3);
 
         for (int y = corridorStartY; y <= corridorEndY; y++) {
-            Grate leftGrate = new Grate(startX, y, level);
-            Grate rightGrate = new Grate(startX + width - 1, y, level);
+            double leftWorldX = (startX * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+            double rightWorldX = ((startX + width - 1) * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+            double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+            Grate leftGrate = new Grate(leftWorldX, worldY, level);
+            Grate rightGrate = new Grate(rightWorldX, worldY, level);
             grates.add(leftGrate);
             grates.add(rightGrate);
             level.addEntity(leftGrate);
             level.addEntity(rightGrate);
         }
     }
-
     private void openGrates() {
         for (Entity grate : grates) {
             grate.die();
@@ -114,20 +112,22 @@ public class Arena {
 
         for (int i = 0; i < mobsToSpawn; i++) {
             int randomIndex = (int) (Math.random() * validSpawnPoints.size());
-            TilePosition spot = validSpawnPoints.get(randomIndex);
-            validSpawnPoints.remove(randomIndex);
+            TilePosition spot = validSpawnPoints.remove(randomIndex);
+
             double worldX = (spot.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
             double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-            // Mob mob = new Zombie(...);
-            // activeMobs.add(mob);
-            // level.addEntity(mob);
+
+            Mob mob = type.spawnRandomMob(worldX, worldY, level);
+
+            activeMobs.add(mob);
+            level.addEntity(mob);
         }
     }
 
     private void spawnInitialMobs() {
         List<TilePosition> validSpawnPoints = new ArrayList<>();
 
-        for (int x =  startX; x < startX + width; x++) {
+        for (int x = startX; x < startX + width; x++) {
             for (int y = startY; y < startY + height; y++) {
                 if (level.getTile(x, y) == TileType.SPAWN_FLOOR) {
                     validSpawnPoints.add(new TilePosition(x, y));
@@ -136,7 +136,7 @@ public class Arena {
         }
 
         if (validSpawnPoints.isEmpty()) {
-            System.err.println("No SPAWN_FLOOR (*) in file. Mobs will not spawn!");
+            System.err.println("No spawn points available, aborting");
             return;
         }
 
@@ -144,8 +144,17 @@ public class Arena {
     }
 
     private void spawnMiniBoss() {
-        //TODO
+        double centerWorldX = (startX + width / 2.0) * Level.TILE_SIZE;
+        double centerWorldY = (startY + height / 2.0) * Level.TILE_SIZE;
+
+        Mob boss = type.spawnMiniBoss(centerWorldX, centerWorldY, level);
+
+        activeMobs.add(boss);
+        level.addEntity(boss);
+
+        System.out.println("MiniBoss " + boss.getClass().getSimpleName() + " spawned!");
     }
+
 
     private boolean isInsideArena(double playerWorldX, double playerWorldY) {
         int playerGridX = (int) (playerWorldX / Level.TILE_SIZE);

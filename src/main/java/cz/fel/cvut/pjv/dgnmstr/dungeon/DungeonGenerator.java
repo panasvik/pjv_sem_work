@@ -38,7 +38,7 @@ public class DungeonGenerator {
 
             pasteArena(map, currentX, 0, type);
 
-            Arena arena = new Arena(currentX, 0, level);
+            Arena arena = new Arena(currentX, 0, level, type);
             level.addArena(arena);
 
             currentX += ARENA_SIZE;
