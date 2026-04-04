@@ -60,5 +60,6 @@ public class Projectile {
 
     public void ExplodeOn(Entity target) {
         target.takeDamage(damage, master);
+        master.getLevel().removeProjectile(this);
     }
 }

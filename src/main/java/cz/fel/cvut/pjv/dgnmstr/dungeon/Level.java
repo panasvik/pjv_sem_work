@@ -52,10 +52,6 @@ public class Level {
         this.height = height;
     }
 
-    public void addEntity(Entity entity) {
-        this.allEntities.add(entity);
-    }
-
     public void addPlayer(Hero player) {
         this.players.add(player);
         this.allEntities.add(player);
@@ -69,9 +65,9 @@ public class Level {
     public List<Entity> getEntitiesAround(Entity center, double range) {
         double rangeSquared = range * range;
         return allEntities.stream()
-                                .filter(other -> other != center) // 1. Исключаем самого себя
+                                .filter(other -> other != center)
                                 .filter(other -> MyMath.calculateDistanceSquared(center, other) <= rangeSquared) // 2. Проверяем дистанцию
-                                .toList(); // 3. Собираем в список (Java 16+)
+                                .toList();
     }
 
     public void  addEntity(Entity entity) {
@@ -177,15 +173,13 @@ public class Level {
         return map[x][y];
     }
 
-    public DifficultyStats getDifficulty() {
-        return difficulty;
-    }
 
     public int getPlayersAlive() {
         return playersAlive;
     }
 
-    public LevelState getState() {
-        return state;
+    public void removeProjectile(Projectile p) {
+        if (p == null) return;
+        projectiles.remove(p);
     }
 }
