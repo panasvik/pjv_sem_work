@@ -16,7 +16,17 @@ public class EvilWizard extends Mob{
               MobStats.EVIL_WIZARD.getReach(),
               MobStats.EVIL_WIZARD.getGold(),
               Faction.MONSTER,
-              level);
+              level, 1);
+    }
+    public EvilWizard(double positionX, double positionY, Level level, int multiplicator) {
+        super(MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
+                MobStats.EVIL_WIZARD.getSpeed(),
+                positionX, positionY,
+                MobStats.EVIL_WIZARD.getDamage(level.getDifficulty().getStatsMult()),
+                MobStats.EVIL_WIZARD.getReach(),
+                MobStats.EVIL_WIZARD.getGold(),
+                Faction.MONSTER,
+                level, multiplicator);
     }
 
     @Override

@@ -13,7 +13,19 @@ public class Ghost extends MeleeMob{
               MobStats.GHOST.getReach(),
               MobStats.GHOST.getGold(),
               Faction.MONSTER,
-              level);
+              level, 1);
+    }
+
+    public Ghost(double positionX, double positionY, Level level, int multiplicator) {
+        super(MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
+                MobStats.GHOST.getSpeed(),
+                positionX,
+                positionY,
+                MobStats.GHOST.getDamage(level.getDifficulty().getStatsMult()),
+                MobStats.GHOST.getReach(),
+                MobStats.GHOST.getGold(),
+                Faction.MONSTER,
+                level, multiplicator);
     }
 
     @Override
