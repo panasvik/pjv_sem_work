@@ -4,14 +4,14 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 
 public class Ghost extends MeleeMob{
-    public Ghost(double positionX, double positionY, Level level, double diffMod) {
-        super(Stats.GHOST.getHp(diffMod),
-              Stats.GHOST.getSpeed(),
+    public Ghost(double positionX, double positionY, Level level) {
+        super(MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
+              MobStats.GHOST.getSpeed(),
               positionX,
               positionY,
-              Stats.GHOST.getDamage(diffMod),
-              Stats.GHOST.getReach(),
-              Stats.GHOST.getGold(),
+              MobStats.GHOST.getDamage(level.getDifficulty().getStatsMult()),
+              MobStats.GHOST.getReach(),
+              MobStats.GHOST.getGold(),
               Faction.MONSTER,
               level);
     }
