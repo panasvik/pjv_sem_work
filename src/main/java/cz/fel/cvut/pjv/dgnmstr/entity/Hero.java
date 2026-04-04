@@ -4,10 +4,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.global.PlaterStats;
 import cz.fel.cvut.pjv.dgnmstr.global.Role;
-import cz.fel.cvut.pjv.dgnmstr.global.Sigmoid;
-import cz.fel.cvut.pjv.dgnmstr.item.Weapon;
-
-import java.util.List;
+import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUltimate {
     private int damage;
@@ -31,7 +28,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         if (!(source instanceof CanAttack)) {
             return false;
         }
-        if (dextCheck()) {
+        if (dextCheck() && getReach() * getReach() <= MyMath.calculateDistanceSquared(this, source)) {
             source.takeDamage(this.damage, this);
             return true;
         }
@@ -56,7 +53,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     }
 
     private boolean dextCheck() {
-        double chance = Sigmoid.sigmoid(this.dexterity * this.dexterity);
+        double chance = MyMath.sigmoid(this.dexterity * this.dexterity);
         double random = Math.random();
         return random < chance;
     }
