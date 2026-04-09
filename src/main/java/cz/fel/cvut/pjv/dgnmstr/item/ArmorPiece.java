@@ -4,9 +4,9 @@ package cz.fel.cvut.pjv.dgnmstr.item;
 import cz.fel.cvut.pjv.dgnmstr.entity.Role;
 
 public class ArmorPiece extends AddableItem {
-    private final int hp, defence, dexterity, speed;;
-    private ArmorPieceType type;
-    private Role role;
+    private final int hp, defence, dexterity, speed;
+    private final ArmorPieceType type;
+    private final Role role;
 
     public ArmorPiece(String name, int price, Role role, ArmorPieceType type, int speed, int dexterity, int defence, int hp) {
         super(name, price);

@@ -13,6 +13,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class PlayerProfile {
+    private static final ObjectMapper MAPPER = new ObjectMapper();
     private Map<ArmorPieceType, ArmorPiece> armor;
     private Weapon weapon;
     private Inventory inventory;
@@ -68,13 +69,11 @@ public class PlayerProfile {
         return true;
     }
     public static PlayerProfile loadFromJson(String filePath) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new File(filePath), PlayerProfile.class);
+        return MAPPER.readValue(new File(filePath), PlayerProfile.class);
     }
 
     public void saveToJson(String filePath) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), this);
+        MAPPER.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), this);
     }
 
     @JsonIgnore
@@ -107,4 +106,6 @@ public class PlayerProfile {
     public void setWeapon(Weapon weapon) { this.weapon = weapon; }
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+    public int getGold() { return gold; }
+    public void setGold(int gold) { this.gold = gold; }
 }

@@ -17,7 +17,7 @@ public class Level {
     private final List<Entity> allEntities;
     private final List<Hero> players;
     private final List<Arena> arenas;
-    private List<Projectile> projectiles;
+    private final List<Projectile> projectiles;
 
     private int playersAlive;
 

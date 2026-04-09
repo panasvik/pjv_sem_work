@@ -27,14 +27,14 @@ public class Arena {
         spawnChests();
     }
 
-    public void update(List<Hero> players) {
-        switch (state) {
-            case NOT_STARTED -> checkPlayerEntry(players);
-            case WAVE_FIGHT  -> checkWaveProgress();
-            case MINI_BOSS_FIGHT  -> checkBossProgress();
-            case CLEARED     -> {  }
-        }
-    }
+//    public void update(List<Hero> players) {
+//        switch (state) {
+//            case NOT_STARTED -> checkPlayerEntry(players);
+//            case WAVE_FIGHT  -> checkWaveProgress();
+//            case MINI_BOSS_FIGHT  -> checkBossProgress();
+//            case CLEARED     -> {  }
+//        }
+//    }
 
     private void checkPlayerEntry(List<Hero> players) {
         Hero firstPlayerToEnter = null;
