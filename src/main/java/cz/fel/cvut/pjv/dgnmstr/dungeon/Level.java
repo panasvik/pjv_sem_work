@@ -35,8 +35,6 @@ public class Level {
         this.state = NOT_STARTED;
         this.difficulty = difficulty;
         this.projectiles = new ArrayList<>();
-
-
     }
 
     public void startLevel() {
@@ -70,12 +68,12 @@ public class Level {
                                 .toList();
     }
 
-    public void  addEntity(Entity entity) {
+    public void addEntity(Entity entity) {
         if(entity != null && !allEntities.contains(entity)) {
             allEntities.add(entity);
         }
     }
-    public void  removeEntity(Entity entity) {
+    public void removeEntity(Entity entity) {
         if (entity != null) {
             allEntities.remove(entity);
         }
@@ -92,24 +90,24 @@ public class Level {
     public void addProjectile(Projectile p) {
         projectiles.add(p);
     }
-    public void update() {
-        if (state != LevelState.PLAYING) {
-            return;
-        }
-
-        allEntities.removeIf(entity -> !entity.isAlive());
-        for (Arena arena: arenas) {
-            arena.update(players);
-        }
-
-        for (Entity entity : new ArrayList<>(allEntities)) {
-            entity.update();
-        }
-
-        for (Projectile p : new ArrayList<>(projectiles)) {
-            p.update();
-        }
-    }
+//    public void update() {
+//        if (state != LevelState.PLAYING) {
+//            return;
+//        }
+//
+//        allEntities.removeIf(entity -> !entity.isAlive());
+//        for (Arena arena: arenas) {
+//            arena.update(players);
+//        }
+//
+//        for (Entity entity : new ArrayList<>(allEntities)) {
+//            entity.update();
+//        }
+//
+//        for (Projectile p : new ArrayList<>(projectiles)) {
+//            p.update();
+//        }
+//    }
     public void playerDies(Hero deadPlayer) {
         deadPlayer.die();
         playersAlive--;
@@ -125,13 +123,13 @@ public class Level {
     private void gameOver() {
         this.state = LevelState.GAME_OVER;
         System.out.println("GAME OVER!");
-        // GameManager.getInstance().showGameOverScreen();
+        // will send info to a controller that the lvl is over
     }
 
     private void levelComplete() {
         this.state = LevelState.VICTORY;
         System.out.println("VICTORY!");
-        // GameManager.getInstance().showVictoryScreen(players);
+        // will send info to a controller that the lvl is complete
     }
 
     public boolean isWalkable(double targetWorldX, double targetWorldY) {
@@ -190,4 +188,12 @@ public class Level {
     public List<Hero> getPlayers() {
         return players;
     }
+
+    public Arena getCurrentArena() {
+        for (Arena arena : arenas) {
+            if (arena.getState() != ArenaState.CLEARED) return arena;
+        }
+        return arenas.getLast();
+    }
+
 }

@@ -2,31 +2,52 @@ package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 
+import java.util.List;
+
 public enum ArenaType {
-    UNDEAD_CRYPT,
-    GOBLIN_CAMP,
-    SPIDER_NEST,
-    FORGE,
-    ROYAL_TOMB;
+    GOBLIN_CAMP(List.of(
+            new MobSpawnRate(MobStats.ZOMBIE, 0.7),
+            new MobSpawnRate(MobStats.GHOST, 0.3)
+    ));
+//  UNDEAD_CRYPT,
+//  SPIDER_NEST,
+//  FORGE,
+//  ROYAL_TOMB;
+
+    private static final int miniBossMult = 3;
+
+    private final List<MobSpawnRate> mobSpawnRates;
+//    private final List<BossSpawnRate> bossSpawnRates;
+
+    ArenaType(List<MobSpawnRate> mobSpawnRates) {
+        this.mobSpawnRates = mobSpawnRates;
+//        this.bossSpawnRates = bossSpawnRates;
+    }
+
+
+
 
     public Mob spawnRandomMob(double x, double y, Level level) {
         double chance = Math.random();
-
-        return switch (this) {
-            case UNDEAD_CRYPT -> chance > 0.3 ? new Zombie(x, y, level) : new Ghost(x, y, level);
-            case ROYAL_TOMB -> new EvilWizard(x, y, level);
-            // TODO: add other mobs to spawn
-            default -> new Zombie(x, y, level);
-        };
+        double sum = 0;
+        for (MobSpawnRate rate : mobSpawnRates) {
+            sum += rate.chance();
+            if (chance <= sum) {
+                return rate.type().spawn(x, y, level);
+            }
+        }
+        return new Zombie(x, y, level);
     }
 
     public Mob spawnMiniBoss(double x, double y, Level level) {
         double chance = Math.random();
-        int miniBossMult = 3;
-        return switch (this) {
-            case UNDEAD_CRYPT -> chance > 0.5 ? new Zombie(x, y, level, miniBossMult) : new Ghost(x, y, level, miniBossMult);
-            case ROYAL_TOMB -> new EvilWizard(x, y, level, miniBossMult);
-            default -> new Zombie(x, y, level, miniBossMult);
-        };
+        double sum = 0;
+        for (MobSpawnRate rate : mobSpawnRates) {
+            sum += rate.chance();
+            if (chance <= sum) {
+                return rate.type().spawnWithMult(x, y, level, miniBossMult);
+            }
+        }
+        return new Zombie(x, y, level, miniBossMult);
     }
 }
