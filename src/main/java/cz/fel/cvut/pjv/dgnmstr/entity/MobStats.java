@@ -15,17 +15,25 @@ public enum MobStats {
             return new Ghost(x, y, level, mult, id);
         }
     },
-    EVIL_WIZARD (30, 10, 25, 40, 150) {
+    EVIL_WIZARD(30, 10, 25, 1000, 150) {
         @Override
         public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
             return new EvilWizard(x, y, level, mult, id);
         }
     },
-    GOBLIN (50, 25, 15, 5, 50){
+    GOBLIN(50, 25, 15, 5, 50) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {return new Goblin(x, y, level, mult,id);}
-
+        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
+            return new Goblin(x, y, level, mult, id);
+        }
+    },
+    SKELETON(40, 15, 20, 30, 75){
+        @Override
+        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
+            return new Skeleton(x, y, level, mult, id);
+        }
     };
+
 
 
     private final int hp;
