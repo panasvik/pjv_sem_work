@@ -3,8 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.item;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.Role;
 
-public class ArmorPiece extends AddableItem {
-    private final int hp, defence, dexterity, speed;
+public abstract class ArmorPiece extends AddableItem {
+    private int hp, defence, dexterity, speed;
     private final ArmorPieceType type;
     private final Role role;
 
@@ -17,6 +17,16 @@ public class ArmorPiece extends AddableItem {
         this.defence = defence;
         this.hp = hp;
     }
+    protected ArmorPiece() {
+        super();
+        this.role = Role.WARRIOR;
+        this.type = ArmorPieceType.CHESTPLATE;
+        this.speed = 0;
+        this.dexterity = 0;
+        this.defence = 0;
+        this.hp = 0;
+    }
+
 
     public int getHp() {
         return hp;
@@ -40,5 +50,21 @@ public class ArmorPiece extends AddableItem {
 
     public ArmorPieceType getType() {
         return type;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setDefence(int defence) {
+        this.defence = defence;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

@@ -12,7 +12,7 @@ public class Chest extends Entity implements Interactable {
 
     @Override
     public void onInteract(Hero player) {
-        //TODO
+
     }
 
     @Override

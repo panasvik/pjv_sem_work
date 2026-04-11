@@ -1,18 +1,13 @@
 package cz.fel.cvut.pjv.dgnmstr.item;
 
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
+        use = JsonTypeInfo.Id.CLASS,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "type" // имя поля в JSON
+        property = "@class"
 )
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Weapon.class, name = "weapon"),
-        @JsonSubTypes.Type(value = ArmorPiece.class, name = "armor")
-})
 public abstract class Item {
     private String name;
     private int price;
@@ -20,6 +15,11 @@ public abstract class Item {
     public Item(String name, int price) {
         this.name = name;
         this.price = price;
+    }
+
+    protected Item() {
+        this.name = "forJSON";
+        this.price = 0;
     }
 
     public abstract boolean addTo(Inventory inventory);

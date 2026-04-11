@@ -60,7 +60,6 @@ public class Level {
     public void startLevel() {
         this.state = LevelState.PLAYING;
         this.playersAlive = players.size();
-
         System.out.println("Level started");
     }
 
