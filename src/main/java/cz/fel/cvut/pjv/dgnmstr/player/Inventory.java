@@ -50,4 +50,16 @@ public class Inventory {
         System.out.println("Unremovable item");
         return false;
     }
+
+    public List<AddableItem> getInvent() {
+        return invent;
+    }
+
+    public void setInvent(List<AddableItem> loadedItems) {
+        this.invent.clear();
+        if (loadedItems != null) {
+            this.invent.addAll(loadedItems);
+            this.size = loadedItems.size();
+        }
+    }
 }
