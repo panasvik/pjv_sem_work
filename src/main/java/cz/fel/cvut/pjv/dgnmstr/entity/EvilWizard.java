@@ -8,7 +8,7 @@ import java.util.Random;
 public class EvilWizard extends Mob{
     private Entity target = null;
     Random random = new Random();
-    public EvilWizard(double positionX, double positionY, Level level) {
+    public EvilWizard(double positionX, double positionY, Level level, int id) {
         super(MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
               MobStats.EVIL_WIZARD.getSpeed(),
               positionX, positionY,
@@ -16,9 +16,9 @@ public class EvilWizard extends Mob{
               MobStats.EVIL_WIZARD.getReach(),
               MobStats.EVIL_WIZARD.getGold(),
               Faction.MONSTER,
-              level, 1);
+              level, 1, id);
     }
-    public EvilWizard(double positionX, double positionY, Level level, int multiplicator) {
+    public EvilWizard(double positionX, double positionY, Level level, int multiplicator, int id) {
         super(MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.EVIL_WIZARD.getSpeed(),
                 positionX, positionY,
@@ -26,7 +26,7 @@ public class EvilWizard extends Mob{
                 MobStats.EVIL_WIZARD.getReach(),
                 MobStats.EVIL_WIZARD.getGold(),
                 Faction.MONSTER,
-                level, multiplicator);
+                level, multiplicator, id);
     }
 
     @Override

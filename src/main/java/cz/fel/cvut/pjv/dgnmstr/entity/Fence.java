@@ -4,8 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 public class Fence extends Entity {
 
-    public Fence(double positionX, double positionY, Level level) {
-        super(Stats.FENCE.getHealth(), Stats.FENCE.getSpeed(), positionX, positionY, Faction.NEUTRAL, level);
+    public Fence(double positionX, double positionY, Level level, int id) {
+        super(Stats.FENCE.getHealth(), Stats.FENCE.getSpeed(), positionX, positionY, Faction.NEUTRAL, level, id);
     }
 
     @Override

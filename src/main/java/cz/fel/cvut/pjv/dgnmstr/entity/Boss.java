@@ -8,8 +8,8 @@ public abstract class Boss extends Mob {
     protected List<Integer> phaseThresholds;
     private int currPhase = 0;
 
-    public Boss(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, List<Integer> phaseThresholds) {
-        super(hp, speed, positionX, positionY, damage, reach, gold, faction, level, 1);
+    public Boss(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, List<Integer> phaseThresholds, int id) {
+        super(hp, speed, positionX, positionY, damage, reach, gold, faction, level, 1, id);
         this.phaseThresholds = phaseThresholds;
     }
 

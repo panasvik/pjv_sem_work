@@ -4,8 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 public class Grate extends Entity {
 
-    public Grate(double positionX, double positionY, Level level) {
-        super(Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Faction.NEUTRAL, level);
+    public Grate(double positionX, double positionY, Level level, int id) {
+        super(Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Faction.NEUTRAL, level, id);
     }
 
     @Override

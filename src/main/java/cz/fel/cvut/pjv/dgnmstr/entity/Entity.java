@@ -12,8 +12,9 @@ public abstract class Entity {
     private double lookX, lookY;
     private final Faction faction;
     private final Level level;
+    private final int id;
 
-    public Entity(int hp, int speed, double positionX, double positionY, Faction faction, Level level) {
+    public Entity(int hp, int speed, double positionX, double positionY, Faction faction, Level level, int id) {
         this.maxHP = hp;
         this.hp = hp;
         this.speed = speed;
@@ -22,7 +23,12 @@ public abstract class Entity {
         this.positionY = positionY;
         this.faction = faction;
         this.level = level;
+        this.id = id;
 
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getHp() {

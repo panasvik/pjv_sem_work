@@ -9,8 +9,8 @@ public abstract class Mob extends Entity implements CanAttack {
     private final int reach;
     private final int gold;
 
-    public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
-        super(hp  * multiplicator, speed, positionX, positionY, faction, level);
+    public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator, int id) {
+        super(hp  * multiplicator, speed, positionX, positionY, faction, level, id);
         this.damage = damage * multiplicator;
         this.reach = reach;
         this.gold = gold * multiplicator;

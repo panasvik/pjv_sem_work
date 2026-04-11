@@ -4,7 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 public class Zombie extends MeleeMob{
 
-    public Zombie(double positionX, double positionY, Level level, int multiplicator) {
+    public Zombie(double positionX, double positionY, Level level, int multiplicator, int id) {
         super(MobStats.ZOMBIE.getHp(level.getDifficulty().getStatsMult()),
               MobStats.ZOMBIE.getSpeed(),
               positionX,
@@ -13,9 +13,9 @@ public class Zombie extends MeleeMob{
               MobStats.ZOMBIE.getReach(),
               MobStats.ZOMBIE.getGold(),
               Faction.MONSTER,
-              level, multiplicator);
+              level, multiplicator, id);
     }
-    public Zombie(double positionX, double positionY, Level level) {
+    public Zombie(double positionX, double positionY, Level level, int id) {
         super(MobStats.ZOMBIE.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.ZOMBIE.getSpeed(),
                 positionX,
@@ -24,6 +24,6 @@ public class Zombie extends MeleeMob{
                 MobStats.ZOMBIE.getReach(),
                 MobStats.ZOMBIE.getGold(),
                 Faction.MONSTER,
-                level, 1);
+                level, 1, id);
     }
 }
