@@ -5,22 +5,28 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 public enum MobStats {
     ZOMBIE(70, 10, 20, 5, 50) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult) {
-            return new Zombie(x, y, level, mult);
+        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
+            return new Zombie(x, y, level, mult, id);
         }
     },
     GHOST(50, 15, 15, 5, 100) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult) {
-            return new Ghost(x, y, level, mult);
+        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
+            return new Ghost(x, y, level, mult, id);
         }
     },
     EVIL_WIZARD (30, 10, 25, 40, 150) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult) {
-            return new EvilWizard(x, y, level, mult);
+        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
+            return new EvilWizard(x, y, level, mult, id);
         }
-    };//reach má být neomezen nezapomenout
+    },
+    GOBLIN (50, 25, 15, 5, 50){
+        @Override
+        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {return new Goblin(x, y, level, mult,id);}
+
+    };
+
 
     private final int hp;
     private final int speed;
@@ -56,10 +62,10 @@ public enum MobStats {
         return gold;
     }
 
-    public abstract Mob spawnWithMult(double x, double y, Level level, int mult);
+    public abstract Mob spawnWithMult(double x, double y, Level level, int mult, int id);
 
-    public Mob spawn(double x, double y, Level level) {
-        return this.spawnWithMult(x, y, level, 1);
+    public Mob spawn(double x, double y, Level level, int id) {
+        return this.spawnWithMult(x, y, level, 1, id);
     }
 }
 

@@ -1,6 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.global.IdGen;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public abstract class Mob extends Entity implements CanAttack {
         int dropGold = (int)(this.getGold() * (Math.random() + 0.5));
 
         if (getLevel() != null){
-            getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold));
+            getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold, IdGen.getNextId()));
         }
     }
 
