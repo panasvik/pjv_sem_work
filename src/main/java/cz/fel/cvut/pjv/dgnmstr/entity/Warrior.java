@@ -12,10 +12,10 @@ public class Warrior extends Hero implements CanAttackMelee {
     private static final int damageMul = 5;
     private static final int ultRange = 2;
     private int hitsForUlt;
-    public Warrior(PlayerStats stats, double posX, double posY, Level level, int id) {
+    public Warrior(PlayerStats stats, double posX, double posY, Level level) {
         super(stats.hp(), stats.speed(), posX, posY,
                 stats.damage(), stats.dexterity(), stats.defence(), stats.range(),
-                Role.WARRIOR, Faction.HERO, level, id);
+                Role.WARRIOR, Faction.HERO, level);
         this.hitsForUlt = 0;
     }
 

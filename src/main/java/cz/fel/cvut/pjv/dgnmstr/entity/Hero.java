@@ -16,8 +16,8 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     private int gold;
 
 
-    public Hero(int hp, int speed, double positionX, double positionY, int damage, int dexterity, int defence, int reach, Role role, Faction faction, Level level, int id) {
-        super(hp, speed, positionX, positionY, faction, level, id);
+    public Hero(int hp, int speed, double positionX, double positionY, int damage, int dexterity, int defence, int reach, Role role, Faction faction, Level level) {
+        super(hp, speed, positionX, positionY, faction, level);
         this.damage = damage;
         this.dexterity = dexterity;
         this.defence = defence;
@@ -31,7 +31,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         if (!(source instanceof CanAttack)) {
             return false;
         }
-        if (dextCheck() && getReach() * getReach() <= MyMath.calculateDistanceSquared(this, source)) {
+        if (dextCheck() && getReach() * getReach() >= MyMath.calculateDistanceSquared(this, source)) {
             source.takeDamage(this.damage, this);
             return true;
         }

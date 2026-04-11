@@ -1,7 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
-import cz.fel.cvut.pjv.dgnmstr.global.IdGen;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.ArrayList;
@@ -84,8 +83,8 @@ public class Arena {
             double leftWorldX = (startX * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
             double rightWorldX = ((startX + width - 1) * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
             double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-            Grate leftGrate = new Grate(leftWorldX, worldY, level, IdGen.getNextId());
-            Grate rightGrate = new Grate(rightWorldX, worldY, level,  IdGen.getNextId());
+            Grate leftGrate = new Grate(leftWorldX, worldY, level);
+            Grate rightGrate = new Grate(rightWorldX, worldY, level);
             grates.add(leftGrate);
             grates.add(rightGrate);
             level.addEntity(leftGrate);
@@ -173,7 +172,7 @@ public class Arena {
                     double worldX = (x * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
                     double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
 
-                    Chest chest = new Chest(worldX, worldY, level, new Inventory(), IdGen.getNextId());
+                    Chest chest = new Chest(worldX, worldY, level, new Inventory());
                     level.addEntity(chest);
                 }
             }

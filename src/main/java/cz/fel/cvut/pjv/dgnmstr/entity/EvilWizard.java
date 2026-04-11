@@ -8,7 +8,7 @@ import java.util.Random;
 public class EvilWizard extends Mob{
     private Entity target = null;
     Random random = new Random();
-    public EvilWizard(double positionX, double positionY, Level level, int id) {
+    public EvilWizard(double positionX, double positionY, Level level) {
         super(MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
               MobStats.EVIL_WIZARD.getSpeed(),
               positionX, positionY,
@@ -16,9 +16,9 @@ public class EvilWizard extends Mob{
               MobStats.EVIL_WIZARD.getReach(),
               MobStats.EVIL_WIZARD.getGold(),
               Faction.MONSTER,
-              level, 1, id);
+              level, 1);
     }
-    public EvilWizard(double positionX, double positionY, Level level, int multiplicator, int id) {
+    public EvilWizard(double positionX, double positionY, Level level, int multiplicator) {
         super(MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.EVIL_WIZARD.getSpeed(),
                 positionX, positionY,
@@ -26,7 +26,7 @@ public class EvilWizard extends Mob{
                 MobStats.EVIL_WIZARD.getReach(),
                 MobStats.EVIL_WIZARD.getGold(),
                 Faction.MONSTER,
-                level, multiplicator, id);
+                level, multiplicator    );
     }
 
     @Override
@@ -35,8 +35,8 @@ public class EvilWizard extends Mob{
             List<Entity> ents = getLevel().getEntitiesAround(this, getReach());
             target = ents.get(random.nextInt(ents.size()));
         }
-        double deltaX = getX() - target.getX();
-        double deltaY = getY() - target.getY();
+        double deltaX = target.getX() - getX();
+        double deltaY = target.getY() - getY();
         getLevel().addProjectile(
                 new Projectile(getReach() / 4, getX(), getY(), this, getDamage(), deltaX, deltaY, 15)
         );

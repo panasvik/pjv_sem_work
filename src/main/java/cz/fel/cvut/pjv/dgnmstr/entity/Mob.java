@@ -1,17 +1,14 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.global.IdGen;
-
-import java.util.List;
 
 public abstract class Mob extends Entity implements CanAttack {
     private final int damage;
     private final int reach;
     private final int gold;
 
-    public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator, int id) {
-        super(hp  * multiplicator, speed, positionX, positionY, faction, level, id);
+    public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
+        super(hp  * multiplicator, speed, positionX, positionY, faction, level);
         this.damage = damage * multiplicator;
         this.reach = reach;
         this.gold = gold * multiplicator;
@@ -44,7 +41,7 @@ public abstract class Mob extends Entity implements CanAttack {
         int dropGold = (int)(this.getGold() * (Math.random() + 0.5));
 
         if (getLevel() != null){
-            getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold, IdGen.getNextId()));
+            getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold));
         }
     }
 
