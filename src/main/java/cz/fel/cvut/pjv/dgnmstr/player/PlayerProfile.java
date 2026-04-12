@@ -31,6 +31,11 @@ public class PlayerProfile {
         this.role = role;
     }
 
+    /**
+     * equips new armor, send old one to inventory
+     * @param newArmor new armor
+     * @return true success / false failure
+     */
     public boolean equipArmor(ArmorPiece newArmor) {
         ArmorPieceType type = newArmor.getType();
 
@@ -52,6 +57,11 @@ public class PlayerProfile {
         return true;
     }
 
+    /**
+     * equips new weapon, sends old one to inventory
+     * @param newWeapon new weapon
+     * @return true success / false failure
+     */
     public boolean equipWeapon(Weapon newWeapon) {
         if (role.getWeaponType() != newWeapon.getType()) {
             System.out.println("Wrong weapon for your role " + this.role);
@@ -68,14 +78,30 @@ public class PlayerProfile {
         inventory.remove(newWeapon);
         return true;
     }
+
+    /**
+     * Json loader
+     * @param filePath path on disc to load profile
+     * @return new PlayerProfile
+     * @throws IOException  could not load
+     */
     public static PlayerProfile loadFromJson(String filePath) throws IOException {
         return MAPPER.readValue(new File(filePath), PlayerProfile.class);
     }
 
+    /**
+     * Json saver
+     * @param filePath path on disc to save profile
+     * @throws IOException  could not save
+     */
     public void saveToJson(String filePath) throws IOException {
         MAPPER.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), this);
     }
 
+    /**
+     * prepares PlayerStats to inject in Hero child
+     * @return PlayerStats record with stats
+     */
     @JsonIgnore
     public PlayerStats getPlayerStats() {
         int damage = (weapon != null) ? weapon.getDamage() : 0;

@@ -1,7 +1,11 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
-
-
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+/**
+ * All entities should be based on this class
+ * provides basic features of Entity:
+ * health, speed, position, level where at, id
+ *
+ * */
 
 public abstract class Entity {
     private int maxHP;
@@ -35,6 +39,11 @@ public abstract class Entity {
         return hp;
     }
 
+    /**
+     * logic for taking damage
+     * @param damage how much damage to take
+     * @param source who deals damage to this
+     */
     public final void takeDamage(int damage, Entity source) {
         if (damage <= 0) return;
         if (handleParry(source)) return;
@@ -48,10 +57,16 @@ public abstract class Entity {
 
     protected abstract void onDamageTaken(int amount, Entity source);
 
+
     protected boolean handleParry(Entity source) {
         return !(source instanceof CanAttack);
     }
 
+    /**
+     * decides how much damage will this take
+     * @param damage base damage
+     * @return how much will take
+     */
     protected abstract int applyDefence(int damage);
 
     public void setHp(int hp) {
@@ -100,6 +115,11 @@ public abstract class Entity {
         return this.faction != other.faction;
     }
 
+    /**
+     * sets the target position to look at
+     * @param targetX target X coords
+     * @param targetY target Y coords
+     */
     public void setLookTarget(double targetX, double targetY) {
         this.lookX = targetX;
         this.lookY = targetY;
@@ -121,10 +141,27 @@ public abstract class Entity {
         this.maxHP = Math.max(0, maxHP);
     }
 
-    public void update() {}
 
-    public boolean isEthereal() {return false;}
+    /**
+     * updates every entity according to its state, Faction etc
+     * f.e. Zombie will move towards player and attack if in reach
+     * Warrior will do everything that the player pressed with keys...
+     */
+    public void update() {
+    }
 
+    /**
+     * can walk thorough walls or not
+     * @return true can / false cannot
+     */
+    public boolean isEthereal() {
+        return false;
+    }
+
+    /**
+     * can this entity be walked through
+      * @return true can / false cannot
+     */
     public boolean isSolid() {
         return false;
     }

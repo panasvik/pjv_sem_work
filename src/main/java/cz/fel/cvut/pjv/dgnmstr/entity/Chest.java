@@ -17,7 +17,7 @@ public class Chest extends Entity implements Interactable {
 
     @Override
     protected void onDamageTaken(int amount, Entity source) {
-        // nothing
+        // nothing, cannot take damage
     }
 
     @Override

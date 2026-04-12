@@ -3,6 +3,9 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
+/**
+ * dropped gold after a mob dies
+ */
 public class DroppedGold extends Entity {
     private int value;
     private static final double PICKUP_RADIUS = Level.TILE_SIZE / 2.0;

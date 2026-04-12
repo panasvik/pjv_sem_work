@@ -26,6 +26,13 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.gold = 0;
     }
 
+
+    /**
+     * decides whether this should take the damage dealt, parry or dodge
+     * checks dexterity, speed and reach to decide
+     * @param source who is dealing damage
+     * @return will be the attack parried or not
+     */
     @Override
     protected boolean handleParry(Entity source) {
         if (!(source instanceof CanAttack)) {
@@ -37,6 +44,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         }
         return speedCheck();
     }
+
 
     @Override
     public boolean defenceCheck(int damage) {
@@ -54,6 +62,11 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     public int getDamage() {
         return damage;
     }
+
+    /**
+     * checks whether this can parry
+     * @return true can / false cannot
+     */
 
     private boolean dextCheck() {
         double chance = MyMath.sigmoid(this.dexterity * this.dexterity);
@@ -105,6 +118,11 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return gold;
     }
 
+
+    /**
+     * loads new stats of PlayerProfile wrapped int PlayerStats
+     * @param stats new stats
+     */
     public void syncStats(PlayerStats stats) {
         this.setMaxHP(stats.hp());
         this.setDamage(stats.damage());
