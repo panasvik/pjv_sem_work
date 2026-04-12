@@ -16,12 +16,17 @@ public class GameApp extends Application {
     public void start(Stage stage) throws IOException {
         boolean isLog = getParameters().getRaw().contains("--log=true");
         Logger mainLogger = Logger.getLogger("");
-        if (isLog) {
-            mainLogger.setLevel(Level.ALL);
 
-            for(Handler handler : mainLogger.getHandlers()){
-                handler.setLevel(Level.ALL);
-            }
+        for(Handler handler : mainLogger.getHandlers()){
+            handler.setLevel(Level.ALL);
+        }
+
+        Logger gameLogger = Logger.getLogger("cz.fel.cvut.pjv.dgnmstr");
+        if (isLog) {
+            mainLogger.setLevel(Level.INFO);
+            gameLogger.setLevel(Level.ALL);
+
+
             log.info("Logování zapnuto.");
         } else {
             mainLogger.setLevel(Level.SEVERE);
