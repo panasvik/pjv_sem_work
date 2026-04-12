@@ -18,7 +18,11 @@ public abstract class RangedMob extends Mob{
     public void attack() {
         if (target == null) {
             List<Entity> ents = getLevel().getEntitiesAround(this, getReach());
-            target = ents.get(random.nextInt(ents.size()));
+            if (!ents.isEmpty()) {
+                target = ents.get(random.nextInt(ents.size()));
+            } else {
+                return;
+            }
         }
         double deltaX = getX() - target.getX();
         double deltaY = getY() - target.getY();

@@ -3,7 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 import java.util.List;
 
 public enum BossStats {
-    ANYSEK_THE_BEHEMOTH(1000, 10, 40, 10, 500, List.of(800, 600, 400, 200));
+    ANYSEK_THE_BEHEMOTH(1000, 10, 40, 10, 500, List.of(800, 600, 400, 200)),
+    DWIGHT_THE_LEVIATHAN(800, 10, 60, 50, 500, List.of(600, 400, 200));
     private final int hp;
     private final int speed;
     private final int damage;
