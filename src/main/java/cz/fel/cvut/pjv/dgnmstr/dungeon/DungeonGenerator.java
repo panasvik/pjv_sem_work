@@ -8,7 +8,10 @@ import java.util.Random;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-
+/** Procedurally generates a complete dungeon {@link Level}.
+ * The generator is responsible for stitching together multiple predefined arenas
+ * (loaded from text files) and connecting them with corridors to create a seamless 2D tile map.
+ */
 public class DungeonGenerator {
 
     private static final int ARENA_SIZE = 64;
