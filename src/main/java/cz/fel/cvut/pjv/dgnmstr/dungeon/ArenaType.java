@@ -3,6 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.dungeon;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public enum ArenaType {
     GOBLIN_CAMP(List.of(
@@ -29,18 +30,16 @@ public enum ArenaType {
             new MobSpawnRate(MobStats.EVIL_WIZARD, 0.5),
             new MobSpawnRate(MobStats.SKELETON, 0.1),
             new MobSpawnRate(MobStats.GHOST, 0.2),
-            new MobSpawnRate(MobStats.ZOMBIE, 0.3)
+            new MobSpawnRate(MobStats.ZOMBIE, 0.2)
 
     ));
-
+    private static final Logger log = Logger.getLogger(ArenaType.class.getName());
     private static final int miniBossMult = 3;
 
     private final List<MobSpawnRate> mobSpawnRates;
-//    private final List<BossSpawnRate> bossSpawnRates;
 
     ArenaType(List<MobSpawnRate> mobSpawnRates) {
         this.mobSpawnRates = mobSpawnRates;
-//        this.bossSpawnRates = bossSpawnRates;
     }
 
 
@@ -52,7 +51,9 @@ public enum ArenaType {
         for (MobSpawnRate rate : mobSpawnRates) {
             sum += rate.chance();
             if (chance <= sum) {
-                return rate.type().spawn(x, y, level);
+                Mob spawned = rate.type().spawn(x, y, level);
+                log.fine("Spawned " + spawned.getClass().getSimpleName() + " at [" + x + ", " + y + "]");
+                return spawned;
             }
         }
         return new Zombie(x, y, level);
@@ -64,7 +65,9 @@ public enum ArenaType {
         for (MobSpawnRate rate : mobSpawnRates) {
             sum += rate.chance();
             if (chance <= sum) {
-                return rate.type().spawnWithMult(x, y, level, miniBossMult);
+                Mob spawned = rate.type().spawnWithMult(x, y, level, miniBossMult);
+                log.fine("Miniboss " + spawned.getClass().getSimpleName() + " spawned at [" + x + ", " + y + "]");
+                return spawned;
             }
         }
         return new Zombie(x, y, level, miniBossMult);

@@ -119,6 +119,22 @@ public class Level {
         projectiles.add(p);
     }
     public void update() {
+        if (state != LevelState.PLAYING) {
+            return;
+        }
+        if (!arenas.isEmpty() && !bossSpawned) {
+            Arena lastArena = arenas.getLast();
+            if(lastArena.getState() == ArenaState.CLEARED){
+                spawnBoss();
+            }
+        }
+        if (bossSpawned && !bossDead && levelBoss != null) {
+            if(!levelBoss.isAlive()){
+                bossDead = true;
+                log.info("The final boss " + levelBoss.getClass().getSimpleName() + " is dead.");
+            }
+        }
+        checkExit();
     }
 
     public void playerDies(Hero deadPlayer) {
@@ -216,10 +232,10 @@ public class Level {
         double random = Math.random();
         double sum = 0;
         BossStats selectedBoss = BossStats.ANYSEK_THE_BEHEMOTH;
-        for (BossSpawnRate bossSpawnRate : bossSpawnRate) {
-            sum += bossSpawnRate.chance();
-            if (bossSpawnRate.chance() <= sum) {
-                selectedBoss = bossSpawnRate.type();
+        for (BossSpawnRate rate : bossSpawnRate) {
+            sum += rate.chance();
+            if (random <= sum) {
+                selectedBoss = rate.type();
                 break;
             }
         }
@@ -237,6 +253,17 @@ public class Level {
 
         log.info("FINAL BOSS AWAITS! " + levelBoss.getClass().getSimpleName() + " spawned in the center.");
 
+    }
+
+    private void checkExit(){
+        if (bossDead){
+            for (Hero player : players) {
+                if (player.isAlive() && isAtExit(player.getX(), player.getY())) {
+                    levelComplete();
+                    break;
+                }
+            }
+        }
     }
 
 }
