@@ -35,3 +35,5 @@ Filip Mařík:
     Data Serialization: Jackson (JSON processing)
 
     Build Tool: Maven
+
+    AI: Gemini to consult with and help with troubleful code
