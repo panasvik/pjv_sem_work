@@ -6,6 +6,9 @@ public abstract class AddableItem extends Item {
     public AddableItem(String name, int price) {
         super(name, price);
     }
+    protected AddableItem() {
+        super();
+    }
 
     @Override
     public boolean addTo(Inventory inventory) {

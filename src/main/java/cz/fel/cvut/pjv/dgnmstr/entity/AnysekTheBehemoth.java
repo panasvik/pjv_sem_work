@@ -8,7 +8,7 @@ public class AnysekTheBehemoth extends Boss{
     private boolean rage = false;
     private int coolDown = 8;
     private int damageMult = 2;
-    public AnysekTheBehemoth(double positionX, double positionY, Level level, int id) {
+    public AnysekTheBehemoth(double positionX, double positionY, Level level) {
         super(BossStats.ANYSEK_THE_BEHEMOTH.getHp(level.getDifficulty().getStatsMult()),
               BossStats.ANYSEK_THE_BEHEMOTH.getSpeed(),
               positionX,
@@ -18,8 +18,7 @@ public class AnysekTheBehemoth extends Boss{
               BossStats.ANYSEK_THE_BEHEMOTH.getGold(),
               Faction.MONSTER,
               level,
-              BossStats.ANYSEK_THE_BEHEMOTH.getThreshold(),
-              id);
+              BossStats.ANYSEK_THE_BEHEMOTH.getThreshold());
 
     }
 

@@ -4,7 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 
 public class Ghost extends MeleeMob{
-    public Ghost(double positionX, double positionY, Level level, int id) {
+    public Ghost(double positionX, double positionY, Level level) {
         super(MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
               MobStats.GHOST.getSpeed(),
               positionX,
@@ -13,10 +13,10 @@ public class Ghost extends MeleeMob{
               MobStats.GHOST.getReach(),
               MobStats.GHOST.getGold(),
               Faction.MONSTER,
-              level, 1, id);
+              level, 1);
     }
 
-    public Ghost(double positionX, double positionY, Level level, int multiplicator, int id) {
+    public Ghost(double positionX, double positionY, Level level, int multiplicator) {
         super(MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.GHOST.getSpeed(),
                 positionX,
@@ -25,7 +25,7 @@ public class Ghost extends MeleeMob{
                 MobStats.GHOST.getReach(),
                 MobStats.GHOST.getGold(),
                 Faction.MONSTER,
-                level, multiplicator, id);
+                level, multiplicator);
     }
 
     @Override

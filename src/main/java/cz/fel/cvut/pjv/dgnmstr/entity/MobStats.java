@@ -5,32 +5,32 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 public enum MobStats {
     ZOMBIE(70, 10, 20, 5, 50) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
-            return new Zombie(x, y, level, mult, id);
+        public Mob spawnWithMult(double x, double y, Level level, int mult) {
+            return new Zombie(x, y, level, mult);
         }
     },
     GHOST(50, 15, 15, 5, 100) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
-            return new Ghost(x, y, level, mult, id);
+        public Mob spawnWithMult(double x, double y, Level level, int mult) {
+            return new Ghost(x, y, level, mult);
         }
     },
-    EVIL_WIZARD(30, 10, 25, 1000, 150) {
+    EVIL_WIZARD (30, 10, 25, 40, 150) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
-            return new EvilWizard(x, y, level, mult, id);
+        public Mob spawnWithMult(double x, double y, Level level, int mult) {
+            return new EvilWizard(x, y, level, mult);
         }
     },
     GOBLIN(50, 25, 15, 5, 50) {
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
-            return new Goblin(x, y, level, mult, id);
+        public Mob spawnWithMult(double x, double y, Level level, int mult) {
+            return new Goblin(x, y, level, mult);
         }
     },
     SKELETON(40, 15, 20, 30, 75){
         @Override
-        public Mob spawnWithMult(double x, double y, Level level, int mult, int id) {
-            return new Skeleton(x, y, level, mult, id);
+        public Mob spawnWithMult(double x, double y, Level level, int mult) {
+            return new Skeleton(x, y, level, mult);
         }
     };
 
@@ -70,10 +70,10 @@ public enum MobStats {
         return gold;
     }
 
-    public abstract Mob spawnWithMult(double x, double y, Level level, int mult, int id);
+    public abstract Mob spawnWithMult(double x, double y, Level level, int mult);
 
-    public Mob spawn(double x, double y, Level level, int id) {
-        return this.spawnWithMult(x, y, level, 1, id);
+    public Mob spawn(double x, double y, Level level) {
+        return this.spawnWithMult(x, y, level, 1);
     }
 }
 

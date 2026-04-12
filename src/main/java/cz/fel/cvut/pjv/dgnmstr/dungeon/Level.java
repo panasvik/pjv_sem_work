@@ -1,14 +1,13 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
-import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Fence;
-import cz.fel.cvut.pjv.dgnmstr.entity.Grate;
-import cz.fel.cvut.pjv.dgnmstr.entity.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState.*;
 import static java.util.stream.StreamSupport.stream;
@@ -18,6 +17,9 @@ public class Level {
     private final List<Hero> players;
     private final List<Arena> arenas;
     private final List<Projectile> projectiles;
+
+    private final Map<Integer, Entity> entityMap;
+    private int nextEntityId = 0;
 
     private int playersAlive;
 
@@ -35,12 +37,29 @@ public class Level {
         this.state = NOT_STARTED;
         this.difficulty = difficulty;
         this.projectiles = new ArrayList<>();
+        this.entityMap = new HashMap<>();
     }
+
+    public int getNewID() {
+        return nextEntityId++;
+    }
+
+    public Entity getEntity(int id) {
+        return entityMap.get(id);
+    }
+
+
+    public void addEntity(Entity entity) {
+        if (entity != null && !entityMap.containsKey(entity.getId())) {
+            allEntities.add(entity);
+            entityMap.put(entity.getId(), entity);
+        }
+    }
+
 
     public void startLevel() {
         this.state = LevelState.PLAYING;
         this.playersAlive = players.size();
-
         System.out.println("Level started");
     }
 
@@ -50,9 +69,10 @@ public class Level {
         this.height = height;
     }
 
-    public void addPlayer(Hero player) {
+    public void addPlayer(PlayerStats stats) {
+        Hero player = new Warrior(stats, 64, 64, this);
         this.players.add(player);
-        this.allEntities.add(player);
+        this.addEntity(player);
         this.playersAlive = players.size();
     }
 
@@ -68,15 +88,11 @@ public class Level {
                                 .toList();
     }
 
-    public void addEntity(Entity entity) {
-        if(entity != null && !allEntities.contains(entity)) {
-            allEntities.add(entity);
-        }
-    }
+
     public void removeEntity(Entity entity) {
         if (entity != null) {
             allEntities.remove(entity);
-        }
+            entityMap.remove(entity.getId());        }
     }
 
     public LevelState getState() {
@@ -90,24 +106,9 @@ public class Level {
     public void addProjectile(Projectile p) {
         projectiles.add(p);
     }
-//    public void update() {
-//        if (state != LevelState.PLAYING) {
-//            return;
-//        }
-//
-//        allEntities.removeIf(entity -> !entity.isAlive());
-//        for (Arena arena: arenas) {
-//            arena.update(players);
-//        }
-//
-//        for (Entity entity : new ArrayList<>(allEntities)) {
-//            entity.update();
-//        }
-//
-//        for (Projectile p : new ArrayList<>(projectiles)) {
-//            p.update();
-//        }
-//    }
+    public void update() {
+    }
+
     public void playerDies(Hero deadPlayer) {
         deadPlayer.die();
         playersAlive--;
@@ -116,7 +117,7 @@ public class Level {
         if (playersAlive <= 0) {
             gameOver();
         } else {
-            allEntities.remove(deadPlayer);
+            removeEntity(deadPlayer);
         }
     }
 
@@ -179,6 +180,8 @@ public class Level {
     public int getPlayersAlive() {
         return playersAlive;
     }
+
+
 
     public void removeProjectile(Projectile p) {
         if (p == null) return;

@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 public class EvilWizard extends RangedMob{
-
-    public EvilWizard(double positionX, double positionY, Level level, int id) {
+    private Entity target = null;
+    Random random = new Random();
+    public EvilWizard(double positionX, double positionY, Level level) {
         super(MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
               MobStats.EVIL_WIZARD.getSpeed(),
               positionX, positionY,
@@ -15,9 +16,9 @@ public class EvilWizard extends RangedMob{
               MobStats.EVIL_WIZARD.getReach(),
               MobStats.EVIL_WIZARD.getGold(),
               Faction.MONSTER,
-              level, 1, id);
+              level, 1);
     }
-    public EvilWizard(double positionX, double positionY, Level level, int multiplicator, int id) {
+    public EvilWizard(double positionX, double positionY, Level level, int multiplicator) {
         super(MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.EVIL_WIZARD.getSpeed(),
                 positionX, positionY,
@@ -25,7 +26,7 @@ public class EvilWizard extends RangedMob{
                 MobStats.EVIL_WIZARD.getReach(),
                 MobStats.EVIL_WIZARD.getGold(),
                 Faction.MONSTER,
-                level, multiplicator, id);
+                level, multiplicator    );
     }
 
 

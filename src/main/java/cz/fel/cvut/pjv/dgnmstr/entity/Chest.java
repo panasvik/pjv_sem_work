@@ -5,14 +5,14 @@ import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 public class Chest extends Entity implements Interactable {
     private final Inventory inventory;
-    public Chest(double positionX, double positionY, Level level, Inventory inventory, int id) {
-        super(Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getFaction(), level, id);
+    public Chest(double positionX, double positionY, Level level, Inventory inventory) {
+        super(Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getFaction(), level);
         this.inventory = inventory;
     }
 
     @Override
     public void onInteract(Hero player) {
-        //TODO
+
     }
 
     @Override

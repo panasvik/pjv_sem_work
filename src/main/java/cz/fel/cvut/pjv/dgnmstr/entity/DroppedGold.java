@@ -6,8 +6,8 @@ import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 public class DroppedGold extends Entity {
     private int value;
     private static final double PICKUP_RADIUS = Level.TILE_SIZE / 2.0;
-    public DroppedGold(double positionX, double positionY, Level level, int value, int id) {
-        super(1, 0, positionX, positionY, Faction.NEUTRAL, level, id);
+    public DroppedGold(double positionX, double positionY, Level level, int value) {
+        super(1, 0, positionX, positionY, Faction.NEUTRAL, level);
         this.value = value;
     }
 
@@ -22,7 +22,7 @@ public class DroppedGold extends Entity {
 
                 if (distSquared <= (PICKUP_RADIUS * PICKUP_RADIUS)) {
                     player.addGold(value);
-                    System.out.println("Подобрано золота: " + value + ". Всего: " + player.getGold());
+                    System.out.println("Gold taken: " + value + ". OverAll: " + player.getGold());
 
                     this.die();
                     break;
