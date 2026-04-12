@@ -189,4 +189,12 @@ public class Arena {
     public ArenaState getState() {
         return state;
     }
+
+    public double getCenterWorldX() {
+        return (startX + width / 2.0) * Level.TILE_SIZE;
+    }
+
+    public double getCenterWorldY() {
+        return (startY + height / 2.0) * Level.TILE_SIZE;
+    }
 }

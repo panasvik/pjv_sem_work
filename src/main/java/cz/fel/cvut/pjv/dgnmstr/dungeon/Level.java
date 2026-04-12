@@ -33,6 +33,11 @@ public class Level {
 
     private static final Logger log = Logger.getLogger(Level.class.getName());
 
+    private List<BossSpawnRate> bossSpawnRate;
+    private Boss levelBoss;
+    private boolean bossSpawned = false;
+    private boolean bossDead = false;
+
     public Level(DifficultyStats difficulty) {
         this.allEntities = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -41,6 +46,9 @@ public class Level {
         this.difficulty = difficulty;
         this.projectiles = new ArrayList<>();
         this.entityMap = new HashMap<>();
+        this.bossSpawnRate = new ArrayList<>();
+        this.bossSpawnRate.add(new BossSpawnRate(BossStats.ANYSEK_THE_BEHEMOTH, 0.5));
+        this.bossSpawnRate.add(new BossSpawnRate(BossStats.DWIGHT_THE_LEVIATHAN, 0.5));
     }
 
     public int getNewID() {
@@ -201,6 +209,34 @@ public class Level {
             if (arena.getState() != ArenaState.CLEARED) return arena;
         }
         return arenas.getLast();
+    }
+    private void spawnBoss() {
+        Arena lastArena = arenas.getLast();
+
+        double random = Math.random();
+        double sum = 0;
+        BossStats selectedBoss = BossStats.ANYSEK_THE_BEHEMOTH;
+        for (BossSpawnRate bossSpawnRate : bossSpawnRate) {
+            sum += bossSpawnRate.chance();
+            if (bossSpawnRate.chance() <= sum) {
+                selectedBoss = bossSpawnRate.type();
+                break;
+            }
+        }
+
+        double spawnX = lastArena.getCenterWorldX();
+        double spawnY = lastArena.getCenterWorldY();
+
+        if (selectedBoss == BossStats.ANYSEK_THE_BEHEMOTH) {
+            levelBoss = new AnysekTheBehemoth(spawnX, spawnY, this);
+        } else {
+            levelBoss = new DwightTheLeviathan(spawnX, spawnY, this);
+        }
+        addEntity(levelBoss);
+        bossSpawned = true;
+
+        log.info("FINAL BOSS AWAITS! " + levelBoss.getClass().getSimpleName() + " spawned in the center.");
+
     }
 
 }

@@ -6,8 +6,9 @@ import java.util.List;
 
 public enum ArenaType {
     GOBLIN_CAMP(List.of(
-            new MobSpawnRate(MobStats.ZOMBIE, 0.4),
-            new MobSpawnRate(MobStats.GOBLIN, 0.6)
+            new MobSpawnRate(MobStats.ZOMBIE, 0.3),
+            new MobSpawnRate(MobStats.GOBLIN, 0.5),
+            new MobSpawnRate(MobStats.EVIL_WIZARD,0.2)
     )),
     UNDEAD_CRYPT(List.of(
             new MobSpawnRate(MobStats.ZOMBIE, 0.3),
@@ -21,9 +22,16 @@ public enum ArenaType {
     )),
     FORGE(List.of(
             new MobSpawnRate(MobStats.EVIL_WIZARD, 0.3),
-            new MobSpawnRate(MobStats.GOBLIN, 0.3)
+            new MobSpawnRate(MobStats.GOBLIN, 0.3),
+            new MobSpawnRate(MobStats.ZOMBIE, 0.4)
+    )),
+    ROYAL_TOMB(List.of(
+            new MobSpawnRate(MobStats.EVIL_WIZARD, 0.5),
+            new MobSpawnRate(MobStats.SKELETON, 0.1),
+            new MobSpawnRate(MobStats.GHOST, 0.2),
+            new MobSpawnRate(MobStats.ZOMBIE, 0.3)
+
     ));
-    //ROYAL_TOMB
 
     private static final int miniBossMult = 3;
 
