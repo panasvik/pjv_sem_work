@@ -5,6 +5,9 @@ import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.logging.Logger;
 
+/**
+ * dropped gold after a mob dies
+ */
 public class DroppedGold extends Entity {
     private int value;
     private static final double PICKUP_RADIUS = Level.TILE_SIZE / 2.0;

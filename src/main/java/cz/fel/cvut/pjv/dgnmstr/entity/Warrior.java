@@ -22,6 +22,11 @@ public class Warrior extends Hero implements CanAttackMelee {
         this.hitsForUlt = 0;
     }
 
+    /**
+     * what to do when this took damage
+     * @param amount how much damage it took
+     * @param source who dealt damage
+     */
     @Override
     protected void onDamageTaken(int amount, Entity source) {
         this.hitsForUlt = 0;

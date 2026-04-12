@@ -49,6 +49,10 @@ public abstract class Mob extends Entity implements CanAttack {
         }
     }
 
+    /**
+     * makes a mob make a step to a target
+     * @param target a target to make step to
+     */
     public void moveToward(Entity target) {
         if(target == null || !this.isAlive()) return;
 

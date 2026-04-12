@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * item manager for PlayerProfile
+ */
 public class Inventory {
     private final List<AddableItem> invent;
     private static final int MAX_SIZE = 16;
@@ -19,6 +22,11 @@ public class Inventory {
         this.size = 0;
     }
 
+    /**
+     * adds item to invent if it fits
+     * @param item item to add
+     * @return true added / false not added
+     */
     public boolean addItem(Item item) {
         if (size >= MAX_SIZE) {
             log.info("Not enough space");
@@ -38,6 +46,11 @@ public class Inventory {
     }
 
 
+    /**
+     * removes item from invent
+     * @param item item to remove
+     * @return true removed / false not removed
+     */
     public boolean remove(Item item) {
         return item.removeFrom(this);
     }
