@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState.*;
 import static java.util.stream.StreamSupport.stream;
@@ -29,6 +30,8 @@ public class Level {
     private LevelState state;
     private final DifficultyStats difficulty;
     public static final int TILE_SIZE = 32;
+
+    private static final Logger log = Logger.getLogger(Level.class.getName());
 
     public Level(DifficultyStats difficulty) {
         this.allEntities = new ArrayList<>();
@@ -60,7 +63,7 @@ public class Level {
     public void startLevel() {
         this.state = LevelState.PLAYING;
         this.playersAlive = players.size();
-        System.out.println("Level started");
+        log.info("Level started");
     }
 
     public void setMap(TileType[][] map, int width, int height) {
@@ -73,6 +76,7 @@ public class Level {
         Hero player = new Warrior(stats, 64, 64, this);
         this.players.add(player);
         this.addEntity(player);
+        log.info("Player added to the level.");
         this.playersAlive = players.size();
     }
 
@@ -112,7 +116,7 @@ public class Level {
     public void playerDies(Hero deadPlayer) {
         deadPlayer.die();
         playersAlive--;
-        System.out.println("Player dead, active players:" + playersAlive);
+        log.info("Player dead, active players:" + playersAlive);
 
         if (playersAlive <= 0) {
             gameOver();
@@ -123,13 +127,13 @@ public class Level {
 
     private void gameOver() {
         this.state = LevelState.GAME_OVER;
-        System.out.println("GAME OVER!");
+        log.info("GAME OVER!");
         // will send info to a controller that the lvl is over
     }
 
     private void levelComplete() {
         this.state = LevelState.VICTORY;
-        System.out.println("VICTORY!");
+        log.info("VICTORY!");
         // will send info to a controller that the lvl is complete
     }
 

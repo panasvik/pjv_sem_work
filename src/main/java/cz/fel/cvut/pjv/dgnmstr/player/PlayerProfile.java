@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class PlayerProfile {
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -19,6 +20,7 @@ public class PlayerProfile {
     private Inventory inventory;
     private Role role;
     private int gold;
+    private final static Logger log =  Logger.getLogger(PlayerProfile.class.getName());
 
     public PlayerProfile() {
         this.armor = new EnumMap<>(ArmorPieceType.class);
@@ -35,7 +37,7 @@ public class PlayerProfile {
         ArmorPieceType type = newArmor.getType();
 
         if (role != newArmor.getRole()) {
-            System.out.println("Armor doesnt match your role " + role);
+            log.warning("Armor doesnt match your role " + role);
             return false;
         }
 
@@ -43,36 +45,43 @@ public class PlayerProfile {
 
         if (oldArmor != null) {
             if (!inventory.addItem(oldArmor)) {
+                log.warning("Cannot unequip old armor. Inventory is full.");
                 return false;
             }
         }
 
         armor.put(type, newArmor);
         inventory.remove(newArmor);
+        log.fine("Succesfully equipped armor: " + newArmor.getName());
         return true;
     }
 
     public boolean equipWeapon(Weapon newWeapon) {
         if (role.getWeaponType() != newWeapon.getType()) {
-            System.out.println("Wrong weapon for your role " + this.role);
+            log.warning("Wrong weapon for your role " + this.role);
             return false;
         }
 
         if (this.weapon != null) {
             if (!inventory.addItem(this.weapon)) {
+                log.warning("Cannot unequip old weapon. Inventory is full.");
                 return false;
             }
         }
 
         this.weapon = newWeapon;
         inventory.remove(newWeapon);
+        log.fine("Succesfully equipped armor: " + newWeapon.getName());
+
         return true;
     }
     public static PlayerProfile loadFromJson(String filePath) throws IOException {
+        log.info("Loading Player profile from JSON: " + filePath);
         return MAPPER.readValue(new File(filePath), PlayerProfile.class);
     }
 
     public void saveToJson(String filePath) throws IOException {
+        log.info("Saving Player profile to JSON: " + filePath);
         MAPPER.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), this);
     }
 

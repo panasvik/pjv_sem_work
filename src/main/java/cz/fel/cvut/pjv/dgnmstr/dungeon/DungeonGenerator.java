@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Random;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 
 public class DungeonGenerator {
@@ -14,8 +15,10 @@ public class DungeonGenerator {
     private static final int CORRIDOR_LENGTH = 20;
 
     private final Random random = new Random();
+    private static final Logger log =  Logger.getLogger(DungeonGenerator.class.getName());
 
     public Level generate(DifficultyStats difficulty) {
+        log.info("Generating Dungeon...");
         Level level = new Level(difficulty);
 
         int totalWidth = (ARENA_SIZE * 3) + (CORRIDOR_LENGTH * 2);
@@ -35,7 +38,7 @@ public class DungeonGenerator {
         for (int i = 0; i < 3; i++) {
 
             ArenaType type = getRandomArenaType();
-
+            log.info("Generating arena " + type.name());
             pasteArena(map, currentX, 0, type);
 
             Arena arena = new Arena(currentX, 0, level, type);
@@ -95,7 +98,7 @@ public class DungeonGenerator {
         InputStream is = getClass().getResourceAsStream(fileName);
 
         if (is == null) {
-            System.err.println("File not found: " + fileName);
+            log.severe("File not found: " + fileName);
             return;
         }
 
@@ -130,7 +133,7 @@ public class DungeonGenerator {
                 y++;
             }
         } catch (IOException e) {
-            System.err.println("Error while reading file " + fileName);
+            log.severe("Error while reading file " + fileName);
             throw e;
         }
     }

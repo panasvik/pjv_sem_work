@@ -1,10 +1,12 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
+import cz.fel.cvut.pjv.dgnmstr.GameApp;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Arena {
     private ArenaState state = ArenaState.NOT_STARTED;
@@ -18,6 +20,9 @@ public class Arena {
     private final ArenaType type;
     private final List<Mob> activeMobs = new ArrayList<>();
     private final List<Entity> grates = new ArrayList<>(); // Решетки на входах
+
+    private static final Logger log =  Logger.getLogger(Arena.class.getName());
+
 
     public Arena(int startX, int startY, Level level, ArenaType type) {
         this.startX = startX;
@@ -47,6 +52,7 @@ public class Arena {
         }
 
         if (firstPlayerToEnter != null) {
+            log.info("Player entered arena. Starting WAVE_FIGHT.");
             this.state = ArenaState.WAVE_FIGHT;
             closeGrates();
             teleportOtherPlayers(firstPlayerToEnter, players);
@@ -58,7 +64,7 @@ public class Arena {
         activeMobs.removeIf(mob -> !mob.isAlive());
 
         if (activeMobs.isEmpty() && state == ArenaState.WAVE_FIGHT) {
-            System.out.println("Spawning Miniboss");
+            log.info("Spawning Miniboss");
             spawnMiniBoss();
             this.state = ArenaState.MINI_BOSS_FIGHT;
         }
@@ -68,7 +74,7 @@ public class Arena {
         activeMobs.removeIf(mob -> !mob.isAlive());
 
         if (activeMobs.isEmpty()) {
-            System.out.println("Arena finished");
+            log.info("Arena finished");
             openGrates();
             this.state = ArenaState.CLEARED;
         }
@@ -136,7 +142,7 @@ public class Arena {
         }
 
         if (validSpawnPoints.isEmpty()) {
-            System.err.println("No spawn points available, aborting");
+            log.severe("No spawn points available, aborting");
             return;
         }
 
@@ -152,7 +158,7 @@ public class Arena {
         activeMobs.add(boss);
         level.addEntity(boss);
 
-        System.out.println("MiniBoss " + boss.getClass().getSimpleName() + " spawned!");
+        log.info("MiniBoss " + boss.getClass().getSimpleName() + " spawned!");
     }
 
 

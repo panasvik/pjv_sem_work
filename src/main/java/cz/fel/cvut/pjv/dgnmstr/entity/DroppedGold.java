@@ -3,6 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
+import java.util.logging.Logger;
+
 public class DroppedGold extends Entity {
     private int value;
     private static final double PICKUP_RADIUS = Level.TILE_SIZE / 2.0;
@@ -10,6 +12,7 @@ public class DroppedGold extends Entity {
         super(1, 0, positionX, positionY, Faction.NEUTRAL, level);
         this.value = value;
     }
+    private static final Logger log =  Logger.getLogger(DroppedGold.class.getName());
 
 
     @Override
@@ -22,7 +25,7 @@ public class DroppedGold extends Entity {
 
                 if (distSquared <= (PICKUP_RADIUS * PICKUP_RADIUS)) {
                     player.addGold(value);
-                    System.out.println("Gold taken: " + value + ". OverAll: " + player.getGold());
+                    log.fine("Gold taken: " + value + ". OverAll: " + player.getGold());
 
                     this.die();
                     break;

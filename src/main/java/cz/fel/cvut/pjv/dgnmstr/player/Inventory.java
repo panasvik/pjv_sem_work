@@ -6,11 +6,13 @@ import cz.fel.cvut.pjv.dgnmstr.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Inventory {
     private final List<AddableItem> invent;
     private static final int MAX_SIZE = 16;
     private int size;
+    private final static Logger log = Logger.getLogger(Inventory.class.getName());
 
     public Inventory() {
         this.invent = new ArrayList<>();
@@ -19,7 +21,7 @@ public class Inventory {
 
     public boolean addItem(Item item) {
         if (size >= MAX_SIZE) {
-            System.out.println("Not enough space");
+            log.info("Not enough space");
             return false;
         }
         return item.addTo(this);
@@ -27,10 +29,12 @@ public class Inventory {
 
     public void confirmAddition(AddableItem addableItem) {
         this.invent.add(addableItem);
+        this.size++;
+        log.fine("Added " + addableItem + " to inventory");
     }
 
     public void rejectAddition(Item item) {
-        System.out.println("Unable to add to inventory");
+        log.warning("Unable to add to inventory");
     }
 
 
@@ -42,12 +46,13 @@ public class Inventory {
         boolean ret = invent.remove(addableItem);
         if (ret) {
             size--;
+            log.fine("Removed " + addableItem + " from inventory");
         }
         return ret;
     }
 
     public boolean rejectRemoval(Item item) {
-        System.out.println("Unremovable item");
+        log.info("Unremovable item");
         return false;
     }
 

@@ -2,10 +2,13 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
+import java.util.logging.Logger;
+
 public abstract class Mob extends Entity implements CanAttack {
     private final int damage;
     private final int reach;
     private final int gold;
+    private static final Logger log = Logger.getLogger(Mob.class.getName());
 
     public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
         super(hp  * multiplicator, speed, positionX, positionY, faction, level);
@@ -41,6 +44,7 @@ public abstract class Mob extends Entity implements CanAttack {
         int dropGold = (int)(this.getGold() * (Math.random() + 0.5));
 
         if (getLevel() != null){
+            log.info(this.getClass().getSimpleName() + "died and dropped " + dropGold + " gold.");
             getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold));
         }
     }

@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.Role.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Warrior extends Hero implements CanAttackMelee {
     private static final double cos45 = 0.707;
@@ -12,6 +13,8 @@ public class Warrior extends Hero implements CanAttackMelee {
     private static final int damageMul = 5;
     private static final int ultRange = 2;
     private int hitsForUlt;
+    private static final Logger log = Logger.getLogger(Warrior.class.getName());
+
     public Warrior(PlayerStats stats, double posX, double posY, Level level) {
         super(stats.hp(), stats.speed(), posX, posY,
                 stats.damage(), stats.dexterity(), stats.defence(), stats.range(),
@@ -65,6 +68,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         if (hitsForUlt < HFULimit) {
             return;
         }
+        log.info("Warrior used Ultimate Power");
         List<Entity> entitiesAround = getLevel().getEntitiesAround(this, getReach() * ultRange);
         for (Entity e : entitiesAround) {
             if (this.isEnemy(e) && isInAngle(e, getLookX(), getLookY())) {

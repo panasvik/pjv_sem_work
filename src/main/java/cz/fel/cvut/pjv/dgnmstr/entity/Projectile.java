@@ -1,5 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
+import java.util.logging.Logger;
+
 public class Projectile {
     private final int radius;
     private final Entity master;
@@ -9,6 +11,7 @@ public class Projectile {
     private double posX;
     private double posY;
     private double velocity;
+    private static final Logger log = Logger.getLogger(Projectile.class.getName());
 
     public Projectile(int radius, double posX, double posY, Entity master, int damage, double deltaX, double deltaY, double velocity) {
         this.radius = radius;
@@ -59,6 +62,9 @@ public class Projectile {
     }
 
     public void explodeOn(Entity target) {
+        String masterName = (master != null) ? master.getClass().getSimpleName() : "Unknown";
+        String targetName = (target != null) ? target.getClass().getSimpleName() : "Unknown";
+        log.fine ("Projectile from " + masterName + " hit " + targetName + " and dealt " + damage + " damage.");
         target.takeDamage(damage, master);
         master.getLevel().removeProjectile(this);
     }

@@ -3,6 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
+import java.util.logging.Logger;
+
 public abstract class Entity {
     private int maxHP;
     private int hp;
@@ -13,6 +15,7 @@ public abstract class Entity {
     private final Faction faction;
     private final Level level;
     private final int id;
+    private static final Logger log = Logger.getLogger(Entity.class.getName());
 
     public Entity(int hp, int speed, double positionX, double positionY, Faction faction, Level level) {
         this.maxHP = hp;
@@ -40,6 +43,7 @@ public abstract class Entity {
         if (handleParry(source)) return;
         damage = applyDefence(damage);
         this.hp -= damage;
+        log.fine(this.getClass().getSimpleName() + ": took " + damage + " damage. HP left: " + this.hp );
         onDamageTaken(damage, source);
         if (this.hp <= 0) {
             die();

@@ -6,6 +6,7 @@ module cz.fel.cvut.pjv.dgnmstr {
     requires org.kordamp.bootstrapfx.core;
     requires com.fasterxml.jackson.databind;
     requires java.desktop;
+    requires java.logging;
 
     opens cz.fel.cvut.pjv.dgnmstr to javafx.fxml;
     exports cz.fel.cvut.pjv.dgnmstr;
