@@ -11,7 +11,7 @@ public class DwightTheLeviathan extends Boss{
     private int damageMult = 2;
     private Entity target = null;
     private Random random = new Random();
-    public DwightTheLeviathan(double positionX, double positionY, Level level, int id) {
+    public DwightTheLeviathan(double positionX, double positionY, Level level) {
         super(BossStats.DWIGHT_THE_LEVIATHAN.getHp(level.getDifficulty().getStatsMult()),
                 BossStats.DWIGHT_THE_LEVIATHAN.getSpeed(),
                 positionX,
@@ -21,8 +21,7 @@ public class DwightTheLeviathan extends Boss{
                 BossStats.DWIGHT_THE_LEVIATHAN.getGold(),
                 Faction.MONSTER,
                 level,
-                BossStats.DWIGHT_THE_LEVIATHAN.getThreshold(),
-                id);
+                BossStats.DWIGHT_THE_LEVIATHAN.getThreshold());
     }
 
     @Override

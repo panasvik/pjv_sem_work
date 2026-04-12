@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Skeleton extends RangedMob{
 
-    public Skeleton(double positionX, double positionY, Level level, int id) {
+    public Skeleton(double positionX, double positionY, Level level) {
         super(MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
                 positionX, positionY,
@@ -14,9 +14,9 @@ public class Skeleton extends RangedMob{
                 MobStats.SKELETON.getReach(),
                 MobStats.SKELETON.getGold(),
                 Faction.MONSTER,
-                level, 1, id);
+                level, 1);
     }
-    public Skeleton(double positionX, double positionY, Level level, int multiplicator, int id) {
+    public Skeleton(double positionX, double positionY, Level level, int multiplicator) {
         super(MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
                 positionX, positionY,
@@ -24,7 +24,7 @@ public class Skeleton extends RangedMob{
                 MobStats.SKELETON.getReach(),
                 MobStats.SKELETON.getGold(),
                 Faction.MONSTER,
-                level, multiplicator, id);
+                level, multiplicator);
     }
 
     @Override
