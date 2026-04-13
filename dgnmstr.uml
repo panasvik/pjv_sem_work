@@ -3,88 +3,88 @@
   <ID>JAVA</ID>
   <OriginalElement>C:/Users/vikpa/DgnMaster/DungeonMaster/src/main/java/cz/fel/cvut/pjv/dgnmstr</OriginalElement>
   <nodes>
-    <node x="4490.0" y="7546.0">cz.fel.cvut.pjv.dgnmstr.network.EntityRemovePacket</node>
-    <node x="3368.5" y="3509.5">cz.fel.cvut.pjv.dgnmstr.entity.Chest</node>
-    <node x="-136.5" y="4249.0">cz.fel.cvut.pjv.dgnmstr.dungeon.DifficultyStats</node>
-    <node x="1509.5" y="-14.0">cz.fel.cvut.pjv.dgnmstr.entity.CanAttack</node>
-    <node x="4355.0" y="6994.0">cz.fel.cvut.pjv.dgnmstr.global.Difficulty</node>
-    <node x="735.5" y="3413.0">cz.fel.cvut.pjv.dgnmstr.entity.BossStats</node>
-    <node x="1582.0" y="2645.0">cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceStats</node>
-    <node x="2789.5" y="3194.0">cz.fel.cvut.pjv.dgnmstr.dungeon.TilePosition</node>
-    <node x="623.0" y="6789.0">cz.fel.cvut.pjv.dgnmstr.global.GameManager</node>
-    <node x="1110.0" y="3329.0">cz.fel.cvut.pjv.dgnmstr.entity.Hero</node>
-    <node x="3864.5" y="758.0">cz.fel.cvut.pjv.dgnmstr.entity.MeleeMob</node>
-    <node x="2691.0" y="2329.5">cz.fel.cvut.pjv.dgnmstr.item.Weapon</node>
-    <node x="3424.5" y="1486.5">cz.fel.cvut.pjv.dgnmstr.entity.Zombie</node>
-    <node x="43.5" y="6181.0">cz.fel.cvut.pjv.dgnmstr.entity.Stats</node>
-    <node x="200.0" y="5234.0">cz.fel.cvut.pjv.dgnmstr.entity.Faction</node>
-    <node x="3922.0" y="6994.0">cz.fel.cvut.pjv.dgnmstr.network.UpdateHealthPacket</node>
-    <node x="169.0" y="5794.0">cz.fel.cvut.pjv.dgnmstr.global.GameState</node>
-    <node x="3627.5" y="7498.0">cz.fel.cvut.pjv.dgnmstr.player.PlayerCursorPos</node>
-    <node x="4302.5" y="757.0">cz.fel.cvut.pjv.dgnmstr.entity.RangedMob</node>
-    <node x="3630.5" y="4394.0">cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState</node>
-    <node x="4186.0" y="1833.0">cz.fel.cvut.pjv.dgnmstr.entity.MobStats</node>
-    <node x="1813.0" y="3558.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorHelmet</node>
-    <node x="1000.0" y="4394.0">cz.fel.cvut.pjv.dgnmstr.dungeon.BossSpawnRate</node>
-    <node x="1538.5" y="3558.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorPants</node>
-    <node x="3505.5" y="2838.5">cz.fel.cvut.pjv.dgnmstr.entity.Interactable</node>
-    <node x="1938.5" y="3218.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorChestplate</node>
-    <node x="2352.0" y="1674.0">cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceType</node>
-    <node x="266.0" y="3509.0">cz.fel.cvut.pjv.dgnmstr.entity.Boss</node>
-    <node x="4229.0" y="3194.0">cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaState</node>
-    <node x="3519.5" y="7006.0">cz.fel.cvut.pjv.dgnmstr.GameApp</node>
-    <node x="2539.0" y="3365.0">cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile</node>
-    <node x="3092.0" y="5929.0">cz.fel.cvut.pjv.dgnmstr.entity.Entity</node>
-    <node x="453.0" y="4370.0">cz.fel.cvut.pjv.dgnmstr.entity.AnysekTheBehemoth</node>
-    <node x="3946.0" y="3510.0">cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaType</node>
-    <node x="1375.5" y="1809.0">cz.fel.cvut.pjv.dgnmstr.item.WeaponStats</node>
-    <node x="3908.0" y="1486.5">cz.fel.cvut.pjv.dgnmstr.entity.Goblin</node>
-    <node x="4222.5" y="2814.0">cz.fel.cvut.pjv.dgnmstr.dungeon.MobSpawnRate</node>
-    <node x="3259.5" y="7522.0">cz.fel.cvut.pjv.dgnmstr.network.UpdatePositionPacket</node>
-    <node x="216.0" y="4394.0">cz.fel.cvut.pjv.dgnmstr.dungeon.TileType</node>
-    <node x="1385.0" y="286.5">cz.fel.cvut.pjv.dgnmstr.entity.CanAttackMelee</node>
-    <node x="3966.5" y="189.0">cz.fel.cvut.pjv.dgnmstr.entity.Mob</node>
-    <node x="1107.5" y="2838.5">cz.fel.cvut.pjv.dgnmstr.entity.CanDefend</node>
-    <node x="529.5" y="4909.0">cz.fel.cvut.pjv.dgnmstr.dungeon.Level</node>
-    <node x="3615.5" y="3218.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorSword</node>
-    <node x="4069.0" y="1261.5">cz.fel.cvut.pjv.dgnmstr.entity.Ghost</node>
-    <node x="436.5" y="6217.5">cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator</node>
-    <node x="3072.0" y="1942.0">cz.fel.cvut.pjv.dgnmstr.item.AddableItem</node>
-    <node x="3051.0" y="2741.0">cz.fel.cvut.pjv.dgnmstr.player.Inventory</node>
-    <node x="3110.0" y="6981.5">cz.fel.cvut.pjv.dgnmstr.entity.Fence</node>
-    <node x="3618.5" y="5246.0">cz.fel.cvut.pjv.dgnmstr.network.LevelStatePacket</node>
-    <node x="2968.5" y="7354.0">cz.fel.cvut.pjv.dgnmstr.GameController</node>
-    <node x="2699.0" y="6970.0">cz.fel.cvut.pjv.dgnmstr.network.SpawnMobPacket</node>
-    <node x="2019.0" y="2681.5">cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece</node>
-    <node x="4375.0" y="1474.0">cz.fel.cvut.pjv.dgnmstr.entity.EvilWizard</node>
-    <node x="2258.5" y="3218.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorChestplate</node>
-    <node x="3581.0" y="1274.0">cz.fel.cvut.pjv.dgnmstr.entity.Skeleton</node>
-    <node x="1374.5" y="2838.5">cz.fel.cvut.pjv.dgnmstr.entity.CanUltimate</node>
-    <node x="2534.0" y="2754.0">cz.fel.cvut.pjv.dgnmstr.player.PlayerStats</node>
-    <node x="2834.0" y="4225.0">cz.fel.cvut.pjv.dgnmstr.dungeon.Arena</node>
-    <node x="1788.0" y="1941.5">cz.fel.cvut.pjv.dgnmstr.entity.Role</node>
-    <node x="2505.0" y="7534.0">cz.fel.cvut.pjv.dgnmstr.global.MyMath</node>
-    <node x="3215.5" y="3218.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorSword</node>
-    <node x="3072.0" y="1213.0">cz.fel.cvut.pjv.dgnmstr.item.Item</node>
-    <node x="1378.0" y="589.0">cz.fel.cvut.pjv.dgnmstr.entity.Projectile</node>
-    <node x="4216.0" y="4066.0">cz.fel.cvut.pjv.dgnmstr.network.ArenaStatePacket</node>
-    <node x="1315.0" y="4394.0">cz.fel.cvut.pjv.dgnmstr.entity.DwightTheLeviathan</node>
-    <node x="638.0" y="4018.0">cz.fel.cvut.pjv.dgnmstr.entity.Warrior</node>
-    <node x="3030.0" y="3521.5">cz.fel.cvut.pjv.dgnmstr.entity.Grate</node>
-    <node x="4106.5" y="7497.0">cz.fel.cvut.pjv.dgnmstr.entity.DroppedGold</node>
-    <node x="2113.0" y="3558.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorHelmet</node>
-    <node x="1659.0" y="3218.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorPants</node>
-    <node x="1781.5" y="1474.0">cz.fel.cvut.pjv.dgnmstr.item.WeaponType</node>
-    <node x="448.0" y="7534.0">cz.fel.cvut.pjv.dgnmstr.network.SyncPlayerStatsPacket</node>
+    <node x="3520.0" y="8010.0">cz.fel.cvut.pjv.dgnmstr.network.SpawnMobPacket</node>
+    <node x="1659.0" y="389.0">cz.fel.cvut.pjv.dgnmstr.entity.Projectile</node>
+    <node x="687.0" y="3569.0">cz.fel.cvut.pjv.dgnmstr.entity.Boss</node>
+    <node x="3995.0" y="2594.0">cz.fel.cvut.pjv.dgnmstr.player.PlayerStats</node>
+    <node x="2741.0" y="5454.0">cz.fel.cvut.pjv.dgnmstr.entity.Faction</node>
+    <node x="1356.5" y="3618.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorSword</node>
+    <node x="3383.0" y="8294.0">cz.fel.cvut.pjv.dgnmstr.network.UpdateHealthPacket</node>
+    <node x="3345.5" y="558.0">cz.fel.cvut.pjv.dgnmstr.entity.MeleeMob</node>
+    <node x="-136.5" y="557.0">cz.fel.cvut.pjv.dgnmstr.entity.RangedMob</node>
+    <node x="1462.5" y="1334.0">cz.fel.cvut.pjv.dgnmstr.item.WeaponType</node>
+    <node x="2490.0" y="3594.0">cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaState</node>
+    <node x="1056.5" y="1929.0">cz.fel.cvut.pjv.dgnmstr.item.WeaponStats</node>
+    <node x="1973.0" y="6289.0">cz.fel.cvut.pjv.dgnmstr.entity.Entity</node>
+    <node x="3169.0" y="8034.0">cz.fel.cvut.pjv.dgnmstr.network.SyncPlayerStatsPacket</node>
+    <node x="3036.0" y="8294.0">cz.fel.cvut.pjv.dgnmstr.global.Difficulty</node>
+    <node x="463.0" y="3005.0">cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceStats</node>
+    <node x="2728.5" y="7998.0">cz.fel.cvut.pjv.dgnmstr.player.PlayerCursorPos</node>
+    <node x="316.0" y="4614.0">cz.fel.cvut.pjv.dgnmstr.entity.DwightTheLeviathan</node>
+    <node x="2219.5" y="3618.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorPants</node>
+    <node x="3243.5" y="2654.0">cz.fel.cvut.pjv.dgnmstr.dungeon.MobSpawnRate</node>
+    <node x="2384.0" y="7369.0">cz.fel.cvut.pjv.dgnmstr.global.GameManager</node>
+    <node x="1509.0" y="2061.5">cz.fel.cvut.pjv.dgnmstr.entity.Role</node>
+    <node x="1116.5" y="3813.0">cz.fel.cvut.pjv.dgnmstr.entity.BossStats</node>
+    <node x="1392.0" y="3089.5">cz.fel.cvut.pjv.dgnmstr.item.Weapon</node>
+    <node x="675.5" y="2098.5">cz.fel.cvut.pjv.dgnmstr.entity.CanUltimate</node>
+    <node x="2180.5" y="8046.0">cz.fel.cvut.pjv.dgnmstr.GameApp</node>
+    <node x="1476.5" y="3958.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorSword</node>
+    <node x="2011.0" y="8306.0">cz.fel.cvut.pjv.dgnmstr.network.EntityRemovePacket</node>
+    <node x="3410.0" y="1321.5">cz.fel.cvut.pjv.dgnmstr.entity.Ghost</node>
+    <node x="11.5" y="4614.0">cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState</node>
+    <node x="1780.5" y="8022.0">cz.fel.cvut.pjv.dgnmstr.network.UpdatePositionPacket</node>
+    <node x="674.0" y="4590.0">cz.fel.cvut.pjv.dgnmstr.entity.AnysekTheBehemoth</node>
+    <node x="671.0" y="2449.0">cz.fel.cvut.pjv.dgnmstr.entity.Hero</node>
+    <node x="3249.0" y="1126.5">cz.fel.cvut.pjv.dgnmstr.entity.Goblin</node>
+    <node x="3386.0" y="186.5">cz.fel.cvut.pjv.dgnmstr.entity.CanAttackMelee</node>
+    <node x="3615.0" y="4445.0">cz.fel.cvut.pjv.dgnmstr.dungeon.Arena</node>
+    <node x="1831.0" y="7561.5">cz.fel.cvut.pjv.dgnmstr.entity.Fence</node>
+    <node x="3022.0" y="1334.0">cz.fel.cvut.pjv.dgnmstr.entity.Skeleton</node>
+    <node x="3920.0" y="3765.0">cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile</node>
+    <node x="2831.0" y="3581.5">cz.fel.cvut.pjv.dgnmstr.entity.Grate</node>
+    <node x="2624.5" y="4469.0">cz.fel.cvut.pjv.dgnmstr.dungeon.DifficultyStats</node>
+    <node x="1566.0" y="8294.0">cz.fel.cvut.pjv.dgnmstr.global.MyMath</node>
+    <node x="2417.5" y="6577.5">cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator</node>
+    <node x="2019.5" y="3958.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorChestplate</node>
+    <node x="2744.5" y="6001.0">cz.fel.cvut.pjv.dgnmstr.entity.Stats</node>
+    <node x="3650.5" y="-14.0">cz.fel.cvut.pjv.dgnmstr.entity.CanAttack</node>
+    <node x="2027.5" y="7157.0">cz.fel.cvut.pjv.dgnmstr.entity.DroppedGold</node>
+    <node x="-44.0" y="1334.0">cz.fel.cvut.pjv.dgnmstr.entity.EvilWizard</node>
+    <node x="3773.0" y="2062.0">cz.fel.cvut.pjv.dgnmstr.item.AddableItem</node>
+    <node x="2870.0" y="6614.0">cz.fel.cvut.pjv.dgnmstr.global.GameState</node>
+    <node x="1490.5" y="5129.0">cz.fel.cvut.pjv.dgnmstr.dungeon.Level</node>
+    <node x="359.0" y="3898.0">cz.fel.cvut.pjv.dgnmstr.entity.Warrior</node>
+    <node x="3207.0" y="1553.0">cz.fel.cvut.pjv.dgnmstr.entity.MobStats</node>
+    <node x="2357.0" y="4614.0">cz.fel.cvut.pjv.dgnmstr.dungeon.TileType</node>
+    <node x="2477.0" y="4326.0">cz.fel.cvut.pjv.dgnmstr.network.ArenaStatePacket</node>
+    <node x="1880.0" y="3618.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorPants</node>
+    <node x="2614.0" y="3958.5">cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorHelmet</node>
+    <node x="2339.5" y="3958.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorChestplate</node>
+    <node x="2893.0" y="2074.0">cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceType</node>
+    <node x="3287.0" y="3570.0">cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaType</node>
+    <node x="3690.5" y="3934.0">cz.fel.cvut.pjv.dgnmstr.dungeon.TilePosition</node>
+    <node x="2705.5" y="1346.5">cz.fel.cvut.pjv.dgnmstr.entity.Zombie</node>
+    <node x="3752.0" y="3101.0">cz.fel.cvut.pjv.dgnmstr.player.Inventory</node>
+    <node x="1121.0" y="4614.0">cz.fel.cvut.pjv.dgnmstr.dungeon.BossSpawnRate</node>
+    <node x="3049.5" y="3909.5">cz.fel.cvut.pjv.dgnmstr.entity.Chest</node>
+    <node x="2307.5" y="8209.0">cz.fel.cvut.pjv.dgnmstr.entity.Mob</node>
+    <node x="2686.5" y="3198.5">cz.fel.cvut.pjv.dgnmstr.entity.Interactable</node>
+    <node x="1754.0" y="3958.5">cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorHelmet</node>
+    <node x="4329.5" y="7394.0">cz.fel.cvut.pjv.dgnmstr.GameController</node>
+    <node x="788.5" y="1698.5">cz.fel.cvut.pjv.dgnmstr.entity.CanDefend</node>
+    <node x="-0.5" y="5466.0">cz.fel.cvut.pjv.dgnmstr.network.LevelStatePacket</node>
+    <node x="3773.0" y="1053.0">cz.fel.cvut.pjv.dgnmstr.item.Item</node>
+    <node x="2920.0" y="3041.5">cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece</node>
   </nodes>
   <notes />
   <edges>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.DroppedGold" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="GENERALIZATION">
-      <point x="-74.75" y="-93.0" />
-      <point x="4181.25" y="6950.0" />
-      <point x="4176.0" y="6950.0" />
-      <point x="4176.0" y="5890.0" />
-      <point x="3338.0" y="5890.0" />
+      <point x="0.0" y="-93.0" />
+      <point x="2177.0" y="7130.0" />
+      <point x="1957.0" y="7130.0" />
+      <point x="1957.0" y="6210.0" />
+      <point x="2219.0" y="6210.0" />
       <point x="82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.player.Inventory" target="cz.fel.cvut.pjv.dgnmstr.item.AddableItem" relationship="TO_MANY">
@@ -93,283 +93,271 @@
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator" target="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" relationship="CREATE">
       <point x="0.0" y="-92.5" />
-      <point x="636.0" y="5710.0" />
-      <point x="2556.0" y="5710.0" />
-      <point x="2556.0" y="4190.0" />
-      <point x="2996.0" y="4190.0" />
+      <point x="2617.0" y="5930.0" />
+      <point x="3957.0" y="5930.0" />
+      <point x="3957.0" y="4410.0" />
+      <point x="3777.0" y="4410.0" />
       <point x="0.0" y="-225.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.entity.Boss" relationship="TO_ONE">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4710.0" />
-      <point x="436.0" y="4710.0" />
-      <point x="436.0" y="4350.0" />
-      <point x="456.0" y="4350.0" />
-      <point x="0.0" y="81.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="4950.0" />
+      <point x="1057.0" y="4950.0" />
+      <point x="1057.0" y="3770.0" />
+      <point x="972.0" y="3770.0" />
+      <point x="95.0" y="81.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Mob" target="cz.fel.cvut.pjv.dgnmstr.entity.DroppedGold" relationship="CREATE">
-      <point x="126.33333333333337" y="141.0" />
-      <point x="4282.333333333333" y="510.0" />
-      <point x="4756.0" y="510.0" />
-      <point x="4756.0" y="6970.0" />
-      <point x="4330.75" y="6970.0" />
-      <point x="74.75" y="-93.0" />
+      <point x="-47.375" y="-141.0" />
+      <point x="2449.625" y="7990.0" />
+      <point x="2177.0" y="7990.0" />
+      <point x="0.0" y="93.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorChestplate" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
       <point x="0.0" y="-31.5" />
-      <point x="2076.0" y="3190.0" />
-      <point x="1996.0" y="3190.0" />
-      <point x="1996.0" y="2610.0" />
-      <point x="2314.5" y="2610.0" />
+      <point x="2157.0" y="3570.0" />
+      <point x="1997.0" y="3570.0" />
+      <point x="1997.0" y="2990.0" />
+      <point x="3215.5" y="2990.0" />
       <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.EvilWizard" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="TO_ONE">
       <point x="0.0" y="56.0" />
-      <point x="4516.0" y="1810.0" />
-      <point x="4556.0" y="1810.0" />
-      <point x="4556.0" y="5690.0" />
-      <point x="3176.0" y="5690.0" />
-      <point x="3176.0" y="5870.0" />
-      <point x="3174.0" y="5870.0" />
+      <point x="97.0" y="2110.0" />
+      <point x="-23.0" y="2110.0" />
+      <point x="-23.0" y="5990.0" />
+      <point x="-103.0" y="5990.0" />
+      <point x="-103.0" y="6230.0" />
+      <point x="2055.0" y="6230.0" />
       <point x="-82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorHelmet" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
       <point x="0.0" y="-31.5" />
-      <point x="2236.0" y="3190.0" />
-      <point x="1996.0" y="3190.0" />
-      <point x="1996.0" y="2610.0" />
-      <point x="2314.5" y="2610.0" />
+      <point x="2737.0" y="3570.0" />
+      <point x="1997.0" y="3570.0" />
+      <point x="1997.0" y="2990.0" />
+      <point x="3215.5" y="2990.0" />
       <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MeleeMob" target="cz.fel.cvut.pjv.dgnmstr.entity.Mob" relationship="GENERALIZATION">
-      <point x="95.75" y="-92.0" />
-      <point x="4151.75" y="550.0" />
-      <point x="4156.0" y="550.0" />
-      <point x="0.0" y="141.0" />
+      <point x="0.0" y="92.0" />
+      <point x="3537.0" y="990.0" />
+      <point x="-143.0" y="990.0" />
+      <point x="-143.0" y="8010.0" />
+      <point x="2354.875" y="8010.0" />
+      <point x="-142.125" y="-141.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.AddableItem" target="cz.fel.cvut.pjv.dgnmstr.item.Item" relationship="GENERALIZATION">
       <point x="0.0" y="-68.0" />
       <point x="0.0" y="117.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Skeleton" target="cz.fel.cvut.pjv.dgnmstr.entity.Projectile" relationship="CREATE">
-      <point x="-67.5" y="-56.0" />
-      <point x="3648.5" y="1190.0" />
-      <point x="3436.0" y="1190.0" />
-      <point x="3436.0" y="1150.0" />
-      <point x="1675.0" y="1150.0" />
+      <point x="67.5" y="-56.0" />
+      <point x="3224.5" y="1290.0" />
+      <point x="297.0" y="1290.0" />
+      <point x="297.0" y="950.0" />
+      <point x="1956.0" y="950.0" />
       <point x="99.0" y="261.0" />
-    </edge>
-    <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceType" relationship="TO_MANY">
-      <point x="-78.5" y="-225.0" />
-      <point x="2617.5" y="3190.0" />
-      <point x="2476.0" y="3190.0" />
-      <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" relationship="TO_ONE">
       <point x="0.0" y="225.0" />
-      <point x="2996.0" y="4810.0" />
-      <point x="779.25" y="4810.0" />
+      <point x="3777.0" y="4990.0" />
+      <point x="1740.25" y="4990.0" />
       <point x="83.25" y="-381.0" />
     </edge>
+    <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceType" relationship="TO_MANY">
+      <point x="-78.5" y="-225.0" />
+      <point x="3998.5" y="3530.0" />
+      <point x="3577.0" y="3530.0" />
+      <point x="3577.0" y="3490.0" />
+      <point x="3697.0" y="3490.0" />
+      <point x="3697.0" y="2330.0" />
+      <point x="3017.0" y="2330.0" />
+      <point x="0.0" y="56.0" />
+    </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.global.GameManager" target="cz.fel.cvut.pjv.dgnmstr.global.GameState" relationship="TO_ONE">
-      <point x="-76.5" y="-261.0" />
-      <point x="699.5" y="6750.0" />
-      <point x="416.0" y="6750.0" />
-      <point x="416.0" y="6450.0" />
-      <point x="276.0" y="6450.0" />
+      <point x="76.5" y="-261.0" />
+      <point x="2613.5" y="7330.0" />
+      <point x="2617.0" y="7330.0" />
+      <point x="2617.0" y="6790.0" />
+      <point x="2977.0" y="6790.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.BossSpawnRate" target="cz.fel.cvut.pjv.dgnmstr.entity.BossStats" relationship="TO_ONE">
       <point x="0.0" y="-56.0" />
-      <point x="1136.0" y="3930.0" />
-      <point x="896.0" y="3930.0" />
+      <point x="1257.0" y="4550.0" />
+      <point x="1277.0" y="4550.0" />
       <point x="0.0" y="177.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.player.Inventory" relationship="CREATE">
       <point x="0.0" y="-225.0" />
-      <point x="2996.0" y="3510.0" />
-      <point x="3076.0" y="3510.0" />
-      <point x="3076.0" y="3030.0" />
-      <point x="3196.0" y="3030.0" />
+      <point x="3777.0" y="4110.0" />
+      <point x="3897.0" y="4110.0" />
       <point x="0.0" y="129.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MeleeMob" target="cz.fel.cvut.pjv.dgnmstr.entity.CanAttackMelee" relationship="REALIZATION">
-      <point x="-95.75" y="-92.0" />
-      <point x="3960.25" y="570.0" />
-      <point x="1536.0" y="570.0" />
+      <point x="0.0" y="-92.0" />
       <point x="0.0" y="43.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator" target="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" relationship="CREATE">
       <point x="0.0" y="-92.5" />
-      <point x="636.0" y="5710.0" />
-      <point x="496.0" y="5710.0" />
-      <point x="496.0" y="4850.0" />
-      <point x="612.75" y="4850.0" />
+      <point x="2617.0" y="5930.0" />
+      <point x="2577.0" y="5930.0" />
+      <point x="2577.0" y="5030.0" />
+      <point x="1573.75" y="5030.0" />
       <point x="-83.25" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" target="cz.fel.cvut.pjv.dgnmstr.entity.EvilWizard" relationship="CREATE">
       <point x="0.0" y="-177.0" />
-      <point x="4356.0" y="1450.0" />
-      <point x="4445.5" y="1450.0" />
-      <point x="-70.5" y="-56.0" />
+      <point x="3377.0" y="1490.0" />
+      <point x="1717.0" y="1490.0" />
+      <point x="1717.0" y="1310.0" />
+      <point x="167.5" y="1310.0" />
+      <point x="70.5" y="-56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaState" relationship="TO_ONE">
       <point x="0.0" y="225.0" />
-      <point x="2996.0" y="4730.0" />
-      <point x="3176.0" y="4730.0" />
-      <point x="3176.0" y="4370.0" />
-      <point x="3876.0" y="4370.0" />
-      <point x="3876.0" y="4050.0" />
-      <point x="4336.0" y="4050.0" />
+      <point x="3777.0" y="4930.0" />
+      <point x="3597.0" y="4930.0" />
+      <point x="3597.0" y="4130.0" />
+      <point x="2597.0" y="4130.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.entity.Role" relationship="TO_ONE">
       <point x="-78.5" y="-225.0" />
-      <point x="2617.5" y="3190.0" />
-      <point x="2476.0" y="3190.0" />
-      <point x="2476.0" y="3070.0" />
-      <point x="1956.0" y="3070.0" />
-      <point x="1956.0" y="2630.0" />
-      <point x="1756.0" y="2630.0" />
-      <point x="1756.0" y="1910.0" />
-      <point x="1896.0" y="1910.0" />
+      <point x="3998.5" y="3530.0" />
+      <point x="3577.0" y="3530.0" />
+      <point x="3577.0" y="3490.0" />
+      <point x="3657.0" y="3490.0" />
+      <point x="3657.0" y="2390.0" />
+      <point x="1477.0" y="2390.0" />
+      <point x="1477.0" y="2030.0" />
+      <point x="1617.0" y="2030.0" />
       <point x="0.0" y="-68.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.Weapon" target="cz.fel.cvut.pjv.dgnmstr.item.WeaponType" relationship="TO_ONE">
-      <point x="82.5" y="-140.5" />
-      <point x="2938.5" y="2250.0" />
-      <point x="3336.0" y="2250.0" />
-      <point x="3336.0" y="1650.0" />
-      <point x="1896.0" y="1650.0" />
+      <point x="-82.5" y="-140.5" />
+      <point x="1474.5" y="2370.0" />
+      <point x="1437.0" y="2370.0" />
+      <point x="1437.0" y="1890.0" />
+      <point x="1577.0" y="1890.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaType" target="cz.fel.cvut.pjv.dgnmstr.dungeon.MobSpawnRate" relationship="TO_MANY">
       <point x="85.0" y="-80.0" />
-      <point x="4201.0" y="3450.0" />
-      <point x="4196.0" y="3450.0" />
-      <point x="4196.0" y="2790.0" />
-      <point x="4356.0" y="2790.0" />
+      <point x="3542.0" y="3530.0" />
+      <point x="3537.0" y="3530.0" />
+      <point x="3537.0" y="2630.0" />
+      <point x="3377.0" y="2630.0" />
       <point x="0.0" y="-56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator" target="cz.fel.cvut.pjv.dgnmstr.dungeon.TileType" relationship="CREATE">
       <point x="0.0" y="-92.5" />
-      <point x="636.0" y="5710.0" />
-      <point x="176.0" y="5710.0" />
-      <point x="176.0" y="5210.0" />
-      <point x="266.0" y="5210.0" />
-      <point x="-50.0" y="56.0" />
+      <point x="2617.0" y="5010.0" />
+      <point x="2507.0" y="5010.0" />
+      <point x="50.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.global.GameManager" target="cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator" relationship="CREATE">
-      <point x="76.5" y="-261.0" />
-      <point x="852.5" y="6750.0" />
-      <point x="856.0" y="6750.0" />
-      <point x="856.0" y="6190.0" />
-      <point x="636.0" y="6190.0" />
+      <point x="-76.5" y="-261.0" />
+      <point x="2460.5" y="6810.0" />
+      <point x="2397.0" y="6810.0" />
+      <point x="2397.0" y="6230.0" />
+      <point x="2617.0" y="6230.0" />
       <point x="0.0" y="-92.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.entity.Mob" relationship="TO_MANY">
       <point x="0.0" y="225.0" />
-      <point x="2996.0" y="4730.0" />
-      <point x="3176.0" y="4730.0" />
-      <point x="3176.0" y="4370.0" />
-      <point x="3876.0" y="4370.0" />
-      <point x="3876.0" y="2930.0" />
-      <point x="3396.0" y="2930.0" />
-      <point x="3396.0" y="1170.0" />
-      <point x="3796.0" y="1170.0" />
-      <point x="3796.0" y="530.0" />
-      <point x="4029.666666666667" y="530.0" />
-      <point x="-126.33333333333334" y="141.0" />
+      <point x="3777.0" y="7950.0" />
+      <point x="2544.375" y="7950.0" />
+      <point x="47.375" y="-141.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.network.LevelStatePacket" target="cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState" relationship="TO_ONE">
       <point x="0.0" y="-44.0" />
       <point x="0.0" y="56.0" />
     </edge>
-    <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" target="cz.fel.cvut.pjv.dgnmstr.entity.Skeleton" relationship="CREATE">
-      <point x="0.0" y="-177.0" />
-      <point x="4356.0" y="1790.0" />
-      <point x="3876.0" y="1790.0" />
-      <point x="3876.0" y="1250.0" />
-      <point x="3648.5" y="1250.0" />
-      <point x="-67.5" y="-56.0" />
-    </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.dungeon.TileType" relationship="TO_MANY">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4710.0" />
-      <point x="366.0" y="4710.0" />
-      <point x="50.0" y="56.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="4950.0" />
+      <point x="2407.0" y="4950.0" />
+      <point x="-50.0" y="56.0" />
+    </edge>
+    <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" target="cz.fel.cvut.pjv.dgnmstr.entity.Skeleton" relationship="CREATE">
+      <point x="0.0" y="-177.0" />
+      <point x="3377.0" y="1490.0" />
+      <point x="2997.0" y="1490.0" />
+      <point x="2997.0" y="1310.0" />
+      <point x="3224.5" y="1310.0" />
+      <point x="67.5" y="-56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Warrior" target="cz.fel.cvut.pjv.dgnmstr.entity.CanAttackMelee" relationship="REALIZATION">
       <point x="-79.0" y="-92.0" />
-      <point x="717.0" y="3970.0" />
-      <point x="236.0" y="3970.0" />
-      <point x="236.0" y="570.0" />
-      <point x="1536.0" y="570.0" />
+      <point x="438.0" y="3870.0" />
+      <point x="437.0" y="3870.0" />
+      <point x="437.0" y="1010.0" />
+      <point x="1637.0" y="1010.0" />
+      <point x="1637.0" y="370.0" />
+      <point x="3537.0" y="370.0" />
       <point x="0.0" y="43.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.EvilWizard" target="cz.fel.cvut.pjv.dgnmstr.entity.RangedMob" relationship="GENERALIZATION">
-      <point x="70.5" y="-56.0" />
-      <point x="4586.5" y="1210.0" />
-      <point x="4276.0" y="1210.0" />
-      <point x="4276.0" y="730.0" />
-      <point x="4496.0" y="730.0" />
-      <point x="0.0" y="-93.0" />
+      <point x="-70.5" y="-56.0" />
+      <point x="26.5" y="1070.0" />
+      <point x="17.0" y="1070.0" />
+      <point x="17.0" y="770.0" />
+      <point x="-39.75" y="770.0" />
+      <point x="-96.75" y="93.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Grate" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="GENERALIZATION">
-      <point x="63.0" y="68.5" />
-      <point x="3219.0" y="3730.0" />
-      <point x="3216.0" y="3730.0" />
-      <point x="3216.0" y="5730.0" />
-      <point x="3336.0" y="5730.0" />
-      <point x="3336.0" y="5870.0" />
-      <point x="3338.0" y="5870.0" />
+      <point x="-63.0" y="68.5" />
+      <point x="2894.0" y="4450.0" />
+      <point x="2957.0" y="4450.0" />
+      <point x="2957.0" y="5910.0" />
+      <point x="2397.0" y="5910.0" />
+      <point x="2397.0" y="6250.0" />
+      <point x="2219.0" y="6250.0" />
       <point x="82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Hero" target="cz.fel.cvut.pjv.dgnmstr.entity.CanUltimate" relationship="REALIZATION">
       <point x="-93.0" y="-261.0" />
-      <point x="1203.0" y="3290.0" />
-      <point x="1356.0" y="3290.0" />
-      <point x="1356.0" y="2930.0" />
-      <point x="1456.0" y="2930.0" />
+      <point x="764.0" y="2410.0" />
+      <point x="757.0" y="2410.0" />
       <point x="0.0" y="31.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.DwightTheLeviathan" target="cz.fel.cvut.pjv.dgnmstr.entity.Boss" relationship="GENERALIZATION">
-      <point x="-80.5" y="-56.0" />
-      <point x="1395.5" y="3990.0" />
-      <point x="676.0" y="3990.0" />
-      <point x="676.0" y="3470.0" />
-      <point x="456.0" y="3470.0" />
-      <point x="0.0" y="-81.0" />
+      <point x="80.5" y="-56.0" />
+      <point x="557.5" y="4570.0" />
+      <point x="777.0" y="4570.0" />
+      <point x="777.0" y="3770.0" />
+      <point x="782.0" y="3770.0" />
+      <point x="-95.0" y="81.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.dungeon.DifficultyStats" relationship="TO_ONE">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4810.0" />
-      <point x="16.0" y="4810.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="4970.0" />
+      <point x="2717.0" y="4970.0" />
+      <point x="2717.0" y="4910.0" />
+      <point x="2777.0" y="4910.0" />
       <point x="0.0" y="201.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.player.Inventory" relationship="CREATE">
       <point x="78.5" y="-225.0" />
-      <point x="2774.5" y="3170.0" />
-      <point x="2776.0" y="3170.0" />
-      <point x="2776.0" y="3110.0" />
-      <point x="3076.0" y="3110.0" />
-      <point x="3076.0" y="3030.0" />
-      <point x="3196.0" y="3030.0" />
+      <point x="4155.5" y="3730.0" />
+      <point x="4137.0" y="3730.0" />
+      <point x="4137.0" y="3490.0" />
+      <point x="3897.0" y="3490.0" />
       <point x="0.0" y="129.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Goblin" target="cz.fel.cvut.pjv.dgnmstr.entity.MeleeMob" relationship="GENERALIZATION">
       <point x="0.0" y="-43.5" />
-      <point x="4036.0" y="1230.0" />
-      <point x="3836.0" y="1230.0" />
-      <point x="3836.0" y="730.0" />
-      <point x="4151.75" y="730.0" />
-      <point x="95.75" y="-92.0" />
+      <point x="3377.0" y="1090.0" />
+      <point x="3537.0" y="1090.0" />
+      <point x="0.0" y="92.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.MobSpawnRate" target="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" relationship="TO_ONE">
       <point x="0.0" y="-56.0" />
@@ -377,569 +365,557 @@
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.entity.AnysekTheBehemoth" relationship="CREATE">
       <point x="-83.25" y="-381.0" />
-      <point x="612.75" y="4870.0" />
-      <point x="616.0" y="4870.0" />
+      <point x="1573.75" y="5090.0" />
+      <point x="657.0" y="5090.0" />
+      <point x="657.0" y="4970.0" />
+      <point x="837.0" y="4970.0" />
       <point x="0.0" y="80.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.DwightTheLeviathan" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="TO_ONE">
       <point x="0.0" y="56.0" />
-      <point x="1476.0" y="4750.0" />
-      <point x="456.0" y="4750.0" />
-      <point x="456.0" y="5690.0" />
-      <point x="3176.0" y="5690.0" />
-      <point x="3176.0" y="5870.0" />
-      <point x="3174.0" y="5870.0" />
+      <point x="477.0" y="5990.0" />
+      <point x="-103.0" y="5990.0" />
+      <point x="-103.0" y="6230.0" />
+      <point x="2055.0" y="6230.0" />
       <point x="-82.0" y="-381.0" />
-    </edge>
-    <edge source="cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorPants" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
-      <point x="0.0" y="-31.5" />
-      <point x="1776.0" y="3190.0" />
-      <point x="1996.0" y="3190.0" />
-      <point x="1996.0" y="2610.0" />
-      <point x="2314.5" y="2610.0" />
-      <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" target="cz.fel.cvut.pjv.dgnmstr.item.AddableItem" relationship="GENERALIZATION">
       <point x="98.5" y="-188.5" />
-      <point x="2314.5" y="2250.0" />
-      <point x="2776.0" y="2250.0" />
-      <point x="2776.0" y="1910.0" />
-      <point x="3196.0" y="1910.0" />
+      <point x="3215.5" y="2590.0" />
+      <point x="2877.0" y="2590.0" />
+      <point x="2877.0" y="1530.0" />
+      <point x="3897.0" y="1530.0" />
       <point x="0.0" y="-68.0" />
+    </edge>
+    <edge source="cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorPants" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
+      <point x="0.0" y="-31.5" />
+      <point x="1997.0" y="2990.0" />
+      <point x="3215.5" y="2990.0" />
+      <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" target="cz.fel.cvut.pjv.dgnmstr.entity.Ghost" relationship="CREATE">
       <point x="0.0" y="-177.0" />
-      <point x="4356.0" y="1790.0" />
-      <point x="4196.0" y="1790.0" />
+      <point x="3377.0" y="1490.0" />
+      <point x="3537.0" y="1490.0" />
       <point x="0.0" y="68.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.WeaponStats" target="cz.fel.cvut.pjv.dgnmstr.item.WeaponType" relationship="TO_ONE">
       <point x="0.0" y="-201.0" />
-      <point x="1556.0" y="1650.0" />
-      <point x="1896.0" y="1650.0" />
+      <point x="1237.0" y="1890.0" />
+      <point x="1577.0" y="1890.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Entity" target="cz.fel.cvut.pjv.dgnmstr.entity.Faction" relationship="TO_ONE">
       <point x="-82.0" y="-381.0" />
-      <point x="3174.0" y="5890.0" />
-      <point x="896.0" y="5890.0" />
-      <point x="896.0" y="5750.0" />
-      <point x="296.0" y="5750.0" />
+      <point x="2055.0" y="6250.0" />
+      <point x="2057.0" y="6250.0" />
+      <point x="2057.0" y="5950.0" />
+      <point x="2837.0" y="5950.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Boss" target="cz.fel.cvut.pjv.dgnmstr.entity.Mob" relationship="GENERALIZATION">
-      <point x="0.0" y="-81.0" />
-      <point x="456.0" y="550.0" />
-      <point x="4156.0" y="550.0" />
-      <point x="0.0" y="141.0" />
+      <point x="-95.0" y="81.0" />
+      <point x="782.0" y="4550.0" />
+      <point x="1017.0" y="4550.0" />
+      <point x="1017.0" y="7650.0" />
+      <point x="-143.0" y="7650.0" />
+      <point x="-143.0" y="8010.0" />
+      <point x="2354.875" y="8010.0" />
+      <point x="-142.125" y="-141.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.entity.Grate" relationship="CREATE">
       <point x="0.0" y="-225.0" />
-      <point x="2996.0" y="3710.0" />
-      <point x="3093.0" y="3710.0" />
-      <point x="-63.0" y="68.5" />
+      <point x="3777.0" y="4110.0" />
+      <point x="3020.0" y="4110.0" />
+      <point x="63.0" y="68.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Mob" target="cz.fel.cvut.pjv.dgnmstr.entity.CanAttack" relationship="REALIZATION">
-      <point x="0.0" y="-141.0" />
-      <point x="4156.0" y="150.0" />
-      <point x="1616.0" y="150.0" />
-      <point x="1616.0" y="110.0" />
-      <point x="1609.25" y="110.0" />
+      <point x="142.125" y="-141.0" />
+      <point x="2639.125" y="7970.0" />
+      <point x="4297.0" y="7970.0" />
+      <point x="4297.0" y="210.0" />
+      <point x="3757.0" y="210.0" />
+      <point x="3757.0" y="110.0" />
+      <point x="3750.25" y="110.0" />
       <point x="33.25" y="44.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorPants" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
       <point x="0.0" y="-31.5" />
-      <point x="1636.0" y="3190.0" />
-      <point x="1996.0" y="3190.0" />
-      <point x="1996.0" y="2610.0" />
-      <point x="2314.5" y="2610.0" />
+      <point x="2317.0" y="3570.0" />
+      <point x="1997.0" y="3570.0" />
+      <point x="1997.0" y="2990.0" />
+      <point x="3215.5" y="2990.0" />
       <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.entity.Chest" relationship="CREATE">
       <point x="0.0" y="-225.0" />
-      <point x="2996.0" y="3710.0" />
-      <point x="3442.25" y="3710.0" />
-      <point x="-73.75" y="80.5" />
+      <point x="3777.0" y="4110.0" />
+      <point x="3270.75" y="4110.0" />
+      <point x="73.75" y="80.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorChestplate" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
       <point x="0.0" y="-31.5" />
-      <point x="2376.0" y="3190.0" />
-      <point x="1996.0" y="3190.0" />
-      <point x="1996.0" y="2610.0" />
-      <point x="2314.5" y="2610.0" />
+      <point x="2457.0" y="3570.0" />
+      <point x="1997.0" y="3570.0" />
+      <point x="1997.0" y="2990.0" />
+      <point x="3215.5" y="2990.0" />
       <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Chest" target="cz.fel.cvut.pjv.dgnmstr.player.Inventory" relationship="TO_ONE">
-      <point x="-73.75" y="-80.5" />
-      <point x="3442.25" y="3170.0" />
-      <point x="3036.0" y="3170.0" />
-      <point x="3036.0" y="2310.0" />
-      <point x="3196.0" y="2310.0" />
+      <point x="73.75" y="-80.5" />
+      <point x="3270.75" y="3470.0" />
+      <point x="3737.0" y="3470.0" />
+      <point x="3737.0" y="3070.0" />
+      <point x="3897.0" y="3070.0" />
       <point x="0.0" y="-129.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.dungeon.TilePosition" relationship="CREATE">
       <point x="0.0" y="-225.0" />
-      <point x="2996.0" y="3710.0" />
-      <point x="2876.0" y="3710.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.player.PlayerStats" relationship="CREATE">
       <point x="78.5" y="-225.0" />
-      <point x="2774.5" y="3170.0" />
-      <point x="2776.0" y="3170.0" />
-      <point x="2776.0" y="3150.0" />
-      <point x="2676.0" y="3150.0" />
+      <point x="4155.5" y="3730.0" />
+      <point x="4137.0" y="3730.0" />
       <point x="0.0" y="116.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.dungeon.BossSpawnRate" relationship="TO_MANY">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4710.0" />
-      <point x="1296.0" y="4710.0" />
-      <point x="1296.0" y="4370.0" />
-      <point x="1136.0" y="4370.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="4950.0" />
+      <point x="1097.0" y="4950.0" />
+      <point x="1097.0" y="4590.0" />
+      <point x="1257.0" y="4590.0" />
       <point x="0.0" y="-56.0" />
-    </edge>
-    <edge source="cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorHelmet" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
-      <point x="0.0" y="-31.5" />
-      <point x="1916.0" y="3190.0" />
-      <point x="1996.0" y="3190.0" />
-      <point x="1996.0" y="2610.0" />
-      <point x="2314.5" y="2610.0" />
-      <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.player.Inventory" relationship="TO_ONE">
       <point x="-78.5" y="-225.0" />
-      <point x="2617.5" y="3190.0" />
-      <point x="2476.0" y="3190.0" />
-      <point x="2476.0" y="3090.0" />
-      <point x="3036.0" y="3090.0" />
-      <point x="3036.0" y="2310.0" />
-      <point x="3196.0" y="2310.0" />
+      <point x="3998.5" y="3530.0" />
+      <point x="3577.0" y="3530.0" />
+      <point x="3577.0" y="3510.0" />
+      <point x="3737.0" y="3510.0" />
+      <point x="3737.0" y="3070.0" />
+      <point x="3897.0" y="3070.0" />
       <point x="0.0" y="-129.0" />
+    </edge>
+    <edge source="cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorHelmet" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="GENERALIZATION">
+      <point x="0.0" y="-31.5" />
+      <point x="1857.0" y="3570.0" />
+      <point x="1997.0" y="3570.0" />
+      <point x="1997.0" y="2990.0" />
+      <point x="3215.5" y="2990.0" />
+      <point x="98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="TO_MANY">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4850.0" />
-      <point x="1656.0" y="4850.0" />
-      <point x="1656.0" y="5690.0" />
-      <point x="3176.0" y="5690.0" />
-      <point x="3176.0" y="5870.0" />
-      <point x="3174.0" y="5870.0" />
+      <point x="1740.25" y="5050.0" />
+      <point x="1057.0" y="5050.0" />
+      <point x="1057.0" y="5990.0" />
+      <point x="-103.0" y="5990.0" />
+      <point x="-103.0" y="6230.0" />
+      <point x="2055.0" y="6230.0" />
       <point x="-82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.dungeon.BossSpawnRate" relationship="CREATE">
       <point x="-83.25" y="-381.0" />
-      <point x="612.75" y="4870.0" />
-      <point x="616.0" y="4870.0" />
-      <point x="616.0" y="4770.0" />
-      <point x="1136.0" y="4770.0" />
+      <point x="1573.75" y="5090.0" />
+      <point x="657.0" y="5090.0" />
+      <point x="657.0" y="4970.0" />
+      <point x="1257.0" y="4970.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Chest" target="cz.fel.cvut.pjv.dgnmstr.entity.Interactable" relationship="REALIZATION">
-      <point x="73.75" y="-80.5" />
-      <point x="3589.75" y="3170.0" />
-      <point x="3596.0" y="3170.0" />
+      <point x="-73.75" y="-80.5" />
+      <point x="3123.25" y="3570.0" />
+      <point x="2777.0" y="3570.0" />
       <point x="0.0" y="31.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Hero" target="cz.fel.cvut.pjv.dgnmstr.entity.CanAttack" relationship="REALIZATION">
       <point x="-93.0" y="-261.0" />
-      <point x="1203.0" y="3290.0" />
-      <point x="1356.0" y="3290.0" />
-      <point x="1356.0" y="150.0" />
-      <point x="1616.0" y="150.0" />
-      <point x="1616.0" y="110.0" />
-      <point x="1609.25" y="110.0" />
+      <point x="764.0" y="2410.0" />
+      <point x="757.0" y="2410.0" />
+      <point x="757.0" y="2370.0" />
+      <point x="1037.0" y="2370.0" />
+      <point x="1037.0" y="1030.0" />
+      <point x="3757.0" y="1030.0" />
+      <point x="3757.0" y="110.0" />
+      <point x="3750.25" y="110.0" />
       <point x="33.25" y="44.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceType" relationship="TO_ONE">
       <point x="-98.5" y="-188.5" />
-      <point x="2117.5" y="2650.0" />
-      <point x="2116.0" y="2650.0" />
-      <point x="2116.0" y="2230.0" />
-      <point x="2476.0" y="2230.0" />
+      <point x="3018.5" y="3010.0" />
+      <point x="3017.0" y="3010.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.global.GameManager" target="cz.fel.cvut.pjv.dgnmstr.dungeon.DifficultyStats" relationship="TO_ONE">
-      <point x="-76.5" y="-261.0" />
-      <point x="699.5" y="6750.0" />
-      <point x="416.0" y="6750.0" />
-      <point x="416.0" y="6450.0" />
-      <point x="16.0" y="6450.0" />
+      <point x="76.5" y="-261.0" />
+      <point x="2613.5" y="7330.0" />
+      <point x="2617.0" y="7330.0" />
+      <point x="2617.0" y="6790.0" />
+      <point x="2357.0" y="6790.0" />
+      <point x="2357.0" y="6210.0" />
+      <point x="2717.0" y="6210.0" />
+      <point x="2717.0" y="4910.0" />
+      <point x="2777.0" y="4910.0" />
       <point x="0.0" y="201.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.RangedMob" target="cz.fel.cvut.pjv.dgnmstr.entity.Mob" relationship="GENERALIZATION">
-      <point x="0.0" y="-93.0" />
-      <point x="4496.0" y="550.0" />
-      <point x="4156.0" y="550.0" />
-      <point x="0.0" y="141.0" />
+      <point x="-96.75" y="93.0" />
+      <point x="-39.75" y="790.0" />
+      <point x="-183.0" y="790.0" />
+      <point x="-183.0" y="7650.0" />
+      <point x="-143.0" y="7650.0" />
+      <point x="-143.0" y="8010.0" />
+      <point x="2354.875" y="8010.0" />
+      <point x="-142.125" y="-141.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.Weapon" target="cz.fel.cvut.pjv.dgnmstr.item.AddableItem" relationship="GENERALIZATION">
-      <point x="-82.5" y="-140.5" />
-      <point x="2773.5" y="2250.0" />
-      <point x="2776.0" y="2250.0" />
-      <point x="2776.0" y="1910.0" />
-      <point x="3196.0" y="1910.0" />
+      <point x="82.5" y="-140.5" />
+      <point x="1639.5" y="2590.0" />
+      <point x="2877.0" y="2590.0" />
+      <point x="2877.0" y="1530.0" />
+      <point x="3897.0" y="1530.0" />
       <point x="0.0" y="-68.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Chest" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="GENERALIZATION">
-      <point x="73.75" y="80.5" />
-      <point x="3589.75" y="4350.0" />
-      <point x="3596.0" y="4350.0" />
-      <point x="3596.0" y="5730.0" />
-      <point x="3336.0" y="5730.0" />
-      <point x="3336.0" y="5870.0" />
-      <point x="3338.0" y="5870.0" />
+      <point x="-73.75" y="80.5" />
+      <point x="3123.25" y="4150.0" />
+      <point x="3117.0" y="4150.0" />
+      <point x="3117.0" y="5910.0" />
+      <point x="2397.0" y="5910.0" />
+      <point x="2397.0" y="6250.0" />
+      <point x="2219.0" y="6250.0" />
       <point x="82.0" y="-381.0" />
+    </edge>
+    <edge source="cz.fel.cvut.pjv.dgnmstr.global.GameManager" target="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" relationship="TO_MANY">
+      <point x="76.5" y="-261.0" />
+      <point x="2613.5" y="7330.0" />
+      <point x="2617.0" y="7330.0" />
+      <point x="2617.0" y="6790.0" />
+      <point x="4257.0" y="6790.0" />
+      <point x="4257.0" y="3510.0" />
+      <point x="3998.5" y="3510.0" />
+      <point x="-78.5" y="-225.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.network.ArenaStatePacket" target="cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaState" relationship="TO_ONE">
       <point x="0.0" y="-44.0" />
       <point x="0.0" y="56.0" />
     </edge>
-    <edge source="cz.fel.cvut.pjv.dgnmstr.global.GameManager" target="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" relationship="TO_MANY">
-      <point x="-76.5" y="-261.0" />
-      <point x="699.5" y="6750.0" />
-      <point x="416.0" y="6750.0" />
-      <point x="416.0" y="6450.0" />
-      <point x="2516.0" y="6450.0" />
-      <point x="2516.0" y="3330.0" />
-      <point x="2617.5" y="3330.0" />
-      <point x="-78.5" y="-225.0" />
-    </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Skeleton" target="cz.fel.cvut.pjv.dgnmstr.entity.RangedMob" relationship="GENERALIZATION">
-      <point x="67.5" y="-56.0" />
-      <point x="3783.5" y="1210.0" />
-      <point x="4276.0" y="1210.0" />
-      <point x="4276.0" y="730.0" />
-      <point x="4496.0" y="730.0" />
-      <point x="0.0" y="-93.0" />
+      <point x="-67.5" y="-56.0" />
+      <point x="3089.5" y="1070.0" />
+      <point x="17.0" y="1070.0" />
+      <point x="17.0" y="770.0" />
+      <point x="-39.75" y="770.0" />
+      <point x="-96.75" y="93.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" relationship="TO_MANY">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4710.0" />
-      <point x="2996.0" y="4710.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="4950.0" />
+      <point x="3777.0" y="4950.0" />
       <point x="0.0" y="225.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.EvilWizard" target="cz.fel.cvut.pjv.dgnmstr.entity.Projectile" relationship="CREATE">
-      <point x="-70.5" y="-56.0" />
-      <point x="4445.5" y="1190.0" />
-      <point x="3436.0" y="1190.0" />
-      <point x="3436.0" y="1150.0" />
-      <point x="1675.0" y="1150.0" />
+      <point x="70.5" y="-56.0" />
+      <point x="167.5" y="1290.0" />
+      <point x="297.0" y="1290.0" />
+      <point x="297.0" y="950.0" />
+      <point x="1956.0" y="950.0" />
       <point x="99.0" y="261.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.item.Weapon" relationship="TO_ONE">
       <point x="-78.5" y="-225.0" />
-      <point x="2617.5" y="3190.0" />
-      <point x="2476.0" y="3190.0" />
-      <point x="2476.0" y="3070.0" />
-      <point x="2516.0" y="3070.0" />
-      <point x="2516.0" y="2290.0" />
-      <point x="2938.5" y="2290.0" />
-      <point x="82.5" y="-140.5" />
+      <point x="3998.5" y="3530.0" />
+      <point x="3577.0" y="3530.0" />
+      <point x="3577.0" y="3490.0" />
+      <point x="3617.0" y="3490.0" />
+      <point x="3617.0" y="2550.0" />
+      <point x="1474.5" y="2550.0" />
+      <point x="-82.5" y="-140.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaType" target="cz.fel.cvut.pjv.dgnmstr.dungeon.MobSpawnRate" relationship="CREATE">
       <point x="-85.0" y="-80.0" />
-      <point x="4031.0" y="3490.0" />
-      <point x="4036.0" y="3490.0" />
-      <point x="4036.0" y="3170.0" />
-      <point x="4356.0" y="3170.0" />
+      <point x="3372.0" y="3550.0" />
+      <point x="3377.0" y="3550.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile" target="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" relationship="TO_MANY">
       <point x="-78.5" y="-225.0" />
-      <point x="2617.5" y="3190.0" />
-      <point x="2476.0" y="3190.0" />
-      <point x="2476.0" y="3070.0" />
-      <point x="2436.0" y="3070.0" />
-      <point x="2436.0" y="2630.0" />
-      <point x="2117.5" y="2630.0" />
+      <point x="3998.5" y="3530.0" />
+      <point x="3577.0" y="3530.0" />
+      <point x="3577.0" y="2610.0" />
+      <point x="3018.5" y="2610.0" />
       <point x="-98.5" y="-188.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.global.GameManager" target="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" relationship="TO_ONE">
-      <point x="-76.5" y="-261.0" />
-      <point x="699.5" y="6750.0" />
-      <point x="416.0" y="6750.0" />
-      <point x="416.0" y="5730.0" />
-      <point x="896.0" y="5730.0" />
-      <point x="896.0" y="4870.0" />
-      <point x="779.25" y="4870.0" />
+      <point x="76.5" y="-261.0" />
+      <point x="2613.5" y="7330.0" />
+      <point x="2617.0" y="7330.0" />
+      <point x="2617.0" y="6790.0" />
+      <point x="2317.0" y="6790.0" />
+      <point x="2317.0" y="5930.0" />
+      <point x="2017.0" y="5930.0" />
+      <point x="2017.0" y="5090.0" />
+      <point x="1740.25" y="5090.0" />
       <point x="83.25" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Hero" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="GENERALIZATION">
       <point x="0.0" y="261.0" />
-      <point x="1296.0" y="3890.0" />
-      <point x="1696.0" y="3890.0" />
-      <point x="1696.0" y="5730.0" />
-      <point x="3336.0" y="5730.0" />
-      <point x="3336.0" y="5870.0" />
-      <point x="3338.0" y="5870.0" />
+      <point x="857.0" y="3530.0" />
+      <point x="337.0" y="3530.0" />
+      <point x="337.0" y="4570.0" />
+      <point x="257.0" y="4570.0" />
+      <point x="257.0" y="5910.0" />
+      <point x="2397.0" y="5910.0" />
+      <point x="2397.0" y="6250.0" />
+      <point x="2219.0" y="6250.0" />
       <point x="82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Ghost" target="cz.fel.cvut.pjv.dgnmstr.entity.MeleeMob" relationship="GENERALIZATION">
       <point x="0.0" y="-68.5" />
-      <point x="4196.0" y="1230.0" />
-      <point x="3836.0" y="1230.0" />
-      <point x="3836.0" y="730.0" />
-      <point x="4151.75" y="730.0" />
-      <point x="95.75" y="-92.0" />
+      <point x="0.0" y="92.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Hero" target="cz.fel.cvut.pjv.dgnmstr.entity.Role" relationship="TO_ONE">
       <point x="93.0" y="-261.0" />
-      <point x="1389.0" y="3270.0" />
-      <point x="1556.0" y="3270.0" />
-      <point x="1556.0" y="2630.0" />
-      <point x="1756.0" y="2630.0" />
-      <point x="1756.0" y="1910.0" />
-      <point x="1896.0" y="1910.0" />
+      <point x="950.0" y="2390.0" />
+      <point x="1477.0" y="2390.0" />
+      <point x="1477.0" y="2030.0" />
+      <point x="1617.0" y="2030.0" />
       <point x="0.0" y="-68.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Projectile" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="TO_ONE">
       <point x="-99.0" y="261.0" />
-      <point x="1477.0" y="1170.0" />
-      <point x="716.0" y="1170.0" />
-      <point x="716.0" y="3950.0" />
-      <point x="976.0" y="3950.0" />
-      <point x="976.0" y="4730.0" />
-      <point x="416.0" y="4730.0" />
-      <point x="416.0" y="5690.0" />
-      <point x="3176.0" y="5690.0" />
-      <point x="3176.0" y="5870.0" />
-      <point x="3174.0" y="5870.0" />
+      <point x="1758.0" y="970.0" />
+      <point x="-103.0" y="970.0" />
+      <point x="-103.0" y="6230.0" />
+      <point x="2055.0" y="6230.0" />
       <point x="-82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece" target="cz.fel.cvut.pjv.dgnmstr.entity.Role" relationship="TO_ONE">
       <point x="-98.5" y="-188.5" />
-      <point x="2117.5" y="2650.0" />
-      <point x="2116.0" y="2650.0" />
-      <point x="2116.0" y="2590.0" />
-      <point x="1756.0" y="2590.0" />
-      <point x="1756.0" y="1910.0" />
-      <point x="1896.0" y="1910.0" />
+      <point x="3018.5" y="3010.0" />
+      <point x="3017.0" y="3010.0" />
+      <point x="3017.0" y="2350.0" />
+      <point x="1477.0" y="2350.0" />
+      <point x="1477.0" y="2030.0" />
+      <point x="1617.0" y="2030.0" />
       <point x="0.0" y="-68.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState" relationship="TO_ONE">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4790.0" />
-      <point x="3736.0" y="4790.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="5010.0" />
+      <point x="117.0" y="5010.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceStats" target="cz.fel.cvut.pjv.dgnmstr.entity.Role" relationship="TO_ONE">
       <point x="0.0" y="-225.0" />
-      <point x="1756.0" y="1910.0" />
-      <point x="1896.0" y="1910.0" />
+      <point x="637.0" y="2390.0" />
+      <point x="1477.0" y="2390.0" />
+      <point x="1477.0" y="2030.0" />
+      <point x="1617.0" y="2030.0" />
       <point x="0.0" y="-68.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Zombie" target="cz.fel.cvut.pjv.dgnmstr.entity.MeleeMob" relationship="GENERALIZATION">
       <point x="0.0" y="-43.5" />
-      <point x="3556.0" y="1230.0" />
-      <point x="3836.0" y="1230.0" />
-      <point x="3836.0" y="730.0" />
-      <point x="4151.75" y="730.0" />
-      <point x="95.75" y="-92.0" />
+      <point x="2837.0" y="1090.0" />
+      <point x="3537.0" y="1090.0" />
+      <point x="0.0" y="92.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.AnysekTheBehemoth" target="cz.fel.cvut.pjv.dgnmstr.entity.Boss" relationship="GENERALIZATION">
       <point x="0.0" y="-80.0" />
-      <point x="616.0" y="3990.0" />
-      <point x="676.0" y="3990.0" />
-      <point x="676.0" y="3470.0" />
-      <point x="456.0" y="3470.0" />
-      <point x="0.0" y="-81.0" />
+      <point x="837.0" y="4570.0" />
+      <point x="777.0" y="4570.0" />
+      <point x="777.0" y="3770.0" />
+      <point x="782.0" y="3770.0" />
+      <point x="-95.0" y="81.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.entity.Hero" relationship="TO_MANY">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4710.0" />
-      <point x="1736.0" y="4710.0" />
-      <point x="1736.0" y="3870.0" />
-      <point x="1516.0" y="3870.0" />
-      <point x="1516.0" y="3290.0" />
-      <point x="1389.0" y="3290.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="4950.0" />
+      <point x="1417.0" y="4950.0" />
+      <point x="1417.0" y="4570.0" />
+      <point x="1097.0" y="4570.0" />
+      <point x="1097.0" y="2410.0" />
+      <point x="950.0" y="2410.0" />
       <point x="93.0" y="-261.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.RangedMob" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="TO_ONE">
-      <point x="0.0" y="93.0" />
-      <point x="4496.0" y="1190.0" />
-      <point x="4676.0" y="1190.0" />
-      <point x="4676.0" y="5690.0" />
-      <point x="3176.0" y="5690.0" />
-      <point x="3176.0" y="5870.0" />
-      <point x="3174.0" y="5870.0" />
+      <point x="96.75" y="93.0" />
+      <point x="153.75" y="1310.0" />
+      <point x="-63.0" y="1310.0" />
+      <point x="-63.0" y="5990.0" />
+      <point x="-103.0" y="5990.0" />
+      <point x="-103.0" y="6230.0" />
+      <point x="2055.0" y="6230.0" />
       <point x="-82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.entity.Warrior" relationship="CREATE">
       <point x="-83.25" y="-381.0" />
-      <point x="612.75" y="4870.0" />
-      <point x="616.0" y="4870.0" />
-      <point x="616.0" y="4770.0" />
-      <point x="796.0" y="4770.0" />
+      <point x="1573.75" y="5090.0" />
+      <point x="657.0" y="5090.0" />
+      <point x="657.0" y="4550.0" />
+      <point x="517.0" y="4550.0" />
       <point x="0.0" y="92.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Stats" target="cz.fel.cvut.pjv.dgnmstr.entity.Faction" relationship="TO_ONE">
       <point x="0.0" y="-129.0" />
-      <point x="136.0" y="5770.0" />
-      <point x="296.0" y="5770.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" target="cz.fel.cvut.pjv.dgnmstr.entity.Goblin" relationship="CREATE">
       <point x="0.0" y="-177.0" />
-      <point x="4356.0" y="1790.0" />
-      <point x="4036.0" y="1790.0" />
+      <point x="0.0" y="43.5" />
+    </edge>
+    <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" target="cz.fel.cvut.pjv.dgnmstr.entity.Zombie" relationship="CREATE">
+      <point x="0.0" y="-177.0" />
+      <point x="3377.0" y="1510.0" />
+      <point x="2837.0" y="1510.0" />
       <point x="0.0" y="43.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Hero" target="cz.fel.cvut.pjv.dgnmstr.entity.CanDefend" relationship="REALIZATION">
       <point x="-93.0" y="-261.0" />
-      <point x="1203.0" y="3290.0" />
-      <point x="1356.0" y="3290.0" />
-      <point x="1356.0" y="2930.0" />
-      <point x="1216.0" y="2930.0" />
+      <point x="764.0" y="2410.0" />
+      <point x="757.0" y="2410.0" />
+      <point x="757.0" y="2370.0" />
+      <point x="897.0" y="2370.0" />
       <point x="0.0" y="31.5" />
-    </edge>
-    <edge source="cz.fel.cvut.pjv.dgnmstr.entity.MobStats" target="cz.fel.cvut.pjv.dgnmstr.entity.Zombie" relationship="CREATE">
-      <point x="0.0" y="-177.0" />
-      <point x="4356.0" y="1810.0" />
-      <point x="3836.0" y="1810.0" />
-      <point x="3836.0" y="1610.0" />
-      <point x="3556.0" y="1610.0" />
-      <point x="0.0" y="43.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.entity.DwightTheLeviathan" relationship="CREATE">
       <point x="-83.25" y="-381.0" />
-      <point x="612.75" y="4870.0" />
-      <point x="616.0" y="4870.0" />
-      <point x="616.0" y="4770.0" />
-      <point x="1656.0" y="4770.0" />
-      <point x="1656.0" y="4370.0" />
-      <point x="1556.5" y="4370.0" />
-      <point x="80.5" y="-56.0" />
+      <point x="1573.75" y="5090.0" />
+      <point x="657.0" y="5090.0" />
+      <point x="657.0" y="4970.0" />
+      <point x="297.0" y="4970.0" />
+      <point x="297.0" y="4590.0" />
+      <point x="396.5" y="4590.0" />
+      <point x="-80.5" y="-56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.LegendaryWarriorSword" target="cz.fel.cvut.pjv.dgnmstr.item.Weapon" relationship="GENERALIZATION">
       <point x="0.0" y="-31.5" />
-      <point x="3736.0" y="3190.0" />
-      <point x="3356.0" y="3190.0" />
-      <point x="3356.0" y="2270.0" />
-      <point x="2773.5" y="2270.0" />
-      <point x="-82.5" y="-140.5" />
+      <point x="1597.0" y="3590.0" />
+      <point x="1457.0" y="3590.0" />
+      <point x="1457.0" y="3390.0" />
+      <point x="1377.0" y="3390.0" />
+      <point x="1377.0" y="2570.0" />
+      <point x="1639.5" y="2570.0" />
+      <point x="82.5" y="-140.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Entity" target="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" relationship="TO_ONE">
       <point x="-82.0" y="-381.0" />
-      <point x="3174.0" y="5890.0" />
-      <point x="896.0" y="5890.0" />
-      <point x="896.0" y="4870.0" />
-      <point x="779.25" y="4870.0" />
+      <point x="2055.0" y="6250.0" />
+      <point x="2057.0" y="6250.0" />
+      <point x="2057.0" y="5970.0" />
+      <point x="2017.0" y="5970.0" />
+      <point x="2017.0" y="5090.0" />
+      <point x="1740.25" y="5090.0" />
       <point x="83.25" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.DwightTheLeviathan" target="cz.fel.cvut.pjv.dgnmstr.entity.Projectile" relationship="CREATE">
-      <point x="80.5" y="-56.0" />
-      <point x="1556.5" y="3910.0" />
-      <point x="1076.0" y="3910.0" />
-      <point x="1076.0" y="1190.0" />
-      <point x="3436.0" y="1190.0" />
-      <point x="3436.0" y="1150.0" />
-      <point x="1675.0" y="1150.0" />
+      <point x="-80.5" y="-56.0" />
+      <point x="396.5" y="4550.0" />
+      <point x="297.0" y="4550.0" />
+      <point x="297.0" y="950.0" />
+      <point x="1956.0" y="950.0" />
       <point x="99.0" y="261.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Warrior" target="cz.fel.cvut.pjv.dgnmstr.entity.Hero" relationship="GENERALIZATION">
       <point x="79.0" y="-92.0" />
-      <point x="875.0" y="3970.0" />
-      <point x="1296.0" y="3970.0" />
+      <point x="596.0" y="3550.0" />
+      <point x="857.0" y="3550.0" />
       <point x="0.0" y="261.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaType" target="cz.fel.cvut.pjv.dgnmstr.entity.Zombie" relationship="CREATE">
       <point x="-85.0" y="-80.0" />
-      <point x="4031.0" y="3490.0" />
-      <point x="4036.0" y="3490.0" />
-      <point x="4036.0" y="1990.0" />
-      <point x="3836.0" y="1990.0" />
-      <point x="3836.0" y="1610.0" />
-      <point x="3556.0" y="1610.0" />
+      <point x="3372.0" y="3550.0" />
+      <point x="3377.0" y="3550.0" />
+      <point x="3377.0" y="3530.0" />
+      <point x="2897.0" y="3530.0" />
+      <point x="2897.0" y="2370.0" />
+      <point x="2837.0" y="2370.0" />
       <point x="0.0" y="43.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="TO_MANY">
       <point x="0.0" y="225.0" />
-      <point x="2996.0" y="4810.0" />
-      <point x="3176.0" y="4810.0" />
-      <point x="3176.0" y="5870.0" />
-      <point x="3174.0" y="5870.0" />
+      <point x="3777.0" y="4990.0" />
+      <point x="3737.0" y="4990.0" />
+      <point x="3737.0" y="5990.0" />
+      <point x="-103.0" y="5990.0" />
+      <point x="-103.0" y="6230.0" />
+      <point x="2055.0" y="6230.0" />
       <point x="-82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Role" target="cz.fel.cvut.pjv.dgnmstr.item.WeaponType" relationship="TO_ONE">
       <point x="0.0" y="-68.5" />
+      <point x="1617.0" y="1890.0" />
+      <point x="1577.0" y="1890.0" />
       <point x="0.0" y="56.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.item.BasicWarriorSword" target="cz.fel.cvut.pjv.dgnmstr.item.Weapon" relationship="GENERALIZATION">
       <point x="0.0" y="-31.5" />
-      <point x="3316.0" y="3190.0" />
-      <point x="3356.0" y="3190.0" />
-      <point x="3356.0" y="2270.0" />
-      <point x="2773.5" y="2270.0" />
-      <point x="-82.5" y="-140.5" />
-    </edge>
-    <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Mob" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="GENERALIZATION">
-      <point x="0.0" y="141.0" />
-      <point x="4156.0" y="530.0" />
-      <point x="4716.0" y="530.0" />
-      <point x="4716.0" y="5730.0" />
-      <point x="3336.0" y="5730.0" />
-      <point x="3336.0" y="5870.0" />
-      <point x="3338.0" y="5870.0" />
-      <point x="82.0" y="-381.0" />
+      <point x="1457.0" y="3390.0" />
+      <point x="1377.0" y="3390.0" />
+      <point x="1377.0" y="2570.0" />
+      <point x="1639.5" y="2570.0" />
+      <point x="82.5" y="-140.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Arena" target="cz.fel.cvut.pjv.dgnmstr.dungeon.ArenaType" relationship="TO_ONE">
       <point x="0.0" y="225.0" />
-      <point x="2996.0" y="4730.0" />
-      <point x="3176.0" y="4730.0" />
-      <point x="3176.0" y="4370.0" />
-      <point x="3876.0" y="4370.0" />
-      <point x="3876.0" y="3610.0" />
-      <point x="3916.0" y="3610.0" />
-      <point x="3916.0" y="3470.0" />
-      <point x="4201.0" y="3470.0" />
+      <point x="3777.0" y="4930.0" />
+      <point x="3597.0" y="4930.0" />
+      <point x="3597.0" y="4430.0" />
+      <point x="3657.0" y="4430.0" />
+      <point x="3657.0" y="3550.0" />
+      <point x="3542.0" y="3550.0" />
       <point x="85.0" y="-80.0" />
+    </edge>
+    <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Mob" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="GENERALIZATION">
+      <point x="-142.125" y="-141.0" />
+      <point x="2354.875" y="7650.0" />
+      <point x="2357.0" y="7650.0" />
+      <point x="2357.0" y="7130.0" />
+      <point x="1957.0" y="7130.0" />
+      <point x="1957.0" y="6210.0" />
+      <point x="2219.0" y="6210.0" />
+      <point x="82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.CanAttackMelee" target="cz.fel.cvut.pjv.dgnmstr.entity.CanAttack" relationship="INTERFACE_GENERALIZATION">
       <point x="0.0" y="-43.5" />
-      <point x="1536.0" y="130.0" />
-      <point x="1542.75" y="130.0" />
+      <point x="3537.0" y="150.0" />
+      <point x="3683.75" y="150.0" />
       <point x="-33.25" y="44.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.global.GameManager" target="cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator" relationship="TO_ONE">
-      <point x="-76.5" y="-261.0" />
-      <point x="699.5" y="6750.0" />
-      <point x="416.0" y="6750.0" />
-      <point x="416.0" y="6450.0" />
-      <point x="636.0" y="6450.0" />
+      <point x="76.5" y="-261.0" />
+      <point x="2613.5" y="7330.0" />
+      <point x="2617.0" y="7330.0" />
       <point x="0.0" y="92.5" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.entity.Fence" target="cz.fel.cvut.pjv.dgnmstr.entity.Entity" relationship="GENERALIZATION">
       <point x="0.0" y="-68.5" />
-      <point x="3236.0" y="6950.0" />
-      <point x="4176.0" y="6950.0" />
-      <point x="4176.0" y="5890.0" />
-      <point x="3338.0" y="5890.0" />
+      <point x="1957.0" y="6210.0" />
+      <point x="2219.0" y="6210.0" />
       <point x="82.0" y="-381.0" />
     </edge>
     <edge source="cz.fel.cvut.pjv.dgnmstr.dungeon.Level" target="cz.fel.cvut.pjv.dgnmstr.entity.Projectile" relationship="TO_MANY">
       <point x="83.25" y="-381.0" />
-      <point x="779.25" y="4830.0" />
-      <point x="576.0" y="4830.0" />
-      <point x="576.0" y="4710.0" />
-      <point x="196.0" y="4710.0" />
-      <point x="196.0" y="1150.0" />
-      <point x="1477.0" y="1150.0" />
+      <point x="1740.25" y="5070.0" />
+      <point x="1737.0" y="5070.0" />
+      <point x="1737.0" y="2370.0" />
+      <point x="1757.0" y="2370.0" />
+      <point x="1757.0" y="1270.0" />
+      <point x="1758.0" y="1270.0" />
       <point x="-99.0" y="261.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Compact" zoom="0.4019142713862218" showDependencies="true" x="1214.0227853524527" y="3372.9477807818866" />
-  <SelectedNodes>
-    <node>cz.fel.cvut.pjv.dgnmstr.dungeon.Level</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Compact" zoom="0.03448680351906158" showDependencies="true" x="2191.000000000002" y="4248.5" />
+  <SelectedNodes />
   <Categories>
     <Category>Constructors</Category>
     <Category>Fields</Category>
