@@ -11,6 +11,8 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee{
     protected double attackAngle(){
         return Math.PI/4;
     }
+    protected static final double COOLDOWN_TIME = 1.5;  //vybalancovat
+
 
     @Override
     public boolean isInRange(Entity entity) {
@@ -47,6 +49,29 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee{
         if (source != null) {
             setLookTarget(source.getX(), source.getY());
         }
+    }
+
+    @Override
+    public void update(double deltaTime) {
+       if(!this.isAlive()){return;}
+
+       Hero target = this.findNearestPlayer();
+       if (target == null){ return;}
+
+       this.setLookTarget(target.getX(), target.getY());
+
+       if (this.isInRange(target)) {
+           if (attackCooldown <= 0) {
+               this.attack();
+               attackCooldown = COOLDOWN_TIME;
+           }
+       }  else {
+           this.checkMoveToward(target, deltaTime);
+       }
+
+       if (attackCooldown > 0){
+           attackCooldown -= deltaTime;
+       }
     }
 }
 
