@@ -50,9 +50,6 @@ public class GameEngine{
         lc = null;
     }
 
-    public void setLevelController(LevelController lc) {
-        this.lc = lc;
-    }
 
     private void initGameLoop() {
         gameLoop = new AnimationTimer() {
