@@ -1,6 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 
+import cz.fel.cvut.pjv.dgnmstr.entity.Chest;
+import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,13 +41,14 @@ public class DungeonGenerator {
 
         int currentX = 0;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < Level.MAX_ARENA_IDX; i++) {
 
             ArenaType type = getRandomArenaType();
             log.info("Generating arena " + type.name());
             pasteArena(map, currentX, 0, type);
 
             Arena arena = new Arena(currentX, 0, level, type);
+            spawnChests(arena, level);
             level.addArena(arena);
 
             currentX += ARENA_SIZE;
@@ -54,11 +58,26 @@ public class DungeonGenerator {
                 currentX += CORRIDOR_LENGTH;
             }
         }
-
+        level.setCurArena(level.getArenas().getFirst());
         int exitY = ARENA_SIZE / 2;
         map[totalWidth - 1][exitY] = TileType.EXIT;
 
         return level;
+    }
+
+    private void spawnChests(Arena arena, Level level) {
+        for (int x = arena.getStartX(); x < arena.getStartX() + arena.getWidth(); x++) {
+            for (int y = arena.getStartY(); y < arena.getStartY() + arena.getHeight(); y++) {
+
+                if (level.getTile(x, y) == TileType.CHEST_FLOOR) {
+                    double worldX = (x * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+                    double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+
+                    Chest chest = new Chest(worldX, worldY, level, new Inventory());
+                    level.addEntity(chest);
+                }
+            }
+        }
     }
 
     private void pasteArena(TileType[][] map, int startX, int startY, ArenaType type) {
