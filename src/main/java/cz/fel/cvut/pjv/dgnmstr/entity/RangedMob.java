@@ -24,8 +24,8 @@ public abstract class RangedMob extends Mob{
                 return;
             }
         }
-        double deltaX = getX() - target.getX();
-        double deltaY = getY() - target.getY();
+        double deltaX = target.getX() - getX();
+        double deltaY = target.getY() - getY();
         fireProjectile(deltaX, deltaY);
 
 
