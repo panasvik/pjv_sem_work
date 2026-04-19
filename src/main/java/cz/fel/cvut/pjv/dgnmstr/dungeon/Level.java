@@ -118,7 +118,7 @@ public class Level {
     public void addProjectile(Projectile p) {
         projectiles.add(p);
     }
-    public void update() {
+    public void update(double deltaTime) {
         if (state != LevelState.PLAYING) {
             return;
         }
@@ -134,6 +134,18 @@ public class Level {
                 log.info("The final boss " + levelBoss.getClass().getSimpleName() + " is dead.");
             }
         }
+        for( Arena arena : arenas){
+            arena.update(players, deltaTime);
+        }
+        for (Entity e : new ArrayList<>(allEntities)) {
+            if (e.isAlive()) {
+                e.update(deltaTime);
+            }
+        }
+        for (Projectile p : new ArrayList<>(projectiles)) {
+            p.update(deltaTime);
+        }
+        allEntities.removeIf(e -> !e.isAlive() && !(e instanceof Hero) );
         checkExit();
     }
 

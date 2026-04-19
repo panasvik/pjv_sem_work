@@ -46,7 +46,21 @@ public class Arena {
         spawnChests();
     }
 
-    public void update(List<Hero> players) {}
+    public void update(List<Hero> players, double deltaTime) {
+        switch (state) {
+            case NOT_STARTED:
+                checkPlayerEntry(players);
+                break;
+            case WAVE_FIGHT:
+                checkWaveProgress();
+                break;
+            case MINI_BOSS_FIGHT:
+                checkBossProgress();
+                break;
+            case CLEARED:
+                break;
+        }
+    }
 
     /**
      * Scans for any player entering the arena bounds.

@@ -72,4 +72,7 @@ public class Projectile {
     public void update() {
 
     }
+
+    public void update(double deltaTime) {
+    }
 }

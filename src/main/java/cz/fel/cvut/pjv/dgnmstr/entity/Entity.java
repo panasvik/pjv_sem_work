@@ -151,7 +151,7 @@ public abstract class Entity {
      * f.e. Zombie will move towards player and attack if in reach
      * Warrior will do everything that the player pressed with keys...
      */
-    public void update() {
+    public void update(double deltaTime) {
     }
 
     /**
