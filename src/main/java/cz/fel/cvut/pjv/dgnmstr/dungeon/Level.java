@@ -1,7 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 
 import java.util.ArrayList;
@@ -11,12 +13,13 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState.*;
-import static java.util.stream.StreamSupport.stream;
 
 public class Level {
+    public static final int MAX_ARENA_IDX = 3;
     private final List<Entity> allEntities;
     private final List<Hero> players;
     private final List<Arena> arenas;
+    private Arena curArena;
     private final List<Projectile> projectiles;
 
     private final Map<Integer, Entity> entityMap;
@@ -33,10 +36,9 @@ public class Level {
 
     private static final Logger log = Logger.getLogger(Level.class.getName());
 
-    private List<BossSpawnRate> bossSpawnRate;
+    private final List<BossSpawnRate> bossSpawnRate;
     private Boss levelBoss;
     private boolean bossSpawned = false;
-    private boolean bossDead = false;
 
     public Level(DifficultyStats difficulty) {
         this.allEntities = new ArrayList<>();
@@ -67,32 +69,32 @@ public class Level {
         }
     }
 
-
-    public void startLevel() {
-        this.state = LevelState.PLAYING;
-        this.playersAlive = players.size();
-        log.info("Level started");
-    }
-
     public void setMap(TileType[][] map, int width, int height) {
         this.map = map;
         this.width = width;
         this.height = height;
     }
 
-    public void addPlayer(PlayerStats stats) {
-        Hero player = new Warrior(stats, 64, 64, this);
+    public void addPlayer(PlayerProfile profile) {
+        Hero player = generateHero(profile);
         this.players.add(player);
         this.addEntity(player);
         log.info("Player added to the level.");
         this.playersAlive = players.size();
     }
 
+    private Hero generateHero(PlayerProfile profile) {
+        return switch (profile.getRole()) {
+            case WARRIOR -> new Warrior(profile, 64, 64, this);
+            // only Warrior exists, add others later;
+        };
+    }
+
     public void addArena(Arena arena) {
         this.arenas.add(arena);
     }
 
-    public List<Entity> getEntitiesAround(Entity center, double range) {
+    public <T extends Positionable> List<Entity> getEntitiesAround(T center, double range) {
         double rangeSquared = range * range;
         return allEntities.stream()
                                 .filter(other -> other != center)
@@ -118,48 +120,8 @@ public class Level {
     public void addProjectile(Projectile p) {
         projectiles.add(p);
     }
-    public void update() {
-        if (state != LevelState.PLAYING) {
-            return;
-        }
-        if (!arenas.isEmpty() && !bossSpawned) {
-            Arena lastArena = arenas.getLast();
-            if(lastArena.getState() == ArenaState.CLEARED){
-                spawnBoss();
-            }
-        }
-        if (bossSpawned && !bossDead && levelBoss != null) {
-            if(!levelBoss.isAlive()){
-                bossDead = true;
-                log.info("The final boss " + levelBoss.getClass().getSimpleName() + " is dead.");
-            }
-        }
-        checkExit();
-    }
 
-    public void playerDies(Hero deadPlayer) {
-        deadPlayer.die();
-        playersAlive--;
-        log.info("Player dead, active players:" + playersAlive);
 
-        if (playersAlive <= 0) {
-            gameOver();
-        } else {
-            removeEntity(deadPlayer);
-        }
-    }
-
-    private void gameOver() {
-        this.state = LevelState.GAME_OVER;
-        log.info("GAME OVER!");
-        // will send info to a controller that the lvl is over
-    }
-
-    private void levelComplete() {
-        this.state = LevelState.VICTORY;
-        log.info("VICTORY!");
-        // will send info to a controller that the lvl is complete
-    }
 
     public boolean isWalkable(double targetWorldX, double targetWorldY) {
         int gridX = (int) (targetWorldX / TILE_SIZE);
@@ -187,7 +149,7 @@ public class Level {
         return true;
     }
 
-    private boolean isAtExit(double worldX, double worldY) {
+    public boolean isAtExit(double worldX, double worldY) {
         int gridX = (int) (worldX / TILE_SIZE);
         int gridY = (int) (worldY / TILE_SIZE);
 
@@ -197,6 +159,7 @@ public class Level {
 
         return map[gridX][gridY] == TileType.EXIT;
     }
+
     public TileType getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height) {
             return TileType.WALL;
@@ -220,50 +183,69 @@ public class Level {
         return players;
     }
 
-    public Arena getCurrentArena() {
-        for (Arena arena : arenas) {
-            if (arena.getState() != ArenaState.CLEARED) return arena;
-        }
-        return arenas.getLast();
-    }
-    private void spawnBoss() {
-        Arena lastArena = arenas.getLast();
-
-        double random = Math.random();
-        double sum = 0;
-        BossStats selectedBoss = BossStats.ANYSEK_THE_BEHEMOTH;
-        for (BossSpawnRate rate : bossSpawnRate) {
-            sum += rate.chance();
-            if (random <= sum) {
-                selectedBoss = rate.type();
-                break;
-            }
-        }
-
-        double spawnX = lastArena.getCenterWorldX();
-        double spawnY = lastArena.getCenterWorldY();
-
-        if (selectedBoss == BossStats.ANYSEK_THE_BEHEMOTH) {
-            levelBoss = new AnysekTheBehemoth(spawnX, spawnY, this);
-        } else {
-            levelBoss = new DwightTheLeviathan(spawnX, spawnY, this);
-        }
-        addEntity(levelBoss);
-        bossSpawned = true;
-
-        log.info("FINAL BOSS AWAITS! " + levelBoss.getClass().getSimpleName() + " spawned in the center.");
-
+    public void setCurArena(Arena curArena) {
+        this.curArena = curArena;
     }
 
-    private void checkExit(){
-        if (bossDead){
-            for (Hero player : players) {
-                if (player.isAlive() && isAtExit(player.getX(), player.getY())) {
-                    levelComplete();
-                    break;
-                }
-            }
-        }
+    public List<Arena> getArenas() {
+        return arenas;
     }
 
+    public List<Entity> getAllEntities() {
+        return allEntities;
+    }
+
+    public Arena getCurArena() {
+        return curArena;
+    }
+
+    public List<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public Map<Integer, Entity> getEntityMap() {
+        return entityMap;
+    }
+
+    public int getNextEntityId() {
+        return nextEntityId;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public List<BossSpawnRate> getBossSpawnRate() {
+        return bossSpawnRate;
+    }
+
+    public Boss getLevelBoss() {
+        return levelBoss;
+    }
+
+    public boolean isBossSpawned() {
+        return bossSpawned;
+    }
+
+
+    public void setPlayersAlive(int playersAlive) {
+        this.playersAlive = playersAlive;
+    }
+
+    public void setState(LevelState state) {
+        this.state = state;
+    }
+
+
+    public void setBossSpawned(boolean bossSpawned) {
+        this.bossSpawned = bossSpawned;
+    }
+
+    public void setLevelBoss(Boss levelBoss) {
+        this.levelBoss = levelBoss;
+    }
 }
