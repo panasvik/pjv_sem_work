@@ -21,4 +21,9 @@ public class Grate extends Entity {
     public boolean isSolid() {
         return true;
     }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }

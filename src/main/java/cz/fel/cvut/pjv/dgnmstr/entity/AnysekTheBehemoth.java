@@ -48,4 +48,9 @@ public class AnysekTheBehemoth extends Boss{
     public void coolRage() {
         this.rage = false;
     }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }

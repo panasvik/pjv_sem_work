@@ -25,6 +25,11 @@ public class Goblin extends MeleeMob {
                 Faction.MONSTER,
                 level, 1);
     }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }
 
 

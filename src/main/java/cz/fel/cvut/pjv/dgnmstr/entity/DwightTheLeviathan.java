@@ -61,4 +61,9 @@ public class DwightTheLeviathan extends Boss{
             );
         }
     }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }

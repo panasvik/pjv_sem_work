@@ -38,5 +38,10 @@ public class Ghost extends MeleeMob{
         return Math.PI/2;
     }
 
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }
 

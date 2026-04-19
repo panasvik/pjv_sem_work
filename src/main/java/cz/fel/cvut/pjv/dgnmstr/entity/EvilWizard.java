@@ -36,4 +36,9 @@ public class EvilWizard extends RangedMob{
                 new Projectile(15, getX(), getY(), this, getDamage(), deltaX, deltaY, 15)
         );
     }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }

@@ -33,6 +33,11 @@ public class Skeleton extends RangedMob{
                 new Projectile(5, getX(), getY(), this, getDamage(), deltaX, deltaY, 25)
         );
     }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }
 
 

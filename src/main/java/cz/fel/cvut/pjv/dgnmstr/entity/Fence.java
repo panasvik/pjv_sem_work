@@ -21,4 +21,9 @@ public class Fence extends Entity {
     public boolean isSolid() {
         return true;
     }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 }
