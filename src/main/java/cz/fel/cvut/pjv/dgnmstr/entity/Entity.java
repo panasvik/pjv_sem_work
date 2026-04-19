@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-/**
+/*
  * All entities should be based on this class
  * provides basic features of Entity:
  * health, speed, position, level where at, id
@@ -9,7 +9,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 import java.util.logging.Logger;
 
-public abstract class Entity {
+public abstract class Entity implements Updatable, Positionable {
     private int maxHP;
     private int hp;
     private int speed;
@@ -151,8 +151,6 @@ public abstract class Entity {
      * f.e. Zombie will move towards player and attack if in reach
      * Warrior will do everything that the player pressed with keys...
      */
-    public void update() {
-    }
 
     /**
      * can walk thorough walls or not
@@ -168,5 +166,9 @@ public abstract class Entity {
      */
     public boolean isSolid() {
         return false;
+    }
+
+    public Faction getFaction() {
+        return faction;
     }
 }

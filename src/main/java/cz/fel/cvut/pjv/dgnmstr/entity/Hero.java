@@ -3,6 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.Role;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
@@ -12,18 +13,20 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     private int dexterity;
     private int defence;
     private int reach;
-    private Role role;
+    private final Role role;
     private int gold;
+    private final PlayerProfile profile;
 
-
-    public Hero(int hp, int speed, double positionX, double positionY, int damage, int dexterity, int defence, int reach, Role role, Faction faction, Level level) {
-        super(hp, speed, positionX, positionY, faction, level);
-        this.damage = damage;
-        this.dexterity = dexterity;
-        this.defence = defence;
-        this.reach = reach;
+    public Hero(PlayerProfile profile, double positionX, double positionY, Role role, Faction faction, Level level) {
+        super(profile.getPlayerStats().hp(), profile.getPlayerStats().speed(), positionX, positionY, faction, level);
+        PlayerStats stats = profile.getPlayerStats();
+        this.damage = stats.damage();
+        this.dexterity = stats.dexterity();
+        this.defence = stats.defence();
+        this.reach = stats.range();
         this.role = role;
         this.gold = 0;
+        this.profile = profile;
     }
 
 
@@ -133,4 +136,9 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.gold = stats.gold();
         setHp(Math.min(getHp(), getMaxHP()));
     }
+
+    public PlayerProfile getProfile() {
+        return profile;
+    }
+
 }

@@ -19,7 +19,7 @@ public class DroppedGold extends Entity {
 
 
     @Override
-    public void update() {
+    public void update(double deltaTime) {
         if (!isAlive()) return;
 
         for (Hero player : getLevel().getPlayers()) {

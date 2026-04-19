@@ -1,6 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.Role.*;
 
@@ -15,10 +16,8 @@ public class Warrior extends Hero implements CanAttackMelee {
     private int hitsForUlt;
     private static final Logger log = Logger.getLogger(Warrior.class.getName());
 
-    public Warrior(PlayerStats stats, double posX, double posY, Level level) {
-        super(stats.hp(), stats.speed(), posX, posY,
-                stats.damage(), stats.dexterity(), stats.defence(), stats.range(),
-                Role.WARRIOR, Faction.HERO, level);
+    public Warrior(PlayerProfile profile, double posX, double posY, Level level) {
+        super(profile, posX, posY, Role.WARRIOR, Faction.HERO, level);
         this.hitsForUlt = 0;
     }
 
@@ -83,6 +82,8 @@ public class Warrior extends Hero implements CanAttackMelee {
         }
     }
 
+    @Override
+    public void update(double deltaTime) {
 
-
+    }
 }
