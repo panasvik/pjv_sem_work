@@ -1,8 +1,12 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+
+import java.util.List;
 import java.util.logging.Logger;
 
-public class Projectile {
+public class Projectile implements Updatable, Positionable {
     private final int radius;
     private final Entity master;
     private final int damage;
@@ -10,8 +14,10 @@ public class Projectile {
     private double deltaY;
     private double posX;
     private double posY;
-    private double velocity;
+    private final double velocity;
     private static final Logger log = Logger.getLogger(Projectile.class.getName());
+    private final Level level;
+    private boolean alive = true;
 
     public Projectile(int radius, double posX, double posY, Entity master, int damage, double deltaX, double deltaY, double velocity) {
         this.radius = radius;
@@ -19,16 +25,31 @@ public class Projectile {
         this.posX = posX;
         this.master = master;
         this.damage = damage;
-        this.deltaX = deltaX;
-        this.deltaY = deltaY;
+        calculateDelta(deltaX, deltaY);
         this.velocity = velocity;
+        this.level = master.getLevel();
     }
 
-    public double getPosX() {
+    private void calculateDelta(double deltaX, double deltaY) {
+        double dist = Math.sqrt(MyMath.calculateDistanceSquared(deltaX, deltaY));
+        if (dist > 0) {
+            this.deltaX = deltaX / dist;
+            this.deltaY = deltaY / dist;
+        } else {
+            this.deltaX = 0;
+            this.deltaY = 0;
+        }
+
+        this.deltaX = deltaX / Math.sqrt(MyMath.calculateDistanceSquared(deltaX, deltaY));
+        this.deltaY = deltaY / Math.sqrt(MyMath.calculateDistanceSquared(deltaX, deltaY));
+    }
+    @Override
+    public double getX() {
         return posX;
     }
 
-    public double getPosY() {
+    @Override
+    public double getY() {
         return posY;
     }
 
@@ -61,15 +82,36 @@ public class Projectile {
         return velocity;
     }
 
-    public void explodeOn(Entity target) {
-        String masterName = (master != null) ? master.getClass().getSimpleName() : "Unknown";
-        String targetName = (target != null) ? target.getClass().getSimpleName() : "Unknown";
-        log.fine ("Projectile from " + masterName + " hit " + targetName + " and dealt " + damage + " damage.");
-        target.takeDamage(damage, master);
-        master.getLevel().removeProjectile(this);
+    public void explodeOn(List<Entity> targets) {
+        if (targets != null) {
+            for (Entity target : targets) {
+                target.takeDamage(damage, master);
+            }
+        }
+        alive = false;
     }
 
-    public void update() {
+    @Override
+    public void update(double deltaTime) {
+        if (!alive) return;
+        posX += deltaX * velocity;
+        posY += deltaY * velocity;
+        List<Entity> entNear = level.getEntitiesAround(this, radius);
+        entNear = entNear.stream()
+                .filter(Entity::isAlive)
+                .filter(e -> e != master)
+                .filter(master::isEnemy)
+                .toList();
+        if (!entNear.isEmpty()) {
+            explodeOn(entNear);
+            return;
+        }
+        if (!level.isWalkable(posX, posY)) {
+            explodeOn(null);
+        }
+    }
 
+    public boolean isAlive() {
+        return alive;
     }
 }
