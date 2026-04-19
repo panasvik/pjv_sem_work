@@ -9,6 +9,7 @@ public abstract class Boss extends Mob {
     protected List<Integer> phaseThresholds;
     private int currPhase = 0;
     private static final Logger log =  Logger.getLogger(Boss.class.getName());
+    private static final double COOLDOWN_TIME = 3.0;
 
     public Boss(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, List<Integer> phaseThresholds) {
         super(hp, speed, positionX, positionY, damage, reach, gold, faction, level, 1);
@@ -31,6 +32,19 @@ public abstract class Boss extends Mob {
 
     public int getCurrPhase() {
         return currPhase;
+    }
+
+    public void update(double deltaTime){
+        if (!this.isAlive()){return;}
+
+        Hero target = this.findNearestPlayer();
+        if (target == null){ return;}
+
+        this.setLookTarget(target.getX(), target.getY());
+
+        if (attackCooldown > 0){
+            attackCooldown -= deltaTime;
+        }
     }
 
 }

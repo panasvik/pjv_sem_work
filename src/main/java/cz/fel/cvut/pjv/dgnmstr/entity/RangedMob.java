@@ -76,29 +76,6 @@ public abstract class RangedMob extends Mob{
             attackCooldown -= deltaTime;
         }
     }
-    protected void retreatFrom(Entity target,  double deltaTime) {
-        if (target == null || !this.isAlive()) {return;}
-
-        double dx = getX() - target.getX();
-        double dy = getY() - target.getY();
-        double dist =  Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 0.1) {return;}
-
-        double moveX = (dx / dist) * getSpeed() * deltaTime;
-        double moveY = (dy / dist)  * getSpeed() * deltaTime;
-
-        double newX = getX() + moveX;
-        double newY = getY() + moveY;
-
-        if (getLevel().isWalkable(newX, newY)) {
-            setPos(newX, newY);
-        } else if (getLevel().isWalkable(newX, getY())) {
-            setPos(newX, getY());
-        } else if (getLevel().isWalkable(getX(), newY)) {
-            setPos(getX(), newY);
-        }
-    }
 }
 
 
