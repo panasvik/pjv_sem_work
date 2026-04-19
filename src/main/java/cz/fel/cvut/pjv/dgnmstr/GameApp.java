@@ -1,5 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr;
 
+import cz.fel.cvut.pjv.dgnmstr.global.GameEngine;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,10 +33,16 @@ public class GameApp extends Application {
         } else {
             mainLogger.setLevel(Level.SEVERE);
         }
-        FXMLLoader fxmlLoader = new FXMLLoader(GameApp.class.getResource("game-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Dungeon Mas");
-        stage.setScene(scene);
+
+        GameEngine engine = GameEngine.getInstance();
+        GameManager manager = GameManager.getInstance();
+
+        SceneManager sceneManager = SceneManager.getInstance();
+        sceneManager.init(stage, 1280, 720);
+        sceneManager.loadScreen("MainMenu","menu-view.fxml");
+
+        sceneManager.activate("MainMenu");
+        stage.setTitle("Dungeon Master");
         stage.show();
     }
 }

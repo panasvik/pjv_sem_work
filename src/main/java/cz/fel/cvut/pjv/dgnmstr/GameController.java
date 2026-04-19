@@ -8,11 +8,6 @@ public class GameController {
     private Label welcomeText;
 
     @FXML
-    protected void onHelloButton() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
-
-    @FXML
     public void selectDifficulty() {
 
     }
