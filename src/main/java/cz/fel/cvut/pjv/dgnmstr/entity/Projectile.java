@@ -115,6 +115,4 @@ public class Projectile implements Updatable, Positionable {
         return alive;
     }
 
-    public void update(double deltaTime) {
-    }
 }
