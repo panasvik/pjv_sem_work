@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.fel.cvut.pjv.dgnmstr.StartMenuController">
+   <children>
+      <Label alignment="CENTER" text="Dungeon Master" textAlignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#SinglePLayer" text="Single PLayer">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button mnemonicParsing="false" onAction="#MultiPlayer" text="Multi PLayer">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button mnemonicParsing="false" onAction="#exitGame" text="EXIT">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+   </children>
+   <opaqueInsets>
+      <Insets bottom="100.0" top="100.0" />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="150.0" />
+   </padding>
+</VBox>

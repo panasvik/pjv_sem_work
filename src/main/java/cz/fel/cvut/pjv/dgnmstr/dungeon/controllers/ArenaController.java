@@ -37,7 +37,7 @@ public class ArenaController implements Updatable {
         }
     }
 
-    private void closeGrates() {
+    public void closeGrates() {
         List<TilePosition> gratePos = arena.getGratePositions();
 
         for (TilePosition pos : gratePos) {
@@ -82,6 +82,7 @@ public class ArenaController implements Updatable {
             spawnTime += dTime;
             if (spawnTime >= spawnDelay) {
                 spawnPeriodicMobs();
+                // subtracting instead of nullifying to damp lags
                 spawnTime -= spawnDelay;
             }
         }
@@ -111,7 +112,7 @@ public class ArenaController implements Updatable {
             arena.setState(ArenaState.CLEARED);
         }
     }
-    private void openGrates() {
+    public void openGrates() {
         for (Entity grate : grates) {
             grate.die();
         }
@@ -197,5 +198,9 @@ public class ArenaController implements Updatable {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public List<Grate> getGrates() {
+        return grates;
     }
 }

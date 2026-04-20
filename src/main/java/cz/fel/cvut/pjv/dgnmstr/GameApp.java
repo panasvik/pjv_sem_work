@@ -13,9 +13,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GameApp extends Application {
+    private static GameApp instance;
     private static final Logger log =  Logger.getLogger(GameApp.class.getName());
+    private Stage stage;
+
+
+
     @Override
     public void start(Stage stage) throws IOException {
+        instance = this;
+        this.stage = stage;
         boolean isLog = getParameters().getRaw().contains("--log=true");
         Logger mainLogger = Logger.getLogger("");
 
@@ -39,10 +46,21 @@ public class GameApp extends Application {
 
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.init(stage, 1280, 720);
-        sceneManager.loadScreen("MainMenu","menu-view.fxml");
+        sceneManager.loadScreen(View.MAIN_MENU);
+        sceneManager.loadScreen(View.SINGLEPLAYER);
+        sceneManager.loadScreen(View.START_MENU);
 
-        sceneManager.activate("MainMenu");
+        sceneManager.activate(View.START_MENU);
         stage.setTitle("Dungeon Master");
         stage.show();
+
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public static GameApp getInstance() {
+        return instance;
     }
 }

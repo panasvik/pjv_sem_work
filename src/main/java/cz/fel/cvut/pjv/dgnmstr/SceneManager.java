@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class SceneManager {
     private static SceneManager instance;
@@ -14,7 +15,10 @@ public class SceneManager {
     private Stage mainStage;
     private Scene mainScene;
 
-    private final Map<String, Parent> screens = new HashMap<>();
+    private final Map<View, Parent> screens = new HashMap<>();
+
+    private static final Logger log =  Logger.getLogger(SceneManager.class.getName());
+
 
     private SceneManager() {}
 
@@ -39,29 +43,28 @@ public class SceneManager {
 
     /**
      *
-     * @param name
-     * @param fxmlPath
+     * @param view
      */
-    public void loadScreen(String name, String fxmlPath) {
+    public void loadScreen(View view) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            screens.put(name, root);
+            Parent root = FXMLLoader.load(getClass().getResource(view.getRelativePath()));
+            screens.put(view, root);
         } catch (IOException e) {
-            System.err.println("Не удалось загрузить FXML: " + fxmlPath);
-            e.printStackTrace();
+            log.severe("View path " + view.getRelativePath() + "not found on disc");
         }
     }
 
     /**
      *
-     * @param name
+     * @param view
      */
-    public void activate(String name) {
-        Parent root = screens.get(name);
+    public void activate(View view) {
+        Parent root = screens.get(view);
         if (root != null) {
             mainScene.setRoot(root);
         } else {
-            System.err.println("Экран с именем '" + name + "' не найден в кэше.");
+            log.severe("View path " + view.getRelativePath() + "not found in HashMap" +
+                    "add it with loadScreen()");
         }
     }
 
