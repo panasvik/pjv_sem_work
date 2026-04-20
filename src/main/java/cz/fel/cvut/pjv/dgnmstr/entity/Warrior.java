@@ -15,11 +15,60 @@ public class Warrior extends Hero implements CanAttackMelee {
     private int hitsForUlt;
     private static final Logger log = Logger.getLogger(Warrior.class.getName());
 
+    private boolean up = false;
+    private boolean down = false;
+    private boolean left = false;
+    private boolean right = false;
+
+    private boolean toAttack  = false;
+    private boolean toUltimate  = false;
+    private boolean toInteract =  false;
+
+    private double attackCooldown = 0.0;
+    private static final double COOLDOWN_TIME = 0.5;
+
+    private double ultActive = 0.0;
+    private static final double ULT_DURATION = 8.0;
+
+    private static final double B_STORM_RADIUS_MULT = 5.0;
+    private double bladeStormDamage = 0.0;
+
+
+
     public Warrior(PlayerStats stats, double posX, double posY, Level level) {
         super(stats.hp(), stats.speed(), posX, posY,
                 stats.damage(), stats.dexterity(), stats.defence(), stats.range(),
                 Role.WARRIOR, Faction.HERO, level);
         this.hitsForUlt = 0;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+
+    public void setToAttack(boolean toAttack) {
+        this.toAttack = toAttack;
+    }
+
+    public void setToUltimate(boolean toUltimate) {
+        this.toUltimate = toUltimate;
+    }
+
+    public void setToInteract(boolean toInteract) {
+        this.toInteract = toInteract;
     }
 
     /**
@@ -83,6 +132,106 @@ public class Warrior extends Hero implements CanAttackMelee {
         }
     }
 
+    @Override
+    public void update(double deltaTime) {
+        if (!isAlive()) return;
+
+        updateMovement(deltaTime);
+        updateAttack();
+        updateUltimate();
+        updateInteraction();
+        updateBladeStorm(deltaTime);
+        updateCooldowns(deltaTime);
+
+    }
+
+    private void updateMovement(double deltaTime) {
+        double moveX = 0;
+        double moveY = 0;
+
+        if (up) moveY -= 1;
+        if (down) moveY += 1;
+        if (left) moveX -= 1;
+        if (right) moveX += 1;
+
+        double length = Math.sqrt(moveX * moveX + moveY * moveY);
+
+        if (length > 0) {
+            moveX /= length;
+            moveY /= length;
+
+            double newX = getX() + moveX * getSpeed() * deltaTime;
+            double newY = getY() + moveY * getSpeed() * deltaTime;
+
+            if (getLevel().isWalkable(newX, newY)) {
+                setPos(newX, newY);
+            } else if (getLevel().isWalkable(newX, getY())) {
+                setPos(newX, getY());
+            } else if (getLevel().isWalkable(getX(), newY)){
+                setPos(getX(), newY);
+            }
+        }
+    }
+
+    private void updateAttack() {
+        if (toAttack && attackCooldown <= 0){
+            attack();
+            attackCooldown =  COOLDOWN_TIME;
+            toAttack = false;
+        }
+    }
+
+    private void updateUltimate() {
+        if (toUltimate && hitsForUlt >= HFULimit){
+            useUltimate();
+            ultActive = ULT_DURATION;
+            toUltimate = false;
+        }
+    }
+
+    private void updateInteraction(){
+        if (toInteract){
+            List <Entity> entitiesAround = getLevel().getEntitiesAround(this, this.getReach());
+            for (Entity e : entitiesAround) {
+                if (e instanceof Chest){
+                    ((Chest) e).onInteract(this);
+                    break;
+                }
+
+            }
+            toInteract = false;
+        }
+    }
+
+    private void updateBladeStorm(double deltaTime){
+        if (ultActive > 0) {
+            double damPerSecond = getDamage()/2.0;
+            bladeStormDamage += damPerSecond * deltaTime;
+
+            if (bladeStormDamage >= 1.0) {
+                int damage = (int) bladeStormDamage;
+
+                double bladeStormRadius = B_STORM_RADIUS_MULT * getReach();
+                List<Entity> entitiesAround = getLevel().getEntitiesAround(this, bladeStormRadius);
+
+                for (Entity e : entitiesAround) {
+                    if (isEnemy(e)){
+                        e.takeDamage(damage, this);
+                    }
+                }
+                bladeStormDamage -= damage;
+            }
+            ultActive -= deltaTime;
+        } else {
+            bladeStormDamage = 0.0;
+        }
+    }
+
+    private void updateCooldowns(double deltaTime) {
+        if (attackCooldown > 0){
+            attackCooldown -= deltaTime;
+        }
+    }
 
 
 }
