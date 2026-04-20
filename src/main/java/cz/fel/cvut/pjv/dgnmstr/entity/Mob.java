@@ -94,8 +94,8 @@ public abstract class Mob extends Entity implements CanAttack {
 
         if (distance < 0.1) {return;}
 
-        double moveX = (dx / distance) * this.getSpeed();
-        double moveY = (dy / distance) * this.getSpeed();
+        double moveX = (dx / distance) * this.getSpeed() * deltaTime;
+        double moveY = (dy / distance) * this.getSpeed() * deltaTime;
 
         double newX = this.getX() + moveX;
         double newY = this.getY() + moveY;

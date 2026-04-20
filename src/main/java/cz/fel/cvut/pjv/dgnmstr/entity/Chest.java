@@ -28,4 +28,7 @@ public class Chest extends Entity implements Interactable {
     public boolean isSolid() {
         return true;
     }
+
+    @Override
+    public void update(double deltaTime) { return;}
 }

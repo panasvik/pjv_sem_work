@@ -80,7 +80,7 @@ public class DwightTheLeviathan extends Boss{
 
         double dangerous_dist = range * DANGEROUS_DISTANCE;
         if (dist < dangerous_dist){
-            retreatFrom(target, range);
+            retreatFrom(target, deltaTime);
         } else if(dist > range * 1.25) {
             int speed = getSpeed();
             setSpeed(speed/2);
