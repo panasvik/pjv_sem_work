@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-/*
+/**
  * All entities should be based on this class
  * provides basic features of Entity:
  * health, speed, position, level where at, id
@@ -146,11 +146,7 @@ public abstract class Entity implements Updatable, Positionable {
     }
 
 
-    /**
-     * updates every entity according to its state, Faction etc
-     * f.e. Zombie will move towards player and attack if in reach
-     * Warrior will do everything that the player pressed with keys...
-     */
+
 
     /**
      * can walk thorough walls or not
