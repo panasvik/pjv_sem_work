@@ -38,34 +38,6 @@ public class Warrior extends Hero implements CanAttackMelee {
         this.hitsForUlt = 0;
     }
 
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-
-    public void setToAttack(boolean toAttack) {
-        this.toAttack = toAttack;
-    }
-
-    public void setToUltimate(boolean toUltimate) {
-        this.toUltimate = toUltimate;
-    }
-
-    public void setToInteract(boolean toInteract) {
-        this.toInteract = toInteract;
-    }
 
     /**
      * what to do when this took damage
@@ -227,6 +199,36 @@ public class Warrior extends Hero implements CanAttackMelee {
         if (attackCooldown > 0){
             attackCooldown -= deltaTime;
         }
+    }
+
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+
+    public void setToAttack(boolean toAttack) {
+        this.toAttack = toAttack;
+    }
+
+    public void setToUltimate(boolean toUltimate) {
+        this.toUltimate = toUltimate;
+    }
+
+    public void setToInteract(boolean toInteract) {
+        this.toInteract = toInteract;
     }
 
 

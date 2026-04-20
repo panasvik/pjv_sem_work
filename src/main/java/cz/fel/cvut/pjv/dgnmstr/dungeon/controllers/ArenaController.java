@@ -37,7 +37,7 @@ public class ArenaController implements Updatable {
         }
     }
 
-    private void closeGrates() {
+    public void closeGrates() {
         List<TilePosition> gratePos = arena.getGratePositions();
 
         for (TilePosition pos : gratePos) {
