@@ -1,10 +1,16 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.BossSpawnRate;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
+import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
-import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState.*;
+import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.*;
 
 public class Level {
     public static final int MAX_ARENA_IDX = 3;

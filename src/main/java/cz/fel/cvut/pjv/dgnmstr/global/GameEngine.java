@@ -1,6 +1,8 @@
 package cz.fel.cvut.pjv.dgnmstr.global;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.LevelController;
+import cz.fel.cvut.pjv.dgnmstr.entity.WarriorController;
+import cz.fel.cvut.pjv.dgnmstr.view.GameRenderer;
 import javafx.animation.AnimationTimer;
 
 
@@ -11,6 +13,7 @@ public class GameEngine{
     private LevelController lc = null;
     private AnimationTimer gameLoop;
     private long lastUPDTime = 0;
+    private GameRenderer renderer;
 
     private GameEngine() {
         initGameLoop();
@@ -62,10 +65,22 @@ public class GameEngine{
                 double deltaTime = (now - lastUPDTime) / 1_000_000_000.0;
                 lastUPDTime = now;
                 if (!isPaused && isStarted && lc != null) {
+
                     lc.update(deltaTime);
+
+                    if (renderer != null) {
+                        renderer.render(lc.getLevel());
+                    }
+
+
                 }
             }
         };
+    }
+
+
+    public void setRenderer(GameRenderer renderer) {
+        this.renderer = renderer;
     }
 }
 

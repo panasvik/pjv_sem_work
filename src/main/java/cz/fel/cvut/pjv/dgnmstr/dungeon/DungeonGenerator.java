@@ -1,7 +1,10 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 
-import cz.fel.cvut.pjv.dgnmstr.entity.Chest;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaType;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
+import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.io.BufferedReader;

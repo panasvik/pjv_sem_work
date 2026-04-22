@@ -1,5 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -26,6 +27,7 @@ public class WarriorController {
         this.scene = scene;
         setInputHandlers();
     }
+
     private void setInputHandlers() {
 
         scene.setOnKeyPressed(event -> {

@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
-import cz.fel.cvut.pjv.dgnmstr.entity.MobStats;
+import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 
 import java.io.Serializable;
 

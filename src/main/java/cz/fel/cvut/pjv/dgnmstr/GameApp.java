@@ -1,10 +1,12 @@
 package cz.fel.cvut.pjv.dgnmstr;
 
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.GameEngine;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
+import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
+import cz.fel.cvut.pjv.dgnmstr.view.View;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,7 +18,8 @@ public class GameApp extends Application {
     private static GameApp instance;
     private static final Logger log =  Logger.getLogger(GameApp.class.getName());
     private Stage stage;
-
+    private Hero thisPlayer = null;
+    private PlayerProfile thisProfile = null;
 
 
     @Override
@@ -62,5 +65,21 @@ public class GameApp extends Application {
 
     public static GameApp getInstance() {
         return instance;
+    }
+
+    public Hero getThisPlayer() {
+        return thisPlayer;
+    }
+
+    public PlayerProfile getThisProfile() {
+        return thisProfile;
+    }
+
+    public void setThisPlayer(Hero thisPlayer) {
+        this.thisPlayer = thisPlayer;
+    }
+
+    public void setThisProfile(PlayerProfile thisProfile) {
+        this.thisProfile = thisProfile;
     }
 }

@@ -1,13 +1,21 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon.controllers;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.*;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.BossSpawnRate;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
+import cz.fel.cvut.pjv.dgnmstr.entity.boss.AnysekTheBehemoth;
+import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
+import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
+import cz.fel.cvut.pjv.dgnmstr.entity.boss.DwightTheLeviathan;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import static cz.fel.cvut.pjv.dgnmstr.dungeon.LevelState.VICTORY;
+import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.VICTORY;
 
 public class LevelController implements Updatable {
     private final Level level;
@@ -179,5 +187,9 @@ public class LevelController implements Updatable {
         } else {
             spawnBoss();
         }
+    }
+
+    public Level getLevel() {
+        return level;
     }
 }

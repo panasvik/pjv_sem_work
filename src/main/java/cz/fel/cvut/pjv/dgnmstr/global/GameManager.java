@@ -1,17 +1,16 @@
 package cz.fel.cvut.pjv.dgnmstr.global;
 
-import cz.fel.cvut.pjv.dgnmstr.dungeon.DifficultyStats;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.LevelController;
-import cz.fel.cvut.pjv.dgnmstr.entity.Hero;
+import cz.fel.cvut.pjv.dgnmstr.entity.WarriorController;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
+import cz.fel.cvut.pjv.dgnmstr.view.GameRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import static cz.fel.cvut.pjv.dgnmstr.global.Difficulty.MID;
 
@@ -19,10 +18,14 @@ public class GameManager {
     private static GameManager instance = new GameManager();
     private Level level;
     private List<PlayerProfile> profiles;
+    private PlayerProfile thisProfile;
     private final DungeonGenerator generator;
     private DifficultyStats currentDifficulty;
     private GameState state;
     private final GameEngine engine;
+    private LevelController lc;
+    private WarriorController wc;
+
 
     public GameManager() {
         this.profiles = new ArrayList<PlayerProfile>();
@@ -61,12 +64,18 @@ public class GameManager {
     public void loadPlayersToLevel() {
         for (PlayerProfile profile: profiles) {
             level.addPlayer(profile);
+            GameManager gameManager = GameManager.getInstance();
+
+            if (profile == gameManager.getThisProfile()) {
+                WarriorController wc = new WarriorController(, scene);
+                gameManager.setWc(wc);
+            }
         }
     }
 
 
     public void startLevel() {
-        LevelController lc = new LevelController(level);
+        lc = new LevelController(level);
         engine.startLC(lc);
         state = GameState.PLAYING;
     }
@@ -138,5 +147,31 @@ public class GameManager {
     }
 
 
+    public PlayerProfile getThisProfile() {
+        return thisProfile;
+    }
 
+    public DifficultyStats getCurrentDifficulty() {
+        return currentDifficulty;
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public void setThisProfile(PlayerProfile thisProfile) {
+        this.thisProfile = thisProfile;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    public WarriorController getWc() {
+        return wc;
+    }
+
+    public void setWc(WarriorController wc) {
+        this.wc = wc;
+    }
 }

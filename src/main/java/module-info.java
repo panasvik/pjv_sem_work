@@ -10,4 +10,6 @@ module cz.fel.cvut.pjv.dgnmstr {
 
     opens cz.fel.cvut.pjv.dgnmstr to javafx.fxml;
     exports cz.fel.cvut.pjv.dgnmstr;
+    exports cz.fel.cvut.pjv.dgnmstr.view;
+    opens cz.fel.cvut.pjv.dgnmstr.view to javafx.fxml;
 }

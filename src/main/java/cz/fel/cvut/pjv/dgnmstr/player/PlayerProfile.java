@@ -2,10 +2,10 @@ package cz.fel.cvut.pjv.dgnmstr.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.fel.cvut.pjv.dgnmstr.entity.Role;
-import cz.fel.cvut.pjv.dgnmstr.item.ArmorPiece;
-import cz.fel.cvut.pjv.dgnmstr.item.ArmorPieceType;
-import cz.fel.cvut.pjv.dgnmstr.item.Weapon;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
+import cz.fel.cvut.pjv.dgnmstr.item.armor.ArmorPiece;
+import cz.fel.cvut.pjv.dgnmstr.item.armor.ArmorPieceType;
+import cz.fel.cvut.pjv.dgnmstr.item.weapon.Weapon;
 
 import java.io.File;
 import java.io.IOException;
