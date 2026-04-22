@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaType;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.io.BufferedReader;
@@ -22,11 +23,13 @@ public class DungeonGenerator {
 
     private static final int ARENA_SIZE = 64;
     private static final int CORRIDOR_LENGTH = 20;
+    private Random random;
 
-    private final Random random = new Random();
+
     private static final Logger log =  Logger.getLogger(DungeonGenerator.class.getName());
 
-    public Level generate(DifficultyStats difficulty) {
+    public Level generate(DifficultyStats difficulty, long seed) {
+        this.random = new Random(seed);
         log.info("Generating Dungeon...");
         Level level = new Level(difficulty);
 
@@ -75,8 +78,9 @@ public class DungeonGenerator {
                 if (level.getTile(x, y) == TileType.CHEST_FLOOR) {
                     double worldX = (x * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
                     double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+                    int id = GameManager.getInstance().getIdGenerator().getNextId();
 
-                    Chest chest = new Chest(worldX, worldY, level, new Inventory());
+                    Chest chest = new Chest(id, worldX, worldY, level, new Inventory());
                     level.addEntity(chest);
                 }
             }
@@ -118,7 +122,7 @@ public class DungeonGenerator {
     }
 
     private void loadArenaFromFile(TileType[][] map, int startX, int startY, ArenaType type) throws IOException {
-        String fileName = "/data/arenas/" + type.name() + ".txt";
+        String fileName = type.name() + ".txt";
 
         InputStream is = getClass().getResourceAsStream(fileName);
 

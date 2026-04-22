@@ -7,6 +7,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +48,9 @@ public class ArenaController implements Updatable {
         for (TilePosition pos : gratePos) {
             double worldX = (pos.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
             double worldY = (pos.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+            int id = GameManager.getInstance().getIdGenerator().getNextId();
 
-            Grate grate = new Grate(worldX, worldY, level);
+            Grate grate = new Grate(id, worldX, worldY, level);
             grates.add(grate);
             level.addEntity(grate);
         }

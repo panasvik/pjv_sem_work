@@ -29,7 +29,6 @@ public class Level {
     private final List<Projectile> projectiles;
 
     private final Map<Integer, Entity> entityMap;
-    private int nextEntityId = 0;
 
     private int playersAlive;
 
@@ -59,9 +58,7 @@ public class Level {
         this.bossSpawnRate.add(new BossSpawnRate(BossStats.DWIGHT_THE_LEVIATHAN, 0.5));
     }
 
-    public int getNewID() {
-        return nextEntityId++;
-    }
+
 
     public Entity getEntity(int id) {
         return entityMap.get(id);
@@ -81,20 +78,13 @@ public class Level {
         this.height = height;
     }
 
-    public void addPlayer(PlayerProfile profile) {
-        Hero player = generateHero(profile);
+    public void addPlayer(Hero player) {
         this.players.add(player);
         this.addEntity(player);
         log.info("Player added to the level.");
         this.playersAlive = players.size();
     }
 
-    private Hero generateHero(PlayerProfile profile) {
-        return switch (profile.getRole()) {
-            case WARRIOR -> new Warrior(profile, 64, 64, this);
-            // only Warrior exists, add others later;
-        };
-    }
 
     public void addArena(Arena arena) {
         this.arenas.add(arena);
@@ -213,9 +203,6 @@ public class Level {
         return entityMap;
     }
 
-    public int getNextEntityId() {
-        return nextEntityId;
-    }
 
     public int getWidth() {
         return width;

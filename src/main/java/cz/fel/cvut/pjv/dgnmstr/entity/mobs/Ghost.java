@@ -5,8 +5,9 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 
 
 public class Ghost extends MeleeMob{
-    public Ghost(double positionX, double positionY, Level level) {
-        super(MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
+    public Ghost(int id, double positionX, double positionY, Level level) {
+        super( id,
+                MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
               MobStats.GHOST.getSpeed(),
               positionX,
               positionY,
@@ -17,8 +18,9 @@ public class Ghost extends MeleeMob{
               level, 1);
     }
 
-    public Ghost(double positionX, double positionY, Level level, int multiplicator) {
-        super(MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
+    public Ghost(int id, double positionX, double positionY, Level level, int multiplicator) {
+        super( id,
+                MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.GHOST.getSpeed(),
                 positionX,
                 positionY,

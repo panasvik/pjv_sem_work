@@ -3,11 +3,13 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 
 public class Skeleton extends RangedMob{
 
-    public Skeleton(double positionX, double positionY, Level level) {
-        super(MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
+    public Skeleton(int id, double positionX, double positionY, Level level) {
+        super(id,MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
                 positionX, positionY,
                 MobStats.SKELETON.getDamage(level.getDifficulty().getStatsMult()),
@@ -16,8 +18,8 @@ public class Skeleton extends RangedMob{
                 Faction.MONSTER,
                 level, 1);
     }
-    public Skeleton(double positionX, double positionY, Level level, int multiplicator) {
-        super(MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
+    public Skeleton(int id, double positionX, double positionY, Level level, int multiplicator) {
+        super(id, MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
                 positionX, positionY,
                 MobStats.SKELETON.getDamage(level.getDifficulty().getStatsMult()),
@@ -29,8 +31,9 @@ public class Skeleton extends RangedMob{
 
     @Override
     protected void fireProjectile(double deltaX, double deltaY){
+        int id = GameManager.getInstance().getIdGenerator().getNextId();
         getLevel().addProjectile(
-                new Projectile(5, getX(), getY(), this, getDamage(), deltaX, deltaY, 25)
+                new Projectile(id, 5, getX(), getY(), this, getDamage(), deltaX, deltaY, 25)
         );
     }
 

@@ -1,6 +1,5 @@
-package cz.fel.cvut.pjv.dgnmstr.entity;
+package cz.fel.cvut.pjv.dgnmstr.global;
 
-import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -9,68 +8,57 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class WarriorController {
+public class InputHandler {
 
-    private final Warrior warrior;
     private final Scene scene;
-
     private final Set<KeyCode> pressedKeys = new HashSet<>();
 
     private double mouseX = 0;
     private double mouseY = 0;
     private boolean leftMousePressed = false;
 
-    private static final Logger log = Logger.getLogger(WarriorController.class.getName());
+    private boolean ult = false;
+    private boolean interact = false;
 
-    public WarriorController(Warrior warrior, Scene scene) {
-        this.warrior = warrior;
+    private static final Logger log = Logger.getLogger(InputHandler.class.getName());
+
+    public InputHandler(Scene scene) {
         this.scene = scene;
         setInputHandlers();
     }
 
     private void setInputHandlers() {
-
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
             pressedKeys.add(code);
 
             switch (code) {
                 case E:
-                    warrior.setToUltimate(true);
-                    log.info("Ultimate activated");
+                    ult = true;
                     break;
                 case F:
-                    warrior.setToInteract(true);
-                    log.info("Interact key pressed");
+                    interact = true;
                     break;
             }
-
-            updateMovement();
         });
 
         scene.setOnKeyReleased(event -> {
             pressedKeys.remove(event.getCode());
-            updateMovement();
         });
-
 
         scene.setOnMouseMoved(event -> {
             mouseX = event.getSceneX();
             mouseY = event.getSceneY();
-            updateLookDirection();
         });
 
         scene.setOnMouseDragged(event -> {
             mouseX = event.getSceneX();
             mouseY = event.getSceneY();
-            updateLookDirection();
         });
 
         scene.setOnMousePressed(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 leftMousePressed = true;
-                warrior.setToAttack(true);
-                log.fine("Attack initiated");
             }
         });
 
@@ -81,14 +69,27 @@ public class WarriorController {
         });
     }
 
-    private void updateMovement() {
-        warrior.setUp(pressedKeys.contains(KeyCode.W));
-        warrior.setDown(pressedKeys.contains(KeyCode.S));
-        warrior.setLeft(pressedKeys.contains(KeyCode.A));
-        warrior.setRight(pressedKeys.contains(KeyCode.D));
-    }
 
-    private void updateLookDirection(){
-        warrior.setLookTarget(mouseX, mouseY);
+    public Inputs getInputs() {
+
+        double sceneCenterX = scene.getWidth() / 2;
+        double sceneCenterY = scene.getHeight() / 2;
+
+        Inputs currentInputs = new Inputs(
+                ult,
+                interact,
+                leftMousePressed, // Передаем атаку!
+                pressedKeys.contains(KeyCode.W),
+                pressedKeys.contains(KeyCode.S), // Исправлено на S
+                pressedKeys.contains(KeyCode.A), // Исправлено на A
+                pressedKeys.contains(KeyCode.D), // Исправлено на D
+                mouseX - sceneCenterX,
+                mouseY - sceneCenterY
+        );
+
+        ult = false;
+        interact = false;
+
+        return currentInputs;
     }
 }

@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 public class DroppedGold extends Entity {
     private int value;
     private static final double PICKUP_RADIUS = Level.TILE_SIZE / 2.0;
-    public DroppedGold(double positionX, double positionY, Level level, int value) {
-        super(1, 0, positionX, positionY, Faction.NEUTRAL, level);
+    public DroppedGold(int id, double positionX, double positionY, Level level, int value) {
+        super(id, 1, 0, positionX, positionY, Faction.NEUTRAL, level);
         this.value = value;
     }
     private static final Logger log =  Logger.getLogger(DroppedGold.class.getName());

@@ -1,12 +1,11 @@
 package cz.fel.cvut.pjv.dgnmstr.entity.hero;
 
-
-
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 
 public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUltimate {
     private int damage;
@@ -17,8 +16,10 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     private int gold;
     private final PlayerProfile profile;
 
-    public Hero(PlayerProfile profile, double positionX, double positionY, Role role, Faction faction, Level level) {
-        super(profile.getPlayerStats().hp(), profile.getPlayerStats().speed(), positionX, positionY, faction, level);
+    protected Inputs currentInputs;
+
+    public Hero(int id, PlayerProfile profile, double positionX, double positionY, Role role, Faction faction, Level level) {
+        super(id, profile.getPlayerStats().hp(), profile.getPlayerStats().speed(), positionX, positionY, faction, level);
         PlayerStats stats = profile.getPlayerStats();
         this.damage = stats.damage();
         this.dexterity = stats.dexterity();
@@ -29,13 +30,10 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.profile = profile;
     }
 
+    public void setInputs(Inputs inputs) {
+        this.currentInputs = inputs;
+    }
 
-    /**
-     * decides whether this should take the damage dealt, parry or dodge
-     * checks dexterity, speed and reach to decide
-     * @param source who is dealing damage
-     * @return will be the attack parried or not
-     */
     @Override
     protected boolean handleParry(Entity source) {
         if (!(source instanceof CanAttack)) {
@@ -48,7 +46,6 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return speedCheck();
     }
 
-
     @Override
     public boolean defenceCheck(int damage) {
         return this.defence >= damage * 2;
@@ -60,16 +57,10 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return damage;
     }
 
-
     @Override
     public int getDamage() {
         return damage;
     }
-
-    /**
-     * checks whether this can parry
-     * @return true can / false cannot
-     */
 
     private boolean dextCheck() {
         double chance = MyMath.sigmoid(this.dexterity * this.dexterity);
@@ -121,11 +112,6 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return gold;
     }
 
-
-    /**
-     * loads new stats of PlayerProfile wrapped int PlayerStats
-     * @param stats new stats
-     */
     public void syncStats(PlayerStats stats) {
         this.setMaxHP(stats.hp());
         this.setDamage(stats.damage());
@@ -140,5 +126,4 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     public PlayerProfile getProfile() {
         return profile;
     }
-
 }

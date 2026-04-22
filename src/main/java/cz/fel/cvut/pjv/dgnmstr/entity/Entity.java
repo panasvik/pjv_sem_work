@@ -21,7 +21,7 @@ public abstract class Entity implements Updatable, Positionable {
     private final int id;
     private static final Logger log = Logger.getLogger(Entity.class.getName());
 
-    public Entity(int hp, int speed, double positionX, double positionY, Faction faction, Level level) {
+    public Entity(int id, int hp, int speed, double positionX, double positionY, Faction faction, Level level) {
         this.maxHP = hp;
         this.hp = hp;
         this.speed = speed;
@@ -30,8 +30,7 @@ public abstract class Entity implements Updatable, Positionable {
         this.positionY = positionY;
         this.faction = faction;
         this.level = level;
-        this.id = (level != null) ? level.getNewID() : -1;
-
+        this.id = id;
     }
 
     public int getId() {

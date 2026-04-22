@@ -16,8 +16,8 @@ public abstract class RangedMob extends Mob{
     protected static final double COOLDOWN_TIME = 2.0;
     protected static final double DANGEROUS_DISTANCE = 0.25;
 
-    public RangedMob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
-        super(hp, speed, positionX, positionY, damage, reach, gold, faction, level, multiplicator);
+    public RangedMob(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
+        super(id, hp, speed, positionX, positionY, damage, reach, gold, faction, level, multiplicator);
     }
 
     @Override

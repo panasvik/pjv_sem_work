@@ -18,8 +18,6 @@ public class GameApp extends Application {
     private static GameApp instance;
     private static final Logger log =  Logger.getLogger(GameApp.class.getName());
     private Stage stage;
-    private Hero thisPlayer = null;
-    private PlayerProfile thisProfile = null;
 
 
     @Override
@@ -34,7 +32,7 @@ public class GameApp extends Application {
         }
 
         Logger gameLogger = Logger.getLogger("cz.fel.cvut.pjv.dgnmstr");
-        if (isLog) {
+        if (true) {
             mainLogger.setLevel(Level.INFO);
             gameLogger.setLevel(Level.ALL);
 
@@ -52,6 +50,7 @@ public class GameApp extends Application {
         sceneManager.loadScreen(View.MAIN_MENU);
         sceneManager.loadScreen(View.SINGLEPLAYER);
         sceneManager.loadScreen(View.START_MENU);
+        sceneManager.loadScreen(View.LEVEL);
 
         sceneManager.activate(View.START_MENU);
         stage.setTitle("Dungeon Master");
@@ -67,19 +66,4 @@ public class GameApp extends Application {
         return instance;
     }
 
-    public Hero getThisPlayer() {
-        return thisPlayer;
-    }
-
-    public PlayerProfile getThisProfile() {
-        return thisProfile;
-    }
-
-    public void setThisPlayer(Hero thisPlayer) {
-        this.thisPlayer = thisPlayer;
-    }
-
-    public void setThisProfile(PlayerProfile thisProfile) {
-        this.thisProfile = thisProfile;
-    }
-}
+   }

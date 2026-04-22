@@ -115,10 +115,14 @@ public class LevelController implements Updatable {
         double spawnY = lastArena.getCenterWorldY();
         Boss levelBoss;
         if (selectedBoss == BossStats.ANYSEK_THE_BEHEMOTH) {
-            levelBoss = new AnysekTheBehemoth(spawnX, spawnY, level);
+            int id = GameManager.getInstance().getIdGenerator().getNextId();
+
+            levelBoss = new AnysekTheBehemoth(id, spawnX, spawnY, level);
             level.setLevelBoss(levelBoss);
         } else {
-            levelBoss = new DwightTheLeviathan(spawnX, spawnY, level);
+            int id = GameManager.getInstance().getIdGenerator().getNextId();
+
+            levelBoss = new DwightTheLeviathan(id, spawnX, spawnY, level);
             level.setLevelBoss(levelBoss);
         }
         level.addEntity(levelBoss);

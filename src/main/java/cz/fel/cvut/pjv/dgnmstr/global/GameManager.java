@@ -4,8 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.LevelController;
-import cz.fel.cvut.pjv.dgnmstr.entity.WarriorController;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.view.GameRenderer;
 
@@ -24,14 +24,20 @@ public class GameManager {
     private GameState state;
     private final GameEngine engine;
     private LevelController lc;
-    private WarriorController wc;
-
+    private InputHandler inputHandler;
+    private ClientGameLoop clientLoop;
+    private final IDGenerator idGenerator;
 
     public GameManager() {
         this.profiles = new ArrayList<PlayerProfile>();
         this.generator = new DungeonGenerator();
         this.state = GameState.MAIN_MENU;
         this.engine = GameEngine.getInstance();
+        this.idGenerator = new IDGenerator();
+    }
+
+    public IDGenerator getIdGenerator() {
+        return idGenerator;
     }
 
     public static GameManager getInstance() {
@@ -53,8 +59,8 @@ public class GameManager {
     /**
      * generates new Level
      */
-    public void newLevel() {
-        level = generator.generate(chooseDifficulty(MID));
+    public void newLevel(long seed) {
+        level = generator.generate(chooseDifficulty(MID), seed);
     }
 
     /**
@@ -63,13 +69,11 @@ public class GameManager {
      */
     public void loadPlayersToLevel() {
         for (PlayerProfile profile: profiles) {
-            level.addPlayer(profile);
-            GameManager gameManager = GameManager.getInstance();
-
-            if (profile == gameManager.getThisProfile()) {
-                WarriorController wc = new WarriorController(, scene);
-                gameManager.setWc(wc);
-            }
+            int newId = idGenerator.getNextId();
+            Hero player = switch (profile.getRole()) {
+                case WARRIOR -> new Warrior(newId, profile, 64, 64, level);
+            };
+            level.addPlayer(player);
         }
     }
 
@@ -77,13 +81,21 @@ public class GameManager {
     public void startLevel() {
         lc = new LevelController(level);
         engine.startLC(lc);
+
+        Hero localPlayer = level.getPlayers().getFirst();
+
+        GameRenderer renderer = null; // REMAKE WHEN RENDERER IS DONE
+        clientLoop = new ClientGameLoop(engine, inputHandler, renderer, localPlayer);
+        clientLoop.start();
         state = GameState.PLAYING;
     }
 
-    /**
-     * throws players back to lobby
-     */
     public void throwToLobby() {
+        if (clientLoop != null) {
+            clientLoop.stop();
+            clientLoop = null;
+        }
+
         engine.exitLevel();
         mergeLoot();
         state = GameState.MAIN_MENU;
@@ -167,11 +179,11 @@ public class GameManager {
         this.state = state;
     }
 
-    public WarriorController getWc() {
-        return wc;
+    public InputHandler getInputHandler() {
+        return inputHandler;
     }
 
-    public void setWc(WarriorController wc) {
-        this.wc = wc;
+    public void setInputHandler(InputHandler inputHandler) {
+        this.inputHandler = inputHandler;
     }
 }

@@ -9,8 +9,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import java.util.List;
 
 public abstract class MeleeMob extends Mob implements CanAttackMelee {
-    public MeleeMob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
-        super(hp, speed, positionX, positionY, damage, reach, gold, faction, level, multiplicator);
+    public MeleeMob(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
+        super(id, hp, speed, positionX, positionY, damage, reach, gold, faction, level, multiplicator);
     }
     protected double attackAngle(){
         return Math.PI/4;

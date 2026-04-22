@@ -7,8 +7,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 
 public class Grate extends Entity {
 
-    public Grate(double positionX, double positionY, Level level) {
-        super(Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Faction.NEUTRAL, level);
+    public Grate(int id, double positionX, double positionY, Level level) {
+        super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Faction.NEUTRAL, level);
     }
 
     @Override

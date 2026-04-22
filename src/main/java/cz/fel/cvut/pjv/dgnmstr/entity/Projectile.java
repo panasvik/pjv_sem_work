@@ -18,8 +18,10 @@ public class Projectile implements Updatable, Positionable {
     private static final Logger log = Logger.getLogger(Projectile.class.getName());
     private final Level level;
     private boolean alive = true;
+    private final int id;
 
-    public Projectile(int radius, double posX, double posY, Entity master, int damage, double deltaX, double deltaY, double velocity) {
+    public Projectile(int id, int radius, double posX, double posY, Entity master, int damage, double deltaX, double deltaY, double velocity) {
+        this.id = id;
         this.radius = radius;
         this.posY = posY;
         this.posX = posX;

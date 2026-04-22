@@ -5,6 +5,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public class DwightTheLeviathan extends Boss{
     private static final double COOLDOWN_TIME = 3.0;
     private static final double DANGEROUS_DISTANCE = 0.33;
 
-    public DwightTheLeviathan(double positionX, double positionY, Level level) {
-        super(BossStats.DWIGHT_THE_LEVIATHAN.getHp(level.getDifficulty().getStatsMult()),
+    public DwightTheLeviathan(int id, double positionX, double positionY, Level level) {
+        super(id, BossStats.DWIGHT_THE_LEVIATHAN.getHp(level.getDifficulty().getStatsMult()),
                 BossStats.DWIGHT_THE_LEVIATHAN.getSpeed(),
                 positionX,
                 positionY,
@@ -55,18 +57,21 @@ public class DwightTheLeviathan extends Boss{
         shotCount++;
         if (shotCount >= 5){
             int stats = 3 * damageMult;
+            IDGenerator idGen = GameManager.getInstance().getIdGenerator();
+
             getLevel().addProjectile(
-                    new Projectile(stats, getX(), getY(), this, getDamage(), deltaX, deltaY, stats));
+                    new Projectile(idGen.getNextId(), stats, getX(), getY(), this, getDamage(), deltaX, deltaY, stats));
             getLevel().addProjectile(
-                    new Projectile(stats, getX(), getY(), this, getDamage(), deltaX + 25, deltaY + 25, stats));
+                    new Projectile(idGen.getNextId(),stats, getX(), getY(), this, getDamage(), deltaX + 25, deltaY + 25, stats));
             getLevel().addProjectile(
-                    new Projectile(stats, getX(), getY(), this, getDamage(), deltaX - 25, deltaY - 25, stats)); // Možná optimalizace
+                    new Projectile(idGen.getNextId(), stats, getX(), getY(), this, getDamage(), deltaX - 25, deltaY - 25, stats)); // Možná optimalizace
             shotCount = 0;
 
         } else {
             int stats = 5 * damageMult;
+            IDGenerator idGen = GameManager.getInstance().getIdGenerator();
             getLevel().addProjectile(
-                    new Projectile(stats, getX(), getY(), this, getDamage(), deltaX, deltaY, stats) //Nejspíš bude potřeba zoptimalizovat
+                    new Projectile(idGen.getNextId(),stats, getX(), getY(), this, getDamage(), deltaX, deltaY, stats) //Nejspíš bude potřeba zoptimalizovat
             );
         }
     }

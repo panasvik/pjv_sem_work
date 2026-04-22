@@ -5,8 +5,10 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 
 public class Zombie extends MeleeMob{
 
-    public Zombie(double positionX, double positionY, Level level, int multiplicator) {
-        super(MobStats.ZOMBIE.getHp(level.getDifficulty().getStatsMult()),
+    public Zombie(int id,
+                  double positionX, double positionY, Level level, int multiplicator) {
+        super(id,
+                MobStats.ZOMBIE.getHp(level.getDifficulty().getStatsMult()),
               MobStats.ZOMBIE.getSpeed(),
               positionX,
               positionY,
@@ -16,8 +18,10 @@ public class Zombie extends MeleeMob{
               Faction.MONSTER,
               level, multiplicator);
     }
-    public Zombie(double positionX, double positionY, Level level) {
-        super(MobStats.ZOMBIE.getHp(level.getDifficulty().getStatsMult()),
+    public Zombie(int id,
+                  double positionX, double positionY, Level level) {
+        super(id,
+                MobStats.ZOMBIE.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.ZOMBIE.getSpeed(),
                 positionX,
                 positionY,

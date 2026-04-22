@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
+import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,14 +18,6 @@ public class Warrior extends Hero implements CanAttackMelee {
     private static final int ultRange = 2;
     private int hitsForUlt;
     private static final Logger log = Logger.getLogger(Warrior.class.getName());
-    private boolean up = false;
-    private boolean down = false;
-    private boolean left = false;
-    private boolean right = false;
-
-    private boolean toAttack  = false;
-    private boolean toUltimate  = false;
-    private boolean toInteract =  false;
 
     private double attackCooldown = 0.0;
     private static final double COOLDOWN_TIME = 0.5;
@@ -35,22 +28,15 @@ public class Warrior extends Hero implements CanAttackMelee {
     private static final double B_STORM_RADIUS_MULT = 5.0;
     private double bladeStormDamage = 0.0;
 
-    public Warrior(PlayerProfile profile, double posX, double posY, Level level) {
-        super(profile, posX, posY, Role.WARRIOR, Faction.HERO, level);
+    public Warrior(int id, PlayerProfile profile, double posX, double posY, Level level) {
+        super(id, profile, posX, posY, Role.WARRIOR, Faction.HERO, level);
         this.hitsForUlt = 0;
     }
 
-
-    /**
-     * what to do when this took damage
-     * @param amount how much damage it took
-     * @param source who dealt damage
-     */
     @Override
     protected void onDamageTaken(int amount, Entity source) {
         this.hitsForUlt = 0;
     }
-
 
     @Override
     public boolean isInRange(Entity entity) {
@@ -106,23 +92,38 @@ public class Warrior extends Hero implements CanAttackMelee {
     public void update(double deltaTime) {
         if (!isAlive()) return;
 
-        updateMovement(deltaTime);
-        updateAttack();
-        updateUltimate();
-        updateInteraction();
+        if (currentInputs != null) {
+            setLookTarget(currentInputs.mouseX() + getX(), currentInputs.mouseY() + getY());
+
+            updateMovement(deltaTime, currentInputs);
+            updateAttack(currentInputs);
+            updateUltimate(currentInputs);
+            updateInteraction(currentInputs);
+//            log.info("player moved : " + currentInputs.down() + " "
+//                    + currentInputs.down() + " "
+//                    + currentInputs.up() + " "
+//                    + currentInputs.left() + " "
+//                    + currentInputs.right() + " "
+//                    + currentInputs.ult() + " "
+//                    + currentInputs.interact() + " "
+//                    + currentInputs.attack() + " "
+//                    + currentInputs.mouseX() + " "
+//                    + currentInputs.mouseY() + " " );
+            currentInputs = null;
+        }
+
         updateBladeStorm(deltaTime);
         updateCooldowns(deltaTime);
-
     }
 
-    private void updateMovement(double deltaTime) {
+    private void updateMovement(double deltaTime, Inputs inputs) {
         double moveX = 0;
         double moveY = 0;
 
-        if (up) moveY -= 1;
-        if (down) moveY += 1;
-        if (left) moveX -= 1;
-        if (right) moveX += 1;
+        if (inputs.up()) moveY -= 1;
+        if (inputs.down()) moveY += 1;
+        if (inputs.left()) moveX -= 1;
+        if (inputs.right()) moveX += 1;
 
         double length = Math.sqrt(moveX * moveX + moveY * moveY);
 
@@ -143,33 +144,29 @@ public class Warrior extends Hero implements CanAttackMelee {
         }
     }
 
-    private void updateAttack() {
-        if (toAttack && attackCooldown <= 0){
+    private void updateAttack(Inputs inputs) {
+        if (inputs.attack() && attackCooldown <= 0){
             attack();
-            attackCooldown =  COOLDOWN_TIME;
-            toAttack = false;
+            attackCooldown = COOLDOWN_TIME;
         }
     }
 
-    private void updateUltimate() {
-        if (toUltimate && hitsForUlt >= HFULimit){
+    private void updateUltimate(Inputs inputs) {
+        if (inputs.ult() && hitsForUlt >= HFULimit){
             useUltimate();
             ultActive = ULT_DURATION;
-            toUltimate = false;
         }
     }
 
-    private void updateInteraction(){
-        if (toInteract){
-            List <Entity> entitiesAround = getLevel().getEntitiesAround(this, this.getReach());
+    private void updateInteraction(Inputs inputs){
+        if (inputs.interact()){
+            List<Entity> entitiesAround = getLevel().getEntitiesAround(this, this.getReach());
             for (Entity e : entitiesAround) {
                 if (e instanceof Chest){
                     ((Chest) e).onInteract(this);
                     break;
                 }
-
             }
-            toInteract = false;
         }
     }
 
@@ -180,7 +177,6 @@ public class Warrior extends Hero implements CanAttackMelee {
 
             if (bladeStormDamage >= 1.0) {
                 int damage = (int) bladeStormDamage;
-
                 double bladeStormRadius = B_STORM_RADIUS_MULT * getReach();
                 List<Entity> entitiesAround = getLevel().getEntitiesAround(this, bladeStormRadius);
 
@@ -202,36 +198,4 @@ public class Warrior extends Hero implements CanAttackMelee {
             attackCooldown -= deltaTime;
         }
     }
-
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-
-    public void setToAttack(boolean toAttack) {
-        this.toAttack = toAttack;
-    }
-
-    public void setToUltimate(boolean toUltimate) {
-        this.toUltimate = toUltimate;
-    }
-
-    public void setToInteract(boolean toInteract) {
-        this.toInteract = toInteract;
-    }
-
-
 }

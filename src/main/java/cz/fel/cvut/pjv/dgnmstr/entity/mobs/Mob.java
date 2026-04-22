@@ -4,6 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.DroppedGold;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.logging.Logger;
@@ -16,8 +17,8 @@ public abstract class Mob extends Entity implements CanAttack {
 
     protected double attackCooldown = 0.0;
 
-    public Mob(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
-        super(hp  * multiplicator, speed, positionX, positionY, faction, level);
+    public Mob(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
+        super(id,hp  * multiplicator, speed, positionX, positionY, faction, level);
         this.damage = damage * multiplicator;
         this.reach = reach;
         this.gold = gold * multiplicator;
@@ -51,7 +52,9 @@ public abstract class Mob extends Entity implements CanAttack {
 
         if (getLevel() != null){
             log.info(this.getClass().getSimpleName() + "died and dropped " + dropGold + " gold.");
-            getLevel().addEntity(new DroppedGold(getX(), getY(), getLevel(), dropGold));
+            int id = GameManager.getInstance().getIdGenerator().getNextId();
+
+            getLevel().addEntity(new DroppedGold(id, getX(), getY(), getLevel(), dropGold));
         }
     }
 

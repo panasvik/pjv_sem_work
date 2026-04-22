@@ -5,7 +5,7 @@ public enum View {
     MULTIPLAYER(""),
     SINGLEPLAYER("single-player-menu-view.fxml"),
     MAIN_MENU("menu-view.fxml"),
-    LEVEL(""),
+    LEVEL("level-view.fxml"),
     PAUSE("");
 
     private final String relativePath;

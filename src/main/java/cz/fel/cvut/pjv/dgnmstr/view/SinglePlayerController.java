@@ -19,8 +19,6 @@ public class SinglePlayerController {
         gameManager.setProfiles(newPlayers);
         gameManager.setThisProfile(newPlayer);
         toMainMenu();
-        GameApp app = GameApp.getInstance();
-        app.setThisProfile(newPlayer);
     }
 
     /**

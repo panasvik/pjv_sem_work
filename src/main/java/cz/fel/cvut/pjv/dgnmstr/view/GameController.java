@@ -18,9 +18,9 @@ public class GameController {
         gameCanvas.widthProperty().bind(canvasWrapper.widthProperty());
         gameCanvas.heightProperty().bind(canvasWrapper.heightProperty());
 
-        GameRenderer renderer = new GameRenderer(gameCanvas);
-
-        GameEngine.getInstance().setRenderer(renderer);
+//        GameRenderer renderer = new GameRenderer(gameCanvas);
+//
+//        GameEngine.getInstance().setRenderer(renderer);
     }
 
 

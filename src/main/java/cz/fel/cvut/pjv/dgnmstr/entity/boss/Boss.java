@@ -15,8 +15,8 @@ public abstract class Boss extends Mob {
     private static final Logger log =  Logger.getLogger(Boss.class.getName());
     private static final double COOLDOWN_TIME = 3.0;
 
-    public Boss(int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, List<Integer> phaseThresholds) {
-        super(hp, speed, positionX, positionY, damage, reach, gold, faction, level, 1);
+    public Boss(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, List<Integer> phaseThresholds) {
+        super(id, hp, speed, positionX, positionY, damage, reach, gold, faction, level, 1);
         this.phaseThresholds = phaseThresholds;
     }
 

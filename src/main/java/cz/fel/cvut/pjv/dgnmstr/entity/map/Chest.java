@@ -9,8 +9,8 @@ import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 public class Chest extends Entity implements Interactable {
     private final Inventory inventory;
-    public Chest(double positionX, double positionY, Level level, Inventory inventory) {
-        super(Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getFaction(), level);
+    public Chest(int id, double positionX, double positionY, Level level, Inventory inventory) {
+        super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getFaction(), level);
         this.inventory = inventory;
     }
 
