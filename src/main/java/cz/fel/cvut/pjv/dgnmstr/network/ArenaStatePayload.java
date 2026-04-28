@@ -4,5 +4,5 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 
 import java.io.Serializable;
 
-public record ArenaStatePacket(ArenaState state) implements Serializable {
+public record ArenaStatePayload(ArenaState state) implements Serializable {
 }

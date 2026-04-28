@@ -4,9 +4,6 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
-import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
-import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
@@ -67,7 +64,6 @@ public class DwightTheLeviathan extends Boss{
 
         } else {
             int stats = 5 * damageMult;
-            IDGenerator idGen = ClientManager.getInstance().getIdGenerator();
             getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX, deltaY, stats);
 
         }

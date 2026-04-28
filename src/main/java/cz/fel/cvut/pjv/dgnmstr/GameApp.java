@@ -1,9 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr;
 
-import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.GameEngine;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
-import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
 import cz.fel.cvut.pjv.dgnmstr.view.View;
 import javafx.application.Application;
@@ -43,7 +41,7 @@ public class GameApp extends Application {
         }
 
         GameEngine engine = GameEngine.getInstance();
-        GameManager manager = GameManager.getInstance();
+        ClientManager manager = ClientManager.getInstance();
 
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.init(stage, 1280, 720);

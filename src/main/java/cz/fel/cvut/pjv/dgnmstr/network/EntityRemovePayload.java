@@ -2,5 +2,5 @@ package cz.fel.cvut.pjv.dgnmstr.network;
 
 import java.io.Serializable;
 
-public record EntityRemovePacket(int id) implements Serializable {
+public record EntityRemovePayload(int id) implements Serializable {
 }

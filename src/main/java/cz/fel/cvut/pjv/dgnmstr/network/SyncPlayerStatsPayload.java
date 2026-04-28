@@ -4,5 +4,5 @@ import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 
 import java.io.Serializable;
 
-public record SyncPlayerStatsPacket(int id, PlayerStats stats) implements Serializable {
+public record SyncPlayerStatsPayload(int id, PlayerStats stats) implements Serializable {
 }

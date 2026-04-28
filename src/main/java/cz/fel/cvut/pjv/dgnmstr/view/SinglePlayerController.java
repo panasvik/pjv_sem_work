@@ -1,8 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
-import cz.fel.cvut.pjv.dgnmstr.GameApp;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.fxml.FXML;
 
@@ -15,7 +14,7 @@ public class SinglePlayerController {
         PlayerProfile newPlayer = new PlayerProfile(Role.WARRIOR);
         List<PlayerProfile> newPlayers = new ArrayList<>();
         newPlayers.add(newPlayer);
-        GameManager gameManager = GameManager.getInstance();
+        ClientManager gameManager = ClientManager.getInstance();
         gameManager.setProfiles(newPlayers);
         gameManager.setThisProfile(newPlayer);
         toMainMenu();

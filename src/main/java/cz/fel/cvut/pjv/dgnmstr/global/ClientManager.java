@@ -14,8 +14,8 @@ import java.util.List;
 
 import static cz.fel.cvut.pjv.dgnmstr.global.Difficulty.MID;
 
-public class GameManager {
-    private static GameManager instance = new GameManager();
+public class ClientManager {
+    private static ClientManager instance = new ClientManager();
     private Level level;
     private List<PlayerProfile> profiles;
     private PlayerProfile thisProfile;
@@ -26,23 +26,18 @@ public class GameManager {
     private LevelController lc;
     private InputHandler inputHandler;
     private ClientGameLoop clientLoop;
-    private final IDGenerator idGenerator;
 
-    public GameManager() {
+    public ClientManager() {
         this.profiles = new ArrayList<PlayerProfile>();
         this.generator = new DungeonGenerator();
         this.state = GameState.MAIN_MENU;
         this.engine = GameEngine.getInstance();
-        this.idGenerator = new IDGenerator();
     }
 
-    public IDGenerator getIdGenerator() {
-        return idGenerator;
-    }
 
-    public static GameManager getInstance() {
+    public static ClientManager getInstance() {
         if (instance == null) {
-            instance = new GameManager();
+            instance = new ClientManager();
         }
         return instance;
     }
@@ -69,10 +64,7 @@ public class GameManager {
      */
     public void loadPlayersToLevel() {
         for (PlayerProfile profile: profiles) {
-            int newId = idGenerator.getNextId();
-            Hero player = switch (profile.getRole()) {
-                case WARRIOR -> new Warrior(newId, profile, 64, 64, level);
-            };
+            Hero player = level.requestHeroSpawn(64, 64, profile);
             level.addPlayer(player);
         }
     }
