@@ -18,7 +18,7 @@ public class ArenaController implements Updatable {
     private final double spawnDelay;
     private Arena arena;
     private Level level;
-    private final List<Grate> grates = new ArrayList<>();
+
     private int totalSpawnedInWave = 0;
 
 
@@ -51,7 +51,7 @@ public class ArenaController implements Updatable {
             int id = GameManager.getInstance().getIdGenerator().getNextId();
 
             Grate grate = new Grate(id, worldX, worldY, level);
-            grates.add(grate);
+            arena.addGrate(grate);
             level.addEntity(grate);
         }
     }
@@ -119,10 +119,10 @@ public class ArenaController implements Updatable {
         }
     }
     public void openGrates() {
-        for (Entity grate : grates) {
+        for (Entity grate : arena.getGrates()) {
             grate.die();
         }
-        grates.clear();
+        arena.clearGrate();
     }
 
     private void teleportOtherPlayers(Hero firstPlayer, List<Hero> players) {
@@ -207,6 +207,6 @@ public class ArenaController implements Updatable {
     }
 
     public List<Grate> getGrates() {
-        return grates;
+        return arena.getGrates();
     }
 }

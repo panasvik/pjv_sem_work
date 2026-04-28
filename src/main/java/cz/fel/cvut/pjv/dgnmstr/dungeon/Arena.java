@@ -4,6 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaType;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TilePosition;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
+import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
+import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 
 import java.util.ArrayList;
@@ -27,8 +29,11 @@ public class Arena {
     private final Level level;
     private final ArenaType type;
     private final List<Mob> activeMobs = new ArrayList<>();
+    private final List<Grate> grates = new ArrayList<>();
     private boolean miniBossSpawned = false;
     private boolean miniBossDead = false;
+
+
 
     /**
      * Constructs a new Arena at the specified grid coordinates.
@@ -138,4 +143,17 @@ public class Arena {
     public void setMiniBossDead(boolean miniBossDead) {
         this.miniBossDead = miniBossDead;
     }
+
+    public List<Grate> getGrates() {
+        return grates;
+    }
+
+    public void addGrate(Grate grate){
+        grates.add(grate);
+    }
+
+    public void clearGrate(){
+        grates.clear();
+    }
+
 }
