@@ -22,7 +22,7 @@ public class SimpleSpawner implements EntitySpawner {
     private final IDGenerator idGen;
 
 
-    public SimpleSpawner(Level level, IDGenerator idGen, ServerNetworkManager networkServer) {
+    public SimpleSpawner(Level level, IDGenerator idGen) {
         this.level = level;
         this.idGen = idGen;
     }
@@ -94,6 +94,7 @@ public class SimpleSpawner implements EntitySpawner {
         int newId = idGen.getNextId();
         Hero w1 = new Warrior(newId, profile, x, y, level);
         level.addEntity(w1);
+        level.addPlayer(w1);
         return w1;
     }
 }

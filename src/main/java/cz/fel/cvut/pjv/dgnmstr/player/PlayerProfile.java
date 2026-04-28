@@ -1,5 +1,5 @@
 package cz.fel.cvut.pjv.dgnmstr.player;
-
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
@@ -14,13 +14,14 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class PlayerProfile {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
     private Map<ArmorPieceType, ArmorPiece> armor;
     private Weapon weapon;
     private Inventory inventory;
     private Role role;
     private int gold;
     private final static Logger log =  Logger.getLogger(PlayerProfile.class.getName());
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     public PlayerProfile() {
         this.armor = new EnumMap<>(ArmorPieceType.class);
@@ -90,6 +91,25 @@ public class PlayerProfile {
      * Json loader
      * @param filePath path on disc to load profile
      * @return new PlayerProfile
+     * @throws IOException  could not load
+     */
+    public static PlayerProfile loadFromJson() throws IOException {
+        String defaultPath = "StartPlayer.json";
+        log.info("Loading default Player profile from JSON: " + defaultPath);
+        File file = new File(defaultPath);
+
+        if (!file.exists()) {
+            log.warning("File " + defaultPath + " not found. Creating a new empty profile.");
+            return new PlayerProfile(Role.WARRIOR); // Возвращаем базовый профиль, если файла нет
+        }
+
+        return MAPPER.readValue(file, PlayerProfile.class);
+    }
+
+    /**
+     * Json loader с указанием конкретного пути
+     * @param filePath путь к файлу на диске
+     * @return новый PlayerProfile
      * @throws IOException  could not load
      */
     public static PlayerProfile loadFromJson(String filePath) throws IOException {

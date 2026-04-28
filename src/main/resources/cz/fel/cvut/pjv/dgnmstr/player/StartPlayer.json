@@ -1,0 +1,28 @@
+{
+  "role": "WARRIOR",
+  "gold": 500,
+  "weapon": {
+    "@class": "cz.fel.cvut.pjv.dgnmstr.item.weapon.BasicWarriorSword"
+  },
+  "armor": {
+    "HELMET": {
+      "@class": "cz.fel.cvut.pjv.dgnmstr.item.armor.BasicWarriorHelmet"
+    },
+    "CHESTPLATE": {
+      "@class": "cz.fel.cvut.pjv.dgnmstr.item.armor.BasicWarriorChestplate"
+    },
+    "PANTS": {
+      "@class": "cz.fel.cvut.pjv.dgnmstr.item.armor.BasicWarriorPants"
+    }
+  },
+  "inventory": {
+    "invent": [
+      {
+        "@class": "cz.fel.cvut.pjv.dgnmstr.item.weapon.LegendaryWarriorSword"
+      },
+      {
+        "@class": "cz.fel.cvut.pjv.dgnmstr.item.armor.LegendaryWarriorChestplate"
+      }
+    ]
+  }
+}

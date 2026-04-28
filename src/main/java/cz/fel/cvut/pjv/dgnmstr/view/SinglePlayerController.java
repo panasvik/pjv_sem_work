@@ -5,13 +5,15 @@ import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.fxml.FXML;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SinglePlayerController {
     @FXML
-    public void newWarrior() {
-        PlayerProfile newPlayer = new PlayerProfile(Role.WARRIOR);
+    public void newWarrior() throws IOException {
+        PlayerProfile newPlayer = PlayerProfile.loadFromJson();
+
         List<PlayerProfile> newPlayers = new ArrayList<>();
         newPlayers.add(newPlayer);
         ClientManager gameManager = ClientManager.getInstance();
