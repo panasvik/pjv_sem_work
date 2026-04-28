@@ -7,7 +7,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +48,11 @@ public class ArenaController implements Updatable {
         for (TilePosition pos : gratePos) {
             double worldX = (pos.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
             double worldY = (pos.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-            int id = GameManager.getInstance().getIdGenerator().getNextId();
 
-            Grate grate = new Grate(id, worldX, worldY, level);
-            grates.add(grate);
-            level.addEntity(grate);
+            Grate grate = getLevel().requestGrateSpawn(worldX, worldY);
+            if (grate != null) {
+                grates.add(grate);
+            }
         }
     }
 
@@ -143,9 +143,11 @@ public class ArenaController implements Updatable {
             double worldX = (spot.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
             double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
 
-            Mob mob = arena.getType().spawnRandomMob(worldX, worldY, level);
-
-            arena.getActiveMobs().add(mob);
+            MobStats mobStats = arena.getType().getRandomMobStats();
+            Mob mob = level.requestMobSpawn( worldX, worldY, mobStats,1);
+            if (mob != null) {
+                arena.getActiveMobs().add(mob);
+            }
             level.addEntity(mob);
         }
     }
@@ -177,15 +179,19 @@ public class ArenaController implements Updatable {
     }
 
     private void spawnMiniBoss() {
-        double centerWorldX = arena.getCenterWorldX();
-        double centerWorldY = arena.getCenterWorldY();
+        List<TilePosition> validSpawnPoints = arena.getValidSpawnPoints();
+        int randomIndex = (int) (Math.random() * validSpawnPoints.size());
+        TilePosition spot = validSpawnPoints.remove(randomIndex);
+        double worldX = (spot.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+        double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
 
-        Mob boss = arena.getType().spawnMiniBoss(centerWorldX, centerWorldY, level);
+        MobStats mobStats = arena.getType().getRandomMobStats();
+        Mob miniboss = level.requestMobSpawn( worldX, worldY, mobStats,1);
 
-        arena.getActiveMobs().add(boss);
-        level.addEntity(boss);
+
+        arena.getActiveMobs().add(miniboss);
         arena.setMiniBossSpawned(true);
-        log.info("MiniBoss " + boss.getClass().getSimpleName() + " spawned!");
+        log.info("MiniBoss " + miniboss.getClass().getSimpleName() + " spawned!");
     }
 
 

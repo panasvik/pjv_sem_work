@@ -10,12 +10,18 @@ import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.DwightTheLeviathan;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
+import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
+import cz.fel.cvut.pjv.dgnmstr.network.DGNPacket;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
+import cz.fel.cvut.pjv.dgnmstr.network.UpdateHeroPayload;
+import cz.fel.cvut.pjv.dgnmstr.network.UpdateMobPayload;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.VICTORY;
+import static cz.fel.cvut.pjv.dgnmstr.network.PacketType.UPDATE_HERO;
 
 public class LevelController implements Updatable {
     private final Level level;
@@ -113,45 +119,30 @@ public class LevelController implements Updatable {
 
         double spawnX = lastArena.getCenterWorldX();
         double spawnY = lastArena.getCenterWorldY();
-        Boss levelBoss;
-        if (selectedBoss == BossStats.ANYSEK_THE_BEHEMOTH) {
-            int id = GameManager.getInstance().getIdGenerator().getNextId();
 
-            levelBoss = new AnysekTheBehemoth(id, spawnX, spawnY, level);
-            level.setLevelBoss(levelBoss);
-        } else {
-            int id = GameManager.getInstance().getIdGenerator().getNextId();
+        Boss levelBoss = level.requestBossSpawn(spawnX, spawnY, selectedBoss);
 
-            levelBoss = new DwightTheLeviathan(id, spawnX, spawnY, level);
+        if (levelBoss != null) {
             level.setLevelBoss(levelBoss);
+            level.setBossSpawned(true);
+            log.info("FINAL BOSS AWAITS! " + levelBoss.getClass().getSimpleName() + " spawned in the center.");
         }
-        level.addEntity(levelBoss);
-        level.setBossSpawned(true);
-
-        log.info("FINAL BOSS AWAITS! " + levelBoss.getClass().getSimpleName() + " spawned in the center.");
-
     }
 
     private void gameOver() {
         level.setState(LevelState.GAME_OVER);
         log.info("GAME OVER!");
-        GameManager mngr = GameManager.getInstance();
-        mngr.throwToLobby();
     }
 
     private void checkLevelComplete() {
         if (level.getState() == LevelState.VICTORY) {
             log.info("VICTORY!");
-            GameManager mngr = GameManager.getInstance();
-            mngr.throwToLobby();
         }
     }
 
     private void levelComplete() {
         level.setState(LevelState.VICTORY);
         log.info("VICTORY!");
-        GameManager mngr = GameManager.getInstance();
-        mngr.throwToLobby();
     }
 
     public void checkProgress() {

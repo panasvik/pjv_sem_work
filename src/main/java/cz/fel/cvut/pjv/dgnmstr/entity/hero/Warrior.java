@@ -124,18 +124,21 @@ public class Warrior extends Hero implements CanAttackMelee {
         if (inputs.down()) moveY += 1;
         if (inputs.left()) moveX -= 1;
         if (inputs.right()) moveX += 1;
+        log.info("moveX " + moveX + "moveY" + moveX);
 
         double length = Math.sqrt(moveX * moveX + moveY * moveY);
+        log.info("length " + length);
 
         if (length > 0) {
             moveX /= length;
             moveY /= length;
 
-            double newX = getX() + moveX * getSpeed() * deltaTime;
-            double newY = getY() + moveY * getSpeed() * deltaTime;
-
+            double newX = getX() + moveX * getSpeed();
+            double newY = getY() + moveY * getSpeed();
+            log.info("tile " + getLevel().getTile((int)(newX / Level.TILE_SIZE), (int)(newY / Level.TILE_SIZE)));
             if (getLevel().isWalkable(newX, newY)) {
                 setPos(newX, newY);
+                log.info("POS SET");
             } else if (getLevel().isWalkable(newX, getY())) {
                 setPos(newX, getY());
             } else if (getLevel().isWalkable(getX(), newY)){

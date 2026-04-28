@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -15,7 +15,7 @@ public class MenuController {
 
     @FXML
     public void newLevel() {
-        GameManager gm = GameManager.getInstance();
+        ClientManager gm = ClientManager.getInstance();
         SceneManager sm = SceneManager.getInstance();
         //now hardcoded, will be changed later
         gm.newLevel(23934954945L);

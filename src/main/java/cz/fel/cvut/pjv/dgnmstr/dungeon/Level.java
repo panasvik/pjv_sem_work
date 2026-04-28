@@ -1,5 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.EntitySpawner;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.BossSpawnRate;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
@@ -9,7 +10,12 @@ import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
+import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
+import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
+import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
+import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.util.ArrayList;
@@ -21,6 +27,7 @@ import java.util.logging.Logger;
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.*;
 
 public class Level {
+    private EntitySpawner spawner;
     public static final int MAX_ARENA_IDX = 3;
     private final List<Entity> allEntities;
     private final List<Hero> players;
@@ -29,6 +36,7 @@ public class Level {
     private final List<Projectile> projectiles;
 
     private final Map<Integer, Entity> entityMap;
+    private final Map<Integer, Projectile> projectileMap;
 
     private int playersAlive;
 
@@ -53,6 +61,7 @@ public class Level {
         this.difficulty = difficulty;
         this.projectiles = new ArrayList<>();
         this.entityMap = new HashMap<>();
+        this.projectileMap = new HashMap<>();
         this.bossSpawnRate = new ArrayList<>();
         this.bossSpawnRate.add(new BossSpawnRate(BossStats.ANYSEK_THE_BEHEMOTH, 0.5));
         this.bossSpawnRate.add(new BossSpawnRate(BossStats.DWIGHT_THE_LEVIATHAN, 0.5));
@@ -114,7 +123,11 @@ public class Level {
     }
 
     public void addProjectile(Projectile p) {
-        projectiles.add(p);
+        if (p != null && !projectileMap.containsKey(p.getId())) {
+            projectiles.add(p);
+            projectileMap.put(p.getId(), p);
+        }
+
     }
 
 
@@ -129,7 +142,7 @@ public class Level {
         if (map[gridX][gridY] == TileType.WALL) {
             return false;
         }
-
+        log.info("CAN WALK THO");
         for (Entity e : allEntities) {
             if (e.isAlive()) {
                 int eGridX = (int) (e.getX() / TILE_SIZE);
@@ -142,6 +155,7 @@ public class Level {
                 }
             }
         }
+        log.info("CAN WALK THO 100%");
         return true;
     }
 
@@ -240,5 +254,60 @@ public class Level {
 
     public void setLevelBoss(Boss levelBoss) {
         this.levelBoss = levelBoss;
+    }
+
+    public void setSpawner(EntitySpawner spawner) {
+        this.spawner = spawner;
+    }
+
+    public void requestProjectileSpawn(Entity master, int radius, int damage, double deltaX, double deltaY, double velocity) {
+        if (spawner != null) {
+            spawner.spawnProjectile(master, radius, damage, deltaX, deltaY, velocity);
+        }
+    }
+
+    public void requestGoldSpawn(double x, double y, int amount) {
+        if (spawner != null) {
+            spawner.spawnGold(x, y, amount);
+        }
+    }
+
+    public Mob requestMobSpawn(double x, double y, MobStats stats, int mult) {
+        if (spawner != null) {
+            return spawner.spawnMob(x, y, stats, mult);
+        }
+        return null;
+    }
+
+    public Boss requestBossSpawn(double x, double y, BossStats stats) {
+        if (spawner != null) {
+            return spawner.spawnBoss(x, y, stats);
+        }
+        return null;
+    }
+
+    public Grate requestGrateSpawn(double x, double y) {
+        if (spawner != null) {
+            return spawner.spawnGrate(x, y);
+        }
+        return null;
+    }
+
+    public Chest requestChestSpawn(double x, double y, Inventory inventory) {
+        if (spawner != null) {
+            return spawner.spawnChest(x, y, inventory);
+        }
+        return null;
+    }
+
+    public Hero requestHeroSpawn(double x, double y, PlayerProfile profile) {
+        if (spawner != null) {
+            return spawner.spawnHero(x, y, profile);
+        }
+        return null;
+    }
+
+    public Map<Integer, Projectile> getProjectileMap() {
+        return projectileMap;
     }
 }

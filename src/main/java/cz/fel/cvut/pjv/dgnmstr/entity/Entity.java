@@ -74,6 +74,9 @@ public abstract class Entity implements Updatable, Positionable {
 
     public void setHp(int hp) {
         this.hp = Math.max(0, Math.min(hp, this.maxHP));
+        if (hp < 0) {
+            die();
+        }
     }
 
     public boolean isAlive() {

@@ -4,7 +4,6 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Zombie;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -46,40 +45,15 @@ public enum ArenaType {
         this.mobSpawnRates = mobSpawnRates;
     }
 
-
-
-
-    public Mob spawnRandomMob(double x, double y, Level level) {
+    public MobStats getRandomMobStats() {
         double chance = Math.random();
         double sum = 0;
         for (MobSpawnRate rate : mobSpawnRates) {
             sum += rate.chance();
             if (chance <= sum) {
-                int id = GameManager.getInstance().getIdGenerator().getNextId();
-                Mob spawned = rate.type().spawn(id, x, y, level);
-                log.fine("Spawned " + spawned.getClass().getSimpleName() + " at [" + x + ", " + y + "]");
-                return spawned;
+                return rate.type();
             }
         }
-        int id = GameManager.getInstance().getIdGenerator().getNextId();
-        return new Zombie(id, x, y, level);
-    }
-
-    public Mob spawnMiniBoss(double x, double y, Level level) {
-        double chance = Math.random();
-        double sum = 0;
-        for (MobSpawnRate rate : mobSpawnRates) {
-            sum += rate.chance();
-            if (chance <= sum) {
-                int id = GameManager.getInstance().getIdGenerator().getNextId();
-
-                Mob spawned = rate.type().spawnWithMult(id, x, y, level, miniBossMult);
-                log.fine("Miniboss " + spawned.getClass().getSimpleName() + " spawned at [" + x + ", " + y + "]");
-                return spawned;
-            }
-        }
-        int id = GameManager.getInstance().getIdGenerator().getNextId();
-
-        return new Zombie(id, x, y, level, miniBossMult);
+        return MobStats.ZOMBIE; // Фолбек
     }
 }

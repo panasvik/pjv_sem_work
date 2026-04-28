@@ -5,7 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
@@ -57,22 +57,19 @@ public class DwightTheLeviathan extends Boss{
         shotCount++;
         if (shotCount >= 5){
             int stats = 3 * damageMult;
-            IDGenerator idGen = GameManager.getInstance().getIdGenerator();
+            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX, deltaY, stats);
 
-            getLevel().addProjectile(
-                    new Projectile(idGen.getNextId(), stats, getX(), getY(), this, getDamage(), deltaX, deltaY, stats));
-            getLevel().addProjectile(
-                    new Projectile(idGen.getNextId(),stats, getX(), getY(), this, getDamage(), deltaX + 25, deltaY + 25, stats));
-            getLevel().addProjectile(
-                    new Projectile(idGen.getNextId(), stats, getX(), getY(), this, getDamage(), deltaX - 25, deltaY - 25, stats)); // Možná optimalizace
+            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX + 25, deltaY + 25, stats);
+
+            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX - 25, deltaY - 25, stats);
+
             shotCount = 0;
 
         } else {
             int stats = 5 * damageMult;
-            IDGenerator idGen = GameManager.getInstance().getIdGenerator();
-            getLevel().addProjectile(
-                    new Projectile(idGen.getNextId(),stats, getX(), getY(), this, getDamage(), deltaX, deltaY, stats) //Nejspíš bude potřeba zoptimalizovat
-            );
+            IDGenerator idGen = ClientManager.getInstance().getIdGenerator();
+            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX, deltaY, stats);
+
         }
     }
 

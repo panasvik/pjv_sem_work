@@ -117,6 +117,11 @@ public class Projectile implements Updatable, Positionable {
         return alive;
     }
 
+    public int getId() {
+        return id;
+    }
 
-
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
 }

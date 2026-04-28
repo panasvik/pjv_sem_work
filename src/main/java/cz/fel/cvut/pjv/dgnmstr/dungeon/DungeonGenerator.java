@@ -5,7 +5,6 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaType;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.io.BufferedReader;
@@ -78,11 +77,8 @@ public class DungeonGenerator {
                 if (level.getTile(x, y) == TileType.CHEST_FLOOR) {
                     double worldX = (x * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
                     double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-                    int id = GameManager.getInstance().getIdGenerator().getNextId();
 
-                    Chest chest = new Chest(id, worldX, worldY, level, new Inventory());
-                    level.addEntity(chest);
-                }
+                    level.requestChestSpawn(worldX, worldY, new Inventory());                }
             }
         }
     }

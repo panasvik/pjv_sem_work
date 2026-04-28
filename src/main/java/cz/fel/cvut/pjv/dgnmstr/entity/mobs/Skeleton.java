@@ -3,8 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
-import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 
 public class Skeleton extends RangedMob{
 
@@ -31,10 +30,7 @@ public class Skeleton extends RangedMob{
 
     @Override
     protected void fireProjectile(double deltaX, double deltaY){
-        int id = GameManager.getInstance().getIdGenerator().getNextId();
-        getLevel().addProjectile(
-                new Projectile(id, 5, getX(), getY(), this, getDamage(), deltaX, deltaY, 25)
-        );
+        getLevel().requestProjectileSpawn(this, 5, getDamage(), deltaX, deltaY, 25);
     }
 
     @Override
