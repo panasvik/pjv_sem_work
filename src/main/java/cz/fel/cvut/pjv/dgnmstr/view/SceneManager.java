@@ -47,10 +47,10 @@ public class SceneManager {
      */
     public void loadScreen(View view) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(view.getRelativePath()));
+            Parent root = FXMLLoader.load(SceneManager.class.getResource(view.getRelativePath()));
             screens.put(view, root);
         } catch (IOException e) {
-            log.severe("View path " + view.getRelativePath() + "not found on disc");
+            log.severe("View path " + view.getRelativePath() + " not found on disc");
         }
     }
 

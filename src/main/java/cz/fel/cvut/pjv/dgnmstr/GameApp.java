@@ -1,7 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr;
 
 import cz.fel.cvut.pjv.dgnmstr.global.GameEngine;
-import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
 import cz.fel.cvut.pjv.dgnmstr.view.View;
 import javafx.application.Application;
@@ -30,26 +29,24 @@ public class GameApp extends Application {
         }
 
         Logger gameLogger = Logger.getLogger("cz.fel.cvut.pjv.dgnmstr");
-        if (true) {
+        if (isLog) {
             mainLogger.setLevel(Level.INFO);
             gameLogger.setLevel(Level.ALL);
 
 
-            log.info("Logování zapnuto.");
+            log.info("Logging is on");
         } else {
             mainLogger.setLevel(Level.SEVERE);
         }
 
-        GameEngine engine = GameEngine.getInstance();
-        ClientManager manager = ClientManager.getInstance();
 
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.init(stage, 1280, 720);
-        sceneManager.loadScreen(View.MAIN_MENU);
-        sceneManager.loadScreen(View.SINGLEPLAYER);
+//        sceneManager.loadScreen(View.MAIN_MENU);
+//        sceneManager.loadScreen(View.SINGLEPLAYER);
         sceneManager.loadScreen(View.START_MENU);
-        sceneManager.loadScreen(View.LEVEL);
-
+//        sceneManager.loadScreen(View.LEVEL);
+//
         sceneManager.activate(View.START_MENU);
         stage.setTitle("Dungeon Master");
         stage.show();
