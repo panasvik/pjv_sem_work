@@ -13,6 +13,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.network.*;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
@@ -96,7 +97,6 @@ public class ServerSpawner implements EntitySpawner {
         Grate grate = new Grate(newId, x, y, level);
         level.addEntity(grate);
 
-        // Отправляем пакет спавна решетки
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_GRATE, new SpawnGratePayload(newId, x, y)));
 
         return grate;
@@ -119,7 +119,7 @@ public class ServerSpawner implements EntitySpawner {
     public Hero spawnHero(double x, double y, PlayerProfile profile) {
         int newId = idGen.getNextId();
         Hero w1 = new Warrior(newId, profile, x, y, level);
-        level.addEntity(w1);
+        level.addPlayer(w1);
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_HERO, new
                 SpawnHeroPayload(newId, x, y, profile)));
         return w1;

@@ -2,6 +2,9 @@ package cz.fel.cvut.pjv.dgnmstr.entity.hero;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanDefend;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanUltimate;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;

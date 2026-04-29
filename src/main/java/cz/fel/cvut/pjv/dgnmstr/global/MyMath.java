@@ -1,7 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.global;
 
-import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Positionable;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 
 public class MyMath {
     public static double sigmoid(double x) {

@@ -5,23 +5,15 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.BossSpawnRate;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
-import cz.fel.cvut.pjv.dgnmstr.entity.boss.AnysekTheBehemoth;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
-import cz.fel.cvut.pjv.dgnmstr.entity.boss.DwightTheLeviathan;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
-import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
-import cz.fel.cvut.pjv.dgnmstr.network.DGNPacket;
-import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
-import cz.fel.cvut.pjv.dgnmstr.network.UpdateHeroPayload;
-import cz.fel.cvut.pjv.dgnmstr.network.UpdateMobPayload;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.VICTORY;
-import static cz.fel.cvut.pjv.dgnmstr.network.PacketType.UPDATE_HERO;
 
 public class LevelController implements Updatable {
     private final Level level;
@@ -36,6 +28,7 @@ public class LevelController implements Updatable {
     public void startLevel() {
         level.setState(LevelState.PLAYING);
         level.setPlayersAlive(level.getPlayers().size());
+        level.spawnChests();
         activateNextArena();
         log.info("Level started");
     }
@@ -45,6 +38,7 @@ public class LevelController implements Updatable {
         updateEntities(deltaTime);
         updateProjectiles(deltaTime);
         checkPlayers();
+        System.out.println("updated");
 
         if (arenaController != null) {
             arenaController.update(deltaTime);
@@ -187,4 +181,5 @@ public class LevelController implements Updatable {
     public Level getLevel() {
         return level;
     }
+
 }

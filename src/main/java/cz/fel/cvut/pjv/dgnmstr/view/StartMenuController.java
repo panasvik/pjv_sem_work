@@ -1,23 +1,139 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
+import cz.fel.cvut.pjv.dgnmstr.GameApp;
+import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.logging.Logger;
 
 public class StartMenuController {
+    private static final Logger log = Logger.getLogger(StartMenuController.class.getName());
+
+    private ServerNetworkManager snm;
+    private boolean isConnected = false;
+
+    private ClientNetworkManager cnm;
+    @FXML
+    public Label socketToConnect;
 
     @FXML
-    public void SinglePLayer() {
-        SceneManager mngr = SceneManager.getInstance();
-        mngr.activate(View.SINGLEPLAYER);
+    public TextField hostIP;
+
+    @FXML
+    public TextField hostPort;
+
+    boolean isProfileLoaded = false;
+
+    private PlayerProfile profile;
+    @FXML
+    public TextField filePath;
+
+    @FXML
+    public void host() {
+        if (!isProfileLoaded) {
+            log.warning("Profile is not loaded");
+            socketToConnect.setText("Load profile first");
+            return;
+        }
+        int port = 8888;
+        snm = new ServerNetworkManager(port);
+        snm.start();
+        socketToConnect.setText(String.valueOf(port));
+        try {
+            cnm = new ClientNetworkManager("127.0.0.1", port, profile);
+            cnm.connect();
+        } catch (UnknownHostException e) {
+            log.severe("HOST DOES NOT EXIST");
+            socketToConnect.setText("HOST DOES NOT EXIST");
+            return;
+        }
+        isConnected = true;
     }
 
     @FXML
-    public void MultiPlayer() {
-
+    public void start() {
+        if(!isConnected) {
+            log.warning("server is not started. start it first");
+            return;
+        }
+        snm.setGameStarted(true);
+        snm.getServerManager().startLC();
     }
 
     @FXML
-    public void exitGame() {
+    public void load() {
+        try {
+            profile = PlayerProfile.loadFromJson();
+        } catch (IOException e) {
+            log.severe("Path does not exist");
+            return;
+        }
+        isProfileLoaded = true;
+    }
+
+    @FXML
+    public void loadFrom() {
+        try {
+            profile = PlayerProfile.loadFromJson(filePath.getText());
+        } catch (IOException e) {
+            log.severe("Path does not exist");
+            return;
+        }
+        isProfileLoaded = true;
+    }
+
+    @FXML
+    public void saveProfile() {
+        if (!isProfileLoaded) {
+            log.warning("Profile is not loaded");
+            return;
+        }
+        try {
+            profile.saveToJson(filePath.getText());
+        } catch (IOException e) {
+            log.severe("UNABLE TO SAVE PROFILE");
+        }
+    }
+
+    @FXML
+    public void exit() {
         Platform.exit();
     }
- }
+
+    @FXML
+    public void connect() {
+        if (!isProfileLoaded) {
+            log.warning("Profile is not loaded");
+            socketToConnect.setText("Load profile first");
+            return;
+        }
+
+        String host = hostIP.getText();
+        String portText = hostPort.getText();
+        int port;
+        try {
+            port = Integer.parseInt(portText);
+        } catch (NumberFormatException e) {
+            log.warning("Port is not a valid number");
+            socketToConnect.setText("Invalid port");
+            return;
+        }
+
+        try {
+            cnm = new ClientNetworkManager(host, port, profile);
+            cnm.connect();
+        } catch (UnknownHostException e) {
+            log.severe("HOST DOES NOT EXIST");
+            socketToConnect.setText("HOST DOES NOT EXIST");
+            return;
+        }
+        isConnected = true;
+    }
+}

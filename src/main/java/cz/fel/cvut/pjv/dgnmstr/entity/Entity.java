@@ -1,5 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerManager;
 /**
  * All entities should be based on this class
  * provides basic features of Entity:
@@ -147,9 +151,6 @@ public abstract class Entity implements Updatable, Positionable {
         this.maxHP = Math.max(0, maxHP);
     }
 
-
-
-
     /**
      * can walk thorough walls or not
      * @return true can / false cannot
@@ -169,4 +170,6 @@ public abstract class Entity implements Updatable, Positionable {
     public Faction getFaction() {
         return faction;
     }
+
+//    public abstract void acceptServer(ServerManager sm);
 }

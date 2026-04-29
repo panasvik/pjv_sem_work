@@ -2,7 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity.map;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Interactable;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Interactable;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;

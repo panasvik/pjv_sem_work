@@ -2,8 +2,6 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
-import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 
 public class Skeleton extends RangedMob{
 

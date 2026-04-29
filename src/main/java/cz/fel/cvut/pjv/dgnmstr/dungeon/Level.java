@@ -1,15 +1,12 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.EntitySpawner;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.BossSpawnRate;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
@@ -310,4 +307,14 @@ public class Level {
     public Map<Integer, Projectile> getProjectileMap() {
         return projectileMap;
     }
+
+
+    public void spawnChests() {
+        for (Arena a: arenas) {
+            for (TilePosition p : a.getChestSpawnPoints()) {
+                requestChestSpawn(p.x() * TILE_SIZE, p.y() * TILE_SIZE, new Inventory());
+            }
+        }
+    }
+
 }
