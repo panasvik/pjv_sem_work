@@ -15,8 +15,12 @@ public enum PacketType implements Serializable {
     SPAWN_GOLD,
     REMOVE_GOLD,
     SPAWN_GRATE,
+    SPAWN_FENCE,
     SPAWN_CHEST,
     REMOVE_GRATE,
     SPAWN_BOSS,
-    SPAWN_HERO
+    SPAWN_HERO,
+    PLAYER_PROFILE,
+    CLIENT_ID,
+    SEED
 }

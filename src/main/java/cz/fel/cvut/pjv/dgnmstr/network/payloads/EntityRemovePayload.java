@@ -1,4 +1,4 @@
-package cz.fel.cvut.pjv.dgnmstr.network;
+package cz.fel.cvut.pjv.dgnmstr.network.payloads;
 
 import java.io.Serializable;
 

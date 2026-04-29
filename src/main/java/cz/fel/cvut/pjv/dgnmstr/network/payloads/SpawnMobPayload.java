@@ -1,4 +1,4 @@
-package cz.fel.cvut.pjv.dgnmstr.network;
+package cz.fel.cvut.pjv.dgnmstr.network.payloads;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 

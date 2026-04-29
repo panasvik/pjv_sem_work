@@ -1,4 +1,4 @@
-package cz.fel.cvut.pjv.dgnmstr.entity;
+package cz.fel.cvut.pjv.dgnmstr.entity.interfaces;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 

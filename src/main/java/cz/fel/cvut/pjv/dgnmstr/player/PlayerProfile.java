@@ -9,11 +9,13 @@ import cz.fel.cvut.pjv.dgnmstr.item.weapon.Weapon;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
+import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class PlayerProfile {
+public class PlayerProfile implements Serializable   {
     private Map<ArmorPieceType, ArmorPiece> armor;
     private Weapon weapon;
     private Inventory inventory;
@@ -87,23 +89,20 @@ public class PlayerProfile {
         return true;
     }
 
-    /**
-     * Json loader
-     * @param filePath path on disc to load profile
-     * @return new PlayerProfile
-     * @throws IOException  could not load
-     */
+
     public static PlayerProfile loadFromJson() throws IOException {
         String defaultPath = "StartPlayer.json";
         log.info("Loading default Player profile from JSON: " + defaultPath);
-        File file = new File(defaultPath);
 
-        if (!file.exists()) {
-            log.warning("File " + defaultPath + " not found. Creating a new empty profile.");
-            return new PlayerProfile(Role.WARRIOR); // Возвращаем базовый профиль, если файла нет
+        try (java.io.InputStream inputStream = PlayerProfile.class.getResourceAsStream(defaultPath)) {
+
+            if (inputStream == null) {
+                log.warning("File " + defaultPath + " not found in resources. Creating a new empty profile.");
+                return new PlayerProfile(Role.WARRIOR); // Возвращаем базовый профиль
+            }
+
+            return MAPPER.readValue(inputStream, PlayerProfile.class);
         }
-
-        return MAPPER.readValue(file, PlayerProfile.class);
     }
 
     /**
@@ -123,6 +122,7 @@ public class PlayerProfile {
      * @throws IOException  could not save
      */
     public void saveToJson(String filePath) throws IOException {
+
         log.info("Saving Player profile to JSON: " + filePath);
         MAPPER.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), this);
     }

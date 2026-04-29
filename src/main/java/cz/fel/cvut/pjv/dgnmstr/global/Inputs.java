@@ -1,5 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.global;
 
+import java.io.Serializable;
+
 public record Inputs(boolean ult,
                      boolean interact,
                      boolean attack,
@@ -8,5 +10,5 @@ public record Inputs(boolean ult,
                      boolean left,
                      boolean right,
                      double mouseX,
-                     double mouseY) {
+                     double mouseY) implements Serializable {
 }
