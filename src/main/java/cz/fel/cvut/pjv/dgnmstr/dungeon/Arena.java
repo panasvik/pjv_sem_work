@@ -68,6 +68,17 @@ public class Arena {
         }
         return validSpawnPoints;
     }
+    public List<TilePosition> getChestSpawnPoints() {
+        List<TilePosition> validSpawnPoints = new ArrayList<>();
+        for (int x = startX; x < startX + width; x++) {
+            for (int y = startY; y < startY + height; y++) {
+                if (level.getTile(x, y) == TileType.CHEST_FLOOR) {
+                    validSpawnPoints.add(new TilePosition(x, y));
+                }
+            }
+        }
+        return validSpawnPoints;
+    }
 
     /**
      * Checks if a specific set of world coordinates falls within this arena's grid bounds.
