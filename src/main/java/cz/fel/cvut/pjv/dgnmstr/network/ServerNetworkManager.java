@@ -1,173 +1,174 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
-import cz.fel.cvut.pjv.dgnmstr.global.GameEngine;
+import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.ClientID;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.PlayerProfilePayload;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.Seed;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.*;
 import java.net.*;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class ServerNetworkManager {
     private static final Logger log = Logger.getLogger(ServerNetworkManager.class.getName());
 
-    private ServerSocket tcpServerSocket;
     private DatagramSocket udpSocket;
+    private ServerManager serverManager;
+    private long seed;
 
-    private final List<ClientConnection> clients = new CopyOnWriteArrayList<>();
+    private final Map<InetSocketAddress, PlayerProfile> clients = new ConcurrentHashMap<>();
+    private final Map<InetSocketAddress, Integer> clientHeroIds = new ConcurrentHashMap<>();
+
     private boolean isRunning = false;
-
-    private final int tcpPort;
+    private boolean isGameStarted = false;
     private final int udpPort;
 
-    public ServerNetworkManager(int tcpPort, int udpPort) {
-        this.tcpPort = tcpPort;
+    public ServerNetworkManager(int udpPort) {
         this.udpPort = udpPort;
+        serverManager = new ServerManager(this);
+        Random random = new Random();
+        seed = random.nextLong();
+        serverManager.generateNewLevel(seed);
+
     }
 
     public void start() {
         try {
-            tcpServerSocket = new ServerSocket(tcpPort);
             udpSocket = new DatagramSocket(udpPort);
             isRunning = true;
 
-            // Поток для приема новых TCP-соединений
-            Thread acceptThread = new Thread(this::acceptClientsLoop, "TCP-Accept-Thread");
-            acceptThread.start();
-
-            // Поток для приема входящих UDP-пакетов
             Thread udpListenThread = new Thread(this::listenUdpLoop, "UDP-Listen-Thread");
             udpListenThread.start();
 
-            log.info("ServerNetworkManager started. TCP: " + tcpPort + ", UDP: " + udpPort);
+            System.out.println("ServerNetworkManager started on UDP port: " + udpPort);
         } catch (IOException e) {
-            log.severe("Failed to start server: " + e.getMessage());
+            System.out.println("Failed to start server: " + e.getMessage());
         }
     }
 
     public void broadcast(DGNPacket packet) {
         if (!isRunning) return;
-
-        if (shouldUseTCP(packet.type())) {
-            broadcastTCP(packet);
-        } else {
-            broadcastUDP(packet);
-        }
-    }
-
-
-    private boolean shouldUseTCP(PacketType type) {
-        return switch (type) {
-            case UPDATE_MOB, UPDATE_PROJECTILE, UPDATE_HERO -> false;
-            default -> true;
-        };
-    }
-
-    private void broadcastTCP(DGNPacket packet) {
-        for (ClientConnection client : clients) {
-            client.sendTCP(packet);
-        }
+        broadcastUDP(packet);
     }
 
     private void broadcastUDP(DGNPacket packet) {
         try {
             byte[] data = SerializationUtils.serialize(packet);
 
-            for (ClientConnection client : clients) {
-                if (client.getUdpPort() != -1) { // Если мы знаем UDP-порт клиента
-                    DatagramPacket udpPacket = new DatagramPacket(data, data.length, client.getAddress(), client.getUdpPort());
-                    udpSocket.send(udpPacket);
-                }
+            for (InetSocketAddress clientAddress : clients.keySet()) {
+                DatagramPacket udpPacket = new DatagramPacket(
+                        data, data.length, clientAddress.getAddress(), clientAddress.getPort()
+                );
+                udpSocket.send(udpPacket);
             }
         } catch (IOException e) {
-            log.warning("Failed to broadcast UDP packet: " + e.getMessage());
-        }
-    }
-
-
-    private void acceptClientsLoop() {
-        while (isRunning) {
-            try {
-                Socket clientSocket = tcpServerSocket.accept();
-                clientSocket.setTcpNoDelay(true); // Отключаем алгоритм Нейгла для игр
-
-                ClientConnection connection = new ClientConnection(clientSocket);
-                clients.add(connection);
-
-                Thread clientThread = new Thread(() -> listenTcpClient(connection), "TCP-Client-" + connection.getId());
-                clientThread.start();
-
-                log.info("New client connected: " + clientSocket.getInetAddress());
-            } catch (IOException e) {
-                if (isRunning) log.severe("Error accepting client: " + e.getMessage());
-            }
-        }
-    }
-
-    private void listenTcpClient(ClientConnection client) {
-        try {
-            while (isRunning && client.isConnected()) {
-                DGNPacket packet = (DGNPacket) client.getOis().readObject();
-                handleIncomingPacket(packet, client);
-            }
-        } catch (EOFException | SocketException e) {
-            log.info("Client disconnected: " + client.getId());
-        } catch (Exception e) {
-            log.warning("Error reading TCP from client: " + e.getMessage());
-        } finally {
-            disconnectClient(client);
+            System.out.println("Failed to broadcast UDP packet: " + e.getMessage());
         }
     }
 
     private void listenUdpLoop() {
         byte[] buffer = new byte[4096];
-        while (isRunning) {
+        while (isRunning && !udpSocket.isClosed()) {
             try {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 udpSocket.receive(packet);
 
+                InetSocketAddress senderAddress = new InetSocketAddress(packet.getAddress(), packet.getPort());
                 DGNPacket dgnPacket = (DGNPacket) SerializationUtils.deserialize(packet.getData());
 
-                updateClientUdpPort(packet.getAddress(), packet.getPort());
+                handleIncomingPacket(dgnPacket, senderAddress);
 
-                handleIncomingPacket(dgnPacket, null);
             } catch (Exception e) {
                 if (isRunning) log.warning("Error reading UDP: " + e.getMessage());
             }
         }
     }
 
-
-    private void handleIncomingPacket(DGNPacket packet, ClientConnection source) {
-        //GameEngine.getInstance().addIncomingPacket(packet);
-
-        log.fine("Received packet: " + packet.type());
-    }
-
-    private void updateClientUdpPort(InetAddress address, int port) {
-        for (ClientConnection c : clients) {
-            if (c.getAddress().equals(address) && c.getUdpPort() == -1) {
-                c.setUdpPort(port);
-                log.info("Mapped UDP port " + port + " to client " + address);
+    private void handleIncomingPacket(DGNPacket packet, InetSocketAddress source) {
+        // Проверяем, является ли это пакетом знакомства (handshake)
+        if (packet.type() == PacketType.PLAYER_PROFILE &&
+                packet.payload() instanceof PlayerProfilePayload payload &&
+                !clients.containsKey(source) && !isGameStarted) {
+            // Сохраняем клиента и его профиль
+            try {
+                byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new Seed(seed)));
+                DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
+                udpSocket.send(idPacket);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            clients.put(source, payload.profile());
+            int id = serverManager.addProfile(payload.profile());
+            clientHeroIds.put(source, id);
+            try {
+                byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.CLIENT_ID, new ClientID(id)));
+                DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
+                udpSocket.send(idPacket);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            System.out.println("New client registered with profile from: " + source);
+            System.out.println(source);
+        }
+
+        // Если клиент уже есть в списке, обрабатываем пакет
+        if (clients.containsKey(source)) {
+            if (packet.type() == PacketType.UPDATE_HERO && packet.payload() instanceof Inputs inputs) {
+                Integer heroId = clientHeroIds.get(source);
+                if (heroId != null) {
+                    serverManager.applyInputs(heroId, inputs);
+                }
+            } else {
+                System.out.println("Received packet: " + packet.type() + " from " + source);
+            }
+        } else {
+            System.out.println("Ignored packet from unknown client: " + source);
         }
     }
 
-    private void disconnectClient(ClientConnection client) {
-        clients.remove(client);
-        client.close();
+    public void disconnectClient(InetSocketAddress clientAddress) {
+        if (clients.remove(clientAddress) != null) {
+            clientHeroIds.remove(clientAddress);
+            System.out.println("Client disconnected/removed: " + clientAddress);
+        }
     }
 
     public void stop() {
         isRunning = false;
-        try {
-            if (tcpServerSocket != null) tcpServerSocket.close();
-            if (udpSocket != null) udpSocket.close();
-            for (ClientConnection c : clients) {
-                c.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (udpSocket != null && !udpSocket.isClosed()) {
+            udpSocket.close();
+        }
+        clients.clear();
+        clientHeroIds.clear();
+        serverManager.stopLC();
+        isGameStarted = false;
+        System.out.println("Server stopped.");
+    }
+
+    public Map<InetSocketAddress, PlayerProfile> getClients() {
+        return clients;
+    }
+
+    public ServerManager getServerManager() {
+        return serverManager;
+    }
+
+    public boolean isGameStarted() {
+        return isGameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        isGameStarted = gameStarted;
+        if (isGameStarted) {
+            serverManager.startLC();
+        }
+        else {
+            serverManager.stopLC();
         }
     }
 }

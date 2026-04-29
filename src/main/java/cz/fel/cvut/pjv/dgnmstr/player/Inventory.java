@@ -4,6 +4,7 @@ package cz.fel.cvut.pjv.dgnmstr.player;
 import cz.fel.cvut.pjv.dgnmstr.item.AddableItem;
 import cz.fel.cvut.pjv.dgnmstr.item.Item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * item manager for PlayerProfile
  */
-public class Inventory {
+public class Inventory implements Serializable {
     private final List<AddableItem> invent;
     private static final int MAX_SIZE = 16;
     private int size;

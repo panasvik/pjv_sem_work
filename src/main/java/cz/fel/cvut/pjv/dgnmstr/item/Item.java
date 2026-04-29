@@ -3,12 +3,14 @@ package cz.fel.cvut.pjv.dgnmstr.item;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
+
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.CLASS,
         include = JsonTypeInfo.As.PROPERTY,
         property = "@class"
 )
-public abstract class Item {
+public abstract class Item implements Serializable {
     private String name;
     private int price;
 

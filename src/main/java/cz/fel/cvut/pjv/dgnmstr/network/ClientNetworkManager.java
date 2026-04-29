@@ -1,5 +1,12 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
+import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.ClientID;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.PlayerProfilePayload;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.Seed;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnHeroPayload;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
+
 import java.io.*;
 import java.net.*;
 import java.util.logging.Logger;
@@ -7,85 +14,48 @@ import java.util.logging.Logger;
 public class ClientNetworkManager {
     private static final Logger log = Logger.getLogger(ClientNetworkManager.class.getName());
 
-    // TCP
-    private Socket tcpSocket;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
-
-    // UDP
     private DatagramSocket udpSocket;
-
+    private ClientManager manager;
     private final InetAddress serverAddress;
-    private final int serverTcpPort;
     private final int serverUdpPort;
+    private final PlayerProfile myProfile; // Храним профиль игрока
 
     private boolean isRunning = false;
 
-    public ClientNetworkManager(String serverIp, int serverTcpPort, int serverUdpPort) throws UnknownHostException {
+    public ClientNetworkManager(String serverIp, int serverUdpPort, PlayerProfile profile) throws UnknownHostException {
         this.serverAddress = InetAddress.getByName(serverIp);
-        this.serverTcpPort = serverTcpPort;
         this.serverUdpPort = serverUdpPort;
+        this.myProfile = profile;
+        manager = new ClientManager();
     }
-
 
     public void connect() {
         try {
-            tcpSocket = new Socket(serverAddress, serverTcpPort);
-            tcpSocket.setTcpNoDelay(true);
-
-            oos = new ObjectOutputStream(tcpSocket.getOutputStream());
-            ois = new ObjectInputStream(tcpSocket.getInputStream());
-
             udpSocket = new DatagramSocket();
-
             isRunning = true;
-
-            Thread tcpThread = new Thread(this::listenTcpLoop, "Client-TCP-Listen");
-            tcpThread.setDaemon(true);
-            tcpThread.start();
 
             Thread udpThread = new Thread(this::listenUdpLoop, "Client-UDP-Listen");
             udpThread.setDaemon(true);
             udpThread.start();
 
-            log.info("Connected to server! TCP Local Port: " + tcpSocket.getLocalPort() + ", UDP Local Port: " + udpSocket.getLocalPort());
+            System.out.println("Started UDP client! Local Port: " + udpSocket.getLocalPort());
 
+            // Отправляем профиль при подключении
             sendUdpHandshake();
 
         } catch (IOException e) {
-            log.severe("Failed to connect to server: " + e.getMessage());
+            System.out.println("Failed to initialize UDP socket: " + e.getMessage());
         }
     }
-
 
     public void send(DGNPacket packet) {
         if (!isRunning) return;
-
-        if (shouldUseTCP(packet.type())) {
-            sendTCP(packet);
-        } else {
-            sendUDP(packet);
-        }
+        sendUDP(packet);
     }
 
-
-    private boolean shouldUseTCP(PacketType type) {
-        return switch (type) {
-            case UPDATE_MOB, UPDATE_PROJECTILE, UPDATE_HERO -> false;
-            default -> true;
-        };
-    }
-
-    private void sendTCP(DGNPacket packet) {
-        try {
-            synchronized (oos) {
-                oos.writeObject(packet);
-                oos.flush();
-                oos.reset();
-            }
-        } catch (IOException e) {
-            log.warning("Failed to send TCP packet: " + e.getMessage());
-        }
+    public void sendInputs(Inputs inputs) {
+        if (!isRunning || inputs == null) return;
+        sendUDP(new DGNPacket(PacketType.UPDATE_HERO, inputs));
     }
 
     private void sendUDP(DGNPacket packet) {
@@ -94,29 +64,14 @@ public class ClientNetworkManager {
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, serverAddress, serverUdpPort);
             udpSocket.send(udpPacket);
         } catch (IOException e) {
-            log.warning("Failed to send UDP packet: " + e.getMessage());
+            System.out.println("Failed to send UDP packet: " + e.getMessage());
         }
     }
-
 
     private void sendUdpHandshake() {
-        sendUDP(new DGNPacket(PacketType.UPDATE_HERO, null));
-    }
-
-
-
-    private void listenTcpLoop() {
-        try {
-            while (isRunning && !tcpSocket.isClosed()) {
-                DGNPacket packet = (DGNPacket) ois.readObject();
-                handleIncomingPacket(packet);
-            }
-        } catch (EOFException | SocketException e) {
-            log.info("Disconnected from server.");
-            disconnect();
-        } catch (Exception e) {
-            log.warning("Error reading TCP stream: " + e.getMessage());
-        }
+        // Упаковываем профиль в Payload и отправляем на сервер
+        PlayerProfilePayload payload = new PlayerProfilePayload(myProfile);
+        sendUDP(new DGNPacket(PacketType.PLAYER_PROFILE, payload));
     }
 
     private void listenUdpLoop() {
@@ -134,22 +89,35 @@ public class ClientNetworkManager {
         }
     }
 
-
     private void handleIncomingPacket(DGNPacket packet) {
-        // ClientManager.getInstance().receiveNetworkEvent(packet);
-
-        log.fine("Client received: " + packet.type());
+        switch (packet.type()) {
+            case SEED -> manager.makeNewLC(((Seed) packet.payload()).seed());
+            case CLIENT_ID -> manager.setLocalHero(((ClientID) packet.payload()).id());
+            case SPAWN_HERO -> manager.addPlayer((SpawnHeroPayload) packet.payload());
+            case SPAWN_MOB -> manager.spawnMob((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnMobPayload) packet.payload());
+            case SPAWN_BOSS -> manager.spawnBoss((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnBossPayload) packet.payload());
+            case SPAWN_PROJECTILE -> manager.spawnProjectile((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnProjectilePayload) packet.payload());
+            case SPAWN_GOLD -> manager.spawnGold((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnGoldPayload) packet.payload());
+            case SPAWN_GRATE -> manager.spawnGrate((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnGratePayload) packet.payload());
+            case SPAWN_CHEST -> manager.spawnChest((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnChestPayload) packet.payload());
+            case SPAWN_FENCE -> manager.spawnFence((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnFencePayload) packet.payload());
+            case UPDATE_HERO -> manager.updateHero((cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateHeroPayload) packet.payload());
+            case UPDATE_MOB -> manager.updateMob((cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateMobPayload) packet.payload());
+            case UPDATE_PROJECTILE -> manager.updateProjectile((cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateProjectilePayload) packet.payload());
+            case ENTITY_REMOVE -> manager.removeEntity((cz.fel.cvut.pjv.dgnmstr.network.payloads.EntityRemovePayload) packet.payload());
+            case LEVEL_STATE -> manager.updateLevelState((cz.fel.cvut.pjv.dgnmstr.network.payloads.LevelStatePayload) packet.payload());
+            case ARENA_STATE -> manager.updateArenaState((cz.fel.cvut.pjv.dgnmstr.network.payloads.ArenaStatePayload) packet.payload());
+            case SYNC_STATS -> manager.syncStats((cz.fel.cvut.pjv.dgnmstr.network.payloads.SyncPlayerStatsPayload) packet.payload());
+            default -> {
+            }
+        }
     }
 
     public void disconnect() {
         isRunning = false;
-        try {
-            if (oos != null) oos.close();
-            if (ois != null) ois.close();
-            if (tcpSocket != null) tcpSocket.close();
-            if (udpSocket != null) udpSocket.close();
-        } catch (IOException e) {
-            log.warning("Error during disconnect: " + e.getMessage());
+        if (udpSocket != null && !udpSocket.isClosed()) {
+            udpSocket.close();
         }
+        System.out.println("Disconnected from server.");
     }
 }
