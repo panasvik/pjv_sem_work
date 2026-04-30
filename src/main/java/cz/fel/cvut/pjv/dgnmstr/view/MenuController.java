@@ -20,7 +20,7 @@ public class MenuController {
         //now hardcoded, will be changed later
         gm.newLevel(23934954945L);
         gm.loadPlayersToLevel();
-
+        sm.loadScreen(View.LEVEL);
         sm.activate(View.LEVEL);
 
         Scene scene = sm.getMainScene();

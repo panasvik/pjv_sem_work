@@ -11,6 +11,7 @@ import cz.fel.cvut.pjv.dgnmstr.view.GameRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.global.Difficulty.MID;
 
@@ -27,6 +28,7 @@ public class GameManager {
     private InputHandler inputHandler;
     private ClientGameLoop clientLoop;
     private final IDGenerator idGenerator;
+    private static final Logger log = Logger.getLogger(GameManager.class.getName());
 
     public GameManager() {
         this.profiles = new ArrayList<PlayerProfile>();
@@ -88,6 +90,7 @@ public class GameManager {
         clientLoop = new ClientGameLoop(engine, inputHandler, renderer, localPlayer);
         clientLoop.start();
         state = GameState.PLAYING;
+        log.info("InputHandler: " + inputHandler);
     }
 
     public void throwToLobby() {

@@ -50,7 +50,6 @@ public class GameApp extends Application {
         sceneManager.loadScreen(View.MAIN_MENU);
         sceneManager.loadScreen(View.SINGLEPLAYER);
         sceneManager.loadScreen(View.START_MENU);
-        sceneManager.loadScreen(View.LEVEL);
 
         sceneManager.activate(View.START_MENU);
         stage.setTitle("Dungeon Master");
