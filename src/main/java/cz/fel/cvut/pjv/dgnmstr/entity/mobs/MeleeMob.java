@@ -15,7 +15,7 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
     protected double attackAngle(){
         return Math.PI/4;
     }
-    protected static final double COOLDOWN_TIME = 1.5;  //vybalancovat
+    protected static final double COOLDOWN_TIME = 1.5;  // to be balanced
 
 
     @Override

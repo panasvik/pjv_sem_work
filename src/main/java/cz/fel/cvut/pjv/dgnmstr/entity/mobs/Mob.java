@@ -56,23 +56,7 @@ public abstract class Mob extends Entity implements CanAttack {
         }
     }
 
-    /**
-     * makes a mob make a step to a target
-     * @param target a target to make step to
-     */
-    public void moveToward(Entity target) {
-        if(target == null || !this.isAlive()) return;
 
-        double dx = target.getX() - this.getX();
-        double dy = target.getY() - this.getY();
-        double distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance > 0) {
-            double moveX = (dx / distance) * this.getSpeed();
-            double moveY = (dy / distance) * this.getSpeed();
-
-            this.setPos(this.getX() + moveX, this.getY() + moveY);
-        }
-    }
 
     protected Hero findNearestPlayer() {
         Hero nearest = null;
@@ -89,6 +73,11 @@ public abstract class Mob extends Entity implements CanAttack {
         return nearest;
     }
 
+    /**
+     * makes a mob make a step to a target
+     * @param target a target to make step to
+     * @param deltaTime time length of a tick
+     */
     protected void checkMoveToward(Entity target, double deltaTime) {
         if (target == null || !this.isAlive()) return;
 
