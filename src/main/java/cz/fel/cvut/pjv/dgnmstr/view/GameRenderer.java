@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,23 +19,37 @@ public class GameRenderer extends AnimationTimer {
     private final Canvas canvas;
     private final GraphicsContext gc;
     private static final Logger log = Logger.getLogger(GameRenderer.class.getName());
+    private final Hero localPlayer;
 
-    public GameRenderer(Canvas canvas, Level level) {
+    public GameRenderer(Canvas canvas, Level level, Hero localPlayer) {
         this.canvas = canvas;
         this.level = level;
         this.gc = canvas.getGraphicsContext2D();
+        this.localPlayer = localPlayer;
     }
 
     @Override
     public void handle(long now) {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Hero player = level.getPlayers().get(0);
-        double camX = Math.max(0, player.getX() - canvas.getWidth() / 2);
-        double camY = Math.max(0, player.getY() - canvas.getHeight() / 2);
-        log.info("Player pos: " + player.getX() + ", " + player.getY());
+        if (level == null || localPlayer == null) {
+            return;
+        }
 
-        for (int x = 0; x < level.getWidth(); x++) {
-            for (int y = 0; y < level.getHeight(); y++ ) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        if (canvas.getWidth() <= 0 || canvas.getHeight() <= 0) {
+            return;
+        }
+        double worldWidth = level.getWidth() * Level.TILE_SIZE;
+        double worldHeight = level.getHeight() * Level.TILE_SIZE;
+        double camX = Math.max(0, Math.min(localPlayer.getX() - canvas.getWidth() / 2, Math.max(0, worldWidth - canvas.getWidth())));
+        double camY = Math.max(0, Math.min(localPlayer.getY() - canvas.getHeight() / 2, Math.max(0, worldHeight - canvas.getHeight())));
+
+        int minTileX = Math.max(0, (int) (camX / Level.TILE_SIZE));
+        int minTileY = Math.max(0, (int) (camY / Level.TILE_SIZE));
+        int maxTileX = Math.min(level.getWidth() - 1, (int) ((camX + canvas.getWidth()) / Level.TILE_SIZE) + 1);
+        int maxTileY = Math.min(level.getHeight() - 1, (int) ((camY + canvas.getHeight()) / Level.TILE_SIZE) + 1);
+
+        for (int x = minTileX; x <= maxTileX; x++) {
+            for (int y = minTileY; y <= maxTileY; y++ ) {
                 TileType tile = level.getTile(x,y);
                 switch (tile) {
                     case WALL:
@@ -60,10 +75,22 @@ public class GameRenderer extends AnimationTimer {
 
             }
         }
-        for (Entity e : level.getAllEntities()){
-
+        List<Entity> entitySnapshot = new ArrayList<>(level.getAllEntities());
+        for (Entity e : entitySnapshot){
+            double drawX = e.getX() - camX;
+            double drawY = e.getY() - camY;
+            if (drawX + Level.TILE_SIZE < 0 || drawY + Level.TILE_SIZE < 0 ||
+                    drawX > canvas.getWidth() || drawY > canvas.getHeight()) {
+                continue;
+            }
             if (e.isAlive()) {
-                gc.drawImage(e.getImage(), e.getX() - camX, e.getY() - camY, Level.TILE_SIZE, Level.TILE_SIZE);            }
+                if (e.getImage() != null) {
+                    gc.drawImage(e.getImage(), drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
+                } else {
+                    gc.setFill(Color.RED);
+                    gc.fillRect(drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
+                }
+            }
         }
 
     }
