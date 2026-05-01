@@ -169,4 +169,12 @@ public class ClientManager {
         PlayerStats stats = payload.stats();
         hero.syncStats(stats);
     }
+
+    public LevelController getLc() {
+        return lc;
+    }
+
+    public Hero getLocalHero() {
+        return localHero;
+    }
 }

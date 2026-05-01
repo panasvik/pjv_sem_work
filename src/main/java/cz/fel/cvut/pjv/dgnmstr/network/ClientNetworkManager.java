@@ -116,4 +116,8 @@ public class ClientNetworkManager {
         }
         System.out.println("Disconnected from server.");
     }
+
+    public ClientManager getManager() {
+        return manager;
+    }
 }

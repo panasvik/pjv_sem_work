@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -47,10 +48,16 @@ public class SceneManager {
      */
     public void loadScreen(View view) {
         try {
-            Parent root = FXMLLoader.load(SceneManager.class.getResource(view.getRelativePath()));
+            URL resource = SceneManager.class.getResource(view.getRelativePath());
+            if (resource == null) {
+                log.severe("View path '" + view.getRelativePath() + "' not found in resources");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(resource);
+            Parent root = loader.load();
             screens.put(view, root);
         } catch (IOException e) {
-            log.severe("View path " + view.getRelativePath() + " not found on disc");
+            log.severe("Unable to load view '" + view.getRelativePath() + "': " + e.getMessage());
         }
     }
 
