@@ -38,7 +38,6 @@ public class LevelController implements Updatable {
         updateEntities(deltaTime);
         updateProjectiles(deltaTime);
         checkPlayers();
-        System.out.println("updated");
 
         if (arenaController != null) {
             arenaController.update(deltaTime);

@@ -34,8 +34,8 @@ public class GameController {
     private ScheduledFuture<?> updateTask;
     private AnimationTimer startupWaiter;
 
-    public GameController(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public GameController() {
+        this.gameManager = GameManager.getInstance();
     }
 
     @FXML

@@ -139,7 +139,6 @@ public class Level {
         if (map[gridX][gridY] == TileType.WALL) {
             return false;
         }
-        log.info("CAN WALK THO");
         for (Entity e : allEntities) {
             if (e.isAlive()) {
                 int eGridX = (int) (e.getX() / TILE_SIZE);
@@ -152,7 +151,6 @@ public class Level {
                 }
             }
         }
-        log.info("CAN WALK THO 100%");
         return true;
     }
 
