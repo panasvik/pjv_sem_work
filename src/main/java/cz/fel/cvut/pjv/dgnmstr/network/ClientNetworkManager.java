@@ -12,10 +12,10 @@ public class ClientNetworkManager {
     private static final Logger log = Logger.getLogger(ClientNetworkManager.class.getName());
 
     private DatagramSocket udpSocket;
-    private ClientManager manager;
+    private final ClientManager manager;
     private final InetAddress serverAddress;
     private final int serverUdpPort;
-    private final PlayerProfile myProfile; // Храним профиль игрока
+    private final PlayerProfile myProfile;
 
     private boolean isRunning = false;
 
@@ -37,7 +37,6 @@ public class ClientNetworkManager {
 
             System.out.println("Started UDP client! Local Port: " + udpSocket.getLocalPort());
 
-            // Отправляем профиль при подключении
             sendUdpHandshake();
 
         } catch (IOException e) {
@@ -66,7 +65,6 @@ public class ClientNetworkManager {
     }
 
     private void sendUdpHandshake() {
-        // Упаковываем профиль в Payload и отправляем на сервер
         PlayerProfilePayload payload = new PlayerProfilePayload(myProfile);
         sendUDP(new DGNPacket(PacketType.PLAYER_PROFILE, payload));
     }
