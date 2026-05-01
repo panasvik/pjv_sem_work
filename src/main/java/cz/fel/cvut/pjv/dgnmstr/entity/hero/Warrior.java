@@ -7,6 +7,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -36,6 +38,13 @@ public class Warrior extends Hero implements CanAttackMelee {
     @Override
     protected void onDamageTaken(int amount, Entity source) {
         this.hitsForUlt = 0;
+    }
+
+    @Override
+    public Image getImage() {
+//        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/Down.Png/WarriorDownIdle.png"));
+//        return new WritableImage(sheet.getPixelReader(), 0, 0, 48, 48);
+        return null;
     }
 
     @Override

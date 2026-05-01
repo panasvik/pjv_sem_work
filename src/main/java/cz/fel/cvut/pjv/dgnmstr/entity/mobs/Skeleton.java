@@ -2,6 +2,11 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
+import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 public class Skeleton extends RangedMob{
 
@@ -34,6 +39,12 @@ public class Skeleton extends RangedMob{
     @Override
     public void update(double deltaTime) {
 
+    }
+
+    @Override
+    public Image getImage() {
+        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinArcher-Sheet.png"));
+        return new WritableImage(sheet.getPixelReader(), 0, 0, 512, 512);
     }
 }
 

@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.Pane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.fel.cvut.pjv.dgnmstr.view.GameController">
    <children>
 
-      <Pane fx:id="canvasWrapper">
+      <Pane fx:id="canvasWrapper" >
          <children>
             <Canvas fx:id="gameCanvas" height="200.0" width="200.0" />
          </children>
