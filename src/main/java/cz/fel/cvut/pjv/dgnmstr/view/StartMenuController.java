@@ -2,6 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.view;
 
 import cz.fel.cvut.pjv.dgnmstr.GameApp;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
+import cz.fel.cvut.pjv.dgnmstr.network.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.application.Platform;
@@ -44,10 +45,15 @@ public class StartMenuController {
         }
         int port = 8888;
         snm = new ServerNetworkManager(port);
+        GameManager gameManager = GameManager.getInstance();
+        gameManager.setSnm(snm);
         snm.start();
+        gameManager.setSm(snm.getServerManager());
         socketToConnect.setText(String.valueOf(port));
         try {
             cnm = new ClientNetworkManager("127.0.0.1", port, profile);
+            gameManager.setCnm(cnm);
+            gameManager.setCm(cnm.getManager());
             cnm.connect();
         } catch (UnknownHostException e) {
             log.severe("HOST DOES NOT EXIST");
@@ -64,6 +70,8 @@ public class StartMenuController {
             return;
         }
         snm.setGameStarted(true);
+        SceneManager sceneManager = SceneManager.getInstance();
+        sceneManager.activate(View.LEVEL);
         snm.getServerManager().startLC();
     }
 
