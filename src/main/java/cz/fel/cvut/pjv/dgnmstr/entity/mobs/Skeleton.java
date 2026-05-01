@@ -2,9 +2,6 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
-import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
