@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import javafx.scene.image.Image;
 
 import java.util.logging.Logger;
 
@@ -48,6 +49,11 @@ public class DroppedGold extends Entity {
     @Override
     protected int applyDefence(int damage) {
         return 0;
+    }
+
+    @Override
+    public Image getImage() {
+        return null;
     }
 
     public int getValue() {

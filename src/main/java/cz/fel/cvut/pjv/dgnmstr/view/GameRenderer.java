@@ -61,10 +61,9 @@ public class GameRenderer extends AnimationTimer {
             }
         }
         for (Entity e : level.getAllEntities()){
-            gc.setFill(Color.RED);
+
             if (e.isAlive()) {
-                gc.fillRect(e.getX() - camX, e.getY() - camY, Level.TILE_SIZE, Level.TILE_SIZE);//for now...
-            }
+                gc.drawImage(e.getImage(), e.getX() - camX, e.getY() - camY, Level.TILE_SIZE, Level.TILE_SIZE);            }
         }
 
     }

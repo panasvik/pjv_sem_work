@@ -1,5 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import javafx.scene.image.Image;
 /**
  * All entities should be based on this class
  * provides basic features of Entity:
@@ -166,4 +167,6 @@ public abstract class Entity implements Updatable, Positionable {
     public Faction getFaction() {
         return faction;
     }
+
+    public abstract Image getImage();
 }

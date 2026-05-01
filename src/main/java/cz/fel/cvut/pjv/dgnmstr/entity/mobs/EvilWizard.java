@@ -6,6 +6,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 import java.util.Random;
 
@@ -46,5 +48,11 @@ public class EvilWizard extends RangedMob{
     @Override
     public void update(double deltaTime) {
 
+    }
+
+    @Override
+    public Image getImage() {
+        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/WizardIdle.png"));
+        return new WritableImage(sheet.getPixelReader(), 0, 0, 64, 64);
     }
 }

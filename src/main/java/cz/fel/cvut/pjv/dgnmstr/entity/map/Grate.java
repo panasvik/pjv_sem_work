@@ -4,6 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
+import javafx.scene.image.Image;
 
 public class Grate extends Entity {
 
@@ -23,6 +24,11 @@ public class Grate extends Entity {
 
     public boolean isSolid() {
         return true;
+    }
+
+    @Override
+    public Image getImage() {
+        return null;
     }
 
     @Override

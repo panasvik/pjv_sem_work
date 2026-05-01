@@ -8,6 +8,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import javafx.scene.image.Image;
 
 import java.util.List;
 import java.util.Random;
@@ -106,6 +107,10 @@ public class DwightTheLeviathan extends Boss{
         }
     }
 
+    @Override
+    public Image getImage() {
+        return null;
+    }
 }
 
 

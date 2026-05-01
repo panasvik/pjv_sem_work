@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import javafx.scene.image.Image;
 
 import java.util.List;
 
@@ -53,6 +54,11 @@ public class AnysekTheBehemoth extends Boss{
             this.rage = true;
             rageTimer = RAGE_DURATION;
         }
+    }
+
+    @Override
+    public Image getImage() {
+        return null;
     }
 
     public void coolRage() {

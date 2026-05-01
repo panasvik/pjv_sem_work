@@ -2,6 +2,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 public class Goblin extends MeleeMob {
     public Goblin(int id, double positionX, double positionY, Level level, int multiplicator) {
@@ -32,6 +34,12 @@ public class Goblin extends MeleeMob {
     @Override
     public void update(double deltaTime) {
 
+    }
+
+    @Override
+    public Image getImage() {
+        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinScout-Sheet.png"));
+        return new WritableImage(sheet.getPixelReader(), 0, 0, 512, 512);
     }
 }
 

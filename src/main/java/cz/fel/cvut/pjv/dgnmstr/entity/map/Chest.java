@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Interactable;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
+import javafx.scene.image.Image;
 
 public class Chest extends Entity implements Interactable {
     private final Inventory inventory;
@@ -31,6 +32,11 @@ public class Chest extends Entity implements Interactable {
 
     public boolean isSolid() {
         return true;
+    }
+
+    @Override
+    public Image getImage() {
+        return null;
     }
 
     @Override
