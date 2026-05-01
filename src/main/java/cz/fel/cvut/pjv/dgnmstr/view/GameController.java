@@ -1,112 +1,88 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
-import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+
 import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
+import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
+import cz.fel.cvut.pjv.dgnmstr.network.ClientManager;
+import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
+import cz.fel.cvut.pjv.dgnmstr.network.GameManager;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
-import cz.fel.cvut.pjv.dgnmstr.view.GameRenderer;
-import cz.fel.cvut.pjv.dgnmstr.global.GameEngine;
-import javafx.scene.control.Label;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class GameController {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
+    private final GameManager gameManager;
+    private final ScheduledExecutorService updateExecutor = Executors.newSingleThreadScheduledExecutor();
 
-    @FXML private Pane canvasWrapper;
-    @FXML private Canvas gameCanvas;
+    @FXML
+    private Pane canvasWrapper;
+
+    @FXML
+    private Canvas gameCanvas;
+
+    private InputHandler inputHandler;
+    private ClientNetworkManager cnm;
+    private GameRenderer renderer;
+    private ScheduledFuture<?> updateTask;
+    private AnimationTimer startupWaiter;
+
+    public GameController(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 
     @FXML
     public void initialize() {
         gameCanvas.widthProperty().bind(canvasWrapper.widthProperty());
         gameCanvas.heightProperty().bind(canvasWrapper.heightProperty());
-        log.info("Canvas: " + gameCanvas.getWidth() + "x" + gameCanvas.getHeight());
-        log.info("Wrapper: " + canvasWrapper.getWidth() + "x" + canvasWrapper.getHeight());
+        startWhenClientStateReady();
+    }
 
-        Scene scene = SceneManager.getInstance().getMainScene();
-        InputHandler inputHandler = new InputHandler(scene);
-        GameManager.getInstance().setInputHandler(inputHandler);
+    private void startWhenClientStateReady() {
+        startupWaiter = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (tryStartGameSystems()) {
+                    stop();
+                }
+            }
+        };
+        startupWaiter.start();
+    }
 
-        Level level = GameManager.getInstance().getLevel();
+    private boolean tryStartGameSystems() {
+        ClientManager clientManager = gameManager.getCm();
+        cnm = gameManager.getCnm();
+        if (cnm == null || clientManager == null || clientManager.getLc() == null || clientManager.getLocalHero() == null) {
+            return false;
+        }
 
-        if (level == null) {
-            log.severe("Level is null!");
+        if (renderer != null) {
+            return true;
+        }
+
+        inputHandler = new InputHandler(SceneManager.getInstance().getMainScene());
+        gameManager.setIh(inputHandler);
+        renderer = new GameRenderer(gameCanvas, clientManager.getLc().getLevel(), clientManager.getLocalHero());
+        gameManager.setGm(renderer);
+        renderer.start();
+        updateTask = updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, 16, TimeUnit.MILLISECONDS);
+        log.info("GameController started level systems");
+        return true;
+    }
+
+    public void manageInputs() {
+        if (inputHandler == null || cnm == null) {
             return;
         }
-        canvasWrapper.widthProperty().addListener((obs, oldVal, newVal) -> {
-            log.info("Wrapper width changed: " + newVal);
-            log.info("Canvas width: " + gameCanvas.getWidth());
-
-            GameRenderer renderer = new GameRenderer(gameCanvas, level);
-            renderer.start();
-        });
-
-        //GameEngine.getInstance().setRenderer(renderer);
+        Inputs inputs = inputHandler.getInputs();
+        cnm.sendInputs(inputs);
     }
-
-
-
-
-
-    /**
-     * pauses a level
-     */
-    @FXML
-    public void PauseGame() {
-
-    }
-
-    /**
-     * resumes paused level
-     */
-    @FXML
-    public void ResumeGame() {
-
-    }
-
-    /**
-     * opens chest view for player
-     */
-    @FXML
-    public void OpenChest() {
-
-    }
-
-    /**
-     * closes chest view
-     */
-    @FXML
-    public void CloseChest() {
-
-    }
-
-    /**
-     * call to update Model when item taken
-     */
-    @FXML
-    public void TakeItemFromChest() {
-
-    }
-
-    /**
-     * shows level over screen
-     */
-    @FXML
-    public void LevelOver() {
-
-    }
-
-    /**
-     * shows level win screen
-     */
-    @FXML
-    public void LevelWin() {
-
-    }
-
-
-
 }
