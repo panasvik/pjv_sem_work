@@ -166,7 +166,7 @@ public class LevelController implements Updatable {
         }
     }
 
-    private void activateNextArena() {
+    public void activateNextArena() {
         List<Arena> allArenas = level.getArenas();
 
         if (curArenaIDX < allArenas.size()) {

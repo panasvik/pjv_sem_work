@@ -3,7 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.network;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.ClientID;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.PlayerProfilePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.Seed;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.LevelSeedPayload;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.*;
@@ -89,16 +89,15 @@ public class ServerNetworkManager {
     }
 
     private void handleIncomingPacket(DGNPacket packet, InetSocketAddress source) {
-        // Проверяем, является ли это пакетом знакомства (handshake)
         if (packet.type() == PacketType.PLAYER_PROFILE &&
                 packet.payload() instanceof PlayerProfilePayload payload &&
                 !clients.containsKey(source) && !isGameStarted) {
-            // Сохраняем клиента и его профиль
             try {
-                byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new Seed(seed)));
+                byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new LevelSeedPayload(seed)));
                 DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
                 udpSocket.send(idPacket);
             } catch (IOException e) {
+                log.severe("Unable to send seed to " + source);
                 throw new RuntimeException(e);
             }
             clients.put(source, payload.profile());
@@ -109,6 +108,8 @@ public class ServerNetworkManager {
                 DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
                 udpSocket.send(idPacket);
             } catch (IOException e) {
+                log.severe("Unable to send client id to " + source);
+
                 throw new RuntimeException(e);
             }
 
@@ -116,7 +117,6 @@ public class ServerNetworkManager {
             System.out.println(source);
         }
 
-        // Если клиент уже есть в списке, обрабатываем пакет
         if (clients.containsKey(source)) {
             if (packet.type() == PacketType.UPDATE_HERO && packet.payload() instanceof Inputs inputs) {
                 Integer heroId = clientHeroIds.get(source);

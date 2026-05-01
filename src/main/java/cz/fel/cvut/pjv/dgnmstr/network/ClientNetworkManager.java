@@ -1,10 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.ClientID;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.PlayerProfilePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.Seed;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnHeroPayload;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.*;
@@ -91,23 +88,24 @@ public class ClientNetworkManager {
 
     private void handleIncomingPacket(DGNPacket packet) {
         switch (packet.type()) {
-            case SEED -> manager.makeNewLC(((Seed) packet.payload()).seed());
+            case SEED -> manager.makeNewLC(((LevelSeedPayload) packet.payload()).seed());
             case CLIENT_ID -> manager.setLocalHero(((ClientID) packet.payload()).id());
             case SPAWN_HERO -> manager.addPlayer((SpawnHeroPayload) packet.payload());
-            case SPAWN_MOB -> manager.spawnMob((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnMobPayload) packet.payload());
-            case SPAWN_BOSS -> manager.spawnBoss((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnBossPayload) packet.payload());
-            case SPAWN_PROJECTILE -> manager.spawnProjectile((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnProjectilePayload) packet.payload());
-            case SPAWN_GOLD -> manager.spawnGold((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnGoldPayload) packet.payload());
-            case SPAWN_GRATE -> manager.spawnGrate((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnGratePayload) packet.payload());
-            case SPAWN_CHEST -> manager.spawnChest((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnChestPayload) packet.payload());
-            case SPAWN_FENCE -> manager.spawnFence((cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnFencePayload) packet.payload());
-            case UPDATE_HERO -> manager.updateHero((cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateHeroPayload) packet.payload());
-            case UPDATE_MOB -> manager.updateMob((cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateMobPayload) packet.payload());
-            case UPDATE_PROJECTILE -> manager.updateProjectile((cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateProjectilePayload) packet.payload());
-            case ENTITY_REMOVE -> manager.removeEntity((cz.fel.cvut.pjv.dgnmstr.network.payloads.EntityRemovePayload) packet.payload());
-            case LEVEL_STATE -> manager.updateLevelState((cz.fel.cvut.pjv.dgnmstr.network.payloads.LevelStatePayload) packet.payload());
-            case ARENA_STATE -> manager.updateArenaState((cz.fel.cvut.pjv.dgnmstr.network.payloads.ArenaStatePayload) packet.payload());
-            case SYNC_STATS -> manager.syncStats((cz.fel.cvut.pjv.dgnmstr.network.payloads.SyncPlayerStatsPayload) packet.payload());
+            case SPAWN_MOB -> manager.spawnMob((SpawnMobPayload) packet.payload());
+            case SPAWN_BOSS -> manager.spawnBoss((SpawnBossPayload) packet.payload());
+            case SPAWN_PROJECTILE -> manager.spawnProjectile((SpawnProjectilePayload) packet.payload());
+            case SPAWN_GOLD -> manager.spawnGold((SpawnGoldPayload) packet.payload());
+            case SPAWN_GRATE -> manager.spawnGrate((SpawnGratePayload) packet.payload());
+            case SPAWN_CHEST -> manager.spawnChest((SpawnChestPayload) packet.payload());
+            case SPAWN_FENCE -> manager.spawnFence((SpawnFencePayload) packet.payload());
+            case UPDATE_HERO -> manager.updateHero((UpdateHeroPayload) packet.payload());
+            case UPDATE_MOB -> manager.updateMob((UpdateMobPayload) packet.payload());
+            case UPDATE_PROJECTILE -> manager.updateProjectile((UpdateProjectilePayload) packet.payload());
+            case ENTITY_REMOVE -> manager.removeEntity((EntityRemovePayload) packet.payload());
+            case LEVEL_STATE -> manager.updateLevelState((LevelStatePayload) packet.payload());
+            case ARENA_STATE -> manager.updateArenaState((ArenaStatePayload) packet.payload());
+            case SYNC_STATS -> manager.syncStats((SyncPlayerStatsPayload) packet.payload());
+            case REMOVE_PROJECTILE -> manager.removeProjectile(((EntityRemovePayload) packet.payload()));
             default -> {
             }
         }

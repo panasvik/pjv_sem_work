@@ -22,5 +22,6 @@ public enum PacketType implements Serializable {
     SPAWN_HERO,
     PLAYER_PROFILE,
     CLIENT_ID,
-    SEED
+    SEED,
+    REMOVE_PROJECTILE,
 }

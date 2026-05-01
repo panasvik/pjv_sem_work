@@ -312,7 +312,7 @@ public class Level {
     public void spawnChests() {
         for (Arena a: arenas) {
             for (TilePosition p : a.getChestSpawnPoints()) {
-                requestChestSpawn(p.x() * TILE_SIZE, p.y() * TILE_SIZE, new Inventory());
+                requestChestSpawn(p.x() * TILE_SIZE, p.y() * TILE_SIZE, Inventory.getRandomInventory());
             }
         }
     }

@@ -2,18 +2,20 @@ package cz.fel.cvut.pjv.dgnmstr.player;
 
 
 import cz.fel.cvut.pjv.dgnmstr.item.AddableItem;
+import cz.fel.cvut.pjv.dgnmstr.item.AllItems;
 import cz.fel.cvut.pjv.dgnmstr.item.Item;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 /**
  * item manager for PlayerProfile
  */
 public class Inventory implements Serializable {
-    private final List<AddableItem> invent;
+    private final List<Item> invent;
     private static final int MAX_SIZE = 16;
     private int size;
     private final static Logger log = Logger.getLogger(Inventory.class.getName());
@@ -42,8 +44,9 @@ public class Inventory implements Serializable {
         log.fine("Added " + addableItem + " to inventory");
     }
 
-    public void rejectAddition(Item item) {
+    public boolean rejectAddition(Item item) {
         log.warning("Unable to add to inventory");
+        return false;
     }
 
 
@@ -70,15 +73,27 @@ public class Inventory implements Serializable {
         return false;
     }
 
-    public List<AddableItem> getInvent() {
+    public List<Item> getInvent() {
         return invent;
     }
 
-    public void setInvent(List<AddableItem> loadedItems) {
+    public void setInvent(List<Item> loadedItems) {
         this.invent.clear();
         if (loadedItems != null) {
             this.invent.addAll(loadedItems);
             this.size = loadedItems.size();
         }
+    }
+
+    public static Inventory getRandomInventory() {
+        Inventory inventory = new Inventory();
+        Random random = new Random();
+        int max = random.nextInt() % 16;
+        List<Item> newInv = new ArrayList<>();
+        for (int i = 0; i < max; i++) {
+            newInv.add(AllItems.getRandomItemInstance());
+        }
+        inventory.setInvent(newInv);
+        return inventory;
     }
 }

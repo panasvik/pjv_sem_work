@@ -1,33 +1,15 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
-import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.LevelController;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.ServerSpawner;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
-import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.*;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.*;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.*;
+import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
-import cz.fel.cvut.pjv.dgnmstr.entity.map.DroppedGold;
-import cz.fel.cvut.pjv.dgnmstr.entity.map.Fence;
-import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
+import cz.fel.cvut.pjv.dgnmstr.entity.map.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.ArenaStatePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.EntityRemovePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.LevelStatePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnChestPayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnFencePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnGoldPayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.SpawnGratePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.SyncPlayerStatsPayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateHeroPayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateMobPayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.UpdateProjectilePayload;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.util.HashSet;
@@ -199,7 +181,7 @@ public class ServerManager {
 
         for (Integer removedProjectileId : trackedProjectileIds) {
             if (!currentProjectileIds.contains(removedProjectileId)) {
-                snm.broadcast(new DGNPacket(PacketType.ENTITY_REMOVE, new EntityRemovePayload(removedProjectileId)));
+                snm.broadcast(new DGNPacket(PacketType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
             }
         }
         trackedProjectileIds.clear();

@@ -3,7 +3,9 @@ package cz.fel.cvut.pjv.dgnmstr.network;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.LevelController;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
@@ -136,6 +138,10 @@ public class ClientManager {
                 lc.getLevel().getPlayers().remove(hero);
             }
         }
+    }
+
+    public void removeProjectile(EntityRemovePayload payload) {
+        if (lc == null) return;
         Projectile projectile = lc.getLevel().getProjectileMap().remove(payload.id());
         if (projectile != null) {
             lc.getLevel().getProjectiles().remove(projectile);
@@ -145,11 +151,15 @@ public class ClientManager {
     public void updateLevelState(LevelStatePayload payload) {
         if (lc == null) return;
         lc.getLevel().setState(payload.state());
+        if (payload.state() == LevelState.PLAYING) {
+            lc.startLevel();
+        }
     }
 
     public void updateArenaState(ArenaStatePayload payload) {
         if (lc == null || lc.getLevel().getCurArena() == null) return;
         lc.getLevel().getCurArena().setState(payload.state());
+        if (payload.state() == ArenaState.CLEARED) lc.activateNextArena();
     }
 
     public void syncStats(SyncPlayerStatsPayload payload) {
