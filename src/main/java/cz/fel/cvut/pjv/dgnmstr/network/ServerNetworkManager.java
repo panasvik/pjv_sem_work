@@ -3,14 +3,20 @@ package cz.fel.cvut.pjv.dgnmstr.network;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
+import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
+import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -23,6 +29,14 @@ public class ServerNetworkManager {
 
     private final Map<InetSocketAddress, PlayerProfile> clients = new ConcurrentHashMap<>();
     private final Map<InetSocketAddress, Integer> clientHeroIds = new ConcurrentHashMap<>();
+    private static final Inputs EMPTY_INPUTS =
+            new Inputs(false, false, false, false, false, false, false, 0, 0);
+    private final Map<Integer, Inputs> lastInputsByHeroId = new ConcurrentHashMap<>();
+    private final Set<Integer> trackedEntityIds = new HashSet<>();
+    private final Set<Integer> trackedProjectileIds = new HashSet<>();
+
+
+
 
     private boolean isRunning = false;
     private boolean isGameStarted = false;
@@ -188,5 +202,79 @@ public class ServerNetworkManager {
             broadcast(new DGNPacket(PacketType.ARENA_STATE, new ArenaStatePayload(currentArenaState)));
             serverManager.setLastArenaState(currentArenaState);
         }
+    }
+
+    public void sendEntityUpdates() {
+        Level level = serverManager.getLc().getLevel();
+        Set<Integer> currentEntityIds = new HashSet<>();
+        for (Entity entity : level.getAllEntities()) {
+            currentEntityIds.add(entity.getId());
+            if (entity instanceof Hero hero) {
+                Inputs inputs = lastInputsByHeroId.getOrDefault(hero.getId(), EMPTY_INPUTS);
+                broadcast(new DGNPacket(PacketType.UPDATE_HERO,
+                        new UpdateHeroPayload(
+                                hero.getId(),
+                                hero.getX(),
+                                hero.getY(),
+                                hero.getHp(),
+                                inputs.mouseX(),
+                                inputs.mouseY(),
+                                inputs.attack(),
+                                inputs.ult(),
+                                inputs.interact()
+                        )));
+                if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
+                    broadcast(new DGNPacket(PacketType.SYNC_STATS,
+                            new SyncPlayerStatsPayload(hero.getId(), hero.getProfile().getPlayerStats())));
+                }
+
+            } else if (entity instanceof Mob mob) {
+                broadcast(new DGNPacket(PacketType.UPDATE_MOB,
+                        new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp())));
+            }
+        }
+
+        for (Integer removedEntityId : trackedEntityIds) {
+            if (!currentEntityIds.contains(removedEntityId)) {
+                broadcast(new DGNPacket(PacketType.ENTITY_REMOVE, new EntityRemovePayload(removedEntityId)));
+            }
+        }
+        trackedEntityIds.clear();
+        trackedEntityIds.addAll(currentEntityIds);
+    }
+
+    public void sendProjectileUpdates() {
+        Level level = serverManager.getLc().getLevel();
+        Set<Integer> currentProjectileIds = new HashSet<>();
+        for (Projectile projectile : level.getProjectiles()) {
+            currentProjectileIds.add(projectile.getId());
+            broadcast(new DGNPacket(PacketType.UPDATE_PROJECTILE,
+                    new UpdateProjectilePayload(
+                            projectile.getId(),
+                            projectile.getX(),
+                            projectile.getY(),
+                            projectile.isAlive()
+                    )));
+        }
+
+        for (Integer removedProjectileId : trackedProjectileIds) {
+            if (!currentProjectileIds.contains(removedProjectileId)) {
+                broadcast(new DGNPacket(PacketType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
+            }
+        }
+        trackedProjectileIds.clear();
+        trackedProjectileIds.addAll(currentProjectileIds);
+    }
+
+    public Map<Integer, Inputs> getLastInputsByHeroId() {
+        return lastInputsByHeroId;
+    }
+
+    public Set<Integer> getTrackedEntityIds() {
+        return trackedEntityIds;
+    }
+
+    public Set<Integer> getTrackedProjectileIds() {
+        return trackedProjectileIds;
     }
 }
