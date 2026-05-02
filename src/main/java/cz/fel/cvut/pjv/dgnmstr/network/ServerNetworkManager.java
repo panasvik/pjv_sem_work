@@ -11,6 +11,7 @@ import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
+import javax.xml.transform.Source;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -56,9 +57,9 @@ public class ServerNetworkManager {
             Thread udpListenThread = new Thread(this::listenUdpLoop, "UDP-Listen-Thread");
             udpListenThread.start();
 
-            System.out.println("ServerNetworkManager started on UDP port: " + udpPort);
+            log.info("ServerNetworkManager started on UDP port: " + udpPort);
         } catch (IOException e) {
-            System.out.println("Failed to start server: " + e.getMessage());
+            log.info("Failed to start server: " + e.getMessage());
         }
     }
 
@@ -78,7 +79,7 @@ public class ServerNetworkManager {
                 udpSocket.send(udpPacket);
             }
         } catch (IOException e) {
-            System.out.println("Failed to broadcast UDP packet: " + e.getMessage());
+            log.info("Failed to broadcast UDP packet: " + e.getMessage());
         }
     }
 
@@ -100,53 +101,69 @@ public class ServerNetworkManager {
         }
     }
 
+    private boolean isNewClient(DGNPacket packet, InetSocketAddress source) {
+        return (packet.type() == PacketType.PLAYER_PROFILE &&
+                packet.payload() instanceof PlayerProfilePayload &&
+                !clients.containsKey(source) && !isGameStarted);
+    }
+
+    private void sendSeed(InetSocketAddress source) {
+        try {
+            byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new LevelSeedPayload(seed)));
+            DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
+            udpSocket.send(idPacket);
+        } catch (IOException e) {
+            log.severe("Unable to send seed to " + source);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendClientId(InetSocketAddress source, int id) {
+        try {
+            byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.CLIENT_ID, new ClientID(id)));
+            DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
+            udpSocket.send(idPacket);
+        } catch (IOException e) {
+            log.severe("Unable to send client id to " + source);
+
+            throw new RuntimeException(e);
+        }
+    }
+
     private void handleIncomingPacket(DGNPacket packet, InetSocketAddress source) {
-        if (packet.type() == PacketType.PLAYER_PROFILE &&
-                packet.payload() instanceof PlayerProfilePayload(PlayerProfile profile) &&
-                !clients.containsKey(source) && !isGameStarted) {
-            try {
-                byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new LevelSeedPayload(seed)));
-                DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
-                udpSocket.send(idPacket);
-            } catch (IOException e) {
-                log.severe("Unable to send seed to " + source);
-                throw new RuntimeException(e);
-            }
+        if (isNewClient(packet, source)) {
+            PlayerProfile profile = ((PlayerProfilePayload) packet.payload()).profile();
+            sendSeed(source);
             clients.put(source, profile);
             int id = serverManager.addProfile(profile);
             clientHeroIds.put(source, id);
-            try {
-                byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.CLIENT_ID, new ClientID(id)));
-                DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
-                udpSocket.send(idPacket);
-            } catch (IOException e) {
-                log.severe("Unable to send client id to " + source);
-
-                throw new RuntimeException(e);
-            }
-
-            System.out.println("New client registered with profile from: " + source);
-            System.out.println(source);
+            sendClientId(source, id);
+            log.info("New client registered with profile from: " + source);
         }
 
-        if (clients.containsKey(source)) {
-            if (packet.type() == PacketType.UPDATE_HERO && packet.payload() instanceof Inputs inputs) {
-                Integer heroId = clientHeroIds.get(source);
-                if (heroId != null) {
-                    serverManager.applyInputs(heroId, inputs);
-                }
-            } else {
-                System.out.println("Received packet: " + packet.type() + " from " + source);
-            }
+        if (!clients.containsKey(source)) {
+            log.info("Ignored packet from unknown client: " + source);
+            return;
+        }
+
+        if (packet.type() == PacketType.UPDATE_HERO && packet.payload() instanceof Inputs inputs) {
+            handleNewInputs(source, inputs);
         } else {
-            System.out.println("Ignored packet from unknown client: " + source);
+            log.info("Received packet: " + packet.type() + " from " + source);
+        }
+    }
+
+    private void handleNewInputs(InetSocketAddress source, Inputs inputs) {
+        Integer heroId = clientHeroIds.get(source);
+        if (heroId != null) {
+            serverManager.applyInputs(heroId, inputs);
         }
     }
 
     public void disconnectClient(InetSocketAddress clientAddress) {
         if (clients.remove(clientAddress) != null) {
             clientHeroIds.remove(clientAddress);
-            System.out.println("Client disconnected/removed: " + clientAddress);
+            log.info("Client disconnected/removed: " + clientAddress);
         }
     }
 
@@ -159,7 +176,7 @@ public class ServerNetworkManager {
         clientHeroIds.clear();
         serverManager.stopLC();
         isGameStarted = false;
-        System.out.println("Server stopped.");
+        log.info("Server stopped.");
     }
 
     public Map<InetSocketAddress, PlayerProfile> getClients() {
@@ -257,7 +274,7 @@ public class ServerNetworkManager {
                 broadcast(new DGNPacket(PacketType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
             }
         }
-        
+
         trackedProjectileIds.clear();
         trackedProjectileIds.addAll(currentProjectileIds);
     }
