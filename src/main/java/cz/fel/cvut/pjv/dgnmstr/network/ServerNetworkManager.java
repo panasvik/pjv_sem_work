@@ -246,15 +246,18 @@ public class ServerNetworkManager {
     public void sendProjectileUpdates() {
         Level level = serverManager.getLc().getLevel();
         Set<Integer> currentProjectileIds = new HashSet<>();
+
         for (Projectile projectile : level.getProjectiles()) {
             currentProjectileIds.add(projectile.getId());
             sendProjectilePacket(projectile);
         }
+
         for (Integer removedProjectileId : trackedProjectileIds) {
             if (!currentProjectileIds.contains(removedProjectileId)) {
                 broadcast(new DGNPacket(PacketType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
             }
         }
+        
         trackedProjectileIds.clear();
         trackedProjectileIds.addAll(currentProjectileIds);
     }
