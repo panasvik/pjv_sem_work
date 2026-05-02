@@ -22,7 +22,7 @@ public class ArenaController implements Updatable {
     private Level level;
 
     private int totalSpawnedInWave = 0;
-
+    private int currentMobCount = 0;
 
     public ArenaController(Arena arena, Level level) {
         this.arena = arena;
@@ -35,6 +35,7 @@ public class ArenaController implements Updatable {
 
     @Override
     public void update(double deltaTime) {
+        currentMobCount = arena.getActiveMobs().size();
         if (arena.getState() == ArenaState.NOT_STARTED) {
             checkPlayerEntry(level.getPlayers());
         } else if (arena.getState() == ArenaState.WAVE_FIGHT) {
@@ -86,7 +87,8 @@ public class ArenaController implements Updatable {
     private void checkWaveProgress(double dTime) {
         arena.getActiveMobs().removeIf(mob -> !mob.isAlive());
 
-        if (totalSpawnedInWave < level.getDifficulty().getTotalSpawns()) {
+        if (totalSpawnedInWave < level.getDifficulty().getTotalSpawns()
+            && currentMobCount < level.getDifficulty().getMobCap()) {
             spawnTime += dTime;
             if (spawnTime >= spawnDelay) {
                 spawnPeriodicMobs();
@@ -137,7 +139,6 @@ public class ArenaController implements Updatable {
 
     private void spawnMobs(int cap, List<TilePosition> validSpawnPoints) {
         int mobsToSpawn = Math.min(cap, validSpawnPoints.size());
-
         for (int i = 0; i < mobsToSpawn; i++) {
             int randomIndex = (int) (Math.random() * validSpawnPoints.size());
             TilePosition spot = validSpawnPoints.remove(randomIndex);
