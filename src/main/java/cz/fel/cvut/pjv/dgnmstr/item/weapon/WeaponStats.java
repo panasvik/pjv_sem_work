@@ -3,8 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.item.weapon;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
 
 public enum WeaponStats {
-    BASIC_WARRIOR_SWORD(30, 10, 5, 10, Role.WARRIOR.getWeaponType(),"Basic Warrior Sword"),
-    LEGENDARY_WARRIOR_SWORD(60, 15, 10, 40, Role.WARRIOR.getWeaponType(),"Legendary Warrior Sword");
+    BASIC_WARRIOR_SWORD(30, 50, 5, 10, Role.WARRIOR.getWeaponType(),"Basic Warrior Sword"),
+    LEGENDARY_WARRIOR_SWORD(60, 100, 10, 40, Role.WARRIOR.getWeaponType(),"Legendary Warrior Sword");
 
     private final int damage;
     private final int range;

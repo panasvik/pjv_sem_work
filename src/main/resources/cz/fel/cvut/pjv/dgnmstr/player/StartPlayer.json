@@ -35,12 +35,12 @@
     }
   },
   "weapon" : {
-    "@class" : "cz.fel.cvut.pjv.dgnmstr.item.weapon.BasicWarriorSword",
+    "@class" : "cz.fel.cvut.pjv.dgnmstr.item.weapon.TESTWarriorSword",
     "name" : "Basic Warrior Sword",
     "price" : 10,
-    "damage" : 30,
+    "damage" : 1000000,
     "dexterity" : 5,
-    "range" : 10,
+    "range" : 2000,
     "type" : "MELEE"
   },
   "inventory" : {
