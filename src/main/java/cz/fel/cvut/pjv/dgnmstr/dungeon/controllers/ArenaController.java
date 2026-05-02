@@ -2,6 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.dungeon.controllers;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.*;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TilePosition;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
@@ -187,7 +188,7 @@ public class ArenaController implements Updatable {
         double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
 
         MobStats mobStats = arena.getType().getRandomMobStats();
-        Mob miniboss = level.requestMobSpawn( worldX, worldY, mobStats,1);
+        Mob miniboss = level.requestMobSpawn( worldX, worldY, mobStats, DifficultyStats.MEDIUM.getStatsMult());
 
 
         arena.getActiveMobs().add(miniboss);

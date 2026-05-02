@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -31,7 +30,6 @@ public class GameController {
     private InputHandler inputHandler;
     private ClientNetworkManager cnm;
     private GameRenderer renderer;
-    private ScheduledFuture<?> updateTask;
     private AnimationTimer startupWaiter;
 
     public GameController() {
@@ -73,7 +71,7 @@ public class GameController {
         renderer = new GameRenderer(gameCanvas, clientManager.getLc().getLevel(), clientManager.getLocalHero());
         gameManager.setGm(renderer);
         renderer.start();
-        updateTask = updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, 16, TimeUnit.MILLISECONDS);
+        updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, 16, TimeUnit.MILLISECONDS);
         log.info("GameController started level systems");
         return true;
     }
