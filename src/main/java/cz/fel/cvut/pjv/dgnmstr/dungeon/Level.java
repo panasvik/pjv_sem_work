@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.*;
@@ -52,12 +51,12 @@ public class Level {
     private boolean bossSpawned = false;
 
     public Level(DifficultyStats difficulty) {
-        this.allEntities = new CopyOnWriteArrayList<>();
-        this.players = new CopyOnWriteArrayList<>();
-        this.arenas = new CopyOnWriteArrayList<>();
+        this.allEntities = new ArrayList<>();
+        this.players = new ArrayList<>();
+        this.arenas = new ArrayList<>();
         this.state = NOT_STARTED;
         this.difficulty = difficulty;
-        this.projectiles = new CopyOnWriteArrayList<>();
+        this.projectiles = new ArrayList<>();
         this.entityMap = new ConcurrentHashMap<>();
         this.projectileMap = new ConcurrentHashMap<>();
         this.bossSpawnRate = new ArrayList<>();

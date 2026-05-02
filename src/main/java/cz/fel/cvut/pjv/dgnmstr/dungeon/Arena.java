@@ -11,6 +11,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cz.fel.cvut.pjv.dgnmstr.dungeon.Level.TILE_SIZE;
+
 /**
  * Represents a single enclosed room (Arena) within a dungeon level.
  * The arena acts as a state machine, managing the progression from the moment
@@ -52,11 +54,11 @@ public class Arena {
 
     public List<TilePosition> getGratePositions() {
         List<TilePosition> positions = new ArrayList<>();
-        int corridorStartY = (startY + (height / 2) - 3);
-        int corridorEndY = (startY + (height / 2) + 3);
+        int corridorStartY = (startY + height / 2 - 3);
+        int corridorEndY = (startY + height / 2 + 3);
 
         for (int y = corridorStartY; y <= corridorEndY; y++) {
-            positions.add(new TilePosition(startX, y));
+            positions.add(new TilePosition(startX - TILE_SIZE, y));
             positions.add(new TilePosition(startX + width - 1, y));
         }
         return positions;
@@ -90,8 +92,8 @@ public class Arena {
      * @return true if the position is inside the arena.
      */
     public boolean isInsideArena(double playerWorldX, double playerWorldY) {
-        int playerGridX = (int) (playerWorldX / Level.TILE_SIZE);
-        int playerGridY = (int) (playerWorldY / Level.TILE_SIZE);
+        int playerGridX = (int) (playerWorldX / TILE_SIZE);
+        int playerGridY = (int) (playerWorldY / TILE_SIZE);
 
         return playerGridX >= this.startX && playerGridX < (this.startX + this.width) &&
                 playerGridY >= this.startY && playerGridY < (this.startY + this.height);
@@ -104,11 +106,11 @@ public class Arena {
     }
 
     public double getCenterWorldX() {
-        return (startX + width / 2.0) * Level.TILE_SIZE;
+        return (startX + width / 2.0) * TILE_SIZE;
     }
 
     public double getCenterWorldY() {
-        return (startY + height / 2.0) * Level.TILE_SIZE;
+        return (startY + height / 2.0) * TILE_SIZE;
     }
 
     public int getStartX() {
