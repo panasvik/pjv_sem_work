@@ -1,5 +1,8 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
@@ -167,6 +170,23 @@ public class ServerNetworkManager {
         }
         else {
             serverManager.stopLC();
+        }
+    }
+
+    public void sendLevelUpdates() {
+        Level level = serverManager.getLc().getLevel();
+        LevelState currentLevelState = level.getState();
+        if (serverManager.getLastLevelState() != currentLevelState) {
+            broadcast(new DGNPacket(PacketType.LEVEL_STATE, new LevelStatePayload(currentLevelState)));
+            serverManager.setLastLevelState(currentLevelState);
+        }
+    }
+
+    public void sendArenaUpdates() {
+        ArenaState currentArenaState = serverManager.getLc().getLevel().getCurArena() != null ? serverManager.getLc().getLevel().getCurArena().getState() : null;
+        if (currentArenaState != null && serverManager.getLastArenaState() != currentArenaState) {
+            broadcast(new DGNPacket(PacketType.ARENA_STATE, new ArenaStatePayload(currentArenaState)));
+            serverManager.setLastArenaState(currentArenaState);
         }
     }
 }

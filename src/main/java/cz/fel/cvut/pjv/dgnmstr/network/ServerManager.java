@@ -120,18 +120,11 @@ public class ServerManager {
         double deltaTime = (now - lastUpdateTimeNanos) / 1_000_000_000.0;
         lc.update(deltaTime);
 
+        snm.sendArenaUpdates();
+        snm.sendLevelUpdates();
         Level level = lc.getLevel();
-        LevelState currentLevelState = level.getState();
-        if (lastLevelState != currentLevelState) {
-            snm.broadcast(new DGNPacket(PacketType.LEVEL_STATE, new LevelStatePayload(currentLevelState)));
-            lastLevelState = currentLevelState;
-        }
 
-        ArenaState currentArenaState = level.getCurArena() != null ? level.getCurArena().getState() : null;
-        if (currentArenaState != null && lastArenaState != currentArenaState) {
-            snm.broadcast(new DGNPacket(PacketType.ARENA_STATE, new ArenaStatePayload(currentArenaState)));
-            lastArenaState = currentArenaState;
-        }
+
 
         Set<Integer> currentEntityIds = new HashSet<>();
         for (Entity entity : level.getAllEntities()) {
@@ -190,4 +183,36 @@ public class ServerManager {
         trackedProjectileIds.addAll(currentProjectileIds);
     }
 
+
+    public LevelController getLc() {
+        return lc;
+    }
+
+    public LevelState getLastLevelState() {
+        return lastLevelState;
+    }
+
+    public ArenaState getLastArenaState() {
+        return lastArenaState;
+    }
+
+    public Set<Integer> getTrackedProjectileIds() {
+        return trackedProjectileIds;
+    }
+
+    public Map<Integer, Inputs> getLastInputsByHeroId() {
+        return lastInputsByHeroId;
+    }
+
+    public Set<Integer> getTrackedEntityIds() {
+        return trackedEntityIds;
+    }
+
+    public void setLastLevelState(LevelState lastLevelState) {
+        this.lastLevelState = lastLevelState;
+    }
+
+    public void setLastArenaState(ArenaState lastArenaState) {
+        this.lastArenaState = lastArenaState;
+    }
 }
