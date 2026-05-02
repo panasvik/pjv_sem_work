@@ -39,11 +39,7 @@ public class ServerManager {
     private volatile boolean running = false;
     private static final Inputs EMPTY_INPUTS =
             new Inputs(false, false, false, false, false, false, false, 0, 0);
-    private static final long HERO_BROADCAST_INTERVAL_NANOS = 33_000_000L;
-    private static final long WORLD_BROADCAST_INTERVAL_NANOS = 50_000_000L;
     private static final double POS_EPSILON = 0.25;
-    private long lastHeroBroadcastNanos = 0L;
-    private long lastWorldBroadcastNanos = 0L;
 
     private record HeroSnapshot(double x, double y, double hp, Inputs inputs) {}
     private record MobSnapshot(double x, double y, double hp) {}
@@ -84,8 +80,6 @@ public class ServerManager {
         lastHeroSnapshots.clear();
         lastMobSnapshots.clear();
         lastProjectileSnapshots.clear();
-        lastHeroBroadcastNanos = 0L;
-        lastWorldBroadcastNanos = 0L;
         if (updateTask != null) {
             updateTask.cancel(false);
             updateTask = null;
@@ -130,16 +124,7 @@ public class ServerManager {
         }
 
         double deltaTime = (now - lastUpdateTimeNanos) / 1_000_000_000.0;
-        lastUpdateTimeNanos = now;
         lc.update(deltaTime);
-        boolean sendHeroUpdates = lastHeroBroadcastNanos == 0L || now - lastHeroBroadcastNanos >= HERO_BROADCAST_INTERVAL_NANOS;
-        boolean sendWorldUpdates = lastWorldBroadcastNanos == 0L || now - lastWorldBroadcastNanos >= WORLD_BROADCAST_INTERVAL_NANOS;
-        if (sendHeroUpdates) {
-            lastHeroBroadcastNanos = now;
-        }
-        if (sendWorldUpdates) {
-            lastWorldBroadcastNanos = now;
-        }
 
         Level level = lc.getLevel();
         LevelState currentLevelState = level.getState();
@@ -164,7 +149,6 @@ public class ServerManager {
                 Inputs inputs = lastInputsByHeroId.getOrDefault(hero.getId(), EMPTY_INPUTS);
                 HeroSnapshot newSnapshot = new HeroSnapshot(hero.getX(), hero.getY(), hero.getHp(), inputs);
                 HeroSnapshot oldSnapshot = lastHeroSnapshots.get(hero.getId());
-                if (sendHeroUpdates && (oldSnapshot == null || heroChanged(oldSnapshot, newSnapshot))) {
                     snm.broadcast(new DGNPacket(PacketType.UPDATE_HERO,
                             new UpdateHeroPayload(
                                     hero.getId(),
@@ -178,19 +162,16 @@ public class ServerManager {
                                     inputs.interact()
                             )));
                     lastHeroSnapshots.put(hero.getId(), newSnapshot);
-                }
                 if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
                     snm.broadcast(new DGNPacket(PacketType.SYNC_STATS,
                             new SyncPlayerStatsPayload(hero.getId(), hero.getProfile().getPlayerStats())));
                 }
+
             } else if (entity instanceof Mob mob) {
                 MobSnapshot newSnapshot = new MobSnapshot(mob.getX(), mob.getY(), mob.getHp());
-                MobSnapshot oldSnapshot = lastMobSnapshots.get(mob.getId());
-                if (sendWorldUpdates && (oldSnapshot == null || mobChanged(oldSnapshot, newSnapshot))) {
                     snm.broadcast(new DGNPacket(PacketType.UPDATE_MOB,
                             new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp())));
                     lastMobSnapshots.put(mob.getId(), newSnapshot);
-                }
             }
         }
 
@@ -208,8 +189,6 @@ public class ServerManager {
         for (Projectile projectile : level.getProjectiles()) {
             currentProjectileIds.add(projectile.getId());
             ProjectileSnapshot newSnapshot = new ProjectileSnapshot(projectile.getX(), projectile.getY(), projectile.isAlive());
-            ProjectileSnapshot oldSnapshot = lastProjectileSnapshots.get(projectile.getId());
-            if (sendWorldUpdates && (oldSnapshot == null || projectileChanged(oldSnapshot, newSnapshot))) {
                 snm.broadcast(new DGNPacket(PacketType.UPDATE_PROJECTILE,
                         new UpdateProjectilePayload(
                                 projectile.getId(),
@@ -218,7 +197,6 @@ public class ServerManager {
                                 projectile.isAlive()
                         )));
                 lastProjectileSnapshots.put(projectile.getId(), newSnapshot);
-            }
         }
 
         for (Integer removedProjectileId : trackedProjectileIds) {
@@ -231,22 +209,4 @@ public class ServerManager {
         trackedProjectileIds.addAll(currentProjectileIds);
     }
 
-    private boolean heroChanged(HeroSnapshot oldSnapshot, HeroSnapshot newSnapshot) {
-        return Math.abs(oldSnapshot.x() - newSnapshot.x()) > POS_EPSILON
-                || Math.abs(oldSnapshot.y() - newSnapshot.y()) > POS_EPSILON
-                || Math.abs(oldSnapshot.hp() - newSnapshot.hp()) > 0.01
-                || !oldSnapshot.inputs().equals(newSnapshot.inputs());
-    }
-
-    private boolean mobChanged(MobSnapshot oldSnapshot, MobSnapshot newSnapshot) {
-        return Math.abs(oldSnapshot.x() - newSnapshot.x()) > POS_EPSILON
-                || Math.abs(oldSnapshot.y() - newSnapshot.y()) > POS_EPSILON
-                || Math.abs(oldSnapshot.hp() - newSnapshot.hp()) > 0.01;
-    }
-
-    private boolean projectileChanged(ProjectileSnapshot oldSnapshot, ProjectileSnapshot newSnapshot) {
-        return Math.abs(oldSnapshot.x() - newSnapshot.x()) > POS_EPSILON
-                || Math.abs(oldSnapshot.y() - newSnapshot.y()) > POS_EPSILON
-                || oldSnapshot.alive() != newSnapshot.alive();
-    }
 }

@@ -58,7 +58,7 @@ public class Arena {
         int corridorEndY = (startY + height / 2 + 3);
 
         for (int y = corridorStartY; y <= corridorEndY; y++) {
-            positions.add(new TilePosition(startX - TILE_SIZE, y));
+            positions.add(new TilePosition(startX - 1, y));
             positions.add(new TilePosition(startX + width - 1, y));
         }
         return positions;
