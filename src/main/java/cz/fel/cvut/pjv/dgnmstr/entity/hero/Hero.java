@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanDefend;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanUltimate;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
@@ -128,5 +129,10 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
 
     public PlayerProfile getProfile() {
         return profile;
+    }
+
+    @Override
+    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
+        serverNetworkManager.handleUpdateEjection(this);
     }
 }

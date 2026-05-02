@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import javafx.scene.image.Image;
 
 import java.util.logging.Logger;
@@ -58,5 +59,10 @@ public class DroppedGold extends Entity {
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
+
     }
 }

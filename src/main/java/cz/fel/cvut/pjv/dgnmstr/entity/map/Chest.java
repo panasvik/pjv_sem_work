@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Interactable;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import javafx.scene.image.Image;
 
@@ -41,6 +42,11 @@ public class Chest extends Entity implements Interactable {
 
     @Override
     public void update(double deltaTime) {
+
+    }
+
+    @Override
+    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
 
     }
 }

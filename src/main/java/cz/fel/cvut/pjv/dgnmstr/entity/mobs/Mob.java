@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 
 import java.util.logging.Logger;
 
@@ -133,4 +134,8 @@ public abstract class Mob extends Entity implements CanAttack {
         }
     }
 
+    @Override
+    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
+        serverNetworkManager.handleUpdateEjection(this);
+    }
 }

@@ -13,10 +13,7 @@ import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.*;
 import java.net.*;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -105,7 +102,7 @@ public class ServerNetworkManager {
 
     private void handleIncomingPacket(DGNPacket packet, InetSocketAddress source) {
         if (packet.type() == PacketType.PLAYER_PROFILE &&
-                packet.payload() instanceof PlayerProfilePayload payload &&
+                packet.payload() instanceof PlayerProfilePayload(PlayerProfile profile) &&
                 !clients.containsKey(source) && !isGameStarted) {
             try {
                 byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new LevelSeedPayload(seed)));
@@ -115,8 +112,8 @@ public class ServerNetworkManager {
                 log.severe("Unable to send seed to " + source);
                 throw new RuntimeException(e);
             }
-            clients.put(source, payload.profile());
-            int id = serverManager.addProfile(payload.profile());
+            clients.put(source, profile);
+            int id = serverManager.addProfile(profile);
             clientHeroIds.put(source, id);
             try {
                 byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.CLIENT_ID, new ClientID(id)));
@@ -204,34 +201,37 @@ public class ServerNetworkManager {
         }
     }
 
-    public void sendEntityUpdates() {
-        Level level = serverManager.getLc().getLevel();
-        Set<Integer> currentEntityIds = new HashSet<>();
-        for (Entity entity : level.getAllEntities()) {
-            currentEntityIds.add(entity.getId());
-            if (entity instanceof Hero hero) {
-                Inputs inputs = lastInputsByHeroId.getOrDefault(hero.getId(), EMPTY_INPUTS);
-                broadcast(new DGNPacket(PacketType.UPDATE_HERO,
-                        new UpdateHeroPayload(
-                                hero.getId(),
-                                hero.getX(),
-                                hero.getY(),
-                                hero.getHp(),
-                                inputs.mouseX(),
-                                inputs.mouseY(),
-                                inputs.attack(),
-                                inputs.ult(),
-                                inputs.interact()
-                        )));
-                if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
-                    broadcast(new DGNPacket(PacketType.SYNC_STATS,
-                            new SyncPlayerStatsPayload(hero.getId(), hero.getProfile().getPlayerStats())));
-                }
+    public void handleUpdateEjection(Hero hero) {
+        Inputs inputs = lastInputsByHeroId.getOrDefault(hero.getId(), EMPTY_INPUTS);
+        broadcast(new DGNPacket(PacketType.UPDATE_HERO,
+                new UpdateHeroPayload(
+                        hero.getId(),
+                        hero.getX(),
+                        hero.getY(),
+                        hero.getHp(),
+                        inputs.mouseX(),
+                        inputs.mouseY(),
+                        inputs.attack(),
+                        inputs.ult(),
+                        inputs.interact()
+                )));
+        if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
+            broadcast(new DGNPacket(PacketType.SYNC_STATS,
+                    new SyncPlayerStatsPayload(hero.getId(), hero.getProfile().getPlayerStats())));
+        }
+    }
 
-            } else if (entity instanceof Mob mob) {
-                broadcast(new DGNPacket(PacketType.UPDATE_MOB,
-                        new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp())));
-            }
+    public void handleUpdateEjection(Mob mob) {
+        broadcast(new DGNPacket(PacketType.UPDATE_MOB,
+                new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp())));
+    }
+
+    public void sendEntityUpdates() {
+        List<Entity> entityList = serverManager.getLc().getLevel().getAllEntities();
+        Set<Integer> currentEntityIds = new HashSet<>();
+        for (Entity entity : entityList) {
+            currentEntityIds.add(entity.getId());
+            entity.acceptUpdateEjection(this);
         }
 
         for (Integer removedEntityId : trackedEntityIds) {
@@ -248,15 +248,8 @@ public class ServerNetworkManager {
         Set<Integer> currentProjectileIds = new HashSet<>();
         for (Projectile projectile : level.getProjectiles()) {
             currentProjectileIds.add(projectile.getId());
-            broadcast(new DGNPacket(PacketType.UPDATE_PROJECTILE,
-                    new UpdateProjectilePayload(
-                            projectile.getId(),
-                            projectile.getX(),
-                            projectile.getY(),
-                            projectile.isAlive()
-                    )));
+            sendProjectilePacket(projectile);
         }
-
         for (Integer removedProjectileId : trackedProjectileIds) {
             if (!currentProjectileIds.contains(removedProjectileId)) {
                 broadcast(new DGNPacket(PacketType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
@@ -276,5 +269,15 @@ public class ServerNetworkManager {
 
     public Set<Integer> getTrackedProjectileIds() {
         return trackedProjectileIds;
+    }
+
+    private void sendProjectilePacket(Projectile projectile) {
+        broadcast(new DGNPacket(PacketType.UPDATE_PROJECTILE,
+                new UpdateProjectilePayload(
+                        projectile.getId(),
+                        projectile.getX(),
+                        projectile.getY(),
+                        projectile.isAlive()
+                )));
     }
 }
