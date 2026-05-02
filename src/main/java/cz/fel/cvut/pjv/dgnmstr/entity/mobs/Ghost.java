@@ -7,6 +7,7 @@ import javafx.scene.image.WritableImage;
 
 
 public class Ghost extends MeleeMob{
+    private final Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/Ghost.png"));
     public Ghost(int id, double positionX, double positionY, Level level) {
         super( id,
                 MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
@@ -40,7 +41,6 @@ public class Ghost extends MeleeMob{
 
     @Override
     public Image getImage() {
-        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/Ghost.png"));
         return new WritableImage(sheet.getPixelReader(), 0, 0, 32, 32);
     }
 

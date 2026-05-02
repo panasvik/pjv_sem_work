@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
 public class Goblin extends MeleeMob {
+    private final Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinScout-Sheet.png"));
     public Goblin(int id, double positionX, double positionY, Level level, int multiplicator) {
         super( id,
                 MobStats.GOBLIN.getHp(level.getDifficulty().getStatsMult()),
@@ -38,7 +39,6 @@ public class Goblin extends MeleeMob {
 
     @Override
     public Image getImage() {
-        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinScout-Sheet.png"));
         return new WritableImage(sheet.getPixelReader(), 0, 0, 512, 512);
     }
 }

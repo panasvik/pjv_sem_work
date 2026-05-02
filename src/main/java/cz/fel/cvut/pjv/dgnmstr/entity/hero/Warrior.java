@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class Warrior extends Hero implements CanAttackMelee {
-    private static final double cos45 = 0.707;
+    private static final double cos45 = 0;
     private static final int HFULimit = 5;
     private static final int damageMul = 5;
     private static final int ultRange = 2;
@@ -22,7 +22,7 @@ public class Warrior extends Hero implements CanAttackMelee {
     private static final Logger log = Logger.getLogger(Warrior.class.getName());
 
     private double attackCooldown = 0.0;
-    private static final double COOLDOWN_TIME = 0.5;
+    private static final double COOLDOWN_TIME = 0.2;
 
     private double ultActive = 0.0;
     private static final double ULT_DURATION = 8.0;
@@ -73,9 +73,11 @@ public class Warrior extends Hero implements CanAttackMelee {
 
     @Override
     public void attack() {
+        log.info("attack method activated");
         List<Entity> entitiesAround = getLevel().getEntitiesAround(this, getReach());
         for (Entity e : entitiesAround) {
             if (this.isEnemy(e) && isInAngle(e, getLookX(), getLookY())) {
+                log.info("enemy is in range, attacking");
                 e.takeDamage(getDamage(), this);
                 hitsForUlt++;
             }
@@ -155,8 +157,10 @@ public class Warrior extends Hero implements CanAttackMelee {
     private void updateAttack(Inputs inputs) {
         if (inputs.attack() && attackCooldown <= 0){
             attack();
+            log.info("attacking");
             attackCooldown = COOLDOWN_TIME;
         }
+
     }
 
     private void updateUltimate(Inputs inputs) {

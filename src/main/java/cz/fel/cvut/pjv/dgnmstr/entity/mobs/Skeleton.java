@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
 public class Skeleton extends RangedMob{
-
+    private final Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinArcher-Sheet.png"));
     public Skeleton(int id, double positionX, double positionY, Level level) {
         super(id,MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
@@ -40,7 +40,6 @@ public class Skeleton extends RangedMob{
 
     @Override
     public Image getImage() {
-        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinArcher-Sheet.png"));
         return new WritableImage(sheet.getPixelReader(), 0, 0, 512, 512);
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
 public class Zombie extends MeleeMob{
+    private final Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/Zombie.png"));
 
     public Zombie(int id,
                   double positionX, double positionY, Level level, int multiplicator) {
@@ -41,7 +42,6 @@ public class Zombie extends MeleeMob{
 
     @Override
     public Image getImage() {
-        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/Zombie.png"));
         return new WritableImage(sheet.getPixelReader(), 0, 0, 32, 32);
     }
 }

@@ -16,9 +16,10 @@ import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.*;
@@ -51,14 +52,14 @@ public class Level {
     private boolean bossSpawned = false;
 
     public Level(DifficultyStats difficulty) {
-        this.allEntities = new ArrayList<>();
-        this.players = new ArrayList<>();
-        this.arenas = new ArrayList<>();
+        this.allEntities = new CopyOnWriteArrayList<>();
+        this.players = new CopyOnWriteArrayList<>();
+        this.arenas = new CopyOnWriteArrayList<>();
         this.state = NOT_STARTED;
         this.difficulty = difficulty;
-        this.projectiles = new ArrayList<>();
-        this.entityMap = new HashMap<>();
-        this.projectileMap = new HashMap<>();
+        this.projectiles = new CopyOnWriteArrayList<>();
+        this.entityMap = new ConcurrentHashMap<>();
+        this.projectileMap = new ConcurrentHashMap<>();
         this.bossSpawnRate = new ArrayList<>();
         this.bossSpawnRate.add(new BossSpawnRate(BossStats.ANYSEK_THE_BEHEMOTH, 0.5));
         this.bossSpawnRate.add(new BossSpawnRate(BossStats.DWIGHT_THE_LEVIATHAN, 0.5));
