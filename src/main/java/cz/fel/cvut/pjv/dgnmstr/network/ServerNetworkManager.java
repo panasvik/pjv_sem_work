@@ -1,9 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.ClientID;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.PlayerProfilePayload;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.LevelSeedPayload;
+import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.*;

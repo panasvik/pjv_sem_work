@@ -31,9 +31,6 @@ public class ServerManager {
     private final Set<Integer> trackedEntityIds = new HashSet<>();
     private final Set<Integer> trackedProjectileIds = new HashSet<>();
     private final Map<Integer, Inputs> lastInputsByHeroId = new ConcurrentHashMap<>();
-    private final Map<Integer, HeroSnapshot> lastHeroSnapshots = new ConcurrentHashMap<>();
-    private final Map<Integer, MobSnapshot> lastMobSnapshots = new ConcurrentHashMap<>();
-    private final Map<Integer, ProjectileSnapshot> lastProjectileSnapshots = new ConcurrentHashMap<>();
     private final ScheduledExecutorService updateExecutor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> updateTask;
     private volatile boolean running = false;
@@ -77,9 +74,6 @@ public class ServerManager {
         trackedEntityIds.clear();
         trackedProjectileIds.clear();
         lastInputsByHeroId.clear();
-        lastHeroSnapshots.clear();
-        lastMobSnapshots.clear();
-        lastProjectileSnapshots.clear();
         if (updateTask != null) {
             updateTask.cancel(false);
             updateTask = null;
@@ -142,13 +136,8 @@ public class ServerManager {
         Set<Integer> currentEntityIds = new HashSet<>();
         for (Entity entity : level.getAllEntities()) {
             currentEntityIds.add(entity.getId());
-            if (!trackedEntityIds.contains(entity.getId())) {
-                broadcastSpawnForEntity(entity);
-            }
             if (entity instanceof Hero hero) {
                 Inputs inputs = lastInputsByHeroId.getOrDefault(hero.getId(), EMPTY_INPUTS);
-                HeroSnapshot newSnapshot = new HeroSnapshot(hero.getX(), hero.getY(), hero.getHp(), inputs);
-                HeroSnapshot oldSnapshot = lastHeroSnapshots.get(hero.getId());
                     snm.broadcast(new DGNPacket(PacketType.UPDATE_HERO,
                             new UpdateHeroPayload(
                                     hero.getId(),
@@ -161,25 +150,20 @@ public class ServerManager {
                                     inputs.ult(),
                                     inputs.interact()
                             )));
-                    lastHeroSnapshots.put(hero.getId(), newSnapshot);
                 if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
                     snm.broadcast(new DGNPacket(PacketType.SYNC_STATS,
                             new SyncPlayerStatsPayload(hero.getId(), hero.getProfile().getPlayerStats())));
                 }
 
             } else if (entity instanceof Mob mob) {
-                MobSnapshot newSnapshot = new MobSnapshot(mob.getX(), mob.getY(), mob.getHp());
                     snm.broadcast(new DGNPacket(PacketType.UPDATE_MOB,
                             new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp())));
-                    lastMobSnapshots.put(mob.getId(), newSnapshot);
             }
         }
 
         for (Integer removedEntityId : trackedEntityIds) {
             if (!currentEntityIds.contains(removedEntityId)) {
                 snm.broadcast(new DGNPacket(PacketType.ENTITY_REMOVE, new EntityRemovePayload(removedEntityId)));
-                lastHeroSnapshots.remove(removedEntityId);
-                lastMobSnapshots.remove(removedEntityId);
             }
         }
         trackedEntityIds.clear();
@@ -188,7 +172,6 @@ public class ServerManager {
         Set<Integer> currentProjectileIds = new HashSet<>();
         for (Projectile projectile : level.getProjectiles()) {
             currentProjectileIds.add(projectile.getId());
-            ProjectileSnapshot newSnapshot = new ProjectileSnapshot(projectile.getX(), projectile.getY(), projectile.isAlive());
                 snm.broadcast(new DGNPacket(PacketType.UPDATE_PROJECTILE,
                         new UpdateProjectilePayload(
                                 projectile.getId(),
@@ -196,13 +179,11 @@ public class ServerManager {
                                 projectile.getY(),
                                 projectile.isAlive()
                         )));
-                lastProjectileSnapshots.put(projectile.getId(), newSnapshot);
         }
 
         for (Integer removedProjectileId : trackedProjectileIds) {
             if (!currentProjectileIds.contains(removedProjectileId)) {
                 snm.broadcast(new DGNPacket(PacketType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
-                lastProjectileSnapshots.remove(removedProjectileId);
             }
         }
         trackedProjectileIds.clear();
