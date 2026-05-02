@@ -35,10 +35,7 @@ public class Zombie extends MeleeMob{
                 level, 1);
     }
 
-    @Override
-    public void update(double deltaTime) {
 
-    }
 
     @Override
     public Image getImage() {

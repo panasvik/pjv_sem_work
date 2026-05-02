@@ -39,10 +39,7 @@ public class EvilWizard extends RangedMob{
         getLevel().requestProjectileSpawn(this, 15, getDamage(), deltaX, deltaY, 15);
     }
 
-    @Override
-    public void update(double deltaTime) {
 
-    }
 
     @Override
     public Image getImage() {

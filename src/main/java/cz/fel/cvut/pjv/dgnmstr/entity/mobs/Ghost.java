@@ -50,9 +50,6 @@ public class Ghost extends MeleeMob{
     }
 
 
-    @Override
-    public void update(double deltaTime) {
 
-    }
 }
 

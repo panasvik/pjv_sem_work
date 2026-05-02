@@ -33,11 +33,6 @@ public class Goblin extends MeleeMob {
     }
 
     @Override
-    public void update(double deltaTime) {
-
-    }
-
-    @Override
     public Image getImage() {
         return new WritableImage(sheet.getPixelReader(), 0, 0, 512, 512);
     }

@@ -33,10 +33,7 @@ public class Skeleton extends RangedMob{
         getLevel().requestProjectileSpawn(this, 5, getDamage(), deltaX, deltaY, 25);
     }
 
-    @Override
-    public void update(double deltaTime) {
 
-    }
 
     @Override
     public Image getImage() {
