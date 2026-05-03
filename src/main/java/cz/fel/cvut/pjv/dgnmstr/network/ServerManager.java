@@ -27,8 +27,6 @@ public class ServerManager {
     private final ScheduledExecutorService updateExecutor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> updateTask;
     private volatile boolean running = false;
-    private static final Inputs EMPTY_INPUTS =
-            new Inputs(false, false, false, false, false, false, false, 0, 0);
 
 
 
