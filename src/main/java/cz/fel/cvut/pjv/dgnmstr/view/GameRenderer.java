@@ -86,7 +86,7 @@ public class GameRenderer extends AnimationTimer {
             }
             if (e.isAlive()) {
                 if (e.getImgId() != null) {
-                    gc.drawImage(ImgLoader.get(e.getImgId()), 0, 0,e.getImgId().getFrameWidth(), e.getImgId().getFrameHeight(), drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
+                    gc.drawImage(ImgLoader.get(e.getImgId()), 0, 0, e.getImgId().getFrameWidth(), e.getImgId().getFrameHeight(), drawX, drawY, Level.TILE_SIZE * e.getImgId().getScale(), Level.TILE_SIZE * e.getImgId().getScale());
                 } else {
                     gc.setFill(Color.RED);
                     gc.fillRect(drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
