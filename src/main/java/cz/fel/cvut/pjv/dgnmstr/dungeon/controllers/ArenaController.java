@@ -24,6 +24,10 @@ public class ArenaController implements Updatable {
     private int totalSpawnedInWave = 0;
     private int currentMobCount = 0;
 
+    private record MobSpawnData(MobStats mobStats, double x, double y){}
+
+
+
     public ArenaController(Arena arena, Level level) {
         this.arena = arena;
         this.level = level;
@@ -137,17 +141,24 @@ public class ArenaController implements Updatable {
         }
     }
 
+
+    private MobSpawnData getMobSpawnData(List<TilePosition> validSpawnPoints) {
+        int randomIndex = (int) (Math.random() * validSpawnPoints.size());
+        TilePosition spot = validSpawnPoints.remove(randomIndex);
+
+        double worldX = (spot.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+        double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
+
+        MobStats mobStats = arena.getType().getRandomMobStats();
+
+        return new MobSpawnData(mobStats, worldX, worldY);
+    }
+
     private void spawnMobs(int cap, List<TilePosition> validSpawnPoints) {
         int mobsToSpawn = Math.min(cap, validSpawnPoints.size());
         for (int i = 0; i < mobsToSpawn; i++) {
-            int randomIndex = (int) (Math.random() * validSpawnPoints.size());
-            TilePosition spot = validSpawnPoints.remove(randomIndex);
-
-            double worldX = (spot.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-            double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-
-            MobStats mobStats = arena.getType().getRandomMobStats();
-            Mob mob = level.requestMobSpawn( worldX, worldY, mobStats,1);
+            MobSpawnData mobSpawnData = getMobSpawnData(validSpawnPoints);
+            Mob mob = level.requestMobSpawn( mobSpawnData.x, mobSpawnData.y, mobSpawnData.mobStats,1);
             if (mob != null) {
                 arena.getActiveMobs().add(mob);
             }
