@@ -56,7 +56,7 @@ public class StartMenuController {
             gameManager.setCnm(cnm);
             gameManager.setCm(cnm.getManager());
             cnm.connect();
-        } catch (UnknownHostException e) {
+        } catch (UnknownHostException | NumberFormatException k) {
             log.severe("HOST DOES NOT EXIST");
             socketToConnect.setText("HOST DOES NOT EXIST");
             return;
