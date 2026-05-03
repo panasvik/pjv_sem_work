@@ -49,7 +49,7 @@ public class StartMenuController {
         gameManager.setSnm(snm);
         snm.start();
         gameManager.setSm(snm.getServerManager());
-        socketToConnect.setText(String.valueOf(port));
+        socketToConnect.setText(serverIP + ":" + port);
         try {
             cnm = new ClientNetworkManager(serverIP, port, profile);
             gameManager.setCnm(cnm);

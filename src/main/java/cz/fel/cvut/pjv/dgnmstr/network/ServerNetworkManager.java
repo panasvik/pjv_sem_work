@@ -134,8 +134,6 @@ public class ServerNetworkManager {
             PlayerProfile profile = ((PlayerProfilePayload) packet.payload()).profile();
             sendSeed(source);
             clients.put(source, profile);
-            int id = serverManager.addProfile(profile);
-            clientHeroIds.put(source, id);
             log.info("New client registered with profile from: " + source);
         }
 
@@ -300,11 +298,11 @@ public class ServerNetworkManager {
     }
 
     public void sendIDs() {
-        for (Map.Entry<InetSocketAddress, Integer> entry: clientHeroIds.entrySet()) {
+        for (Map.Entry<InetSocketAddress, PlayerProfile> entry: clients.entrySet()) {
             InetSocketAddress source = entry.getKey();
-            int id = entry.getValue();
+            int id = serverManager.addProfile(entry.getValue());
+            clientHeroIds.put(source, id);
             sendClientId(source, id);
-
         }
     }
 }
