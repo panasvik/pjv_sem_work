@@ -43,7 +43,8 @@ public class StartMenuController {
             socketToConnect.setText("Load profile first");
             return;
         }
-        int port = 8888;
+        int port = Integer.parseInt(hostPort.getText());
+        String serverIP = hostIP.getText();
         snm = new ServerNetworkManager(port);
         GameManager gameManager = GameManager.getInstance();
         gameManager.setSnm(snm);
@@ -51,7 +52,7 @@ public class StartMenuController {
         gameManager.setSm(snm.getServerManager());
         socketToConnect.setText(String.valueOf(port));
         try {
-            cnm = new ClientNetworkManager("127.0.0.1", port, profile);
+            cnm = new ClientNetworkManager(serverIP, port, profile);
             gameManager.setCnm(cnm);
             gameManager.setCm(cnm.getManager());
             cnm.connect();
