@@ -194,15 +194,8 @@ public class ArenaController implements Updatable {
 
     private void spawnMiniBoss() {
         List<TilePosition> validSpawnPoints = arena.getValidSpawnPoints();
-        int randomIndex = (int) (Math.random() * validSpawnPoints.size());
-        TilePosition spot = validSpawnPoints.remove(randomIndex);
-        double worldX = (spot.x() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-        double worldY = (spot.y() * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-
-        MobStats mobStats = arena.getType().getRandomMobStats();
-        Mob miniboss = level.requestMobSpawn( worldX, worldY, mobStats, DifficultyStats.MEDIUM.getStatsMult());
-
-
+        MobSpawnData mobSpawnData = getMobSpawnData(validSpawnPoints);
+        Mob miniboss = level.requestMobSpawn( mobSpawnData.x, mobSpawnData.y, mobSpawnData.mobStats,DifficultyStats.MEDIUM.getStatsMult());
         arena.getActiveMobs().add(miniboss);
         arena.setMiniBossSpawned(true);
         log.info("MiniBoss " + miniboss.getClass().getSimpleName() + " spawned!");
