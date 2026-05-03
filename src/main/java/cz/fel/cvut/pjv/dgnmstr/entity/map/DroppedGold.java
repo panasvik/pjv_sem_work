@@ -4,6 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import javafx.scene.image.Image;
 
@@ -52,9 +53,10 @@ public class DroppedGold extends Entity {
     }
 
     @Override
-    public Image getImage() {
+    public ImgId getImgId() {
         return null;
     }
+
 
     public int getValue() {
         return value;

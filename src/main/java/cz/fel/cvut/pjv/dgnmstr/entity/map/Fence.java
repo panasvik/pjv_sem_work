@@ -4,6 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import javafx.scene.image.Image;
 
 public class Fence extends Entity {
@@ -27,9 +28,10 @@ public class Fence extends Entity {
     }
 
     @Override
-    public Image getImage() {
+    public ImgId getImgId() {
         return null;
     }
+
 
     @Override
     public void update(double deltaTime) {

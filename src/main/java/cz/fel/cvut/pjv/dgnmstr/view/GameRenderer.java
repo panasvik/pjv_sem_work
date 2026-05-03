@@ -4,6 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -84,8 +86,8 @@ public class GameRenderer extends AnimationTimer {
                 continue;
             }
             if (e.isAlive()) {
-                if (e.getImage() != null) {
-                    gc.drawImage(e.getImage(), drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
+                if (e.getImgId() != null) {
+                    gc.drawImage(ImgLoader.get(e.getImgId()), 0, 0,e.getImgId().getFrameWidth(), e.getImgId().getFrameHeight(), drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
                 } else {
                     gc.setFill(Color.RED);
                     gc.fillRect(drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);

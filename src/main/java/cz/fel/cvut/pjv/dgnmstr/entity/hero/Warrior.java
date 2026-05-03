@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttackMelee;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import javafx.scene.image.Image;
@@ -41,7 +42,7 @@ public class Warrior extends Hero implements CanAttackMelee {
     }
 
     @Override
-    public Image getImage() {
+    public ImgId getImgId() {
 //        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/Down.Png/WarriorDownIdle.png"));
 //        return new WritableImage(sheet.getPixelReader(), 0, 0, 48, 48);
         return null;

@@ -2,12 +2,12 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
 
 public class Ghost extends MeleeMob{
-    private final Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/Ghost.png"));
     public Ghost(int id, double positionX, double positionY, Level level) {
         super( id,
                 MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
@@ -40,8 +40,8 @@ public class Ghost extends MeleeMob{
     }
 
     @Override
-    public Image getImage() {
-        return new WritableImage(sheet.getPixelReader(), 0, 0, 32, 32);
+    public ImgId getImgId() {
+        return ImgId.GHOST;
     }
 
     @Override

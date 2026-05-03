@@ -3,6 +3,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerManager;
 import javafx.scene.image.Image;
 /**
@@ -172,5 +173,5 @@ public abstract class Entity implements Updatable, Positionable {
         return faction;
     }
 
-    public abstract Image getImage();
+    public abstract ImgId getImgId();
 }
