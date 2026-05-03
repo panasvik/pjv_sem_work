@@ -16,20 +16,32 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.DroppedGold;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Fence;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
+import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.ArenaStatePayload;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class ClientManager {
     private LevelController lc;
+    private final PlayerProfile myProfile;
     private Hero localHero;
     private static final Logger log = Logger.getLogger(ClientManager.class.getName());
+    private final ScheduledExecutorService updateExecutor = Executors.newSingleThreadScheduledExecutor();
+    private InputHandler inputHandler;
+    private ClientNetworkManager networkManager;
 
-    public ClientManager() {
+
+    public ClientManager(ClientNetworkManager networkManager, PlayerProfile profile) {
+        this.networkManager = networkManager;
+        this.myProfile = profile;
     }
 
     public void makeNewLC(long seed) {
@@ -45,7 +57,7 @@ public class ClientManager {
     }
 
     public void setLocalHero(int id) {
-        localHero = (Hero) lc.getLevel().getEntityMap().get(id);
+        localHero = (Hero) lc.getLevel().getEntity(id);
         System.out.println("local hero set");
         System.out.println(localHero);
     }
@@ -66,7 +78,7 @@ public class ClientManager {
 
     public void spawnProjectile(SpawnProjectilePayload payload) {
         if (lc == null || lc.getLevel().getProjectileMap().containsKey(payload.id())) return;
-        Entity master = lc.getLevel().getEntityMap().get(payload.masterID());
+        Entity master = lc.getLevel().getEntity(payload.masterID());
         if (master == null) return;
         Projectile projectile = new Projectile(payload.id(), payload.radius(), payload.posX(), payload.posY(), master,
                 payload.damage(), payload.deltaX(), payload.deltaY(), payload.velocity());
@@ -95,7 +107,7 @@ public class ClientManager {
 
     public void updateHero(UpdateHeroPayload payload) {
         if (lc == null) return;
-        Entity entity = lc.getLevel().getEntityMap().get(payload.id());
+        Entity entity = lc.getLevel().getEntity(payload.id());
         if (!(entity instanceof Hero hero)) return;
         hero.setPos(payload.x(), payload.y());
         hero.setHp(payload.hp());
@@ -106,7 +118,7 @@ public class ClientManager {
 
     public void updateMob(UpdateMobPayload payload) {
         if (lc == null) return;
-        Entity entity = lc.getLevel().getEntityMap().get(payload.id());
+        Entity entity = lc.getLevel().getEntity(payload.id());
         if (!(entity instanceof Mob mob)) return;
         mob.setPos(payload.x(), payload.y());
         mob.setHp(payload.hp());
@@ -167,5 +179,31 @@ public class ClientManager {
 
     public Hero getLocalHero() {
         return localHero;
+    }
+
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
+
+    public void setInputHandler(InputHandler inputHandler) {
+        this.inputHandler = inputHandler;
+    }
+
+    public void startManagingInputs() {
+        updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, 16, TimeUnit.MILLISECONDS);
+
+    }
+
+    public void manageInputs() {
+        if (inputHandler == null) {
+            return;
+        }
+        Inputs inputs = inputHandler.getInputs();
+        networkManager.sendInputs(inputs);
+    }
+
+
+    public PlayerProfile getMyProfile() {
+        return myProfile;
     }
 }

@@ -142,10 +142,22 @@ public class ServerNetworkManager {
             return;
         }
 
-        if (packet.type() == PacketType.UPDATE_HERO && packet.payload() instanceof Inputs inputs) {
-            handleNewInputs(source, inputs);
-        } else {
-            log.info("Received packet: " + packet.type() + " from " + source);
+        handleClientUpdatePacket(packet, source);
+    }
+
+    private void handleClientUpdatePacket(DGNPacket packet, InetSocketAddress source) {
+        switch (packet.type()) {
+            case UPDATE_HERO -> handleNewInputs(source, (Inputs) packet.payload());
+            case PROFILE_UPDATE -> handleProfileUpdate(source, (PlayerProfilePayload) packet.payload());
+            default -> log.info("Received packet: " + packet.type() + " from " + source);
+        }
+    }
+
+    private void handleProfileUpdate(InetSocketAddress source, PlayerProfilePayload payload) {
+        Integer heroId = clientHeroIds.get(source);
+        if (heroId != null) {
+            clients.get(source).mergeProfileChanges(payload.profile());
+            serverManager.updateByProfile(heroId, payload.profile());
         }
     }
 

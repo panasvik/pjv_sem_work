@@ -15,15 +15,12 @@ public class ClientNetworkManager {
     private final ClientManager manager;
     private final InetAddress serverAddress;
     private final int serverUdpPort;
-    private final PlayerProfile myProfile;
-
     private boolean isRunning = false;
 
     public ClientNetworkManager(String serverIp, int serverUdpPort, PlayerProfile profile) throws UnknownHostException {
         this.serverAddress = InetAddress.getByName(serverIp);
         this.serverUdpPort = serverUdpPort;
-        this.myProfile = profile;
-        manager = new ClientManager();
+        manager = new ClientManager(this, profile);
     }
 
     public void connect() {
@@ -44,10 +41,6 @@ public class ClientNetworkManager {
         }
     }
 
-    public void send(DGNPacket packet) {
-        if (!isRunning) return;
-        sendUDP(packet);
-    }
 
     public void sendInputs(Inputs inputs) {
         if (!isRunning || inputs == null) return;
@@ -65,7 +58,7 @@ public class ClientNetworkManager {
     }
 
     private void sendUdpHandshake() {
-        PlayerProfilePayload payload = new PlayerProfilePayload(myProfile);
+        PlayerProfilePayload payload = new PlayerProfilePayload(manager.getMyProfile());
         sendUDP(new DGNPacket(PacketType.PLAYER_PROFILE, payload));
     }
 
@@ -115,6 +108,12 @@ public class ClientNetworkManager {
             udpSocket.close();
         }
         System.out.println("Disconnected from server.");
+    }
+
+    public void sendProfileUpdate(PlayerProfile profile) {
+        PlayerProfilePayload payload = new PlayerProfilePayload(profile);
+        DGNPacket packet = new DGNPacket(PacketType.PROFILE_UPDATE, payload);
+        sendUDP(packet);
     }
 
     public ClientManager getManager() {

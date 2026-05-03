@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 public class GameController {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
     private final GameManager gameManager;
-    private final ScheduledExecutorService updateExecutor = Executors.newSingleThreadScheduledExecutor();
 
     @FXML
     private Pane canvasWrapper;
@@ -27,7 +26,6 @@ public class GameController {
     @FXML
     private Canvas gameCanvas;
 
-    private InputHandler inputHandler;
     private ClientNetworkManager cnm;
     private GameRenderer renderer;
     private AnimationTimer startupWaiter;
@@ -66,22 +64,16 @@ public class GameController {
             log.info("starting");
             return true;
         }
-
-        inputHandler = new InputHandler(SceneManager.getInstance().getMainScene());
+        InputHandler inputHandler = new InputHandler(SceneManager.getInstance().getMainScene());
+        clientManager.setInputHandler(inputHandler);
         gameManager.setIh(inputHandler);
         renderer = new GameRenderer(gameCanvas, clientManager.getLc().getLevel(), clientManager.getLocalHero());
         gameManager.setGm(renderer);
         renderer.start();
-        updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, 16, TimeUnit.MILLISECONDS);
+        clientManager.startManagingInputs();
         log.info("GameController started level systems");
         return true;
     }
 
-    public void manageInputs() {
-        if (inputHandler == null || cnm == null) {
-            return;
-        }
-        Inputs inputs = inputHandler.getInputs();
-        cnm.sendInputs(inputs);
-    }
+
 }

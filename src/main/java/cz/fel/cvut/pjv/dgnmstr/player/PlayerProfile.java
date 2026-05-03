@@ -147,6 +147,14 @@ public class PlayerProfile implements Serializable   {
         return new PlayerStats(damage, defence, hp, range, dexterity, speed, gold);
     }
 
+    public void mergeProfileChanges(PlayerProfile from) {
+        setGold(from.getGold());
+        setArmor(from.getArmor());
+        setInventory(from.getInventory());
+        setWeapon(from.getWeapon());
+    }
+
+
     public Inventory getInventory() {
         return inventory;
     }

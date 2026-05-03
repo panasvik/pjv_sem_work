@@ -24,4 +24,5 @@ public enum PacketType implements Serializable {
     CLIENT_ID,
     SEED,
     REMOVE_PROJECTILE,
+    PROFILE_UPDATE
 }

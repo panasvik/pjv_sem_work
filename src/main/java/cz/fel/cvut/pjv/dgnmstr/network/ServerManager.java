@@ -68,11 +68,18 @@ public class ServerManager {
         }
     }
 
+    public void updateByProfile(int id, PlayerProfile profile) {
+        if (lc.getLevel().getEntity(id) instanceof Hero hero) {
+            hero.getProfile().mergeProfileChanges(profile);
+            hero.syncStats(profile.getPlayerStats());
+        }
+    }
+
     public void applyInputs(int heroId, Inputs inputs) {
         if (lc == null || inputs == null) {
             return;
         }
-        Entity entity = lc.getLevel().getEntityMap().get(heroId);
+        Entity entity = lc.getLevel().getEntity(heroId);
         if (entity instanceof Hero hero) {
             hero.setInputs(inputs);
             snm.getLastInputsByHeroId().put(heroId, inputs);

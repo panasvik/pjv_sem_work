@@ -2,5 +2,5 @@ package cz.fel.cvut.pjv.dgnmstr.network;
 
 import java.io.Serializable;
 
-public record DGNPacket(PacketType type, Object payload) implements Serializable {
+public record DGNPacket(PacketType type, Serializable payload) implements Serializable {
 }
