@@ -59,7 +59,7 @@ public class AnysekTheBehemoth extends Boss{
 
     @Override
     public ImgId getImgId() {
-        return null;
+        return ImgId.ANYSEK;
     }
 
     public void coolRage() {

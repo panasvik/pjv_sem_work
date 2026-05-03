@@ -28,7 +28,7 @@ public class Grate extends Entity {
 
     @Override
     public ImgId getImgId() {
-        return null;
+        return ImgId.GRATE;
     }
 
 

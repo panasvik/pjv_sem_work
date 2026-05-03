@@ -103,7 +103,7 @@ public class DwightTheLeviathan extends Boss{
 
     @Override
     public ImgId getImgId() {
-        return null;
+        return ImgId.DWIGHT;
     }
 }
 

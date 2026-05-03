@@ -29,7 +29,7 @@ public class Fence extends Entity {
 
     @Override
     public ImgId getImgId() {
-        return null;
+        return ImgId.FENCE;
     }
 
 

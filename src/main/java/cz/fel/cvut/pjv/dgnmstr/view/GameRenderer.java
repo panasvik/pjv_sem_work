@@ -55,25 +55,24 @@ public class GameRenderer extends AnimationTimer {
                 TileType tile = level.getTile(x,y);
                 switch (tile) {
                     case WALL:
-                        gc.setFill(Color.BLACK);
+                        gc.drawImage(ImgLoader.get(ImgId.FENCE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case FLOOR:
-                        gc.setFill(Color.DARKGRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case SPAWN_FLOOR:
-                        gc.setFill(Color.GRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case CHEST_FLOOR:
-                        gc.setFill(Color.GRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case EXIT:
-                        gc.setFill(Color.GRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     default:
                         gc.setFill(Color.WHITE);
                         break;
                 }
-                gc.fillRect(x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
 
             }
         }

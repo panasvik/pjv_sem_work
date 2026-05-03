@@ -37,7 +37,7 @@ public class Chest extends Entity implements Interactable {
 
     @Override
     public ImgId getImgId() {
-        return null;
+        return ImgId.CHEST;
     }
 
     @Override

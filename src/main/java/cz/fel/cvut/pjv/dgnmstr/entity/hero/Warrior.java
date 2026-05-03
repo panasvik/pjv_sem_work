@@ -43,9 +43,7 @@ public class Warrior extends Hero implements CanAttackMelee {
 
     @Override
     public ImgId getImgId() {
-//        Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/Down.Png/WarriorDownIdle.png"));
-//        return new WritableImage(sheet.getPixelReader(), 0, 0, 48, 48);
-        return null;
+        return ImgId.WARRIOR;
     }
 
     @Override

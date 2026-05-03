@@ -54,7 +54,7 @@ public class DroppedGold extends Entity {
 
     @Override
     public ImgId getImgId() {
-        return null;
+        return ImgId.GOLD;
     }
 
 

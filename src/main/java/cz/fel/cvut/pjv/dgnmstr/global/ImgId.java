@@ -5,7 +5,16 @@ public enum ImgId {
     ZOMBIE("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/Zombie.png", 32, 32),
     EVIL_WIZARD("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/WizardIdle.png", 32, 32),
     GHOST("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/Ghost.png", 32, 32),
-    SKELETON("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinArcher-Sheet.png", 512, 512);
+    SKELETON("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinArcher-Sheet.png", 512, 512),
+    WARRIOR("/cz/fel/cvut/pjv/dgnmstr/entity/hero/Down/Png/WarriorDownIdle.png", 48, 48),
+    FENCE("/cz/fel/cvut/pjv/dgnmstr/entity/map/Fence.png", 32, 32),
+    GOLD("/cz/fel/cvut/pjv/dgnmstr/entity/map/unpaid.png", 32, 32),
+    CHEST("/cz/fel/cvut/pjv/dgnmstr/entity/map/Chest.png", 32, 32),
+    GRATE("/cz/fel/cvut/pjv/dgnmstr/entity/map/Grate.png", 32, 32),
+    TILE("/cz/fel/cvut/pjv/dgnmstr/entity/map/Tile.png", 32, 32),
+    ANYSEK("/cz/fel/cvut/pjv/dgnmstr/entity/boss/Behemoth.png", 96, 96),
+    DWIGHT("/cz/fel/cvut/pjv/dgnmstr/entity/boss/leviathan.png", 600, 600)
+    ;
 
     private final String imgPath;
     private final int frameWidth;
