@@ -1,6 +1,5 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
-import cz.fel.cvut.pjv.dgnmstr.GameApp;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.network.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
@@ -70,10 +69,13 @@ public class StartMenuController {
             log.warning("server is not started. start it first");
             return;
         }
-        snm.setGameStarted(true);
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.activate(View.LEVEL);
-        snm.getServerManager().startLC();
+        if (snm != null) {
+            snm.sendIDs();
+            snm.setGameStarted(true);
+            snm.getServerManager().startLC();
+        }
     }
 
     @FXML
@@ -134,10 +136,12 @@ public class StartMenuController {
             socketToConnect.setText("Invalid port");
             return;
         }
-
+        GameManager gameManager = GameManager.getInstance();
         try {
             cnm = new ClientNetworkManager(host, port, profile);
             cnm.connect();
+            gameManager.setCnm(cnm);
+            gameManager.setCm(cnm.getManager());
         } catch (UnknownHostException e) {
             log.severe("HOST DOES NOT EXIST");
             socketToConnect.setText("HOST DOES NOT EXIST");

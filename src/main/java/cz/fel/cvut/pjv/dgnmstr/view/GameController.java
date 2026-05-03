@@ -59,10 +59,12 @@ public class GameController {
         ClientManager clientManager = gameManager.getCm();
         cnm = gameManager.getCnm();
         if (cnm == null || clientManager == null || clientManager.getLc() == null || clientManager.getLocalHero() == null) {
+            log.info("unable to start, no cnm or cm or lc or localHero");
             return false;
         }
 
         if (renderer != null) {
+            log.info("starting");
             return true;
         }
 

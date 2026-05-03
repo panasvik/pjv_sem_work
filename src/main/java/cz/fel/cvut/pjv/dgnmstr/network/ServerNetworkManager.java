@@ -11,7 +11,6 @@ import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
-import javax.xml.transform.Source;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -137,7 +136,6 @@ public class ServerNetworkManager {
             clients.put(source, profile);
             int id = serverManager.addProfile(profile);
             clientHeroIds.put(source, id);
-            sendClientId(source, id);
             log.info("New client registered with profile from: " + source);
         }
 
@@ -299,5 +297,14 @@ public class ServerNetworkManager {
                         projectile.getY(),
                         projectile.isAlive()
                 )));
+    }
+
+    public void sendIDs() {
+        for (Map.Entry<InetSocketAddress, Integer> entry: clientHeroIds.entrySet()) {
+            InetSocketAddress source = entry.getKey();
+            int id = entry.getValue();
+            sendClientId(source, id);
+
+        }
     }
 }
