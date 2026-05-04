@@ -1,6 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
 
+import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
 import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
@@ -36,7 +37,13 @@ public class GameController {
     private VBox inventoryView;
 
     @FXML
+    private VBox chestView;
+
+    @FXML
     private ListView<Item> inventoryList;
+
+    @FXML
+    private ListView<Item> chestList;
 
     private ClientNetworkManager cnm;
     private GameRenderer renderer;
@@ -54,7 +61,11 @@ public class GameController {
         ImgLoader.loadAll();
 
         // Setup custom cell factory for inventory list to show item names
-        inventoryList.setCellFactory(param -> new ListCell<Item>() {
+        fillList(inventoryList);
+    }
+
+    private void fillList(ListView<Item> itemList) {
+        itemList.setCellFactory(param -> new ListCell<Item>() {
             @Override
             protected void updateItem(Item item, boolean empty) {
                 super.updateItem(item, empty);
@@ -138,4 +149,11 @@ public class GameController {
         log.info("Hiding inventory");
     }
 
+    public VBox getChestView() {
+        return chestView;
+    }
+
+    public VBox getInventoryView() {
+        return inventoryView;
+    }
 }

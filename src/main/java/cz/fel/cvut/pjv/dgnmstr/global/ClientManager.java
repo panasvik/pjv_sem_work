@@ -30,6 +30,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import static cz.fel.cvut.pjv.dgnmstr.global.MyMath.getClosestChest;
+
 public class ClientManager {
     private LevelController lc;
     private final PlayerProfile myProfile;
@@ -203,13 +205,12 @@ public class ClientManager {
         }
         Inputs inputs = inputHandler.getInputs();
         networkManager.sendInputs(inputs);
-        if (inputs.interact()) {
 
-        }
     }
 
-    private void openNearestChest() {
-
+    public Chest getnearestChest() {
+        List<Chest> chests = lc.getLevel().getChests();
+        return getClosestChest(chests, localHero);
     }
 
     public PlayerProfile getMyProfile() {

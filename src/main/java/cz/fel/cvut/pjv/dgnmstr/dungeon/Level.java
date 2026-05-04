@@ -100,10 +100,11 @@ public class Level {
     public <T extends Positionable> List<Entity> getEntitiesAround(T center, double range) {
         double rangeSquared = range * range;
         return allEntities.stream()
-                                .filter(other -> other != center)
-                                .filter(other -> MyMath.calculateDistanceSquared(center, other) <= rangeSquared) // 2. Проверяем дистанцию
-                                .toList();
+                            .filter(other -> other != center)
+                            .filter(other -> MyMath.calculateDistanceSquared(center, other) <= rangeSquared)
+                            .toList();
     }
+
 
 
     public void removeEntity(Entity entity) {
@@ -323,4 +324,6 @@ public class Level {
     public List<Chest> getChests() {
         return chests;
     }
+
+
 }
