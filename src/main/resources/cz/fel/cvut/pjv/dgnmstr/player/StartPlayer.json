@@ -44,26 +44,8 @@
     "type" : "MELEE"
   },
   "inventory" : {
-    "invent" : [ {
-      "@class" : "cz.fel.cvut.pjv.dgnmstr.item.weapon.LegendaryWarriorSword",
-      "name" : "Legendary Warrior Sword",
-      "price" : 40,
-      "damage" : 60,
-      "dexterity" : 10,
-      "range" : 15,
-      "type" : "MELEE"
-    }, {
-      "@class" : "cz.fel.cvut.pjv.dgnmstr.item.armor.LegendaryWarriorChestplate",
-      "name" : "Legendary Warrior Chestplate",
-      "price" : 30,
-      "hp" : 140,
-      "defence" : 40,
-      "dexterity" : 20,
-      "speed" : 0,
-      "type" : "CHESTPLATE",
-      "role" : "WARRIOR"
-    } ]
+    "invent" : []
   },
   "role" : "WARRIOR",
-  "gold" : 500
+  "gold" : 0
 }

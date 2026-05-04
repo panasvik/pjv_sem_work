@@ -55,12 +55,15 @@ public abstract class Entity implements Updatable, Positionable {
         if (damage <= 0) return;
         if (handleParry(source)) return;
         damage = applyDefence(damage);
+
         this.hp -= damage;
         log.fine(this.getClass().getSimpleName() + ": took " + damage + " damage. HP left: " + this.hp );
         onDamageTaken(damage, source);
         if (this.hp <= 0) {
             die();
         }
+        log.info(this + "took "  + damage + " damage");
+
     }
 
     protected abstract void onDamageTaken(int amount, Entity source);

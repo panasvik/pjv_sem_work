@@ -40,14 +40,14 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
 
     @Override
     protected boolean handleParry(Entity source) {
-        if (!(source instanceof CanAttack)) {
+        if (!(source instanceof CanAttack attackSource)) {
             return false;
         }
         if (dextCheck() && getReach() * getReach() >= MyMath.calculateDistanceSquared(this, source)) {
             source.takeDamage(this.damage, this);
             return true;
         }
-        return speedCheck();
+        return speedCheck(attackSource.getDamage());
     }
 
     @Override
@@ -67,12 +67,12 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     }
 
     private boolean dextCheck() {
-        double chance = MyMath.sigmoid(this.dexterity * this.dexterity);
+        double chance = MyMath.sigmoid(dexterity);
         double random = Math.random();
         return random < chance;
     }
 
-    private boolean speedCheck() {
+    private boolean speedCheck(int damage) {
         return getSpeed() > damage;
     }
 

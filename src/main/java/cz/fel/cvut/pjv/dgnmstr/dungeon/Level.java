@@ -60,6 +60,7 @@ public class Level {
         this.entityMap = new ConcurrentHashMap<>();
         this.projectileMap = new ConcurrentHashMap<>();
         this.bossSpawnRate = new ArrayList<>();
+        this.chests = new ArrayList<>();
         this.bossSpawnRate.add(new BossSpawnRate(BossStats.ANYSEK_THE_BEHEMOTH, 0.5));
         this.bossSpawnRate.add(new BossSpawnRate(BossStats.DWIGHT_THE_LEVIATHAN, 0.5));
     }
