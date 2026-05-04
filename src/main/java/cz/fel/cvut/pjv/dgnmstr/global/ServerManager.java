@@ -97,6 +97,11 @@ public class ServerManager {
         snm.sendLevelUpdates();
         snm.sendEntityUpdates();
         snm.sendProjectileUpdates();
+        if (lc.getLevel().getState() == LevelState.GAME_OVER ||
+            lc.getLevel().getState() == LevelState.VICTORY) {
+            stopLC();
+            snm.stop();
+        }
     }
 
 

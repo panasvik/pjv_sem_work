@@ -181,6 +181,9 @@ public class ServerNetworkManager {
         if (udpSocket != null && !udpSocket.isClosed()) {
             udpSocket.close();
         }
+        for (InetSocketAddress clientAddress : clients.keySet()) {
+            disconnectClient(clientAddress);
+        }
         clients.clear();
         clientHeroIds.clear();
         serverManager.stopLC();

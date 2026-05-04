@@ -42,8 +42,21 @@ public class StartMenuController {
             socketToConnect.setText("Load profile first");
             return;
         }
-        int port = Integer.parseInt(hostPort.getText());
-        String serverIP = hostIP.getText();
+
+        int port;
+
+        if (hostPort.getText().isEmpty()) {
+            port = 5000;
+        } else {
+            port = Integer.parseInt(hostPort.getText());
+
+        }
+        String serverIP;
+        if (hostIP.getText().isEmpty()) {
+            serverIP = "127.0.0.1";
+        } else {
+            serverIP = hostIP.getText();
+        }
         snm = new ServerNetworkManager(port);
         GameManager gameManager = GameManager.getInstance();
         gameManager.setSnm(snm);
@@ -105,6 +118,7 @@ public class StartMenuController {
         if (!isProfileLoaded) {
             log.warning("Profile is not loaded");
             return;
+
         }
         try {
             profile.saveToJson(filePath.getText());

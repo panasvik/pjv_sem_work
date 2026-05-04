@@ -23,8 +23,11 @@ import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
+import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
+import cz.fel.cvut.pjv.dgnmstr.view.View;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -89,10 +92,13 @@ public class ClientManager {
     }
 
     public void spawnChest(SpawnChestPayload payload) {
+        log.info("spawning chest with id " + payload.id());
         if (lc == null || lc.getLevel().getEntityMap().containsKey(payload.id())) return;
         Chest chest = new Chest(payload.id(), payload.x(), payload.y(), lc.getLevel(), Inventory.getRandomInventory());
         lc.getLevel().addEntity(chest);
         lc.getLevel().addChest(chest);
+        log.info("spawned chest with id " + payload.id());
+
     }
 
     public void spawnGrate(SpawnGratePayload payload) {
@@ -159,9 +165,16 @@ public class ClientManager {
     public void updateLevelState(LevelStatePayload payload) {
         if (lc == null) return;
         lc.getLevel().setState(payload.state());
-        if (payload.state() == LevelState.PLAYING) {
-            lc.startLevel();
+
+        switch (payload.state()) {
+            case PLAYING -> lc.startLevel();
+            case VICTORY, GAME_OVER -> {
+                networkManager.disconnect();
+                SceneManager sceneManager = SceneManager.getInstance();
+                sceneManager.activate(View.START_MENU);
+            }
         }
+
     }
 
     public void updateArenaState(ArenaStatePayload payload) {
