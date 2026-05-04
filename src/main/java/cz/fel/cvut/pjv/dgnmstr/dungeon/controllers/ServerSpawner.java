@@ -17,17 +17,17 @@ import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
+import java.util.logging.Logger;
+
 /**
- * Реализация фабрики сущностей для Сервера.
- * Сервер имеет право генерировать уникальные ID и обязан рассылать
- * информацию о новых сущностях всем подключенным клиентам.
+ *
  */
 public class ServerSpawner implements EntitySpawner {
     private final Level level;
     private final IDGenerator idGen;
 
-    // Псевдо-класс для вашей сетевой логики.
-    // Это должен быть класс, который умеет отправлять DGNPacket всем клиентам.
+    private static final Logger log = Logger.getLogger(ServerSpawner.class.getName());
+
     private final ServerNetworkManager networkServer;
 
     public ServerSpawner(Level level, IDGenerator idGen, ServerNetworkManager networkServer) {
@@ -109,6 +109,7 @@ public class ServerSpawner implements EntitySpawner {
         Chest chest = new Chest(newId, x, y, level, inv);
         level.addEntity(chest);
         level.addChest(chest);
+        log.info("send spawning chest with id " + newId);
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_CHEST,
                 new SpawnChestPayload(newId, x, y)));
 

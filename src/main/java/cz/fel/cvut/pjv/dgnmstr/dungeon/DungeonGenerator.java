@@ -53,7 +53,6 @@ public class DungeonGenerator {
             pasteArena(map, currentX, 0, type);
 
             Arena arena = new Arena(currentX, 0, level, type);
-            spawnChests(arena, level);
             level.addArena(arena);
 
             currentX += ARENA_SIZE;
@@ -70,18 +69,6 @@ public class DungeonGenerator {
         return level;
     }
 
-    private void spawnChests(Arena arena, Level level) {
-        for (int x = arena.getStartX(); x < arena.getStartX() + arena.getWidth(); x++) {
-            for (int y = arena.getStartY(); y < arena.getStartY() + arena.getHeight(); y++) {
-
-                if (level.getTile(x, y) == TileType.CHEST_FLOOR) {
-                    double worldX = (x * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-                    double worldY = (y * Level.TILE_SIZE) + (Level.TILE_SIZE / 2.0);
-
-                    level.requestChestSpawn(worldX, worldY, new Inventory());                }
-            }
-        }
-    }
 
     private void pasteArena(TileType[][] map, int startX, int startY, ArenaType type) {
 
