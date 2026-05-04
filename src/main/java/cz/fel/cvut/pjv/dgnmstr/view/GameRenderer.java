@@ -4,6 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -53,25 +55,24 @@ public class GameRenderer extends AnimationTimer {
                 TileType tile = level.getTile(x,y);
                 switch (tile) {
                     case WALL:
-                        gc.setFill(Color.BLACK);
+                        gc.drawImage(ImgLoader.get(ImgId.FENCE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case FLOOR:
-                        gc.setFill(Color.DARKGRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case SPAWN_FLOOR:
-                        gc.setFill(Color.GRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case CHEST_FLOOR:
-                        gc.setFill(Color.GRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     case EXIT:
-                        gc.setFill(Color.GRAY);
+                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     default:
                         gc.setFill(Color.WHITE);
                         break;
                 }
-                gc.fillRect(x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
 
             }
         }
@@ -84,8 +85,8 @@ public class GameRenderer extends AnimationTimer {
                 continue;
             }
             if (e.isAlive()) {
-                if (e.getImage() != null) {
-                    gc.drawImage(e.getImage(), drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
+                if (e.getImgId() != null) {
+                    gc.drawImage(ImgLoader.get(e.getImgId()), 0, 0, e.getImgId().getFrameWidth(), e.getImgId().getFrameHeight(), drawX, drawY, Level.TILE_SIZE * e.getImgId().getScale(), Level.TILE_SIZE * e.getImgId().getScale());
                 } else {
                     gc.setFill(Color.RED);
                     gc.fillRect(drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);

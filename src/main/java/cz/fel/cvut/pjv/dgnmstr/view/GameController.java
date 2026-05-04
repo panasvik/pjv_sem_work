@@ -1,6 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
 
+import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientManager;
@@ -39,6 +40,7 @@ public class GameController {
         gameCanvas.widthProperty().bind(canvasWrapper.widthProperty());
         gameCanvas.heightProperty().bind(canvasWrapper.heightProperty());
         startWhenClientStateReady();
+        ImgLoader.loadAll();
     }
 
     private void startWhenClientStateReady() {

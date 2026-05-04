@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import javafx.scene.image.Image;
 
 public class Fence extends Entity {
@@ -28,9 +29,10 @@ public class Fence extends Entity {
     }
 
     @Override
-    public Image getImage() {
-        return null;
+    public ImgId getImgId() {
+        return ImgId.FENCE;
     }
+
 
     @Override
     public void update(double deltaTime) {

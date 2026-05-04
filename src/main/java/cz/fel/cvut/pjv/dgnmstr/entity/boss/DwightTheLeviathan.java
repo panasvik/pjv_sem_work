@@ -4,6 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import javafx.scene.image.Image;
 
@@ -101,8 +102,8 @@ public class DwightTheLeviathan extends Boss{
     }
 
     @Override
-    public Image getImage() {
-        return null;
+    public ImgId getImgId() {
+        return ImgId.DWIGHT;
     }
 }
 

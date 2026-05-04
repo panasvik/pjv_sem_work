@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import javafx.scene.image.Image;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 
 public class Grate extends Entity {
 
@@ -28,9 +29,10 @@ public class Grate extends Entity {
     }
 
     @Override
-    public Image getImage() {
-        return null;
+    public ImgId getImgId() {
+        return ImgId.GRATE;
     }
+
 
     @Override
     public void update(double deltaTime) {

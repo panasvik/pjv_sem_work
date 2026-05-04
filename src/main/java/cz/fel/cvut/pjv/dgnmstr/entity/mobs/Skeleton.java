@@ -2,11 +2,11 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
 public class Skeleton extends RangedMob{
-    private final Image sheet = new Image(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/entity/mobs/GoblinArcher-Sheet.png"));
     public Skeleton(int id, double positionX, double positionY, Level level) {
         super(id,MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
@@ -33,14 +33,11 @@ public class Skeleton extends RangedMob{
         getLevel().requestProjectileSpawn(this, 5, getDamage(), deltaX, deltaY, 25);
     }
 
-    @Override
-    public void update(double deltaTime) {
 
-    }
 
     @Override
-    public Image getImage() {
-        return new WritableImage(sheet.getPixelReader(), 0, 0, 512, 512);
+    public ImgId getImgId() {
+        return ImgId.SKELETON;
     }
 }
 
