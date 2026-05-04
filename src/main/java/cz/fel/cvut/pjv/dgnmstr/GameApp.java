@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr;
 
-import cz.fel.cvut.pjv.dgnmstr.network.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
 import cz.fel.cvut.pjv.dgnmstr.view.View;
 import javafx.application.Application;

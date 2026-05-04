@@ -1,5 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;

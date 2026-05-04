@@ -1,4 +1,4 @@
-package cz.fel.cvut.pjv.dgnmstr.network;
+package cz.fel.cvut.pjv.dgnmstr.global;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
@@ -11,19 +11,20 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
+import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Interactable;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.DroppedGold;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Fence;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
-import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
-import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
+import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.ArenaStatePayload;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -87,7 +88,9 @@ public class ClientManager {
 
     public void spawnChest(SpawnChestPayload payload) {
         if (lc == null || lc.getLevel().getEntityMap().containsKey(payload.id())) return;
-        lc.getLevel().addEntity(new Chest(payload.id(), payload.x(), payload.y(), lc.getLevel(), new Inventory()));
+        Chest chest = new Chest(payload.id(), payload.x(), payload.y(), lc.getLevel(), Inventory.getRandomInventory());
+        lc.getLevel().addEntity(chest);
+        lc.getLevel().addChest(chest);
     }
 
     public void spawnGrate(SpawnGratePayload payload) {
@@ -200,8 +203,14 @@ public class ClientManager {
         }
         Inputs inputs = inputHandler.getInputs();
         networkManager.sendInputs(inputs);
+        if (inputs.interact()) {
+
+        }
     }
 
+    private void openNearestChest() {
+
+    }
 
     public PlayerProfile getMyProfile() {
         return myProfile;

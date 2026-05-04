@@ -1,7 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
-import cz.fel.cvut.pjv.dgnmstr.network.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.application.Platform;

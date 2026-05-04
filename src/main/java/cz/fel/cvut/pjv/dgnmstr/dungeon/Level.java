@@ -31,7 +31,7 @@ public class Level {
     private final List<Arena> arenas;
     private Arena curArena;
     private final List<Projectile> projectiles;
-
+    List<Chest> chests;
     private final Map<Integer, Entity> entityMap;
     private final Map<Integer, Projectile> projectileMap;
 
@@ -315,4 +315,11 @@ public class Level {
         }
     }
 
+    public void addChest(Chest chest) {
+        chests.add(chest);
+    }
+
+    public List<Chest> getChests() {
+        return chests;
+    }
 }

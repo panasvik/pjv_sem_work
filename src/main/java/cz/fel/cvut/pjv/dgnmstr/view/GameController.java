@@ -3,18 +3,15 @@ package cz.fel.cvut.pjv.dgnmstr.view;
 
 import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
-import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
-import cz.fel.cvut.pjv.dgnmstr.network.ClientManager;
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
-import cz.fel.cvut.pjv.dgnmstr.network.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
+import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class GameController {
@@ -72,10 +69,16 @@ public class GameController {
         renderer = new GameRenderer(gameCanvas, clientManager.getLc().getLevel(), clientManager.getLocalHero());
         gameManager.setGm(renderer);
         renderer.start();
+        gameManager.setGameController(this);
+        showInventory();
         clientManager.startManagingInputs();
         log.info("GameController started level systems");
         return true;
     }
 
+    public void showInventory() {
+        Inventory inventory = gameManager.getCm().getMyProfile().getInventory();
+
+    }
 
 }

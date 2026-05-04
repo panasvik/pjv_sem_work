@@ -108,7 +108,7 @@ public class ServerSpawner implements EntitySpawner {
 
         Chest chest = new Chest(newId, x, y, level, inv);
         level.addEntity(chest);
-
+        level.addChest(chest);
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_CHEST,
                 new SpawnChestPayload(newId, x, y)));
 

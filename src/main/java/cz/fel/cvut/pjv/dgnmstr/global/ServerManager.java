@@ -1,14 +1,11 @@
-package cz.fel.cvut.pjv.dgnmstr.network;
+package cz.fel.cvut.pjv.dgnmstr.global;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.*;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.*;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.map.*;
-import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
-import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 
