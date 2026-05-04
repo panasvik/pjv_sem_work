@@ -91,13 +91,9 @@ public class ServerManager {
         if (!running || lc == null) {
             return;
         }
-        long now = System.nanoTime();
-        if (lastUpdateTimeNanos == 0L) {
-            lastUpdateTimeNanos = now;
-            return;
-        }
 
-        double deltaTime = (now - lastUpdateTimeNanos) / 1_000_000_000.0;
+
+        double deltaTime = 0.016;
         lc.update(deltaTime);
 
         snm.sendArenaUpdates();
