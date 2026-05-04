@@ -1,6 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
 
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
@@ -22,6 +23,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.logging.Logger;
+
+import static cz.fel.cvut.pjv.dgnmstr.entity.map.Chest.PRICE_TO_OPEN_CHEST;
 
 public class GameController {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
@@ -45,9 +48,9 @@ public class GameController {
     @FXML
     private ListView<Item> chestList;
 
-    private ClientNetworkManager cnm;
+
+    private Chest currentChest;
     private GameRenderer renderer;
-    private AnimationTimer startupWaiter;
 
     public GameController() {
         this.gameManager = GameManager.getInstance();
@@ -60,27 +63,27 @@ public class GameController {
         startWhenClientStateReady();
         ImgLoader.loadAll();
 
-        // Setup custom cell factory for inventory list to show item names
         fillList(inventoryList);
         fillList(chestList);
+        setupListInteractions();
     }
 
     private void fillList(ListView<Item> itemList) {
-        itemList.setCellFactory(param -> new ListCell<Item>() {
+        itemList.setCellFactory(_ -> new ListCell<>() {
             @Override
             protected void updateItem(Item item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.getName() + " - " + item.getPrice() + " gold");
+                    setText(item.getName());
                 }
             }
         });
     }
 
     private void startWhenClientStateReady() {
-        startupWaiter = new AnimationTimer() {
+        AnimationTimer startupWaiter = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (tryStartGameSystems()) {
@@ -93,7 +96,7 @@ public class GameController {
 
     private boolean tryStartGameSystems() {
         ClientManager clientManager = gameManager.getCm();
-        cnm = gameManager.getCnm();
+        ClientNetworkManager cnm = gameManager.getCnm();
         if (cnm == null || clientManager == null || clientManager.getLc() == null || clientManager.getLocalHero() == null) {
             return false;
         }
@@ -110,7 +113,6 @@ public class GameController {
         renderer.start();
         gameManager.setGameController(this);
         
-        // Add single listener for all key events to avoid registration timing issues
         SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.I) {
                 if (inventoryView.isVisible()) {
@@ -133,12 +135,15 @@ public class GameController {
     }
 
     public void showChest() {
-        Chest chest = gameManager.getCm().getnearestChest();
-        if (chest == null) {
+        Hero hero = gameManager.getCm().getLocalHero();
+        currentChest = gameManager.getCm().getnearestChest();
+        if (currentChest == null) {
             log.info("No chest in range");
             return;
         }
-        Inventory inventory = chest.getInventory();
+        if (!currentChest.interact(hero)) return;
+        log.info("player " + hero + " opened " + currentChest + " and got " + hero.getGold() + " gold left");
+        Inventory inventory = currentChest.getInventory();
         ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
         chestList.setItems(items);
         chestView.setVisible(true);
@@ -160,11 +165,47 @@ public class GameController {
         inventoryView.setVisible(false);
     }
 
-    public VBox getChestView() {
-        return chestView;
+    private void setupListInteractions() {
+        chestList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Trigger on double-click
+                Item selectedItem = chestList.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    takeItemFromChest(selectedItem);
+                }
+            }
+        });
+
+        inventoryList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Item selectedItem = inventoryList.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    if (chestView.isVisible()) {
+                        storeItemInChest(selectedItem);
+                    } /*else {
+                        useItem(selectedItem);
+                    }*/
+                }
+            }
+        });
     }
 
-    public VBox getInventoryView() {
-        return inventoryView;
+    public void takeItemFromChest(Item selectedItem) {
+        if (gameManager.getCm().getMyProfile().getInventory().addItem(selectedItem)) {
+            inventoryList.getItems().add(selectedItem);
+
+        }
+        if (currentChest.getInventory().remove(selectedItem)) {
+            chestList.getItems().remove(selectedItem);
+        }
+    }
+
+    public void storeItemInChest(Item selectedItem) {
+        if (gameManager.getCm().getMyProfile().getInventory().remove(selectedItem)) {
+            inventoryList.getItems().remove(selectedItem);
+
+        }
+        if (currentChest.getInventory().addItem(selectedItem)) {
+            chestList.getItems().add(selectedItem);
+        }
     }
 }

@@ -123,6 +123,7 @@ public class ClientManager {
         hero.setPos(payload.x(), payload.y());
         hero.setHp(payload.hp());
         hero.setLookTarget(payload.mouseX(), payload.mouseY());
+        hero.setGold(payload.gold());
         hero.setInputs(new Inputs(payload.isUlt(), payload.isInteract(), payload.isAttack(),
                 false, false, false, false, payload.mouseX(), payload.mouseY()));
     }

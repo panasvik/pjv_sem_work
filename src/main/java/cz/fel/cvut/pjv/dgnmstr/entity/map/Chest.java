@@ -8,19 +8,32 @@ import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
-import javafx.scene.image.Image;
+
+import java.util.logging.Logger;
 
 public class Chest extends Entity implements Interactable {
+    private static final Logger log =  Logger.getLogger(Chest.class.getName());
+
     public static final double MAX_DIST_TO_OPEN = 900;
+    public static final int PRICE_TO_OPEN_CHEST = 100;
     private final Inventory inventory;
+    private boolean opened = false;
     public Chest(int id, double positionX, double positionY, Level level, Inventory inventory) {
         super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getFaction(), level);
         this.inventory = inventory;
     }
 
     @Override
-    public void onInteract(Hero player) {
-
+    public boolean interact(Hero hero) {
+        int currGold = hero.getGold();
+        if (opened) return true;
+        if (currGold > PRICE_TO_OPEN_CHEST) {
+            opened = true;
+            hero.setGold(currGold - PRICE_TO_OPEN_CHEST);
+        } else {
+            log.info("not enough gold to open " + currGold);
+        }
+        return opened;
     }
 
     @Override

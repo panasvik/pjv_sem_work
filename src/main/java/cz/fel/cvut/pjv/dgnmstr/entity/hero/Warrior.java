@@ -108,17 +108,6 @@ public class Warrior extends Hero implements CanAttackMelee {
             updateMovement(deltaTime, currentInputs);
             updateAttack(currentInputs);
             updateUltimate(currentInputs);
-            updateInteraction(currentInputs);
-//            log.info("player moved : " + currentInputs.down() + " "
-//                    + currentInputs.down() + " "
-//                    + currentInputs.up() + " "
-//                    + currentInputs.left() + " "
-//                    + currentInputs.right() + " "
-//                    + currentInputs.ult() + " "
-//                    + currentInputs.interact() + " "
-//                    + currentInputs.attack() + " "
-//                    + currentInputs.mouseX() + " "
-//                    + currentInputs.mouseY() + " " );
             currentInputs = null;
         }
 
@@ -169,17 +158,6 @@ public class Warrior extends Hero implements CanAttackMelee {
         }
     }
 
-    private void updateInteraction(Inputs inputs){
-        if (inputs.interact()){
-            List<Entity> entitiesAround = getLevel().getEntitiesAround(this, this.getReach());
-            for (Entity e : entitiesAround) {
-                if (e instanceof Chest){
-                    ((Chest) e).onInteract(this);
-                    break;
-                }
-            }
-        }
-    }
 
     private void updateBladeStorm(double deltaTime){
         if (ultActive > 0) {

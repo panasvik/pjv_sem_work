@@ -110,6 +110,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
 
     public void addGold(int amount) {
         gold += amount;
+        profile.setGold(gold);
     }
 
     public int getGold() {
@@ -134,5 +135,10 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     @Override
     public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
         serverNetworkManager.handleUpdateEjection(this);
+    }
+
+    public void setGold(int gold) {
+        this.profile.setGold(gold);
+        this.gold = gold;
     }
 }

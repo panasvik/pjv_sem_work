@@ -242,7 +242,8 @@ public class ServerNetworkManager {
                         inputs.mouseY(),
                         inputs.attack(),
                         inputs.ult(),
-                        inputs.interact()
+                        inputs.interact(),
+                        hero.getGold()
                 )));
         if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
             broadcast(new DGNPacket(PacketType.SYNC_STATS,
