@@ -26,6 +26,7 @@ public class ArenaController implements Updatable {
 
     private record MobSpawnData(MobStats mobStats, double x, double y){}
 
+    private static final Logger log = Logger.getLogger(ArenaController.class.getName());
 
 
     public ArenaController(Arena arena, Level level) {
@@ -34,7 +35,6 @@ public class ArenaController implements Updatable {
         this.spawnDelay = level.getDifficulty().getTimePeriod();
     }
 
-    private static final Logger log = Logger.getLogger(ArenaController.class.getName());
 
 
     @Override

@@ -11,6 +11,7 @@ import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import javafx.scene.image.Image;
 
 public class Chest extends Entity implements Interactable {
+    public static final double MAX_DIST_TO_OPEN = 900;
     private final Inventory inventory;
     public Chest(int id, double positionX, double positionY, Level level, Inventory inventory) {
         super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getFaction(), level);

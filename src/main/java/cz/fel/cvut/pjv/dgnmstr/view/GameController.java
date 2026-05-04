@@ -62,6 +62,7 @@ public class GameController {
 
         // Setup custom cell factory for inventory list to show item names
         fillList(inventoryList);
+        fillList(chestList);
     }
 
     private void fillList(ListView<Item> itemList) {
@@ -108,22 +109,8 @@ public class GameController {
         gameManager.setGm(renderer);
         renderer.start();
         gameManager.setGameController(this);
-
-        if (SceneManager.getInstance().getMainScene() != null) {
-            SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-                if (event.getCode() == KeyCode.I) {
-                    toggleInventory();
-                }
-            });
-        }
-
-        clientManager.startManagingInputs();
-        log.info("GameController started level systems");
-        return true;
-    }
-
-    public void toggleInventory() {
-        if (SceneManager.getInstance().getMainScene() == null) return;
+        
+        // Add single listener for all key events to avoid registration timing issues
         SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.I) {
                 if (inventoryView.isVisible()) {
@@ -131,8 +118,34 @@ public class GameController {
                 } else {
                     showInventory();
                 }
+            } else if (event.getCode() == KeyCode.F) {
+                if (chestView.isVisible()) {
+                    hideChest();
+                } else {
+                    showChest();
+                }
             }
         });
+
+        clientManager.startManagingInputs();
+        log.info("GameController started level systems");
+        return true;
+    }
+
+    public void showChest() {
+        Chest chest = gameManager.getCm().getnearestChest();
+        if (chest == null) {
+            log.info("No chest in range");
+            return;
+        }
+        Inventory inventory = chest.getInventory();
+        ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
+        chestList.setItems(items);
+        chestView.setVisible(true);
+    }
+
+    public void hideChest() {
+        chestView.setVisible(false);
     }
 
     public void showInventory() {
@@ -140,13 +153,11 @@ public class GameController {
         ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
         inventoryList.setItems(items);
         inventoryView.setVisible(true);
-        log.info("Showing inventory");
     }
 
     @FXML
     public void hideInventory() {
         inventoryView.setVisible(false);
-        log.info("Hiding inventory");
     }
 
     public VBox getChestView() {

@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 public class Inventory implements Serializable {
     private final List<Item> invent;
     private static final int MAX_SIZE = 16;
+    private static final int MIN_CHEST_SIZE = 4;
+
     private int size;
     private final static Logger log = Logger.getLogger(Inventory.class.getName());
 
@@ -88,7 +90,7 @@ public class Inventory implements Serializable {
     public static Inventory getRandomInventory() {
         Inventory inventory = new Inventory();
         Random random = new Random();
-        int max = random.nextInt() % 16;
+        int max = random.nextInt(MAX_SIZE - MIN_CHEST_SIZE) + MIN_CHEST_SIZE;
         List<Item> newInv = new ArrayList<>();
         for (int i = 0; i < max; i++) {
             newInv.add(AllItems.getRandomItemInstance());

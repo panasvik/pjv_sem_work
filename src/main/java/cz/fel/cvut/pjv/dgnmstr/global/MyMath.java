@@ -8,8 +8,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import static cz.fel.cvut.pjv.dgnmstr.entity.map.Chest.MAX_DIST_TO_OPEN;
+
 public class MyMath {
-    public static final double SCALE_FACTOR = 50;
     public static double sigmoid(double x) {
         double midpoint = 100.0;
         double scale = 36.07;
@@ -28,12 +29,19 @@ public class MyMath {
             return null;
         }
 
-        Optional<Chest> closestChest = chests.stream()
-                .min(Comparator.comparingDouble(chest ->
-                        MyMath.calculateDistanceSquared(chest, player)
-                ));
+        Chest closestChest = null;
+        double minDistanceSquared = MAX_DIST_TO_OPEN;
 
-        return closestChest.orElse(null);
+        for (Chest chest : chests) {
+            double distanceSquared = MyMath.calculateDistanceSquared(chest, player);
+
+            if (distanceSquared < minDistanceSquared) {
+                minDistanceSquared = distanceSquared;
+                closestChest = chest;
+            }
+        }
+
+        return closestChest;
     }
 
     public static double calculateDistanceSquared(double dx, double dy) {
