@@ -5,7 +5,7 @@ public class BasicWarriorHelmet extends ArmorPiece{
         super(ArmorPieceStats.BASIC_WARRIOR_HELMET.getName(),
                 ArmorPieceStats.BASIC_WARRIOR_HELMET.getPrice(),
                 ArmorPieceStats.BASIC_WARRIOR_CHESTPLATE.getRole(),
-                ArmorPieceType.CHESTPLATE,
+                ArmorPieceType.HELMET,
                 ArmorPieceStats.BASIC_WARRIOR_HELMET.getSpeed(),
                 ArmorPieceStats.BASIC_WARRIOR_HELMET.getDexterity(),
                 ArmorPieceStats.BASIC_WARRIOR_HELMET.getArmor(),

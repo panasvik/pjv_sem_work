@@ -5,7 +5,7 @@ public class BasicWarriorPants extends ArmorPiece{
         super(ArmorPieceStats.BASIC_WARRIOR_PANTS.getName(),
                 ArmorPieceStats.BASIC_WARRIOR_PANTS.getPrice(),
                 ArmorPieceStats.BASIC_WARRIOR_CHESTPLATE.getRole(),
-                ArmorPieceType.CHESTPLATE,
+                ArmorPieceType.PANTS,
                 ArmorPieceStats.BASIC_WARRIOR_PANTS.getSpeed(),
                 ArmorPieceStats.BASIC_WARRIOR_PANTS.getDexterity(),
                 ArmorPieceStats.BASIC_WARRIOR_PANTS.getArmor(),

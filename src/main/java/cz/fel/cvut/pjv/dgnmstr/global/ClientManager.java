@@ -248,6 +248,7 @@ public class ClientManager {
     public boolean useItem(Item item) {
         boolean result = item.acceptUsing(myProfile);
         if (result) {
+            localHero.syncStats(myProfile.getPlayerStats());
             networkManager.sendProfileUpdate(myProfile);
         }
         return result;

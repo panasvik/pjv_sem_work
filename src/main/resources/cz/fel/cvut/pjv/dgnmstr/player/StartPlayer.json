@@ -8,7 +8,7 @@
       "defence" : 10,
       "dexterity" : 15,
       "speed" : 0,
-      "type" : "CHESTPLATE",
+      "type" : "HELMET",
       "role" : "WARRIOR"
     },
     "CHESTPLATE" : {
@@ -29,8 +29,8 @@
       "hp" : 10,
       "defence" : 5,
       "dexterity" : 20,
-      "speed" : 5,
-      "type" : "CHESTPLATE",
+      "speed" : 2,
+      "type" : "PANTS",
       "role" : "WARRIOR"
     }
   },

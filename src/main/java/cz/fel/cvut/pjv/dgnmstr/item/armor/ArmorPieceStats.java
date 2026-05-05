@@ -5,10 +5,10 @@ import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
 public enum ArmorPieceStats {
     BASIC_WARRIOR_CHESTPLATE(70, 20, 0, 10, 20, Role.WARRIOR,"Basic Warrior Chestplate"),
     BASIC_WARRIOR_HELMET(30, 10, 0, 15, 20, Role.WARRIOR, "Basic Warrior Helmet"),
-    BASIC_WARRIOR_PANTS(10, 5, 5, 20, 20, Role.WARRIOR, "Basic Warrior Pants"),
+    BASIC_WARRIOR_PANTS(10, 5, 2, 20, 20, Role.WARRIOR, "Basic Warrior Pants"),
     LEGENDARY_WARRIOR_CHESTPLATE(140, 40, 0, 20, 30, Role.WARRIOR, "Legendary Warrior Chestplate"),
     LEGENDARY_WARRIOR_HELMET(60, 20, 0, 30, 30, Role.WARRIOR, "Legendary Warrior Helmet"),
-    LEGENDARY_WARRIOR_PANTS(20, 10, 10, 40, 30, Role.WARRIOR, "Legendary Warrior Pants");
+    LEGENDARY_WARRIOR_PANTS(20, 10, 5, 40, 30, Role.WARRIOR, "Legendary Warrior Pants");
 
     private final int hp;
     private final int armor;
