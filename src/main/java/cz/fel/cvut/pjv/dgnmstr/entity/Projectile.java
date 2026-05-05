@@ -90,6 +90,7 @@ public class Projectile implements Updatable, Positionable {
         if (targets != null) {
             for (Entity target : targets) {
                 target.takeDamage(damage, master);
+                log.info("dealing damage to " + target);
             }
         }
         alive = false;

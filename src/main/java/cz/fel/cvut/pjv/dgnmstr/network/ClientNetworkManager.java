@@ -115,6 +115,7 @@ public class ClientNetworkManager {
         PlayerProfilePayload payload = new PlayerProfilePayload(profile);
         DGNPacket packet = new DGNPacket(PacketType.PROFILE_UPDATE, payload);
         sendUDP(packet);
+        System.out.println("sent profile with " + profile.getGold() + " gold in it");
     }
 
     public ClientManager getManager() {

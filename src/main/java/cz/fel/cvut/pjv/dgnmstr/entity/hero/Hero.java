@@ -18,7 +18,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     private int reach;
     private final Role role;
     private int gold;
-    private final PlayerProfile profile;
+    private PlayerProfile profile;
 
     protected Inputs currentInputs;
 
@@ -140,5 +140,10 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     public void setGold(int gold) {
         this.profile.setGold(gold);
         this.gold = gold;
+    }
+
+    public void setProfile(PlayerProfile profile) {
+        this.profile = profile;
+        syncStats(profile.getPlayerStats());
     }
 }

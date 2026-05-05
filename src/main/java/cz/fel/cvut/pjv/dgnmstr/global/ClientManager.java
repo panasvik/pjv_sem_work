@@ -64,6 +64,7 @@ public class ClientManager {
 
     public void setLocalHero(int id) {
         localHero = (Hero) lc.getLevel().getEntity(id);
+        localHero.setProfile(myProfile);
         System.out.println("local hero set");
         System.out.println(localHero);
     }
@@ -229,5 +230,19 @@ public class ClientManager {
 
     public PlayerProfile getMyProfile() {
         return myProfile;
+    }
+
+    public Chest openNearestChest() {
+        Chest currentChest = getnearestChest();
+        if (currentChest == null) {
+            log.info("No chest in range");
+            return null;
+        }
+        if (!currentChest.interact(localHero)) return null;
+        log.info("player " + localHero + " opened " + currentChest + " and got " + localHero.getGold() + " gold left");
+        System.out.println("localHero got " + localHero.getGold() + " gold ");
+        System.out.println("myProfile got " + myProfile.getGold() + " gold ");
+        networkManager.sendProfileUpdate(myProfile);
+        return currentChest;
     }
 }

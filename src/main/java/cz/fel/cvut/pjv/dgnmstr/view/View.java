@@ -2,12 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.view;
 
 public enum View {
     START_MENU("start-menu-view.fxml"),
-    MULTIPLAYER(""),
-    SINGLEPLAYER("single-player-menu-view.fxml"),
-    MAIN_MENU("menu-view.fxml"),
-    LEVEL("level-view.fxml"),
-    PAUSE("");
-
+    LEVEL("level-view.fxml");
     private final String relativePath;
 
     View(String relativePath) {

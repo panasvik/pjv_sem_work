@@ -11,12 +11,15 @@ import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.item.Item;
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -30,8 +33,15 @@ public class GameController {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
     private final GameManager gameManager;
 
+
     @FXML
     private Pane canvasWrapper;
+
+    @FXML
+    private ProgressBar healthBar;
+
+    private DoubleProperty maxHealth;
+    private DoubleProperty currentHealth = new SimpleDoubleProperty(100.0);
 
     @FXML
     private Canvas gameCanvas;
@@ -62,7 +72,6 @@ public class GameController {
         gameCanvas.heightProperty().bind(canvasWrapper.heightProperty());
         startWhenClientStateReady();
         ImgLoader.loadAll();
-
         fillList(inventoryList);
         fillList(chestList);
         setupListInteractions();
@@ -110,9 +119,9 @@ public class GameController {
         gameManager.setIh(inputHandler);
         renderer = new GameRenderer(gameCanvas, clientManager.getLc().getLevel(), clientManager.getLocalHero());
         gameManager.setGm(renderer);
-        renderer.start();
         gameManager.setGameController(this);
-        
+        renderer.start();
+
         SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.I) {
                 if (inventoryView.isVisible()) {
@@ -130,19 +139,17 @@ public class GameController {
         });
 
         clientManager.startManagingInputs();
+
+        maxHealth = new SimpleDoubleProperty(clientManager.getLocalHero().getMaxHP());
+        currentHealth = new SimpleDoubleProperty(clientManager.getLocalHero().getHp());
+        healthBar.progressProperty().bind(currentHealth.divide(maxHealth));
         log.info("GameController started level systems");
         return true;
     }
 
     public void showChest() {
-        Hero hero = gameManager.getCm().getLocalHero();
-        currentChest = gameManager.getCm().getnearestChest();
-        if (currentChest == null) {
-            log.info("No chest in range");
-            return;
-        }
-        if (!currentChest.interact(hero)) return;
-        log.info("player " + hero + " opened " + currentChest + " and got " + hero.getGold() + " gold left");
+        currentChest = gameManager.getCm().openNearestChest();
+        if (currentChest == null) return;
         Inventory inventory = currentChest.getInventory();
         ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
         chestList.setItems(items);
@@ -207,5 +214,10 @@ public class GameController {
         if (currentChest.getInventory().addItem(selectedItem)) {
             chestList.getItems().add(selectedItem);
         }
+    }
+
+    public void updateHeathBar(int currHP, int maxHP) {
+        currentHealth.set(Math.min(maxHealth.get(), maxHP));
+        currentHealth.set(Math.max(0, currHP));
     }
 }

@@ -4,6 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import javafx.animation.AnimationTimer;
@@ -21,30 +22,36 @@ public class GameRenderer extends AnimationTimer {
     private final Canvas canvas;
     private final GraphicsContext gc;
     private static final Logger log = Logger.getLogger(GameRenderer.class.getName());
-    private final Hero localPlayer;
+    private final Hero localHero;
 
-    public GameRenderer(Canvas canvas, Level level, Hero localPlayer) {
+    public GameRenderer(Canvas canvas, Level level, Hero localHero) {
         this.canvas = canvas;
         this.level = level;
         this.gc = canvas.getGraphicsContext2D();
-        this.localPlayer = localPlayer;
+        this.localHero = localHero;
     }
 
     @Override
     public void handle(long now) {
-        if (level == null || localPlayer == null) {
+        if (level == null || localHero == null) {
             return;
         }
-
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         if (canvas.getWidth() <= 0 || canvas.getHeight() <= 0) {
             return;
         }
         double worldWidth = level.getWidth() * Level.TILE_SIZE;
         double worldHeight = level.getHeight() * Level.TILE_SIZE;
-        double camX = Math.max(0, Math.min(localPlayer.getX() - canvas.getWidth() / 2, Math.max(0, worldWidth - canvas.getWidth())));
-        double camY = Math.max(0, Math.min(localPlayer.getY() - canvas.getHeight() / 2, Math.max(0, worldHeight - canvas.getHeight())));
+        double camX = Math.max(0, Math.min(localHero.getX() - canvas.getWidth() / 2, Math.max(0, worldWidth - canvas.getWidth())));
+        double camY = Math.max(0, Math.min(localHero.getY() - canvas.getHeight() / 2, Math.max(0, worldHeight - canvas.getHeight())));
 
+        drawLevel(camX, camY);
+        drawEntities(camX, camY);
+        GameManager.getInstance().getGameController().updateHeathBar(localHero.getHp(), localHero.getMaxHP());
+
+    }
+
+    private void drawLevel(double camX, double camY) {
         int minTileX = Math.max(0, (int) (camX / Level.TILE_SIZE));
         int minTileY = Math.max(0, (int) (camY / Level.TILE_SIZE));
         int maxTileX = Math.min(level.getWidth() - 1, (int) ((camX + canvas.getWidth()) / Level.TILE_SIZE) + 1);
@@ -57,16 +64,7 @@ public class GameRenderer extends AnimationTimer {
                     case WALL:
                         gc.drawImage(ImgLoader.get(ImgId.FENCE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
-                    case FLOOR:
-                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
-                        break;
-                    case SPAWN_FLOOR:
-                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
-                        break;
-                    case CHEST_FLOOR:
-                        gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
-                        break;
-                    case EXIT:
+                    case FLOOR, SPAWN_FLOOR, CHEST_FLOOR, EXIT:
                         gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     default:
@@ -76,6 +74,9 @@ public class GameRenderer extends AnimationTimer {
 
             }
         }
+    }
+
+    private void drawEntities(double camX, double camY) {
         List<Entity> entitySnapshot = new ArrayList<>(level.getAllEntities());
         for (Entity e : entitySnapshot){
             double drawX = e.getX() - camX;
@@ -93,6 +94,6 @@ public class GameRenderer extends AnimationTimer {
                 }
             }
         }
-
     }
+
 }

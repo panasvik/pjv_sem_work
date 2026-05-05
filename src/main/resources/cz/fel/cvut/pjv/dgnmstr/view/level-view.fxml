@@ -34,7 +34,7 @@
                   <Insets bottom="40.0" left="40.0" />
                </HBox.margin>
             </ProgressIndicator>
-            <ProgressBar prefWidth="200.0" progress="0.0">
+            <ProgressBar fx:id="healthBar" prefWidth="200.0" progress="1.0" styleClass="health-bar">
                <HBox.margin>
                   <Insets bottom="40.0" right="40.0" />
                </HBox.margin>

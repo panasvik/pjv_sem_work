@@ -156,6 +156,7 @@ public class ServerNetworkManager {
 
     private void handleProfileUpdate(InetSocketAddress source, PlayerProfilePayload payload) {
         Integer heroId = clientHeroIds.get(source);
+        System.out.println("got plrofile with " + payload.profile().getGold() + " gold in it");
         if (heroId != null) {
             clients.get(source).mergeProfileChanges(payload.profile());
             serverManager.updateByProfile(heroId, payload.profile());

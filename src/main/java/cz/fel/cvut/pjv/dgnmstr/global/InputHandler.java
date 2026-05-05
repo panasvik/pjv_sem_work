@@ -78,11 +78,11 @@ public class InputHandler {
         Inputs currentInputs = new Inputs(
                 ult,
                 interact,
-                leftMousePressed, // Передаем атаку!
+                leftMousePressed,
                 pressedKeys.contains(KeyCode.W),
-                pressedKeys.contains(KeyCode.S), // Исправлено на S
-                pressedKeys.contains(KeyCode.A), // Исправлено на A
-                pressedKeys.contains(KeyCode.D), // Исправлено на D
+                pressedKeys.contains(KeyCode.S),
+                pressedKeys.contains(KeyCode.A),
+                pressedKeys.contains(KeyCode.D),
                 mouseX - sceneCenterX,
                 mouseY - sceneCenterY
         );
