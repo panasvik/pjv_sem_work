@@ -69,7 +69,7 @@ public class ArenaController implements Updatable {
         Hero firstPlayerToEnter = null;
 
         for (Hero player : players) {
-            if (player.isAlive() && arena.isInsideArena(player.getX(), player.getY())) {
+            if (player.isAlive() && arena.isInsideArena(player.getCenterX(), player.getCenterY())) {
                 firstPlayerToEnter = player;
                 break;
             }
@@ -136,7 +136,7 @@ public class ArenaController implements Updatable {
     private void teleportOtherPlayers(Hero firstPlayer, List<Hero> players) {
         for (Hero player : players) {
             if (player != firstPlayer && player.isAlive()) {
-                player.setPos( firstPlayer.getX() + Level.TILE_SIZE, firstPlayer.getY());
+                player.setPos( firstPlayer.getCenterX() + Level.TILE_SIZE, firstPlayer.getCenterY());
             }
         }
     }
@@ -162,7 +162,6 @@ public class ArenaController implements Updatable {
             if (mob != null) {
                 arena.getActiveMobs().add(mob);
             }
-            level.addEntity(mob);
         }
     }
 
@@ -196,9 +195,13 @@ public class ArenaController implements Updatable {
         List<TilePosition> validSpawnPoints = arena.getValidSpawnPoints();
         MobSpawnData mobSpawnData = getMobSpawnData(validSpawnPoints);
         Mob miniboss = level.requestMobSpawn( mobSpawnData.x, mobSpawnData.y, mobSpawnData.mobStats,DifficultyStats.MEDIUM.getStatsMult());
-        arena.getActiveMobs().add(miniboss);
-        arena.setMiniBossSpawned(true);
-        log.info("MiniBoss " + miniboss.getClass().getSimpleName() + " spawned!");
+        if (miniboss != null) {
+            arena.getActiveMobs().add(miniboss);
+            arena.setMiniBossSpawned(true);
+            log.info("MiniBoss " + miniboss.getClass().getSimpleName() + " spawned!");
+        } else {
+            log.warning("Miniboss spawn failed!");
+        }
     }
 
 
