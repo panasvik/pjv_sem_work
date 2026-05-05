@@ -148,7 +148,7 @@ public class LevelController implements Updatable {
     public void checkExit(){
         List<Hero> players = level.getPlayers();
         for (Hero player : players) {
-            if (player.isAlive() && level.isAtExit(player.getX(), player.getY())) {
+            if (player.isAlive() && level.isAtExit(player.getCenterX(), player.getCenterY())) {
                 level.setState(VICTORY);
                 break;
             }

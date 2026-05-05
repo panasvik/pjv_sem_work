@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import javafx.scene.image.Image;
@@ -48,17 +49,15 @@ public class Warrior extends Hero implements CanAttackMelee {
 
     @Override
     public boolean isInRange(Entity entity) {
-        double deltaX = entity.getX() - getX();
-        double deltaY = entity.getY() - getY();
-        return getReach() * getReach() > deltaX * deltaX + deltaY * deltaY;
+        return getReach() * getReach() > MyMath.calculateDistanceSquared(this, entity);
     }
 
     @Override
     public boolean isInAngle(Entity entity, double curX, double curY) {
-        double deltaXE = entity.getX() - getX();
-        double deltaYE = entity.getY() - getY();
-        double deltaXC = curX - getX();
-        double deltaYC = curY - getY();
+        double deltaXE = entity.getCenterX() - getCenterX();
+        double deltaYE = entity.getCenterY() - getCenterY();
+        double deltaXC = curX - getCenterX();
+        double deltaYC = curY - getCenterY();
         double dotProduct = deltaXE * deltaXC + deltaYE * deltaYC;
 
         if (dotProduct < 0) return false;
@@ -103,7 +102,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         if (!isAlive()) return;
 
         if (currentInputs != null) {
-            setLookTarget(currentInputs.mouseX() + getX(), currentInputs.mouseY() + getY());
+            setLookTarget(currentInputs.mouseX() + getCenterX(), currentInputs.mouseY() + getCenterY());
 
             updateMovement(deltaTime, currentInputs);
             updateAttack(currentInputs);
@@ -132,11 +131,16 @@ public class Warrior extends Hero implements CanAttackMelee {
 
             double newX = getX() + moveX * getSpeed();
             double newY = getY() + moveY * getSpeed();
-            if (getLevel().isWalkable(newX, newY)) {
+
+            double newCenterX = getCenterX() + moveX * getSpeed();
+            double newCenterY = getCenterY() + moveY * getSpeed();
+            double half = getHalfHitBox();
+
+            if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
                 setPos(newX, newY);
-            } else if (getLevel().isWalkable(newX, getY())) {
+            } else if (getLevel().isWalkable(newCenterX, getCenterY(), half)) {
                 setPos(newX, getY());
-            } else if (getLevel().isWalkable(getX(), newY)){
+            } else if (getLevel().isWalkable(getCenterX(), newCenterY, half)){
                 setPos(getX(), newY);
             }
         }

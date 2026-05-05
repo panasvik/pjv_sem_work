@@ -44,7 +44,7 @@ public abstract class Boss extends Mob {
         Hero target = this.findNearestPlayer();
         if (target == null){ return;}
 
-        this.setLookTarget(target.getX(), target.getY());
+        this.setLookTarget(target.getCenterX(), target.getCenterY());
 
         if (attackCooldown > 0){
             attackCooldown -= deltaTime;

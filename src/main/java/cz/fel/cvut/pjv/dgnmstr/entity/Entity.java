@@ -177,4 +177,13 @@ public abstract class Entity implements Updatable, Positionable {
 
     public abstract void acceptUpdateEjection(ServerNetworkManager serverNetworkManager);
     public abstract ImgId getImgId();
+    public double getHalfHitBox(){
+        return getImgId().getHitBoxSize()/2.0;
+    }
+    public double getCenterX(){
+        return getX() + (Level.TILE_SIZE * getImgId().getScale())/2.0;
+    }
+    public double getCenterY(){
+        return getY() + (Level.TILE_SIZE * getImgId().getScale())/2.0;
+    }
 }
