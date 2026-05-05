@@ -11,13 +11,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.fel.cvut.pjv.dgnmstr.view.GameController">
+   <stylesheets>
+      <URL value="@style.css" />
+   </stylesheets>
    <Pane fx:id="canvasWrapper">
       <Canvas fx:id="gameCanvas" height="200.0" width="200.0" />
    </Pane>
 
-   <BorderPane pickOnBounds="false">
+      <BorderPane pickOnBounds="false">
       <top>
          <Button mnemonicParsing="false" text="Pause" BorderPane.alignment="TOP_LEFT">
             <BorderPane.margin>
@@ -26,7 +30,7 @@
          </Button>
       </top>
 
-      <bottom>
+         <bottom>
          <HBox alignment="BOTTOM_CENTER" spacing="100.0" BorderPane.alignment="CENTER">
             <ProgressBar fx:id="healthBar" prefWidth="200.0" progress="1.0" styleClass="health-bar">
                <HBox.margin>
@@ -35,6 +39,19 @@
             </ProgressBar>
          </HBox>
       </bottom>
+      <left>
+         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="BOTTOM_LEFT">
+            <BorderPane.margin>
+               <Insets />
+            </BorderPane.margin>
+            <children>
+               <Label fx:id="swordLabel" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="194.0" text="Label" />
+               <Label fx:id="helmetLabel" text="Label" />
+               <Label fx:id="chestplateLabel" text="Label" />
+               <Label fx:id="pantsLabel" text="Label" />
+            </children>
+         </VBox>
+      </left>
    </BorderPane>
 
    <VBox fx:id="inventoryView" alignment="TOP_RIGHT" maxHeight="400.0" maxWidth="300.0" spacing="10.0" style="-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20; -fx-background-radius: 10;" visible="false" StackPane.alignment="TOP_RIGHT">
