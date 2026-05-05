@@ -154,7 +154,14 @@ public class Level {
         return true;
     }
 
-    public boolean isAtExit(double worldX, double worldY) {
+    public boolean isWalkable(double centerX, double centerY, double half) {
+        if (isWalkable(centerX + half, centerY + half) && isWalkable(centerX - half, centerY - half) &&
+            isWalkable(centerX + half, centerY - half) && isWalkable(centerX - half, centerY + half)){
+            return true;
+        }
+        return false;
+    }
+        public boolean isAtExit(double worldX, double worldY) {
         int gridX = (int) (worldX / TILE_SIZE);
         int gridY = (int) (worldY / TILE_SIZE);
 
