@@ -64,7 +64,9 @@ public abstract class Mob extends Entity implements CanAttack {
         double minDist = Double.MAX_VALUE;
         for (Hero p : getLevel().getPlayers()){
             if (!p.isAlive()) { continue;}
-            double dist = MyMath.calculateDistanceSquared(this, p);
+            double dx = this.getCenterX() - p.getCenterX();
+            double dy = this.getCenterY() - p.getCenterY();
+            double dist = dx * dx + dy * dy;
             if (dist < minDist) {
                 nearest = p;
                 minDist = dist;
@@ -82,8 +84,8 @@ public abstract class Mob extends Entity implements CanAttack {
     protected void checkMoveToward(Entity target, double deltaTime) {
         if (target == null || !this.isAlive()) return;
 
-        double dx = target.getX() - this.getX();
-        double dy = target.getY() - this.getY();
+        double dx = target.getCenterX() - this.getCenterX();
+        double dy = target.getCenterY() - this.getCenterY();
         double distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < 0.1) {return;}
@@ -94,16 +96,20 @@ public abstract class Mob extends Entity implements CanAttack {
         double newX = this.getX() + moveX;
         double newY = this.getY() + moveY;
 
+        double newCenterX = this.getCenterX() + moveX;
+        double newCenterY = this.getCenterY() + moveY;
+        double half = this.getHalfHitBox();
+
         if (isEthereal()){
             this.setPos(newX, newY);
             return;
         }
 
-        if (getLevel().isWalkable(newX, newY)) {
+        if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
             this.setPos(newX, newY);
-        } else if (getLevel().isWalkable(this.getX(), newY)){
+        } else if (getLevel().isWalkable(this.getCenterX(), newCenterY, half)){
             this.setPos(this.getX(), newY);
-        } else if (getLevel().isWalkable(newX, this.getY())){
+        } else if (getLevel().isWalkable(newCenterX, this.getCenterY(), half)){
             this.setPos(newX, this.getY());
         }
 
@@ -113,8 +119,8 @@ public abstract class Mob extends Entity implements CanAttack {
     protected void retreatFrom(Entity target,  double deltaTime) {
         if (target == null || !this.isAlive()) {return;}
 
-        double dx = getX() - target.getX();
-        double dy = getY() - target.getY();
+        double dx = getCenterX() - target.getCenterX();
+        double dy = getCenterY() - target.getCenterY();
         double dist =  Math.sqrt(dx * dx + dy * dy);
 
         if (dist < 0.1) {return;}
@@ -125,11 +131,15 @@ public abstract class Mob extends Entity implements CanAttack {
         double newX = getX() + moveX;
         double newY = getY() + moveY;
 
-        if (getLevel().isWalkable(newX, newY)) {
+        double newCenterX = this.getCenterX() + moveX;
+        double newCenterY = this.getCenterY() + moveY;
+        double half = this.getHalfHitBox();
+
+        if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
             setPos(newX, newY);
-        } else if (getLevel().isWalkable(newX, getY())) {
+        } else if (getLevel().isWalkable(newCenterX, getCenterY(), half)) {
             setPos(newX, getY());
-        } else if (getLevel().isWalkable(getX(), newY)) {
+        } else if (getLevel().isWalkable(getCenterX(), newCenterY, half)) {
             setPos(getX(), newY);
         }
     }
