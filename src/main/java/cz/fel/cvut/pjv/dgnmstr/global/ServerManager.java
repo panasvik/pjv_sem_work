@@ -39,7 +39,7 @@ public class ServerManager {
     }
 
     public int addProfile(PlayerProfile profile) {
-        Hero w1 = lc.getLevel().requestHeroSpawn(64, 64, profile);
+        Hero w1 = lc.getLevel().requestHeroSpawn(128, 128, profile);
         return w1.getId();
     }
 
