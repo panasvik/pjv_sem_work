@@ -118,11 +118,13 @@ public class ServerSpawner implements EntitySpawner {
         int newId = idGen.getNextId();
 
         Chest chest = new Chest(newId, x, y, level, inv);
+        double half = Level.TILE_SIZE * chest.getImgId().getScale() / 2.0;
+        chest.setPos(x - half, y - half);
         level.addEntity(chest);
         level.addChest(chest);
         log.info("send spawning chest with id " + newId);
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_CHEST,
-                new SpawnChestPayload(newId, x, y)));
+                new SpawnChestPayload(newId, chest.getX(), chest.getY())));
 
         return chest;
     }
