@@ -14,7 +14,7 @@ public abstract class RangedMob extends Mob{
     protected Random random = new Random();
 
     protected static final double COOLDOWN_TIME = 2.0;
-    protected static final double DANGEROUS_DISTANCE = 0.25;
+    protected static final double DANGEROUS_DISTANCE = 0.5;
 
     public RangedMob(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
         super(id, hp, speed, positionX, positionY, damage, reach, gold, faction, level, multiplicator);
@@ -30,8 +30,8 @@ public abstract class RangedMob extends Mob{
                 return;
             }
         }
-        double deltaX = target.getX() - getX();
-        double deltaY = target.getY() - getY();
+        double deltaX = target.getCenterX() - getCenterX();
+        double deltaY = target.getCenterY() - getCenterY();
         fireProjectile(deltaX, deltaY);
 
 
@@ -55,21 +55,22 @@ public abstract class RangedMob extends Mob{
 
         if (target == null ) {return;}
 
-        this.setLookTarget(target.getX(), target.getY());
+        this.setLookTarget(target.getCenterX(), target.getCenterY());
 
-        double distSquared = MyMath.calculateDistanceSquared(this, target);
-        double dist = Math.sqrt(distSquared);
+        double dist = MyMath.calculateDistanceSquared(this, target);
 
         double maxReach = getReach();
+        double sqReach = getReach() * (getReach());
         double dangerousDist = maxReach * DANGEROUS_DISTANCE;
+        double sqDangerousDist = dangerousDist * dangerousDist;
 
-        if (dist > maxReach) {
+        if (dist > sqReach) {
             this.checkMoveToward(target, deltaTime);
-        } else if (dist < dangerousDist) {
+        } else if (dist < sqDangerousDist) {
             this.retreatFrom(target, deltaTime);
         }
 
-        if (attackCooldown <= 0 && dist <= maxReach){
+        if (attackCooldown <= 0 && dist <= sqReach){
             this.attack();
             attackCooldown = COOLDOWN_TIME;
         }

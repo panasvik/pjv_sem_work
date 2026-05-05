@@ -53,7 +53,7 @@ public abstract class Mob extends Entity implements CanAttack {
         if (getLevel() != null){
             log.info(this.getClass().getSimpleName() + "died and dropped " + dropGold + " gold.");
 
-            getLevel().requestGoldSpawn(getX(), getY(), dropGold);
+            getLevel().requestGoldSpawn(getCenterX(), getCenterY(), dropGold);
         }
     }
 
@@ -64,9 +64,7 @@ public abstract class Mob extends Entity implements CanAttack {
         double minDist = Double.MAX_VALUE;
         for (Hero p : getLevel().getPlayers()){
             if (!p.isAlive()) { continue;}
-            double dx = this.getCenterX() - p.getCenterX();
-            double dy = this.getCenterY() - p.getCenterY();
-            double dist = dx * dx + dy * dy;
+            double dist = MyMath.calculateDistanceSquared(this, p);
             if (dist < minDist) {
                 nearest = p;
                 minDist = dist;
@@ -125,8 +123,8 @@ public abstract class Mob extends Entity implements CanAttack {
 
         if (dist < 0.1) {return;}
 
-        double moveX = (dx / dist) * getSpeed() * deltaTime;
-        double moveY = (dy / dist)  * getSpeed() * deltaTime;
+        double moveX = (dx / dist) * getSpeed();
+        double moveY = (dy / dist)  * getSpeed();
 
         double newX = getX() + moveX;
         double newY = getY() + moveY;

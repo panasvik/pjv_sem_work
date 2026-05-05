@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import javafx.scene.image.Image;
@@ -48,9 +49,7 @@ public class Warrior extends Hero implements CanAttackMelee {
 
     @Override
     public boolean isInRange(Entity entity) {
-        double deltaX = entity.getCenterX() - getCenterX();
-        double deltaY = entity.getCenterY() - getCenterY();
-        return getReach() * getReach() > deltaX * deltaX + deltaY * deltaY;
+        return getReach() * getReach() > MyMath.calculateDistanceSquared(this, entity);
     }
 
     @Override
@@ -103,7 +102,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         if (!isAlive()) return;
 
         if (currentInputs != null) {
-            setLookTarget(currentInputs.mouseX() + getX(), currentInputs.mouseY() + getY());
+            setLookTarget(currentInputs.mouseX() + getCenterX(), currentInputs.mouseY() + getCenterY());
 
             updateMovement(deltaTime, currentInputs);
             updateAttack(currentInputs);

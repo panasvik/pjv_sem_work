@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttackMelee;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
 
@@ -21,16 +22,14 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
     @Override
     public boolean isInRange(Entity entity) {
         if (entity == null){ return false; }
-        double dx = entity.getX() - this.getX();
-        double dy = entity.getY() - this.getY();
-        double distance = Math.sqrt(dx * dx + dy * dy);
-        return distance <= this.getReach();
+        double distance = MyMath.calculateDistanceSquared(this, entity);
+        return distance <= (double) this.getReach() * this.getReach();
     }
 
     @Override
     public boolean isInAngle(Entity entity, double curX, double curY) {
-        double ang1 = Math.atan2(curY - this.getY(), curX - this.getX());
-        double ang2 = Math.atan2(entity.getY() - this.getY(), entity.getX() - this.getX());
+        double ang1 = Math.atan2(curY - this.getCenterY(), curX - this.getCenterX());
+        double ang2 = Math.atan2(entity.getCenterY() - this.getCenterY(), entity.getCenterX() - this.getCenterX());
         double diff = Math.abs(ang1 - ang2);
         if (diff > Math.PI){
             diff = Math.abs(2 * Math.PI - diff);
@@ -51,7 +50,7 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
     @Override
     protected void onDamageTaken(int amount, Entity source) {
         if (source != null) {
-            setLookTarget(source.getX(), source.getY());
+            setLookTarget(source.getCenterX(), source.getCenterY());
         }
     }
 
@@ -62,7 +61,7 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
        Hero target = this.findNearestPlayer();
        if (target == null){ return;}
 
-       this.setLookTarget(target.getX(), target.getY());
+       this.setLookTarget(target.getCenterX(), target.getCenterY());
 
        if (this.isInRange(target)) {
            if (attackCooldown <= 0) {
