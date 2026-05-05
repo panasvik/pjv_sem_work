@@ -38,13 +38,14 @@ public class GameController {
     private Pane canvasWrapper;
 
     @FXML
+    private Canvas gameCanvas;
+
+    @FXML
     private ProgressBar healthBar;
 
     private DoubleProperty maxHealth;
-    private DoubleProperty currentHealth = new SimpleDoubleProperty(100.0);
+    private DoubleProperty currentHealth;
 
-    @FXML
-    private Canvas gameCanvas;
 
     @FXML
     private VBox inventoryView;

@@ -93,9 +93,9 @@ public class Warrior extends Hero implements CanAttackMelee {
         for (Entity e : entitiesAround) {
             if (this.isEnemy(e) && isInAngle(e, getLookX(), getLookY())) {
                 e.takeDamage(getDamage() * damageMul, this);
-                hitsForUlt++;
             }
         }
+        hitsForUlt = 0;
     }
 
     @Override
