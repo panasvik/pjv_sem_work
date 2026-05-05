@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -11,7 +12,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import java.net.URL?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.fel.cvut.pjv.dgnmstr.view.GameController">
    <stylesheets>
@@ -47,11 +47,12 @@
                <Insets bottom="40.0" left="20.0" />
             </padding>
             <children>
-               <Label text="EQUIPMENT" style="-fx-text-fill: #555555; -fx-font-size: 12;" />
-               <Label fx:id="swordLabel" text="Sword: None" styleClass="equipment-label" />
-               <Label fx:id="helmetLabel" text="Helmet: None" styleClass="equipment-label" />
-               <Label fx:id="chestplateLabel" text="Armor: None" styleClass="equipment-label" />
-               <Label fx:id="pantsLabel" text="Pants: None" styleClass="equipment-label" />
+               <Label style="-fx-text-fill: #555555; -fx-font-size: 12;" text="EQUIPMENT" textFill="WHITE" />
+               <Label fx:id="swordLabel" styleClass="equipment-label" text="Sword: None" />
+               <Label fx:id="helmetLabel" styleClass="equipment-label" text="Helmet: None" />
+               <Label fx:id="chestplateLabel" styleClass="equipment-label" text="Armor: None" />
+               <Label fx:id="pantsLabel" styleClass="equipment-label" text="Pants: None" />
+               <Label fx:id="goldLabel" styleClass="equipment-label" text="Gold: 0" />
             </children>
          </VBox>
       </left>

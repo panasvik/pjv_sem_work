@@ -23,12 +23,14 @@ public class GameRenderer extends AnimationTimer {
     private final GraphicsContext gc;
     private static final Logger log = Logger.getLogger(GameRenderer.class.getName());
     private final Hero localHero;
+    private GameManager gameManager;
 
     public GameRenderer(Canvas canvas, Level level, Hero localHero) {
         this.canvas = canvas;
         this.level = level;
         this.gc = canvas.getGraphicsContext2D();
         this.localHero = localHero;
+        gameManager = GameManager.getInstance();
     }
 
     @Override
@@ -47,7 +49,8 @@ public class GameRenderer extends AnimationTimer {
 
         drawLevel(camX, camY);
         drawEntities(camX, camY);
-        GameManager.getInstance().getGameController().updateHeathBar(localHero.getHp(), localHero.getMaxHP());
+        gameManager.getGameController().updateHeathBar(localHero.getHp(), localHero.getMaxHP());
+        gameManager.getGameController().setGold(localHero.getGold());
 
     }
 

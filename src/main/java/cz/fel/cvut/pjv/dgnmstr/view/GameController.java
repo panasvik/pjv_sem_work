@@ -56,6 +56,9 @@ public class GameController {
     private Label chestplateLabel;
     @FXML
     private Label pantsLabel;
+    @FXML
+    private Label goldLabel;
+
 
     @FXML
     private VBox inventoryView;
@@ -255,4 +258,9 @@ public class GameController {
         maxHealth.set(maxHP);
         currentHealth.set(currHP);
     }
+
+    public void setGold(int gold) {
+        goldLabel.setText("Gold: " + gold);
+    }
+
 }
