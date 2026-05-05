@@ -42,6 +42,7 @@ public class PlayerProfile implements Serializable   {
      * @return true success / false failure
      */
     public boolean equipArmor(ArmorPiece newArmor) {
+        if (newArmor == null) return false;
         ArmorPieceType type = newArmor.getType();
 
         if (role != newArmor.getRole()) {
@@ -70,6 +71,7 @@ public class PlayerProfile implements Serializable   {
      * @return true success / false failure
      */
     public boolean equipWeapon(Weapon newWeapon) {
+        if (newWeapon == null) return false;
         if (role.getWeaponType() != newWeapon.getType()) {
             log.warning("Wrong weapon for your role " + this.role);
             return false;

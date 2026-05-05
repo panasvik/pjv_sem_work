@@ -17,6 +17,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.DroppedGold;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Fence;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
+import cz.fel.cvut.pjv.dgnmstr.item.Item;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.ArenaStatePayload;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
@@ -240,9 +241,15 @@ public class ClientManager {
         }
         if (!currentChest.interact(localHero)) return null;
         log.info("player " + localHero + " opened " + currentChest + " and got " + localHero.getGold() + " gold left");
-        System.out.println("localHero got " + localHero.getGold() + " gold ");
-        System.out.println("myProfile got " + myProfile.getGold() + " gold ");
         networkManager.sendProfileUpdate(myProfile);
         return currentChest;
+    }
+
+    public boolean useItem(Item item) {
+        boolean result = item.acceptUsing(myProfile);
+        if (result) {
+            networkManager.sendProfileUpdate(myProfile);
+        }
+        return result;
     }
 }

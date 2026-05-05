@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
 import cz.fel.cvut.pjv.dgnmstr.global.InputHandler;
 import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
+import cz.fel.cvut.pjv.dgnmstr.item.armor.ArmorPieceType;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
@@ -17,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
@@ -27,7 +29,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.logging.Logger;
 
-import static cz.fel.cvut.pjv.dgnmstr.entity.map.Chest.PRICE_TO_OPEN_CHEST;
 
 public class GameController {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
@@ -48,6 +49,15 @@ public class GameController {
 
 
     @FXML
+    private Label swordLabel;
+    @FXML
+    private Label helmetLabel;
+    @FXML
+    private Label chestplateLabel;
+    @FXML
+    private Label pantsLabel;
+
+    @FXML
     private VBox inventoryView;
 
     @FXML
@@ -61,11 +71,14 @@ public class GameController {
 
 
     private Chest currentChest;
+
     private GameRenderer renderer;
 
     public GameController() {
         this.gameManager = GameManager.getInstance();
     }
+
+    private ClientManager clientManager;
 
     @FXML
     public void initialize() {
@@ -105,7 +118,7 @@ public class GameController {
     }
 
     private boolean tryStartGameSystems() {
-        ClientManager clientManager = gameManager.getCm();
+        clientManager = gameManager.getCm();
         ClientNetworkManager cnm = gameManager.getCnm();
         if (cnm == null || clientManager == null || clientManager.getLc() == null || clientManager.getLocalHero() == null) {
             return false;
@@ -115,6 +128,7 @@ public class GameController {
             log.info("starting");
             return true;
         }
+
         InputHandler inputHandler = new InputHandler(SceneManager.getInstance().getMainScene());
         clientManager.setInputHandler(inputHandler);
         gameManager.setIh(inputHandler);
@@ -140,20 +154,29 @@ public class GameController {
         });
 
         clientManager.startManagingInputs();
-
-        maxHealth = new SimpleDoubleProperty(clientManager.getLocalHero().getMaxHP());
-        currentHealth = new SimpleDoubleProperty(clientManager.getLocalHero().getHp());
+        Hero localHero = clientManager.getLocalHero();
+        maxHealth = new SimpleDoubleProperty(localHero.getMaxHP());
+        currentHealth = new SimpleDoubleProperty(localHero.getHp());
         healthBar.progressProperty().bind(currentHealth.divide(maxHealth));
+        updateUI();
         log.info("GameController started level systems");
         return true;
     }
 
+    private void updateUI() {
+        Hero localHero = clientManager.getLocalHero();
+        helmetLabel.setText(localHero.getProfile().getArmor().get(ArmorPieceType.HELMET).getName());
+        chestplateLabel.setText(localHero.getProfile().getArmor().get(ArmorPieceType.CHESTPLATE).getName());
+        pantsLabel.setText(localHero.getProfile().getArmor().get(ArmorPieceType.PANTS).getName());
+        swordLabel.setText(localHero.getProfile().getWeapon().getName());
+        maxHealth.set(localHero.getMaxHP());
+        currentHealth.set(localHero.getHp());
+    }
+
     public void showChest() {
-        currentChest = gameManager.getCm().openNearestChest();
+        currentChest = clientManager.openNearestChest();
         if (currentChest == null) return;
-        Inventory inventory = currentChest.getInventory();
-        ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
-        chestList.setItems(items);
+        updateCurChestList();
         chestView.setVisible(true);
     }
 
@@ -162,10 +185,20 @@ public class GameController {
     }
 
     public void showInventory() {
-        Inventory inventory = gameManager.getCm().getMyProfile().getInventory();
+        updateInventoryList();
+        inventoryView.setVisible(true);
+    }
+
+    private void updateInventoryList() {
+        Inventory inventory = clientManager.getMyProfile().getInventory();
         ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
         inventoryList.setItems(items);
-        inventoryView.setVisible(true);
+    }
+
+    private void updateCurChestList() {
+        Inventory inventory = currentChest.getInventory();
+        ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
+        chestList.setItems(items);
     }
 
     @FXML
@@ -189,36 +222,37 @@ public class GameController {
                 if (selectedItem != null) {
                     if (chestView.isVisible()) {
                         storeItemInChest(selectedItem);
-                    } /*else {
+                    } else {
                         useItem(selectedItem);
-                    }*/
+                    }
                 }
             }
         });
     }
 
-    public void takeItemFromChest(Item selectedItem) {
-        if (gameManager.getCm().getMyProfile().getInventory().addItem(selectedItem)) {
-            inventoryList.getItems().add(selectedItem);
+    public void useItem(Item selectedItem) {
+        if (clientManager.useItem(selectedItem)) {
+            updateInventoryList();
+            updateUI();
+        }
+    }
 
-        }
-        if (currentChest.getInventory().remove(selectedItem)) {
-            chestList.getItems().remove(selectedItem);
-        }
+    public void takeItemFromChest(Item selectedItem) {
+        clientManager.getMyProfile().getInventory().addItem(selectedItem);
+        updateInventoryList();
+        currentChest.getInventory().remove(selectedItem);
+        updateCurChestList();
     }
 
     public void storeItemInChest(Item selectedItem) {
-        if (gameManager.getCm().getMyProfile().getInventory().remove(selectedItem)) {
-            inventoryList.getItems().remove(selectedItem);
-
-        }
-        if (currentChest.getInventory().addItem(selectedItem)) {
-            chestList.getItems().add(selectedItem);
-        }
+        clientManager.getMyProfile().getInventory().remove(selectedItem);
+        updateInventoryList();
+        currentChest.getInventory().addItem(selectedItem);
+        updateCurChestList();
     }
 
     public void updateHeathBar(int currHP, int maxHP) {
-        currentHealth.set(Math.min(maxHealth.get(), maxHP));
-        currentHealth.set(Math.max(0, currHP));
+        maxHealth.set(maxHP);
+        currentHealth.set(currHP);
     }
 }

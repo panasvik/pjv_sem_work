@@ -2,6 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.item.weapon;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
 import cz.fel.cvut.pjv.dgnmstr.item.AddableItem;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 public abstract class Weapon extends AddableItem {
 
@@ -22,6 +23,11 @@ public abstract class Weapon extends AddableItem {
         this.dexterity = 0;
         this.range = 0;
         this.type = Role.WARRIOR.getWeaponType();
+    }
+
+    @Override
+    public boolean acceptUsing(PlayerProfile profile) {
+        return profile.equipWeapon(this);
     }
 
     public WeaponType getType() {

@@ -2,6 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.item;
 
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.Serializable;
 
@@ -26,7 +27,7 @@ public abstract class Item implements Serializable {
 
     public abstract boolean addTo(Inventory inventory);
     public abstract boolean removeFrom(Inventory inventory);
-
+    public abstract boolean acceptUsing(PlayerProfile profile);
     public String getName() {
         return name;
     }

@@ -36,7 +36,7 @@
   },
   "weapon" : {
     "@class" : "cz.fel.cvut.pjv.dgnmstr.item.weapon.TESTWarriorSword",
-    "name" : "Basic Warrior Sword",
+    "name" : "TEST Warrior Sword",
     "price" : 10,
     "damage" : 1000000,
     "dexterity" : 5,

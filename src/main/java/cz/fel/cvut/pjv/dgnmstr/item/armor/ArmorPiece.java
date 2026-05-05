@@ -3,6 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.item.armor;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
 import cz.fel.cvut.pjv.dgnmstr.item.AddableItem;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 public abstract class ArmorPiece extends AddableItem {
     private int hp, defence, dexterity, speed;
@@ -28,6 +29,10 @@ public abstract class ArmorPiece extends AddableItem {
         this.hp = 0;
     }
 
+    @Override
+    public boolean acceptUsing(PlayerProfile profile) {
+        return profile.equipArmor(this);
+    }
 
     public int getHp() {
         return hp;
