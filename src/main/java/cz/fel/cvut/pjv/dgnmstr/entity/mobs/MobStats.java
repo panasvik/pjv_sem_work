@@ -3,31 +3,31 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 public enum MobStats {
-    ZOMBIE(70, 1, 20, 5, 50) {
+    ZOMBIE(70, 1, 20, 20, 50) {
         @Override
         public Mob spawnWithMult(int id, double x, double y, Level level, int mult) {
             return new Zombie(id, x, y, level, mult);
         }
     },
-    GHOST(50, 1, 15, 5, 100) {
+    GHOST(50, 1, 15, 20, 100) {
         @Override
         public Mob spawnWithMult(int id, double x, double y, Level level, int mult) {
             return new Ghost(id, x, y, level, mult);
         }
     },
-    EVIL_WIZARD (30, 1, 25, 40, 150) {
+    EVIL_WIZARD (30, 1, 25, 400, 150) {
         @Override
         public Mob spawnWithMult(int id, double x, double y, Level level, int mult) {
             return new EvilWizard(id, x, y, level, mult);
         }
     },
-    GOBLIN(50, 2, 15, 5, 50) {
+    GOBLIN(50, 2, 15, 20, 50) {
         @Override
         public Mob spawnWithMult(int id, double x, double y, Level level, int mult) {
             return new Goblin(id, x, y, level, mult);
         }
     },
-    SKELETON(40, 1, 20, 30, 75){
+    SKELETON(40, 1, 20, 300, 75){
         @Override
         public Mob spawnWithMult(int id, double x, double y, Level level, int mult) {
             return new Skeleton(id, x, y, level, mult);
