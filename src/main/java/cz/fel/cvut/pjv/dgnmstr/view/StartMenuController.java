@@ -16,10 +16,10 @@ import java.util.logging.Logger;
 public class StartMenuController {
     private static final Logger log = Logger.getLogger(StartMenuController.class.getName());
 
-    private ServerNetworkManager snm;
+    private GameManager gameManager;
+
     private boolean isConnected = false;
 
-    private ClientNetworkManager cnm;
     @FXML
     public Label socketToConnect;
 
@@ -57,17 +57,16 @@ public class StartMenuController {
         } else {
             serverIP = hostIP.getText();
         }
-        snm = new ServerNetworkManager(port);
-        GameManager gameManager = GameManager.getInstance();
-        gameManager.setSnm(snm);
-        snm.start();
-        gameManager.setSm(snm.getServerManager());
+        ServerNetworkManager serverNetworkManager = new ServerNetworkManager(port);
+        gameManager.setSnm(serverNetworkManager);
+        serverNetworkManager.start();
+        gameManager.setSm(serverNetworkManager.getServerManager());
         socketToConnect.setText(serverIP + ":" + port);
         try {
-            cnm = new ClientNetworkManager(serverIP, port, profile);
-            gameManager.setCnm(cnm);
-            gameManager.setCm(cnm.getManager());
-            cnm.connect();
+            ClientNetworkManager clientNetworkManager = new ClientNetworkManager(serverIP, port, profile);
+            gameManager.setCnm(clientNetworkManager);
+            gameManager.setCm(clientNetworkManager.getManager());
+            clientNetworkManager.connect();
         } catch (UnknownHostException | NumberFormatException k) {
             log.severe("HOST DOES NOT EXIST");
             socketToConnect.setText("HOST DOES NOT EXIST");
@@ -84,15 +83,17 @@ public class StartMenuController {
         }
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.activate(View.LEVEL);
-        if (snm != null) {
-            snm.sendIDs();
-            snm.setGameStarted(true);
-            snm.getServerManager().startLC();
+        ServerNetworkManager serverNetworkManager = gameManager.getSnm();
+        if (serverNetworkManager != null) {
+            serverNetworkManager.sendIDs();
+            serverNetworkManager.setGameStarted(true);
+            serverNetworkManager.getServerManager().startLC();
         }
     }
 
     @FXML
     public void load() {
+        gameManager = GameManager.getInstance();
         try {
             profile = PlayerProfile.loadFromJson();
         } catch (IOException e) {
@@ -104,6 +105,7 @@ public class StartMenuController {
 
     @FXML
     public void loadFrom() {
+        gameManager = GameManager.getInstance();
         try {
             profile = PlayerProfile.loadFromJson(filePath.getText());
         } catch (IOException e) {
@@ -150,12 +152,11 @@ public class StartMenuController {
             socketToConnect.setText("Invalid port");
             return;
         }
-        GameManager gameManager = GameManager.getInstance();
         try {
-            cnm = new ClientNetworkManager(host, port, profile);
-            cnm.connect();
-            gameManager.setCnm(cnm);
-            gameManager.setCm(cnm.getManager());
+            ClientNetworkManager clientNetworkManager = new ClientNetworkManager(host, port, profile);
+            clientNetworkManager.connect();
+            gameManager.setCnm(clientNetworkManager);
+            gameManager.setCm(clientNetworkManager.getManager());
         } catch (UnknownHostException e) {
             log.severe("HOST DOES NOT EXIST");
             socketToConnect.setText("HOST DOES NOT EXIST");
