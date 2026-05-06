@@ -65,9 +65,9 @@ public class GameRenderer extends AnimationTimer {
                 TileType tile = level.getTile(x,y);
                 switch (tile) {
                     case WALL:
-                        gc.drawImage(ImgLoader.get(ImgId.FENCE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
+                        gc.drawImage(ImgLoader.get(ImgId.WALL),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
-                    case FLOOR, SPAWN_FLOOR, CHEST_FLOOR, EXIT:
+                    case FLOOR, SPAWN_FLOOR, CHEST_FLOOR, EXIT, FENCE_FLOOR:
                         gc.drawImage(ImgLoader.get(ImgId.TILE),x * Level.TILE_SIZE - camX, y * Level.TILE_SIZE - camY, Level.TILE_SIZE, Level.TILE_SIZE);
                         break;
                     default:

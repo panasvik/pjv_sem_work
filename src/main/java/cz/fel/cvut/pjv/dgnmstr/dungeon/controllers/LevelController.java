@@ -4,15 +4,18 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.*;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.BossSpawnRate;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TilePosition;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
+import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.List;
 import java.util.logging.Logger;
 
+import static cz.fel.cvut.pjv.dgnmstr.dungeon.Level.TILE_SIZE;
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.VICTORY;
 
 public class LevelController implements Updatable {
@@ -28,7 +31,8 @@ public class LevelController implements Updatable {
     public void startLevel() {
         level.setState(LevelState.PLAYING);
         level.setPlayersAlive(level.getPlayers().size());
-        level.spawnChests();
+        spawnChests();
+        spawnFences();
         activateNextArena();
         log.info("Level started");
     }
@@ -176,6 +180,26 @@ public class LevelController implements Updatable {
             spawnBoss();
         }
     }
+
+    public void spawnChests() {
+        List<Arena> arenas = level.getArenas();
+        for (Arena a: arenas) {
+            for (TilePosition p : a.getChestSpawnPoints()) {
+                level.requestChestSpawn(p.x() * TILE_SIZE, p.y() * TILE_SIZE, Inventory.getRandomInventory());
+            }
+        }
+    }
+
+    public void spawnFences() {
+        List<Arena> arenas = level.getArenas();
+        for (Arena a: arenas) {
+            for (TilePosition p : a.getFenceSpawnPoints()) {
+                level.requestFenceSpawn(p.x() * TILE_SIZE, p.y() * TILE_SIZE);
+            }
+        }
+    }
+
+
 
     public Level getLevel() {
         return level;

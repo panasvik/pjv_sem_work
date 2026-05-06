@@ -17,7 +17,8 @@ public interface EntitySpawner {
         Mob spawnMob(double x, double y, MobStats stats, int mult);
         Boss spawnBoss(double x, double y, BossStats stats);
         Grate spawnGrate(double x, double y);
-        Chest spawnChest(double x, double y, Inventory inventory);
+        void spawnChest(double x, double y, Inventory inventory);
         Hero spawnHero(double x, double y, PlayerProfile profile);
+        void spawnFence(double x, double y);
 
 }

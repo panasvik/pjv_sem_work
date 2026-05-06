@@ -64,8 +64,10 @@ public class DungeonGenerator {
         }
         level.setCurArena(level.getArenas().getFirst());
         int exitY = ARENA_SIZE / 2;
-        map[totalWidth - 1][exitY] = TileType.EXIT;
 
+        for (int y = exitY - 3; y < exitY + 3; y++) {
+            map[totalWidth - 1][y] = TileType.EXIT;
+        }
         return level;
     }
 
@@ -136,6 +138,9 @@ public class DungeonGenerator {
                             break;
                         case 'C': // chest
                             map[globalX][globalY] = TileType.CHEST_FLOOR;
+                            break;
+                        case 'F': // fence
+                            map[globalX][globalY] = TileType.FENCE_FLOOR;
                             break;
                         default: // unknown symbol
                             map[globalX][globalY] = TileType.FLOOR;

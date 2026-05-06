@@ -104,7 +104,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         if (currentInputs != null) {
             setLookTarget(currentInputs.mouseX() + getCenterX(), currentInputs.mouseY() + getCenterY());
 
-            updateMovement(deltaTime, currentInputs);
+            updateMovement(currentInputs);
             updateAttack(currentInputs);
             updateUltimate(currentInputs);
             currentInputs = null;
@@ -114,7 +114,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         updateCooldowns(deltaTime);
     }
 
-    private void updateMovement(double deltaTime, Inputs inputs) {
+    private void updateMovement(Inputs inputs) {
         double moveX = 0;
         double moveY = 0;
 

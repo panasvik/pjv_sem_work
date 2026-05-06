@@ -297,11 +297,16 @@ public class Level {
         return null;
     }
 
-    public Chest requestChestSpawn(double x, double y, Inventory inventory) {
+    public void requestChestSpawn(double x, double y, Inventory inventory) {
         if (spawner != null) {
-            return spawner.spawnChest(x, y, inventory);
+            spawner.spawnChest(x, y, inventory);
         }
-        return null;
+    }
+
+    public void requestFenceSpawn(double x, double y) {
+        if (spawner != null) {
+            spawner.spawnFence(x, y);
+        }
     }
 
     public Hero requestHeroSpawn(double x, double y, PlayerProfile profile) {
@@ -316,13 +321,7 @@ public class Level {
     }
 
 
-    public void spawnChests() {
-        for (Arena a: arenas) {
-            for (TilePosition p : a.getChestSpawnPoints()) {
-                requestChestSpawn(p.x() * TILE_SIZE + (double) TILE_SIZE / 2, p.y() * TILE_SIZE + (double) TILE_SIZE / 2, new Inventory());
-            }
-        }
-    }
+
 
     public void addChest(Chest chest) {
         chests.add(chest);

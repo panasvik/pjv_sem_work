@@ -1,7 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon.service;
 
 public enum DifficultyStats {
-    MEDIUM(28, 10, 2, 1, 56, 2);
+    MEDIUM(10, 8, 2, 4, 20, 2);
 
     private final int mobCap;
     private final int initCap;
