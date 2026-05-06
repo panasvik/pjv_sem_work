@@ -38,9 +38,9 @@ X.....XXXX........XXXXC..**...XXXX...**...XXXX........XXXX.....X
 X.....XXXX........XXXXC..**...XXXX...**...XXXX........XXXX.....X
 X.....XXXX........XXXX........XXXX........XXXX........XXXX.....X
 X..............................................................X
-X..............................................................X
-X..............................................................X
-X..............................................................X
+XFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFX
+XFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFX
+XFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFX
 X..............................................................X
 X.....XXXX........XXXX........XXXX........XXXX........XXXX.....X
 X.....XXXX........XXXX........XXXX........XXXX........XXXX.....X
