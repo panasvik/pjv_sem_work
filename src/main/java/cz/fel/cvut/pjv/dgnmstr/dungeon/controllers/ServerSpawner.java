@@ -8,6 +8,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Warrior;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.DroppedGold;
+import cz.fel.cvut.pjv.dgnmstr.entity.map.Fence;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
@@ -114,17 +115,14 @@ public class ServerSpawner implements EntitySpawner {
     }
 
     @Override
-    public Chest spawnChest(double x, double y, Inventory inv) {
+    public void spawnChest(double x, double y, Inventory inv) {
         int newId = idGen.getNextId();
-
         Chest chest = new Chest(newId, x, y, level, inv);
         level.addEntity(chest);
         level.addChest(chest);
         log.info("send spawning chest with id " + newId);
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_CHEST,
-                new SpawnChestPayload(newId, x, y)));
-
-        return chest;
+                new SpawnChestPayload(newId, x, y, inv)));
     }
 
     @Override
@@ -137,5 +135,14 @@ public class ServerSpawner implements EntitySpawner {
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_HERO, new
                 SpawnHeroPayload(newId, w1.getX(), w1.getY(), profile)));
         return w1;
+    }
+
+    @Override
+    public void spawnFence(double x, double y) {
+        int newId= idGen.getNextId();
+        Fence fence = new Fence(newId, x, y, level);
+        level.addEntity(fence);
+        networkServer.broadcast(new DGNPacket( PacketType.SPAWN_FENCE,
+                new SpawnFencePayload(newId, x, y)));
     }
 }

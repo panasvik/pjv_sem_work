@@ -96,7 +96,7 @@ public class ClientManager {
     public void spawnChest(SpawnChestPayload payload) {
         log.info("spawning chest with id " + payload.id());
         if (lc == null || lc.getLevel().getEntityMap().containsKey(payload.id())) return;
-        Chest chest = new Chest(payload.id(), payload.x(), payload.y(), lc.getLevel(), Inventory.getRandomInventory());
+        Chest chest = new Chest(payload.id(), payload.x(), payload.y(), lc.getLevel(), payload.inventory());
         lc.getLevel().addEntity(chest);
         lc.getLevel().addChest(chest);
         log.info("spawned chest with id " + payload.id());

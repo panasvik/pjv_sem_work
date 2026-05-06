@@ -4,9 +4,8 @@ import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+
 
 import static cz.fel.cvut.pjv.dgnmstr.entity.map.Chest.MAX_DIST_TO_OPEN;
 

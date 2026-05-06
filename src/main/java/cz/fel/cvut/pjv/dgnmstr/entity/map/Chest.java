@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class Chest extends Entity implements Interactable {
     private static final Logger log =  Logger.getLogger(Chest.class.getName());
 
-    public static final double MAX_DIST_TO_OPEN = 900;
+    public static final double MAX_DIST_TO_OPEN = 2500; // already squared value
     public static final int PRICE_TO_OPEN_CHEST = 100;
     private final Inventory inventory;
     private boolean opened = false;
@@ -43,7 +43,7 @@ public class Chest extends Entity implements Interactable {
 
     @Override
     protected int applyDefence(int damage) {
-        return 0;
+        return 0; //invincible
     }
 
     public boolean isSolid() {
