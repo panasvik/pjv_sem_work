@@ -88,7 +88,7 @@ public class ClientManager {
         if (lc == null || lc.getLevel().getProjectileMap().containsKey(payload.id())) return;
         Entity master = lc.getLevel().getEntity(payload.masterID());
         if (master == null) return;
-        Projectile projectile = new Projectile(payload.id(), payload.radius(), payload.posX(), payload.posY(), master,
+        Projectile projectile = new Projectile(payload.id(), payload.type(), payload.radius(), payload.posX(), payload.posY(), master,
                 payload.damage(), payload.deltaX(), payload.deltaY(), payload.velocity());
         lc.getLevel().addProjectile(projectile);
     }

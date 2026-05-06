@@ -13,7 +13,10 @@ public enum ImgId {
     GRATE("/cz/fel/cvut/pjv/dgnmstr/entity/map/Grate.png", 32, 32, 1, 28),
     TILE("/cz/fel/cvut/pjv/dgnmstr/entity/map/Tile.png", 32, 32, 1,0),
     ANYSEK("/cz/fel/cvut/pjv/dgnmstr/entity/boss/Behemoth.png", 96, 96, 5,96),
-    DWIGHT("/cz/fel/cvut/pjv/dgnmstr/entity/boss/leviathan.png", 600, 600, 5,96)
+    DWIGHT("/cz/fel/cvut/pjv/dgnmstr/entity/boss/leviathan.png", 600, 600, 5,96),
+    ARROW("/cz/fel/cvut/pjv/dgnmstr/entity/projectiles/Arrow.png", 16, 16, 2, 16),
+    FIREBALL("/cz/fel/cvut/pjv/dgnmstr/entity/projectiles/Fireball1.png", 16, 16, 2, 16),
+    //WATERBALL("/cz/fel/cvut/pjv/dgnmstr/entity/projectiles/Waterball.png", 16, 16, 1, 12),
     ;
 
     private final String imgPath;

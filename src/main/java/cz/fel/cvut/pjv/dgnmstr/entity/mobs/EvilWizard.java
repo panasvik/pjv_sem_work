@@ -4,6 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
@@ -36,7 +37,7 @@ public class EvilWizard extends RangedMob{
 
     @Override
     protected void fireProjectile(double deltaX, double deltaY){
-        getLevel().requestProjectileSpawn(this, 15, getDamage(), deltaX, deltaY, 15);
+        getLevel().requestProjectileSpawn(ProjectileType.FIREBALL,this, 15, getDamage(), deltaX, deltaY, 10);
     }
 
 

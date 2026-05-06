@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 
 import java.util.List;
 import java.util.Random;
@@ -55,17 +56,17 @@ public class DwightTheLeviathan extends Boss{
         shotCount++;
         if (shotCount >= 5){
             int stats = 3 * damageMult;
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX, deltaY, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.FIREBALL,this, stats, getDamage(), deltaX, deltaY, stats);
 
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX + 25, deltaY + 25, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.FIREBALL, this, stats, getDamage(), deltaX + 25, deltaY + 25, stats);
 
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX - 25, deltaY - 25, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.FIREBALL, this, stats, getDamage(), deltaX - 25, deltaY - 25, stats);
 
             shotCount = 0;
 
         } else {
             int stats = 5 * damageMult;
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX, deltaY, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.FIREBALL,this, stats, getDamage(), deltaX, deltaY, stats);
 
         }
     }

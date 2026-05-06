@@ -12,6 +12,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.network.*;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
@@ -37,15 +38,15 @@ public class ServerSpawner implements EntitySpawner {
     }
 
     @Override
-    public void spawnProjectile(Entity master, int radius, int damage, double deltaX, double deltaY, double velocity) {
+    public void spawnProjectile(ProjectileType type, Entity master, int radius, int damage, double deltaX, double deltaY, double velocity) {
         int newId = idGen.getNextId();
 
-        Projectile p = new Projectile(newId, radius, master.getCenterX(), master.getCenterY(), master, damage, deltaX, deltaY, velocity);
+        Projectile p = new Projectile(newId, type, radius, master.getCenterX(), master.getCenterY(), master, damage, deltaX, deltaY, velocity);
 
         level.addProjectile(p);
 
         networkServer.broadcast(new DGNPacket(PacketType.SPAWN_PROJECTILE,
-                new SpawnProjectilePayload(newId, radius, master.getCenterX(), master.getCenterY(), master.getId(), damage, deltaX, deltaY, velocity)
+                new SpawnProjectilePayload(newId, type, radius, master.getCenterX(), master.getCenterY(), master.getId(), damage, deltaX, deltaY, velocity)
         ));
     }
 

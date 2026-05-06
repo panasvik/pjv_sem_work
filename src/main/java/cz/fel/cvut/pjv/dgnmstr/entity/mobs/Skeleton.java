@@ -3,6 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
@@ -30,7 +31,7 @@ public class Skeleton extends RangedMob{
 
     @Override
     protected void fireProjectile(double deltaX, double deltaY){
-        getLevel().requestProjectileSpawn(this, 5, getDamage(), deltaX, deltaY, 25);
+        getLevel().requestProjectileSpawn(ProjectileType.ARROW, this, 5, getDamage(), deltaX, deltaY, 15);
     }
 
 

@@ -8,11 +8,12 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 public interface EntitySpawner {
-        void spawnProjectile(Entity master, int radius, int damage, double deltaX, double deltaY, double velocity);
+        void spawnProjectile(ProjectileType type, Entity master, int radius, int damage, double deltaX, double deltaY, double velocity);
         void spawnGold(double x, double y, int amount);
         Mob spawnMob(double x, double y, MobStats stats, int mult);
         Boss spawnBoss(double x, double y, BossStats stats);

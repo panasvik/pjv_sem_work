@@ -3,7 +3,9 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
+import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,8 +23,9 @@ public class Projectile implements Updatable, Positionable {
     private final Level level;
     private boolean alive = true;
     private final int id;
+    private final ProjectileType type;
 
-    public Projectile(int id, int radius, double posX, double posY, Entity master, int damage, double deltaX, double deltaY, double velocity) {
+    public Projectile(int id, ProjectileType type, int radius, double posX, double posY, Entity master, int damage, double deltaX, double deltaY, double velocity) {
         this.id = id;
         this.radius = radius;
         this.posY = posY;
@@ -32,6 +35,7 @@ public class Projectile implements Updatable, Positionable {
         calculateDelta(deltaX, deltaY);
         this.velocity = velocity;
         this.level = master.getLevel();
+        this.type = type;
     }
 
     private void calculateDelta(double deltaX, double deltaY) {
@@ -126,5 +130,9 @@ public class Projectile implements Updatable, Positionable {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    public ImgId getImgId() {
+        return type.getImgId();
     }
 }
