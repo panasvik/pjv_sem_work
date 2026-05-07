@@ -3,6 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
+import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
@@ -10,8 +11,8 @@ import java.util.Random;
 
 public abstract class RangedMob extends Mob{
 
-    protected Entity target = null;
-    protected Random random = new Random();
+    protected Hero target = null;
+
 
     protected static final double COOLDOWN_TIME = 2.0;
     protected static final double DANGEROUS_DISTANCE = 0.5;
@@ -22,14 +23,7 @@ public abstract class RangedMob extends Mob{
 
     @Override
     public void attack() {
-        if (target == null) {
-            List<Entity> ents = getLevel().getEntitiesAround(this, getReach());
-            if (!ents.isEmpty()) {
-                target = ents.get(random.nextInt(ents.size()));
-            } else {
-                return;
-            }
-        }
+
         double deltaX = target.getCenterX() - getCenterX();
         double deltaY = target.getCenterY() - getCenterY();
         fireProjectile(deltaX, deltaY);
@@ -39,7 +33,10 @@ public abstract class RangedMob extends Mob{
 
     @Override
     protected void onDamageTaken(int amount, Entity source) {
-        target = source;
+       if(source instanceof Hero hero){
+           target = hero;
+       }
+
     }
 
 

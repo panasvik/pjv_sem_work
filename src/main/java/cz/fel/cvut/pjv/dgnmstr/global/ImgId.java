@@ -16,7 +16,7 @@ public enum ImgId {
     DWIGHT("/cz/fel/cvut/pjv/dgnmstr/entity/boss/leviathan.png", 600, 600, 5,96),
     ARROW("/cz/fel/cvut/pjv/dgnmstr/entity/projectiles/Arrow.png", 16, 16, 2, 16),
     FIREBALL("/cz/fel/cvut/pjv/dgnmstr/entity/projectiles/Fireball1.png", 16, 16, 2, 16),
-    //WATERBALL("/cz/fel/cvut/pjv/dgnmstr/entity/projectiles/Waterball.png", 16, 16, 1, 12),
+    WATERBALL("/cz/fel/cvut/pjv/dgnmstr/entity/projectiles/Waterball.png", 48, 48, 1, 30),
     ;
 
     private final String imgPath;
