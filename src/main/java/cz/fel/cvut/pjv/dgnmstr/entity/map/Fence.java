@@ -39,8 +39,4 @@ public class Fence extends Entity {
 
     }
 
-    @Override
-    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
-
-    }
 }

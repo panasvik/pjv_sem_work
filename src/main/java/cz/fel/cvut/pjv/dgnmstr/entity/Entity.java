@@ -4,7 +4,6 @@ import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
-import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 /**
  * All entities should be based on this class
  * provides basic features of Entity:
@@ -175,7 +174,6 @@ public abstract class Entity implements Updatable, Positionable {
         return faction;
     }
 
-    public abstract void acceptUpdateEjection(ServerNetworkManager serverNetworkManager);
     public abstract ImgId getImgId();
     public double getHalfHitBox(){
         return getImgId().getHitBoxSize()/2.0;

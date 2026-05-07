@@ -262,7 +262,12 @@ public class ServerNetworkManager {
         Set<Integer> currentEntityIds = new HashSet<>();
         for (Entity entity : entityList) {
             currentEntityIds.add(entity.getId());
-            entity.acceptUpdateEjection(this);
+            switch (entity) {
+                case Hero hero -> handleUpdateEjection(hero);
+                case Mob mob -> handleUpdateEjection(mob);
+                default -> log.info("nothing to update");
+
+            }
         }
 
         for (Integer removedEntityId : trackedEntityIds) {

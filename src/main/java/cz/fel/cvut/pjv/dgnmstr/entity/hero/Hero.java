@@ -132,10 +132,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return profile;
     }
 
-    @Override
-    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
-        serverNetworkManager.handleUpdateEjection(this);
-    }
+
 
     public void setGold(int gold) {
         this.profile.setGold(gold);

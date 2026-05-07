@@ -77,8 +77,9 @@ public class DungeonGenerator {
         try {
             loadArenaFromFile(map, startX, startY, type);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.severe("UNABLE to load arena " + type.name() + " from file ");
         }
+
         int doorStartY = startY + (ARENA_SIZE / 2) - 3;
         int doorEndY = startY + (ARENA_SIZE / 2) + 3;
 

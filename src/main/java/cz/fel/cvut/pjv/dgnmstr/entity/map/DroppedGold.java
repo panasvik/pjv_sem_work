@@ -63,8 +63,4 @@ public class DroppedGold extends Entity {
         return value;
     }
 
-    @Override
-    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
-
-    }
 }

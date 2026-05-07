@@ -142,8 +142,4 @@ public abstract class Mob extends Entity implements CanAttack {
         }
     }
 
-    @Override
-    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
-        serverNetworkManager.handleUpdateEjection(this);
-    }
 }

@@ -60,11 +60,6 @@ public class Chest extends Entity implements Interactable {
 
     }
 
-    @Override
-    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
-
-    }
-
     public Inventory getInventory() {
         return inventory;
     }

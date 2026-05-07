@@ -38,9 +38,4 @@ public class Grate extends Entity {
     public void update(double deltaTime) {
 
     }
-
-    @Override
-    public void acceptUpdateEjection(ServerNetworkManager serverNetworkManager) {
-
-    }
 }
