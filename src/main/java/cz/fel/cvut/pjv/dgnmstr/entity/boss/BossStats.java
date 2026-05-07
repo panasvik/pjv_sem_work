@@ -11,7 +11,7 @@ public enum BossStats {
             return new AnysekTheBehemoth(id, x, y, level);
         }
     },
-    DWIGHT_THE_LEVIATHAN(800, 10, 60, 50, 500, List.of(600, 400, 200)) {
+    DWIGHT_THE_LEVIATHAN(800, 10, 60, 400, 500, List.of(600, 400, 200)) {
         @Override
         public Boss spawn(int id, double x, double y, Level level) {
             return new DwightTheLeviathan(id, x, y, level);

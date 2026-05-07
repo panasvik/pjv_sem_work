@@ -122,7 +122,7 @@ public abstract class Entity implements Updatable, Positionable {
     }
 
     public boolean isEnemy(Entity other) {
-        if (this.faction == Faction.NEUTRAL) {
+        if (this.faction == Faction.NEUTRAL || other.faction == Faction.NEUTRAL) {
             return false;
         }
         return this.faction != other.faction;

@@ -3,6 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.view;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
+import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
@@ -49,6 +50,7 @@ public class GameRenderer extends AnimationTimer {
 
         drawLevel(camX, camY);
         drawEntities(camX, camY);
+        drawProjectiles(camX, camY);
         gameManager.getGameController().updateHeathBar(localHero.getHp(), localHero.getMaxHP());
         gameManager.getGameController().setGold(localHero.getGold());
 
@@ -96,6 +98,28 @@ public class GameRenderer extends AnimationTimer {
                     gc.fillRect(drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
                 }
             }
+        }
+    }
+
+    private void drawProjectiles(double camX, double camY){
+        List<Projectile> projectiles = new ArrayList<>(level.getProjectiles());
+        for (Projectile p : projectiles){
+            double drawX = p.getX() - camX;
+            double drawY = p.getY() - camY;
+
+            ImgId imgId = p.getImgId();
+            double drawWidth = imgId.getWidth() * imgId.getScale();
+            double drawHeight = imgId.getHeight() * imgId.getScale();
+            if (drawWidth + drawX < 0 || drawY + drawHeight < 0 || drawX - drawWidth > canvas.getWidth() || drawY -drawHeight > canvas.getHeight()){
+                continue;
+            }
+            double angle = Math.toDegrees(Math.atan2(p.getDeltaY(), p.getDeltaX()));
+            gc.save();
+            gc.translate(drawX, drawY);
+            gc.rotate(angle);
+            gc.drawImage(ImgLoader.get(imgId), 0, 0, imgId.getFrameWidth(), imgId.getFrameHeight(), -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+            gc.restore();
+
         }
     }
 

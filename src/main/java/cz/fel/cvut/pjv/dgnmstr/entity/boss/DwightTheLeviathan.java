@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 
 import java.util.List;
 import java.util.Random;
@@ -14,7 +15,7 @@ public class DwightTheLeviathan extends Boss{
     private int shotCount = 0;
 
     private int damageMult = 2;
-    private Entity target = null;
+    private Hero target = null;
     private Random random = new Random();
 
     private static final double COOLDOWN_TIME = 3.0;
@@ -41,11 +42,9 @@ public class DwightTheLeviathan extends Boss{
 
     @Override
     public void attack() {
-        if (target == null) {
-            List<Entity> ents = getLevel().getEntitiesAround(this, getReach());
-            if (!ents.isEmpty()) {
-                target = ents.get(random.nextInt(ents.size()));
-            } else {
+        if (target == null || !target.isAlive()) {
+            target = findNearestPlayer();
+             if (target == null){
                 return;
             }
         }
@@ -55,17 +54,17 @@ public class DwightTheLeviathan extends Boss{
         shotCount++;
         if (shotCount >= 5){
             int stats = 3 * damageMult;
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX, deltaY, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.WATERBALL,this, stats, getDamage(), deltaX, deltaY, stats);
 
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX + 25, deltaY + 25, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.WATERBALL, this, stats, getDamage(), deltaX + 25, deltaY + 25, stats);
 
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX - 25, deltaY - 25, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.WATERBALL, this, stats, getDamage(), deltaX - 25, deltaY - 25, stats);
 
             shotCount = 0;
 
         } else {
             int stats = 5 * damageMult;
-            getLevel().requestProjectileSpawn(this, stats, getDamage(), deltaX, deltaY, stats);
+            getLevel().requestProjectileSpawn(ProjectileType.WATERBALL,this, stats, getDamage(), deltaX, deltaY, stats);
 
         }
     }

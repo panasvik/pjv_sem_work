@@ -12,6 +12,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
@@ -264,9 +265,9 @@ public class Level {
         this.spawner = spawner;
     }
 
-    public void requestProjectileSpawn(Entity master, int radius, int damage, double deltaX, double deltaY, double velocity) {
+    public void requestProjectileSpawn(ProjectileType type, Entity master, int radius, int damage, double deltaX, double deltaY, double velocity) {
         if (spawner != null) {
-            spawner.spawnProjectile(master, radius, damage, deltaX, deltaY, velocity);
+            spawner.spawnProjectile(type, master, radius, damage, deltaX, deltaY, velocity);
         }
     }
 
