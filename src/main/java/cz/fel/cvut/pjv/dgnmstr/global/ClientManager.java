@@ -173,6 +173,7 @@ public class ClientManager {
             case PLAYING -> lc.startLevel();
             case VICTORY, GAME_OVER -> {
                 networkManager.disconnect();
+                stopManagingInputs();
                 SceneManager sceneManager = SceneManager.getInstance();
                 sceneManager.activate(View.START_MENU);
             }
@@ -212,7 +213,6 @@ public class ClientManager {
 
     public void startManagingInputs() {
         updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, 16, TimeUnit.MILLISECONDS);
-
     }
 
     public void manageInputs() {
@@ -253,4 +253,9 @@ public class ClientManager {
         }
         return result;
     }
+
+    public void stopManagingInputs() {
+        updateExecutor.shutdownNow();
+    }
 }
+

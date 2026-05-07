@@ -54,7 +54,8 @@ public class ServerNetworkManager {
             udpSocket = new DatagramSocket(udpPort);
             isRunning = true;
 
-            Thread udpListenThread = new Thread(this::listenUdpLoop, "UDP-Listen-Thread");
+            Thread udpListenThread = new Thread(this::listenUdpLoop);
+            udpListenThread.setDaemon(true);
             udpListenThread.start();
 
             log.info("ServerNetworkManager started on UDP port: " + udpPort);
@@ -187,7 +188,6 @@ public class ServerNetworkManager {
         }
         clients.clear();
         clientHeroIds.clear();
-        serverManager.stopLC();
         isGameStarted = false;
         log.info("Server stopped.");
     }
@@ -328,4 +328,6 @@ public class ServerNetworkManager {
             sendClientId(source, id);
         }
     }
+
+
 }

@@ -16,9 +16,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ServerManager {
     private LevelController lc;
-    private DungeonGenerator generator;
+    private final DungeonGenerator generator;
     private ServerNetworkManager snm;
-    private long lastUpdateTimeNanos;
     private LevelState lastLevelState;
     private ArenaState lastArenaState;
     private final ScheduledExecutorService updateExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -55,7 +54,6 @@ public class ServerManager {
 
     public void stopLC() {
         running = false;
-        lastUpdateTimeNanos = 0L;
         snm.getTrackedEntityIds().clear();
         snm.getTrackedProjectileIds().clear();
         snm.getLastInputsByHeroId().clear();
@@ -89,7 +87,6 @@ public class ServerManager {
             return;
         }
 
-
         double deltaTime = 0.016;
         lc.update(deltaTime);
 
@@ -97,10 +94,10 @@ public class ServerManager {
         snm.sendLevelUpdates();
         snm.sendEntityUpdates();
         snm.sendProjectileUpdates();
+
         if (lc.getLevel().getState() == LevelState.GAME_OVER ||
             lc.getLevel().getState() == LevelState.VICTORY) {
-            stopLC();
-            snm.stop();
+            stop();
         }
     }
 
@@ -125,5 +122,11 @@ public class ServerManager {
 
     public void setLastArenaState(ArenaState lastArenaState) {
         this.lastArenaState = lastArenaState;
+    }
+
+    public void stop() {
+        updateExecutor.shutdownNow();
+        stopLC();
+        snm.stop();
     }
 }

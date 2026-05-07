@@ -42,8 +42,6 @@ public class GameApp extends Application {
         GameManager gameManager = GameManager.getInstance();
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.init(stage, 1280, 720);
-//        sceneManager.loadScreen(View.MAIN_MENU);
-//        sceneManager.loadScreen(View.SINGLEPLAYER);
         sceneManager.loadScreen(View.START_MENU);
         sceneManager.loadScreen(View.LEVEL);
 
@@ -51,6 +49,27 @@ public class GameApp extends Application {
         stage.setTitle("Dungeon Master");
         stage.show();
 
+    }
+
+    @Override
+    public void stop() {
+        log.info("Shutting down game and cleaning up threads...");
+        GameManager gm = GameManager.getInstance();
+
+        // Clean up server threads
+        if (gm.getSm() != null) {
+            gm.getSm().stop();
+        }
+
+        // Clean up client threads
+        if (gm.getCnm() != null) {
+            gm.getCnm().disconnect();
+        }
+        if (gm.getCm() != null) {
+            gm.getCm().stopManagingInputs();
+        }
+
+        // Force the JVM to terminate and kill any lingering threads
     }
 
     public Stage getStage() {
