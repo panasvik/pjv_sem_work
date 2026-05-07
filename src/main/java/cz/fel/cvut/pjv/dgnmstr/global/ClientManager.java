@@ -144,6 +144,7 @@ public class ClientManager {
         if (projectile == null) return;
         projectile.setPos(payload.x(), payload.y());
         projectile.setAlive(payload.isAlive());
+        if (!projectile.isAlive()) lc.getLevel().removeProjectile(projectile);
     }
 
     public void removeEntity(EntityRemovePayload payload) {
