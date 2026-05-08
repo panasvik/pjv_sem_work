@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -30,7 +31,7 @@ import javafx.scene.layout.VBox;
 import java.util.logging.Logger;
 
 
-public class GameController {
+public class GameController implements Reappearance {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
     private final GameManager gameManager;
 
@@ -76,6 +77,7 @@ public class GameController {
     private Chest currentChest;
 
     private GameRenderer renderer;
+    private EventHandler<KeyEvent> menuToggleHandler;
 
     public GameController() {
         this.gameManager = GameManager.getInstance();
@@ -87,8 +89,12 @@ public class GameController {
     public void initialize() {
         gameCanvas.widthProperty().bind(canvasWrapper.widthProperty());
         gameCanvas.heightProperty().bind(canvasWrapper.heightProperty());
-        startWhenClientStateReady();
         ImgLoader.loadAll();
+    }
+
+    @Override
+    public void reappear() {
+        startWhenClientStateReady();
         fillList(inventoryList);
         fillList(chestList);
         setupListInteractions();
@@ -140,7 +146,23 @@ public class GameController {
         gameManager.setGameController(this);
         renderer.start();
 
-        SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        installMenuToggleHandler();
+
+        clientManager.startManagingInputs();
+        Hero localHero = clientManager.getLocalHero();
+        maxHealth = new SimpleDoubleProperty(localHero.getMaxHP());
+        currentHealth = new SimpleDoubleProperty(localHero.getHp());
+        healthBar.progressProperty().bind(currentHealth.divide(maxHealth));
+        updateUI();
+        log.info("GameController started level systems");
+        return true;
+    }
+
+    private void installMenuToggleHandler() {
+        if (menuToggleHandler != null) {
+            return;
+        }
+        menuToggleHandler = event -> {
             if (event.getCode() == KeyCode.I) {
                 if (inventoryView.isVisible()) {
                     hideInventory();
@@ -154,16 +176,25 @@ public class GameController {
                     showChest();
                 }
             }
-        });
+        };
+        SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, menuToggleHandler);
+    }
 
-        clientManager.startManagingInputs();
-        Hero localHero = clientManager.getLocalHero();
-        maxHealth = new SimpleDoubleProperty(localHero.getMaxHP());
-        currentHealth = new SimpleDoubleProperty(localHero.getHp());
-        healthBar.progressProperty().bind(currentHealth.divide(maxHealth));
-        updateUI();
-        log.info("GameController started level systems");
-        return true;
+    public void stopGameSystems() {
+        if (renderer != null) {
+            renderer.stop();
+            renderer = null;
+        }
+        if (menuToggleHandler != null) {
+            SceneManager.getInstance().getMainScene().removeEventFilter(KeyEvent.KEY_PRESSED, menuToggleHandler);
+            menuToggleHandler = null;
+        }
+        if (healthBar != null) {
+            healthBar.progressProperty().unbind();
+        }
+        hideInventory();
+        hideChest();
+        currentChest = null;
     }
 
     private void updateUI() {
