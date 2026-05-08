@@ -3,13 +3,19 @@ package cz.fel.cvut.pjv.dgnmstr.global;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 
 import static cz.fel.cvut.pjv.dgnmstr.entity.map.Chest.MAX_DIST_TO_OPEN;
 
 public class MyMath {
+
+    private static final Logger log = Logger.getLogger(MyMath.class.getName());
+
     public static double sigmoid(double x) {
         double midpoint = 100.0;
         double scale = 36.07;
@@ -45,5 +51,13 @@ public class MyMath {
 
     public static double calculateDistanceSquared(double dx, double dy) {
         return dx * dx + dy * dy;
+    }
+
+    public static void tryWait(long ms) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(ms);
+        } catch (InterruptedException e) {
+            log.severe("FATAL ERROR");
+        }
     }
 }

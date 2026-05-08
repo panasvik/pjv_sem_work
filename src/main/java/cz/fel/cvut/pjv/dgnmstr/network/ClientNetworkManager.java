@@ -29,7 +29,7 @@ public class ClientNetworkManager {
             udpSocket = new DatagramSocket();
             isRunning = true;
 
-            Thread udpThread = new Thread(this::listenUdpLoop, "Client-UDP-Listen");
+            Thread udpThread = new Thread(this::listenUdpLoop, "Client-Network-Thread");
             udpThread.setDaemon(true);
             udpThread.start();
 
