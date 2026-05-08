@@ -85,8 +85,6 @@ public class StartMenuController {
             log.warning("server is not started. start it first");
             return;
         }
-        SceneManager sceneManager = SceneManager.getInstance();
-        sceneManager.activate(View.LEVEL);
         ServerNetworkManager serverNetworkManager = gameManager.getSnm();
         if (serverNetworkManager != null) {
             ServerManager serverManager = gameManager.getSm();
@@ -97,6 +95,11 @@ public class StartMenuController {
             serverNetworkManager.sendIDs();
             serverNetworkManager.setGameStarted(true);
             serverManager.startLC();
+        }
+        ClientManager clientManager = gameManager.getCm();
+        if (clientManager.isReady()) {
+            SceneManager sceneManager = SceneManager.getInstance();
+            sceneManager.activate(View.LEVEL);
         }
     }
 

@@ -47,6 +47,7 @@ public class ClientManager {
     private ScheduledFuture<?> inputTask;
     private InputHandler inputHandler;
     private ClientNetworkManager networkManager;
+    private boolean isReady = false;
 
 
     public ClientManager(ClientNetworkManager networkManager, PlayerProfile profile) {
@@ -72,6 +73,7 @@ public class ClientManager {
         localHero.setProfile(myProfile);
         System.out.println("local hero set");
         System.out.println(localHero);
+        isReady = true;
     }
 
     public void spawnMob(SpawnMobPayload payload) {
@@ -176,19 +178,21 @@ public class ClientManager {
 
         switch (payload.state()) {
             case PLAYING -> lc.startLevel();
-            case VICTORY, GAME_OVER -> {
-                stopManagingInputs();
-                localHero = null;
-                Platform.runLater(() -> {
-                    GameManager gameManager = GameManager.getInstance();
-                    if (gameManager.getGameController() != null) {
-                        gameManager.getGameController().stopGameSystems();
-                    }
-                    SceneManager.getInstance().activate(View.START_MENU);
-                });
-            }
+            case VICTORY, GAME_OVER -> stopLocal();
         }
+    }
 
+    private void stopLocal() {
+        stopManagingInputs();
+        localHero = null;
+        Platform.runLater(() -> {
+            GameManager gameManager = GameManager.getInstance();
+            if (gameManager.getGameController() != null) {
+                gameManager.getGameController().stopGameSystems();
+            }
+            SceneManager.getInstance().activate(View.START_MENU);
+        });
+        isReady = false;
     }
 
     public void updateArenaState(ArenaStatePayload payload) {
@@ -279,6 +283,10 @@ public class ClientManager {
             updateExecutor.shutdownNow();
             updateExecutor = null;
         }
+    }
+
+    public boolean isReady() {
+        return isReady;
     }
 }
 
