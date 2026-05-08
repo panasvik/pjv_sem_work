@@ -93,15 +93,19 @@ public class Projectile implements Updatable, Positionable {
 
     public void explodeOn(List<Entity> targets) {
         int cumulative_damage = 0;
-        if (targets == null) return;
+        if (targets == null) {
+            alive = false;
+            return;
+        }
 
         for (Entity target : targets) {
             cumulative_damage += target.takeDamage(damage, master);
             log.info("dealing damage to " + target);
         }
 
-        if (cumulative_damage > 0)
+        if (cumulative_damage > 0) {
             alive = false;
+        }
     }
 
     @Override
@@ -116,8 +120,7 @@ public class Projectile implements Updatable, Positionable {
                 .filter(master::isEnemy)
                 .toList();
         if (!entNear.isEmpty()) {
-            explodeOn(entNear);
-            return;
+           explodeOn(entNear);
         }
         if (!level.isWalkable(posX, posY)) {
             explodeOn(null);
