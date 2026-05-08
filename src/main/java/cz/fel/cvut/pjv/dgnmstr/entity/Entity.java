@@ -4,12 +4,6 @@ import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
-/**
- * All entities should be based on this class
- * provides basic features of Entity:
- * health, speed, position, level where at, id
- *
- * */
 
 import java.util.logging.Logger;
 
@@ -49,10 +43,11 @@ public abstract class Entity implements Updatable, Positionable {
      * logic for taking damage
      * @param damage how much damage to take
      * @param source who deals damage to this
+     * @return damage actually dealt
      */
-    public final void takeDamage(int damage, Entity source) {
-        if (damage <= 0) return;
-        if (handleParry(source)) return;
+    public final int takeDamage(int damage, Entity source) {
+        if (damage <= 0) return 0;
+        if (handleParry(source)) return 0;
         damage = applyDefence(damage);
 
         this.hp -= damage;
@@ -62,7 +57,7 @@ public abstract class Entity implements Updatable, Positionable {
             die();
         }
         log.info(this + "took "  + damage + " damage");
-
+        return damage;
     }
 
     protected abstract void onDamageTaken(int amount, Entity source);

@@ -51,6 +51,7 @@ public class Projectile implements Updatable, Positionable {
         this.deltaX = deltaX / Math.sqrt(MyMath.calculateDistanceSquared(deltaX, deltaY));
         this.deltaY = deltaY / Math.sqrt(MyMath.calculateDistanceSquared(deltaX, deltaY));
     }
+
     @Override
     public double getX() {
         return posX;
@@ -91,13 +92,16 @@ public class Projectile implements Updatable, Positionable {
     }
 
     public void explodeOn(List<Entity> targets) {
-        if (targets != null) {
-            for (Entity target : targets) {
-                target.takeDamage(damage, master);
-                log.info("dealing damage to " + target);
-            }
+        int cumulative_damage = 0;
+        if (targets == null) return;
+
+        for (Entity target : targets) {
+            cumulative_damage += target.takeDamage(damage, master);
+            log.info("dealing damage to " + target);
         }
-        alive = false;
+
+        if (cumulative_damage > 0)
+            alive = false;
     }
 
     @Override
