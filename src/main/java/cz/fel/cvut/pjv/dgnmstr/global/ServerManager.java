@@ -9,6 +9,7 @@ import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -20,9 +21,11 @@ public class ServerManager {
     private ServerNetworkManager snm;
     private LevelState lastLevelState;
     private ArenaState lastArenaState;
-    private final ScheduledExecutorService updateExecutor = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledExecutorService updateExecutor;
     private ScheduledFuture<?> updateTask;
     private volatile boolean running = false;
+    private long seed;
+    private Random random = new Random();
 
 
 
@@ -30,8 +33,8 @@ public class ServerManager {
         generator = new DungeonGenerator();
         this.snm = manager;
     }
-
-    public void generateNewLevel(long seed) {
+    public void generateNewLevel() {
+        seed = random.nextLong();
         Level level = generator.generate(DifficultyStats.MEDIUM, seed);
         level.setSpawner(new ServerSpawner(level, new IDGenerator(), snm));
         lc = new LevelController(level);
@@ -48,6 +51,7 @@ public class ServerManager {
         }
         lc.startLevel();
         running = true;
+        updateExecutor = Executors.newSingleThreadScheduledExecutor();
         updateTask = updateExecutor.scheduleAtFixedRate(this::tick, 0, 16, TimeUnit.MILLISECONDS);
         System.out.println("lc started");
     }
@@ -127,6 +131,9 @@ public class ServerManager {
     public void stop() {
         updateExecutor.shutdownNow();
         stopLC();
-        snm.stop();
+    }
+
+    public long getSeed() {
+        return seed;
     }
 }

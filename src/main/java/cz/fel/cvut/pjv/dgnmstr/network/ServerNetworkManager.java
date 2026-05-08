@@ -23,7 +23,6 @@ public class ServerNetworkManager {
 
     private DatagramSocket udpSocket;
     private ServerManager serverManager;
-    private long seed;
 
     private final Map<InetSocketAddress, PlayerProfile> clients = new ConcurrentHashMap<>();
     private final Map<InetSocketAddress, Integer> clientHeroIds = new ConcurrentHashMap<>();
@@ -43,10 +42,6 @@ public class ServerNetworkManager {
     public ServerNetworkManager(int udpPort) {
         this.udpPort = udpPort;
         serverManager = new ServerManager(this);
-        Random random = new Random();
-        seed = random.nextLong();
-        serverManager.generateNewLevel(seed);
-
     }
 
     public void start() {
@@ -108,9 +103,15 @@ public class ServerNetworkManager {
                 !clients.containsKey(source) && !isGameStarted);
     }
 
+    public void sendSeeds() {
+        for (Map.Entry<InetSocketAddress, PlayerProfile> entry : clients.entrySet()) {
+            sendSeed(entry.getKey());
+        }
+    }
+
     private void sendSeed(InetSocketAddress source) {
         try {
-            byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new LevelSeedPayload(seed)));
+            byte[] data = SerializationUtils.serialize(new DGNPacket(PacketType.SEED, new LevelSeedPayload(serverManager.getSeed())));
             DatagramPacket idPacket = new DatagramPacket(data, data.length, source.getAddress(), source.getPort());
             udpSocket.send(idPacket);
         } catch (IOException e) {
@@ -134,7 +135,6 @@ public class ServerNetworkManager {
     private void handleIncomingPacket(DGNPacket packet, InetSocketAddress source) {
         if (isNewClient(packet, source)) {
             PlayerProfile profile = ((PlayerProfilePayload) packet.payload()).profile();
-            sendSeed(source);
             clients.put(source, profile);
             log.info("New client registered with profile from: " + source);
         }
@@ -265,8 +265,7 @@ public class ServerNetworkManager {
             switch (entity) {
                 case Hero hero -> handleUpdateEjection(hero);
                 case Mob mob -> handleUpdateEjection(mob);
-                default -> log.info("nothing to update");
-
+                default -> {} // nothing to update for those
             }
         }
 
