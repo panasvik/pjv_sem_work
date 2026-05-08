@@ -1,5 +1,8 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
+import cz.fel.cvut.pjv.dgnmstr.global.ClientManager;
+import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
+import cz.fel.cvut.pjv.dgnmstr.global.ServerManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
@@ -12,6 +15,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
 
 public class StartMenuController {
     private static final Logger log = Logger.getLogger(StartMenuController.class.getName());
@@ -85,11 +89,17 @@ public class StartMenuController {
         sceneManager.activate(View.LEVEL);
         ServerNetworkManager serverNetworkManager = gameManager.getSnm();
         if (serverNetworkManager != null) {
+            ServerManager serverManager = gameManager.getSm();
+            serverManager.generateNewLevel();
+            MyMath.tryWait(200);
+            serverNetworkManager.sendSeeds();
+            MyMath.tryWait(200);
             serverNetworkManager.sendIDs();
             serverNetworkManager.setGameStarted(true);
-            serverNetworkManager.getServerManager().startLC();
+            serverManager.startLC();
         }
     }
+
 
     @FXML
     public void load() {
@@ -132,6 +142,22 @@ public class StartMenuController {
     @FXML
     public void exit() {
         Platform.exit();
+        ClientNetworkManager clientNetworkManager = gameManager.getCnm();
+        if (clientNetworkManager != null) {
+            clientNetworkManager.disconnect();
+        }
+        ClientManager clientManager = gameManager.getCm();
+        if (clientManager != null) {
+            clientManager.stopManagingInputs();
+        }
+        ServerNetworkManager serverNetworkManager = gameManager.getSnm();
+        if (serverNetworkManager != null) {
+            serverNetworkManager.stop();
+        }
+        ServerManager serverManager = gameManager.getSm();
+        if (serverManager != null) {
+            serverManager.stop();
+        }
     }
 
     @FXML

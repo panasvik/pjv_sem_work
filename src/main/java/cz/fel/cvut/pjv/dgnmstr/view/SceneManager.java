@@ -18,6 +18,9 @@ public class SceneManager {
 
     private final Map<View, Parent> screens = new HashMap<>();
 
+    private final Map<View, Object> controllers = new HashMap<>();
+
+
     private static final Logger log =  Logger.getLogger(SceneManager.class.getName());
 
 
@@ -42,36 +45,40 @@ public class SceneManager {
         this.mainStage.setScene(mainScene);
     }
 
-    /**
-     *
-     * @param view
-     */
     public void loadScreen(View view) {
         try {
             URL resource = SceneManager.class.getResource(view.getRelativePath());
             if (resource == null) {
-                log.severe("View path '" + view.getRelativePath() + "' not found in resources");
+                log.severe("View path '" + view.getRelativePath() + "' not found");
                 return;
             }
+
             FXMLLoader loader = new FXMLLoader(resource);
             Parent root = loader.load();
+
             screens.put(view, root);
+
+            Object controller = loader.getController();
+            if (controller != null) {
+                controllers.put(view, controller);
+            }
+
         } catch (IOException e) {
-            log.severe("Unable to load view '" + view.getRelativePath() + "': " + e.getMessage());
+            log.severe("Unable to load view: " + e.getMessage());
         }
     }
 
-    /**
-     *
-     * @param view
-     */
     public void activate(View view) {
         Parent root = screens.get(view);
         if (root != null) {
             mainScene.setRoot(root);
+
+            Object controller = controllers.get(view);
+            if (controller instanceof Reappearance) {
+                ((Reappearance) controller).reappear();
+            }
         } else {
-            log.severe("View path " + view.getRelativePath() + "not found in HashMap" +
-                    "add it with loadScreen()");
+            log.severe("View not found. Load it first.");
         }
     }
 
