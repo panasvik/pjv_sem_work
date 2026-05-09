@@ -6,6 +6,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
+import cz.fel.cvut.pjv.dgnmstr.network.ServerSpawner;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 

@@ -263,6 +263,10 @@ public class Level {
         this.spawner = spawner;
     }
 
+    public EntitySpawner getSpawner() {
+        return spawner;
+    }
+
     public void requestProjectileSpawn(ProjectileType type, Entity master, int radius, int damage, double deltaX, double deltaY, double velocity) {
         if (spawner != null) {
             spawner.spawnProjectile(type, master, radius, damage, deltaX, deltaY, velocity);
