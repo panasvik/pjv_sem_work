@@ -16,9 +16,7 @@ import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -333,4 +331,15 @@ public class Level {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Level level = (Level) o;
+        return getPlayersAlive() == level.getPlayersAlive() && getWidth() == level.getWidth() && getHeight() == level.getHeight() && isBossSpawned() == level.isBossSpawned() && Objects.equals(spawner, level.spawner) && Objects.equals(getAllEntities(), level.getAllEntities()) && Objects.equals(getPlayers(), level.getPlayers()) && Objects.equals(getArenas(), level.getArenas()) && Objects.equals(getCurArena(), level.getCurArena()) && Objects.equals(getProjectiles(), level.getProjectiles()) && Objects.equals(getChests(), level.getChests()) && Objects.equals(getEntityMap(), level.getEntityMap()) && Objects.equals(getProjectileMap(), level.getProjectileMap()) && Objects.deepEquals(map, level.map) && getState() == level.getState() && getDifficulty() == level.getDifficulty() && Objects.equals(getBossSpawnRate(), level.getBossSpawnRate()) && Objects.equals(getLevelBoss(), level.getLevelBoss());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(spawner, getAllEntities(), getPlayers(), getArenas(), getCurArena(), getProjectiles(), getChests(), getEntityMap(), getProjectileMap(), getPlayersAlive(), Arrays.deepHashCode(map), getWidth(), getHeight(), getState(), getDifficulty(), getBossSpawnRate(), getLevelBoss(), isBossSpawned());
+    }
 }

@@ -92,12 +92,11 @@ public class Projectile implements Updatable, Positionable {
     }
 
     public void explodeOn(List<Entity> targets) {
-        int cumulative_damage = 0;
         if (targets == null) {
-            alive = false;
             return;
         }
 
+        int cumulative_damage = 0;
         for (Entity target : targets) {
             cumulative_damage += target.takeDamage(damage, master);
             log.info("dealing damage to " + target);
@@ -123,7 +122,7 @@ public class Projectile implements Updatable, Positionable {
            explodeOn(entNear);
         }
         if (!level.isWalkable(posX, posY)) {
-            explodeOn(null);
+            alive = false;
         }
     }
 

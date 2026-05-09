@@ -10,6 +10,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.Level.TILE_SIZE;
 
@@ -182,4 +183,15 @@ public class Arena {
         grates.clear();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Arena arena = (Arena) o;
+        return getStartX() == arena.getStartX() && getStartY() == arena.getStartY() && isMiniBossSpawned() == arena.isMiniBossSpawned() && isMiniBossDead() == arena.isMiniBossDead() && getState() == arena.getState() && getType() == arena.getType() && Objects.equals(getActiveMobs(), arena.getActiveMobs()) && Objects.equals(getGrates(), arena.getGrates());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getState(), getStartX(), getStartY(), getType(), getActiveMobs(), getGrates(), isMiniBossSpawned(), isMiniBossDead());
+    }
 }
