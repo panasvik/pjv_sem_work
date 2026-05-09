@@ -240,7 +240,7 @@ public class ClientManager {
 
     }
 
-    public Chest getnearestChest() {
+    public Chest getNearestChest() {
         List<Chest> chests = lc.getLevel().getChests();
         return getClosestChest(chests, localHero);
     }
@@ -250,7 +250,7 @@ public class ClientManager {
     }
 
     public Chest openNearestChest() {
-        Chest currentChest = getnearestChest();
+        Chest currentChest = getNearestChest();
         if (currentChest == null) {
             log.info("No chest in range");
             return null;

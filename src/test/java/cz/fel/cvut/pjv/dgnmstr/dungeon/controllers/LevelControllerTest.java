@@ -91,7 +91,7 @@ class LevelControllerTest {
         PlayerProfile profile = PlayerProfile.loadFromJson();
         Hero w1 = level.requestHeroSpawn(128, 128, profile);
         lc.startLevel();
-        
+
         boolean exitFound = false;
         for(int x = 0; x < level.getWidth(); x++) {
             for(int y = 0; y < level.getHeight(); y++) {
@@ -105,7 +105,7 @@ class LevelControllerTest {
             }
             if (exitFound) break;
         }
-        
+
         lc.checkExit();
         assertEquals(LevelState.VICTORY, level.getState());
     }

@@ -15,16 +15,14 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class GameRenderer extends AnimationTimer {
     // this class should render level view
     private final Level level;
     private final Canvas canvas;
     private final GraphicsContext gc;
-    private static final Logger log = Logger.getLogger(GameRenderer.class.getName());
     private final Hero localHero;
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     public GameRenderer(Canvas canvas, Level level, Hero localHero) {
         this.canvas = canvas;

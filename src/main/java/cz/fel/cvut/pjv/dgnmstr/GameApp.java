@@ -6,21 +6,16 @@ import cz.fel.cvut.pjv.dgnmstr.view.View;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GameApp extends Application {
-    private static GameApp instance;
     private static final Logger log =  Logger.getLogger(GameApp.class.getName());
-    private Stage stage;
 
 
     @Override
-    public void start(Stage stage) throws IOException {
-        instance = this;
-        this.stage = stage;
+    public void start(Stage stage) {
         boolean isLog = getParameters().getRaw().contains("--log=true");
         Logger mainLogger = Logger.getLogger("");
 
@@ -39,7 +34,6 @@ public class GameApp extends Application {
             mainLogger.setLevel(Level.SEVERE);
         }
 
-        GameManager gameManager = GameManager.getInstance();
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.init(stage, 1280, 720);
         sceneManager.loadScreen(View.START_MENU);
@@ -72,12 +66,4 @@ public class GameApp extends Application {
         // Force the JVM to terminate and kill any lingering threads
     }
 
-    public Stage getStage() {
-        return stage;
-    }
-
-    public static GameApp getInstance() {
-        return instance;
-    }
-
-   }
+}
