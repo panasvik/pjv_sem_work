@@ -52,7 +52,7 @@ public abstract class Entity implements Updatable, Positionable {
 
         log.fine(this.getClass().getSimpleName() + ": took " + damage + " damage. HP left: " + this.hp );
         onDamageTaken(damage, source);
-        
+
         setHp(hp - damage);
         log.info(this + "took "  + damage + " damage");
         return damage;
@@ -129,6 +129,28 @@ public abstract class Entity implements Updatable, Positionable {
     public void setLookTarget(double targetX, double targetY) {
         this.lookX = targetX;
         this.lookY = targetY;
+    }
+
+    protected void tryStepTo(double moveX, double moveY) {
+        double newX = this.getX() + moveX;
+        double newY = this.getY() + moveY;
+
+        double newCenterX = this.getCenterX() + moveX;
+        double newCenterY = this.getCenterY() + moveY;
+        double half = this.getHalfHitBox();
+
+        if (isEthereal()){
+            this.setPos(newX, newY);
+            return;
+        }
+
+        if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
+            this.setPos(newX, newY);
+        } else if (getLevel().isWalkable(this.getCenterX(), newCenterY, half)){
+            this.setPos(this.getX(), newY);
+        } else if (getLevel().isWalkable(newCenterX, this.getCenterY(), half)){
+            this.setPos(newX, this.getY());
+        }
     }
 
     public double getLookX() {

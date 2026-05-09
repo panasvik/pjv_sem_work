@@ -87,7 +87,7 @@ public class DwightTheLeviathan extends Boss{
         } else if(dist > range * 1.25) {
             int speed = getSpeed();
             setSpeed(speed/2);
-            checkMoveToward(target, deltaTime);
+            checkMoveToward(target);
             setSpeed(speed);
         }
         if (dist <= range && attackCooldown <= 0) {

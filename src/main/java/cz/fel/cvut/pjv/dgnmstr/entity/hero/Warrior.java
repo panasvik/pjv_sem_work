@@ -114,37 +114,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         updateCooldowns(deltaTime);
     }
 
-    private void updateMovement(Inputs inputs) {
-        double moveX = 0;
-        double moveY = 0;
 
-        if (inputs.up()) moveY -= 1;
-        if (inputs.down()) moveY += 1;
-        if (inputs.left()) moveX -= 1;
-        if (inputs.right()) moveX += 1;
-
-        double length = Math.sqrt(moveX * moveX + moveY * moveY);
-
-        if (length > 0) {
-            moveX /= length;
-            moveY /= length;
-
-            double newX = getX() + moveX * getSpeed();
-            double newY = getY() + moveY * getSpeed();
-
-            double newCenterX = getCenterX() + moveX * getSpeed();
-            double newCenterY = getCenterY() + moveY * getSpeed();
-            double half = getHalfHitBox();
-
-            if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
-                setPos(newX, newY);
-            } else if (getLevel().isWalkable(newCenterX, getCenterY(), half)) {
-                setPos(newX, getY());
-            } else if (getLevel().isWalkable(getCenterX(), newCenterY, half)){
-                setPos(getX(), newY);
-            }
-        }
-    }
 
     private void updateAttack(Inputs inputs) {
         if (inputs.attack() && attackCooldown <= 0){

@@ -69,7 +69,7 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
                attackCooldown = COOLDOWN_TIME;
            }
        }  else {
-           this.checkMoveToward(target, deltaTime);
+           this.checkMoveToward(target);
        }
 
        if (attackCooldown > 0){

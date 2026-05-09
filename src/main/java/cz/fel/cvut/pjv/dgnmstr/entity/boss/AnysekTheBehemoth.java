@@ -74,7 +74,7 @@ public class AnysekTheBehemoth extends Boss{
 
         this.setLookTarget(target.getCenterX(), target.getCenterY());
 
-        checkMoveToward(target, deltaTime);
+        checkMoveToward(target);
         double range = getReach();
         double distS = MyMath.calculateDistanceSquared(this, target);
         double dist = Math.sqrt(distS);

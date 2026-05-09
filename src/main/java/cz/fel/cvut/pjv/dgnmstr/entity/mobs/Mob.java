@@ -77,9 +77,8 @@ public abstract class Mob extends Entity implements CanAttack {
     /**
      * makes a mob make a step to a target
      * @param target a target to make step to
-     * @param deltaTime time length of a tick
      */
-    protected void checkMoveToward(Entity target, double deltaTime) {
+    protected void checkMoveToward(Entity target) {
         if (target == null || !this.isAlive()) return;
 
         double dx = target.getCenterX() - this.getCenterX();
@@ -91,29 +90,9 @@ public abstract class Mob extends Entity implements CanAttack {
         double moveX = (dx / distance) * this.getSpeed();
         double moveY = (dy / distance) * this.getSpeed();
 
-        double newX = this.getX() + moveX;
-        double newY = this.getY() + moveY;
-
-        double newCenterX = this.getCenterX() + moveX;
-        double newCenterY = this.getCenterY() + moveY;
-        double half = this.getHalfHitBox();
-
-        if (isEthereal()){
-            this.setPos(newX, newY);
-            return;
-        }
-
-        if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
-            this.setPos(newX, newY);
-        } else if (getLevel().isWalkable(this.getCenterX(), newCenterY, half)){
-            this.setPos(this.getX(), newY);
-        } else if (getLevel().isWalkable(newCenterX, this.getCenterY(), half)){
-            this.setPos(newX, this.getY());
-        }
-
-
-
+        tryStepTo(moveX, moveY);
     }
+
     protected void retreatFrom(Entity target,  double deltaTime) {
         if (target == null || !this.isAlive()) {return;}
 

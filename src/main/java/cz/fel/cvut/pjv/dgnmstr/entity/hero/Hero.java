@@ -132,7 +132,24 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return profile;
     }
 
+    protected void updateMovement(Inputs inputs) {
+        double moveX = 0;
+        double moveY = 0;
 
+        if (inputs.up()) moveY -= 1;
+        if (inputs.down()) moveY += 1;
+        if (inputs.left()) moveX -= 1;
+        if (inputs.right()) moveX += 1;
+
+        double length = Math.sqrt(moveX * moveX + moveY * moveY);
+
+        if (length > 0) {
+            moveX = moveX * getSpeed() / length;
+            moveY = moveY * getSpeed() / length;
+
+            tryStepTo(moveX, moveY);
+        }
+    }
 
     public void setGold(int gold) {
         this.profile.setGold(gold);

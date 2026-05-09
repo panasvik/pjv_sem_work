@@ -62,7 +62,7 @@ public abstract class RangedMob extends Mob{
         double sqDangerousDist = dangerousDist * dangerousDist;
 
         if (dist > sqReach) {
-            this.checkMoveToward(target, deltaTime);
+            this.checkMoveToward(target);
         } else if (dist < sqDangerousDist) {
             this.retreatFrom(target, deltaTime);
         }
