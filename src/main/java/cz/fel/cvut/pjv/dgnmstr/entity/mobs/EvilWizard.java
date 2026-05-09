@@ -1,15 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
-
-import java.util.Random;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 
 public class EvilWizard extends RangedMob{
     public EvilWizard(int id,double positionX, double positionY, Level level) {

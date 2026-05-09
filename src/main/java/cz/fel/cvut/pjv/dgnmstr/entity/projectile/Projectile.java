@@ -1,11 +1,11 @@
-package cz.fel.cvut.pjv.dgnmstr.entity;
+package cz.fel.cvut.pjv.dgnmstr.entity.projectile;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
+import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -96,13 +96,13 @@ public class Projectile implements Updatable, Positionable {
             return;
         }
 
-        int cumulative_damage = 0;
+        int cumulativeDamage = 0;
         for (Entity target : targets) {
-            cumulative_damage += target.takeDamage(damage, master);
+            cumulativeDamage += target.takeDamage(damage, master);
             log.info("dealing damage to " + target);
         }
 
-        if (cumulative_damage > 0) {
+        if (cumulativeDamage > 0) {
             alive = false;
         }
     }

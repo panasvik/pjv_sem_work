@@ -139,6 +139,8 @@ public abstract class Entity implements Updatable, Positionable {
         double newCenterY = this.getCenterY() + moveY;
         double half = this.getHalfHitBox();
 
+        if (newX < 0 || newY < 0) return;
+
         if (isEthereal()){
             this.setPos(newX, newY);
             return;
@@ -193,6 +195,7 @@ public abstract class Entity implements Updatable, Positionable {
     public double getHalfHitBox(){
         return getImgId().getHitBoxSize()/2.0;
     }
+
     public double getCenterX(){
         return getX() + (Level.TILE_SIZE * getImgId().getScale())/2.0;
     }

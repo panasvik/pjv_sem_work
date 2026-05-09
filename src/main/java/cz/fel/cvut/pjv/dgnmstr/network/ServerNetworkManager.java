@@ -4,7 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;

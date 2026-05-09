@@ -1,14 +1,11 @@
 package cz.fel.cvut.pjv.dgnmstr.entity.boss;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
-import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 
-import java.util.List;
 import java.util.Random;
 
 public class DwightTheLeviathan extends Boss{

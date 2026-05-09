@@ -154,7 +154,7 @@ public class ArenaController implements Updatable {
         return new MobSpawnData(mobStats, worldX, worldY);
     }
 
-    private void spawnMobs(int cap, List<TilePosition> validSpawnPoints) {
+    protected void spawnMobs(int cap, List<TilePosition> validSpawnPoints) {
         int mobsToSpawn = Math.min(cap, validSpawnPoints.size());
         for (int i = 0; i < mobsToSpawn; i++) {
             MobSpawnData mobSpawnData = getMobSpawnData(validSpawnPoints);
@@ -177,7 +177,7 @@ public class ArenaController implements Updatable {
     }
 
 
-    private void spawnInitialMobs() {
+    protected void spawnInitialMobs() {
         List<TilePosition> validSpawnPoints = arena.getValidSpawnPoints();
 
         if (validSpawnPoints.isEmpty()) {

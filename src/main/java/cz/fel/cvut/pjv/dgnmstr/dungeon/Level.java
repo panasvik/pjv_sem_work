@@ -1,6 +1,5 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
-import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.EntitySpawner;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
@@ -11,8 +10,9 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 

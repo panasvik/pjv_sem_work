@@ -92,7 +92,7 @@ public class PlayerProfile implements Serializable   {
     }
 
 
-    public static PlayerProfile loadFromJson() throws IOException {
+    public static PlayerProfile loadFromJson() {
         String defaultPath = "StartPlayer.json";
         log.info("Loading default Player profile from JSON: " + defaultPath);
 
@@ -102,9 +102,11 @@ public class PlayerProfile implements Serializable   {
                 log.warning("File " + defaultPath + " not found in resources. Creating a new empty profile.");
                 return new PlayerProfile(Role.WARRIOR); // Возвращаем базовый профиль
             }
-
             return MAPPER.readValue(inputStream, PlayerProfile.class);
+        } catch (IOException e) {
+            log.severe("CORRUPTED GAME INTEGRITY");
         }
+        return null;
     }
 
     /**

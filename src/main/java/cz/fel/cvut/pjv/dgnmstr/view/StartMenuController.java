@@ -107,12 +107,7 @@ public class StartMenuController {
     @FXML
     public void load() {
         gameManager = GameManager.getInstance();
-        try {
-            profile = PlayerProfile.loadFromJson();
-        } catch (IOException e) {
-            log.severe("Path does not exist");
-            return;
-        }
+        profile = PlayerProfile.loadFromJson();
         isProfileLoaded = true;
     }
 

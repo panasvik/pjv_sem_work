@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.network.payloads;
 
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 
 import java.io.Serializable;
 

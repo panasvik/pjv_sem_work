@@ -3,7 +3,7 @@ package cz.fel.cvut.pjv.dgnmstr.view;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgId;

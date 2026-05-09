@@ -3,17 +3,15 @@ package cz.fel.cvut.pjv.dgnmstr.dungeon.controllers;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Arena;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.TestSpawner;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.SimpleSpawner;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +26,7 @@ class ArenaControllerTest {
         long testSeed = 12345678L;
         level = generator.generate(DifficultyStats.MEDIUM, testSeed);
         IDGenerator gen = new IDGenerator();
-        TestSpawner testSpawner = new TestSpawner(level, gen);
+        SimpleSpawner testSpawner = new SimpleSpawner(level, gen);
         level.setSpawner(testSpawner);
         lc = new LevelController(level);
         lc.startLevel();
@@ -36,7 +34,7 @@ class ArenaControllerTest {
     }
 
     @Test
-    void playerEnters() {
+    void arenaStart() {
         Arena arena = ac.getArena();
         assertEquals(ArenaState.NOT_STARTED, arena.getState());
 
@@ -72,11 +70,7 @@ class ArenaControllerTest {
         Arena arena = ac.getArena();
 
         PlayerProfile profile;
-        try {
-            profile = PlayerProfile.loadFromJson();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        profile = PlayerProfile.loadFromJson();
         level.getSpawner().spawnHero(arena.getCenterWorldX(), arena.getCenterWorldY(), profile);
 
         // kill all mobs

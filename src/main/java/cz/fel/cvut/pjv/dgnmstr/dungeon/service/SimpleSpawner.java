@@ -1,8 +1,9 @@
-package cz.fel.cvut.pjv.dgnmstr.dungeon;
+package cz.fel.cvut.pjv.dgnmstr.dungeon.service;
 
-import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.EntitySpawner;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.EntitySpawner;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.Projectile;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
@@ -14,20 +15,16 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
-import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
-import java.util.logging.Logger;
-
-public class TestSpawner implements EntitySpawner{
+public class SimpleSpawner implements EntitySpawner {
     private final Level level;
     private final IDGenerator idGen;
 
-    private static final Logger log = Logger.getLogger(TestSpawner.class.getName());
 
-    public TestSpawner(Level level, IDGenerator idGen) {
+    public SimpleSpawner(Level level, IDGenerator idGen) {
         this.level = level;
         this.idGen = idGen;
     }
@@ -93,7 +90,6 @@ public class TestSpawner implements EntitySpawner{
         Chest chest = new Chest(newId, x, y, level, inv);
         level.addEntity(chest);
         level.addChest(chest);
-        log.info("send spawning chest with id " + newId);
     }
 
     @Override

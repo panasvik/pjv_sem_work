@@ -1,14 +1,13 @@
-package cz.fel.cvut.pjv.dgnmstr.dungeon.controllers;
+package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 

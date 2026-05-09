@@ -10,6 +10,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.List;
@@ -144,6 +145,7 @@ public class LevelController implements Updatable {
 
     public void checkProgress() {
         if (!level.isBossSpawned()) return;
+        System.out.println("boss sp");
         if (!level.getLevelBoss().isAlive()) {
             checkExit();
         }
@@ -199,7 +201,9 @@ public class LevelController implements Updatable {
         }
     }
 
-
+    public ArenaController getArenaController() {
+        return arenaController;
+    }
 
     public Level getLevel() {
         return level;

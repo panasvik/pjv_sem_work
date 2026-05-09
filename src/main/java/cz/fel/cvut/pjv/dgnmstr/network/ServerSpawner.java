@@ -1,7 +1,7 @@
 package cz.fel.cvut.pjv.dgnmstr.network;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.EntitySpawner;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.EntitySpawner;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.BossStats;
@@ -13,8 +13,9 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Fence;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
-import cz.fel.cvut.pjv.dgnmstr.global.ProjectileType;
+import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
