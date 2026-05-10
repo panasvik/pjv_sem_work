@@ -46,9 +46,13 @@ public class ClientManager {
     private boolean isReady = false;
 
 
-    public ClientManager(ClientNetworkManager networkManager, PlayerProfile profile) {
-        this.networkManager = networkManager;
+    public ClientManager(String serverIp, int serverUdpPort, PlayerProfile profile) throws java.net.UnknownHostException {
         this.myProfile = profile;
+        this.networkManager = new ClientNetworkManager(serverIp, serverUdpPort, this);
+    }
+
+    public ClientNetworkManager getNetworkManager() {
+        return networkManager;
     }
 
     public void makeNewLC(long seed) {
@@ -126,10 +130,7 @@ public class ClientManager {
         if (!(entity instanceof Hero hero)) return;
         hero.setPos(payload.x(), payload.y());
         hero.setHp(payload.hp());
-        hero.setLookTarget(payload.mouseX(), payload.mouseY());
         hero.setGold(payload.gold());
-        hero.setInputs(new Inputs(payload.isUlt(), payload.isInteract(), payload.isAttack(),
-                false, false, false, false, payload.mouseX(), payload.mouseY()));
     }
 
     public void updateMob(UpdateMobPayload payload) {

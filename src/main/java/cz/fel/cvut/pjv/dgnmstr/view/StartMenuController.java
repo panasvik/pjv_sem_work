@@ -61,15 +61,16 @@ public class StartMenuController {
         } else {
             serverIP = hostIP.getText();
         }
-        ServerNetworkManager serverNetworkManager = new ServerNetworkManager(port);
-        gameManager.setSnm(serverNetworkManager);
-        serverNetworkManager.start();
-        gameManager.setSm(serverNetworkManager.getServerManager());
+        ServerManager serverManager = new ServerManager(port);
+        gameManager.setSnm(serverManager.getSnm());
+        serverManager.getSnm().start();
+        gameManager.setSm(serverManager);
         socketToConnect.setText(serverIP + ":" + port);
         try {
-            ClientNetworkManager clientNetworkManager = new ClientNetworkManager(serverIP, port, profile);
+            ClientManager clientManager = new ClientManager(serverIP, port, profile);
+            gameManager.setCm(clientManager);
+            ClientNetworkManager clientNetworkManager = clientManager.getNetworkManager();
             gameManager.setCnm(clientNetworkManager);
-            gameManager.setCm(clientNetworkManager.getManager());
             clientNetworkManager.connect();
         } catch (UnknownHostException | NumberFormatException k) {
             log.severe("HOST DOES NOT EXIST");
@@ -177,10 +178,11 @@ public class StartMenuController {
             return;
         }
         try {
-            ClientNetworkManager clientNetworkManager = new ClientNetworkManager(host, port, profile);
+            ClientManager clientManager = new ClientManager(host, port, profile);
+            ClientNetworkManager clientNetworkManager = clientManager.getNetworkManager();
             clientNetworkManager.connect();
+            gameManager.setCm(clientManager);
             gameManager.setCnm(clientNetworkManager);
-            gameManager.setCm(clientNetworkManager.getManager());
         } catch (UnknownHostException e) {
             log.severe("HOST DOES NOT EXIST");
             socketToConnect.setText("HOST DOES NOT EXIST");

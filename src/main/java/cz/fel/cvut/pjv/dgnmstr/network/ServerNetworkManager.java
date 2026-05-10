@@ -26,9 +26,6 @@ public class ServerNetworkManager {
 
     private final Map<InetSocketAddress, PlayerProfile> clients = new ConcurrentHashMap<>();
     private final Map<InetSocketAddress, Integer> clientHeroIds = new ConcurrentHashMap<>();
-    private static final Inputs EMPTY_INPUTS =
-            new Inputs(false, false, false, false, false, false, false, 0, 0);
-    private final Map<Integer, Inputs> lastInputsByHeroId = new ConcurrentHashMap<>();
     private final Set<Integer> trackedEntityIds = new HashSet<>();
     private final Set<Integer> trackedProjectileIds = new HashSet<>();
 
@@ -39,9 +36,9 @@ public class ServerNetworkManager {
     private boolean isGameStarted = false;
     private final int udpPort;
 
-    public ServerNetworkManager(int udpPort) {
+    public ServerNetworkManager(int udpPort, ServerManager serverManager) {
         this.udpPort = udpPort;
-        serverManager = new ServerManager(this);
+        this.serverManager = serverManager;
     }
 
     public void start() {
@@ -232,18 +229,12 @@ public class ServerNetworkManager {
     }
 
     public void handleUpdateEjection(Hero hero) {
-        Inputs inputs = lastInputsByHeroId.getOrDefault(hero.getId(), EMPTY_INPUTS);
         broadcast(new DGNPacket(PacketType.UPDATE_HERO,
                 new UpdateHeroPayload(
                         hero.getId(),
                         hero.getX(),
                         hero.getY(),
                         hero.getHp(),
-                        inputs.mouseX(),
-                        inputs.mouseY(),
-                        inputs.attack(),
-                        inputs.ult(),
-                        inputs.interact(),
                         hero.getGold()
                 )));
         if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
@@ -297,9 +288,6 @@ public class ServerNetworkManager {
         trackedProjectileIds.addAll(currentProjectileIds);
     }
 
-    public Map<Integer, Inputs> getLastInputsByHeroId() {
-        return lastInputsByHeroId;
-    }
 
     public Set<Integer> getTrackedEntityIds() {
         return trackedEntityIds;

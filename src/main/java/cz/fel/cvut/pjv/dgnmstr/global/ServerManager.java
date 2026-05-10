@@ -30,10 +30,11 @@ public class ServerManager {
 
 
 
-    public ServerManager(ServerNetworkManager manager) {
+    public ServerManager(int port) {
         generator = new DungeonGenerator();
-        this.snm = manager;
+        this.snm = new ServerNetworkManager(port, this);
     }
+
     public void generateNewLevel() {
         seed = random.nextLong();
         Level level = generator.generate(DifficultyStats.MEDIUM, seed);
@@ -61,7 +62,6 @@ public class ServerManager {
         running = false;
         snm.getTrackedEntityIds().clear();
         snm.getTrackedProjectileIds().clear();
-        snm.getLastInputsByHeroId().clear();
         if (updateTask != null) {
             updateTask.cancel(false);
             updateTask = null;
@@ -82,12 +82,11 @@ public class ServerManager {
         Entity entity = lc.getLevel().getEntity(heroId);
         if (entity instanceof Hero hero) {
             hero.setInputs(inputs);
-            snm.getLastInputsByHeroId().put(heroId, inputs);
         }
     }
 
 
-    private void tick() {
+    void tick() {
         if (!running || lc == null) {
             return;
         }
@@ -132,6 +131,10 @@ public class ServerManager {
     public void stop() {
         updateExecutor.shutdownNow();
         stopLC();
+    }
+
+    public ServerNetworkManager getSnm() {
+        return snm;
     }
 
     public long getSeed() {

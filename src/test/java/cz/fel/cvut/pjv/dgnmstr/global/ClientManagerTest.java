@@ -24,10 +24,15 @@ class ClientManagerTest {
     private PlayerProfile profile;
 
     @BeforeEach
-    void setUp() {
-        networkManager = mock(ClientNetworkManager.class);
+    void setUp() throws Exception {
         profile = new PlayerProfile(Role.WARRIOR);
-        clientManager = new ClientManager(networkManager, profile);
+        clientManager = new ClientManager("127.0.0.1", 0, profile);
+        networkManager = mock(ClientNetworkManager.class);
+        
+        java.lang.reflect.Field nmField = ClientManager.class.getDeclaredField("networkManager");
+        nmField.setAccessible(true);
+        nmField.set(clientManager, networkManager);
+        
         clientManager.makeNewLC(12345L);
     }
 

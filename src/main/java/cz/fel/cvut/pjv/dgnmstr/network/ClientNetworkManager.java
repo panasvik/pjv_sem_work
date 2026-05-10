@@ -18,10 +18,10 @@ public class ClientNetworkManager {
     private final int serverUdpPort;
     private boolean isRunning = false;
 
-    public ClientNetworkManager(String serverIp, int serverUdpPort, PlayerProfile profile) throws UnknownHostException {
+    public ClientNetworkManager(String serverIp, int serverUdpPort, ClientManager manager) throws UnknownHostException {
         this.serverAddress = InetAddress.getByName(serverIp);
         this.serverUdpPort = serverUdpPort;
-        manager = new ClientManager(this, profile);
+        this.manager = manager;
     }
 
     public void connect() {
