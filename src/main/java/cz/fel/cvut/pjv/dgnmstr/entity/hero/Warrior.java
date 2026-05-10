@@ -16,20 +16,18 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class Warrior extends Hero implements CanAttackMelee {
-    private static final double cos45 = 0;
-    private static final int HFULimit = 5;
-    private static final int damageMul = 5;
-    private static final int ultRange = 2;
+    public static final int HFULimit = 5;
     private int hitsForUlt;
     private static final Logger log = Logger.getLogger(Warrior.class.getName());
 
     private double attackCooldown = 0.0;
-    private static final double COOLDOWN_TIME = 0.2;
+    public static final double COOLDOWN_TIME = 0.2;
 
     private double ultActive = 0.0;
-    private static final double ULT_DURATION = 8.0;
+    public static final double ULT_DURATION = 8.0;
+    public static final int DAMAGE_MUL = 5;
 
-    private static final double B_STORM_RADIUS_MULT = 5.0;
+    public static final double B_STORM_RADIUS_MUL = 5.0;
     private double bladeStormDamage = 0.0;
 
     public Warrior(int id, PlayerProfile profile, double posX, double posY, Level level) {
@@ -66,7 +64,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         double squaredMagE = deltaXE * deltaXE + deltaYE * deltaYE;
         double squaredMagC = deltaXC * deltaXC + deltaYC * deltaYC;
 
-        return squaredDot / (squaredMagE * squaredMagC) > cos45 * cos45;
+        return squaredDot / (squaredMagE * squaredMagC) > 0;
     }
 
     @Override
@@ -88,10 +86,10 @@ public class Warrior extends Hero implements CanAttackMelee {
             return;
         }
         log.info("Warrior used Ultimate Power");
-        List<Entity> entitiesAround = getLevel().getEntitiesAround(this, getReach() * ultRange);
+        List<Entity> entitiesAround = getLevel().getEntitiesAround(this, getReach() * B_STORM_RADIUS_MUL);
         for (Entity e : entitiesAround) {
             if (this.isEnemy(e) && isInAngle(e, getLookX(), getLookY())) {
-                e.takeDamage(getDamage() * damageMul, this);
+                e.takeDamage(getDamage() * DAMAGE_MUL, this);
             }
         }
         hitsForUlt = 0;
@@ -140,7 +138,7 @@ public class Warrior extends Hero implements CanAttackMelee {
 
             if (bladeStormDamage >= 1.0) {
                 int damage = (int) bladeStormDamage;
-                double bladeStormRadius = B_STORM_RADIUS_MULT * getReach();
+                double bladeStormRadius = B_STORM_RADIUS_MUL * getReach();
                 List<Entity> entitiesAround = getLevel().getEntitiesAround(this, bladeStormRadius);
 
                 for (Entity e : entitiesAround) {

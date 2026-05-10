@@ -16,8 +16,8 @@ import java.util.logging.Logger;
  */
 public class Inventory implements Serializable {
     private final List<Item> invent;
-    private static final int MAX_SIZE = 16;
-    private static final int MIN_CHEST_SIZE = 4;
+    public static final int MAX_SIZE = 16;
+    public static final int MIN_CHEST_SIZE = 4;
 
     private int size;
     private final static Logger log = Logger.getLogger(Inventory.class.getName());
