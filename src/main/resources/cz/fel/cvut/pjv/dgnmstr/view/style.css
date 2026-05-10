@@ -76,3 +76,9 @@
 .button:hover {
     -fx-background-color: #444444;
 }
+
+.tutorial-message {
+    -fx-text-fill: #e0d7b0;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(one-pass-box, black, 2, 0.5, 1, 1);
+}

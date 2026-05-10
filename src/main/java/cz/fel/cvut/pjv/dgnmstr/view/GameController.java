@@ -18,10 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -34,6 +31,7 @@ import java.util.logging.Logger;
 public class GameController implements Reappearance {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
     private final GameManager gameManager;
+
 
 
     @FXML
@@ -72,12 +70,24 @@ public class GameController implements Reappearance {
 
     @FXML
     private ListView<Item> chestList;
-
-
     private Chest currentChest;
+
+    @FXML
+    private VBox tutorialBox;
+
+    @FXML
+    private Label tutorialName;
+
+    @FXML
+    private Label tutorialMessage;
+
+    private final TutorialText[] tutorialValues = TutorialText.values();
+    private int currentTutorialIndex = 0;
 
     private GameRenderer renderer;
     private EventHandler<KeyEvent> menuToggleHandler;
+
+
 
     public GameController() {
         this.gameManager = GameManager.getInstance();
@@ -90,6 +100,10 @@ public class GameController implements Reappearance {
         gameCanvas.widthProperty().bind(canvasWrapper.widthProperty());
         gameCanvas.heightProperty().bind(canvasWrapper.heightProperty());
         ImgLoader.loadAll();
+        tutorialBox.setVisible(true);
+        tutorialMessage.setWrapText(true);
+        tutorialName.setWrapText(true);
+        updateTutorialUI();
     }
 
     @Override
@@ -195,6 +209,7 @@ public class GameController implements Reappearance {
         hideInventory();
         hideChest();
         currentChest = null;
+        closeTutorial();
     }
 
     private void updateUI() {
@@ -292,6 +307,30 @@ public class GameController implements Reappearance {
 
     public void setGold(int gold) {
         goldLabel.setText("Gold: " + gold);
+    }
+
+
+    @FXML
+    void nextMessage() {
+        currentTutorialIndex++;
+
+        if (currentTutorialIndex < tutorialValues.length) {
+            updateTutorialUI();
+        } else {
+            closeTutorial();
+        }
+    }
+
+    @FXML
+    void closeTutorial() {
+        tutorialBox.setVisible(false);
+        currentTutorialIndex = 0;
+    }
+
+    private void updateTutorialUI() {
+        TutorialText current = tutorialValues[currentTutorialIndex];
+        tutorialName.setText(current.getName());
+        tutorialMessage.setText(current.getMessage());
     }
 
 }

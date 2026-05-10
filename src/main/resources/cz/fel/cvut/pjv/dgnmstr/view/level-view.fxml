@@ -23,13 +23,6 @@
    </Pane>
 
    <BorderPane pickOnBounds="false">
-      <top>
-         <Button mnemonicParsing="false" text="PAUSE" BorderPane.alignment="TOP_LEFT">
-            <BorderPane.margin>
-               <Insets left="20.0" top="20.0" />
-            </BorderPane.margin>
-         </Button>
-      </top>
 
       <bottom>
          <HBox alignment="BOTTOM_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
@@ -42,17 +35,29 @@
       </bottom>
 
       <left>
-         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="250.0" spacing="10.0" BorderPane.alignment="BOTTOM_LEFT">
+         <VBox alignment="BOTTOM_LEFT" prefHeight="655.0" prefWidth="285.0" spacing="10.0" BorderPane.alignment="BOTTOM_LEFT">
             <padding>
                <Insets bottom="40.0" left="20.0" />
             </padding>
             <children>
+               <VBox fx:id="tutorialBox" prefWidth="280.0" spacing="10.0" styleClass="fantasy-panel">
+                  <children>
+                     <Label fx:id="tutorialName" styleClass="panel-header" text="Tutorial" />
+                     <Label fx:id="tutorialMessage" styleClass="tutorial-message" text="Tutorial Text" wrapText="true" />
+                     <HBox alignment="CENTER" spacing="20.0">
+                        <children>
+                           <Button mnemonicParsing="false" onAction="#nextMessage" text="Next" />
+                           <Button mnemonicParsing="false" onAction="#closeTutorial" text="Close" />
+                        </children>
+                     </HBox>
+                  </children>
+               </VBox>
                <Label style="-fx-text-fill: #555555; -fx-font-size: 12;" text="EQUIPMENT" textFill="WHITE" />
-               <Label fx:id="swordLabel" styleClass="equipment-label" text="Sword: None" />
-               <Label fx:id="helmetLabel" styleClass="equipment-label" text="Helmet: None" />
-               <Label fx:id="chestplateLabel" styleClass="equipment-label" text="Armor: None" />
-               <Label fx:id="pantsLabel" styleClass="equipment-label" text="Pants: None" />
-               <Label fx:id="goldLabel" styleClass="equipment-label" text="Gold: 0" />
+               <Label fx:id="swordLabel" prefHeight="19.0" prefWidth="329.0" styleClass="equipment-label" text="Sword: None" />
+               <Label fx:id="helmetLabel" prefHeight="19.0" prefWidth="321.0" styleClass="equipment-label" text="Helmet: None" />
+               <Label fx:id="chestplateLabel" prefHeight="19.0" prefWidth="293.0" styleClass="equipment-label" text="Armor: None" />
+               <Label fx:id="pantsLabel" prefHeight="19.0" prefWidth="303.0" styleClass="equipment-label" text="Pants: None" />
+               <Label fx:id="goldLabel" prefHeight="19.0" prefWidth="327.0" styleClass="equipment-label" text="Gold: 0" />
             </children>
          </VBox>
       </left>
