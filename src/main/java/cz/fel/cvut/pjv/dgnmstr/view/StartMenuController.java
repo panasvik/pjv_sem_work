@@ -5,9 +5,11 @@ import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -34,6 +36,9 @@ public class StartMenuController {
     private PlayerProfile profile;
     @FXML
     public TextField filePath;
+
+    @FXML
+    public Button heroViewButton;
 
     @FXML
     public void host() {
@@ -101,6 +106,7 @@ public class StartMenuController {
             return;
         }
         isProfileLoaded = true;
+        heroViewButton.setDisable(false);
     }
 
     @FXML
@@ -113,6 +119,7 @@ public class StartMenuController {
             return;
         }
         isProfileLoaded = true;
+        heroViewButton.setDisable(false);
     }
 
     @FXML
@@ -163,5 +170,9 @@ public class StartMenuController {
             return;
         }
         isConnected = true;
+    }
+
+    public void openHeroView(ActionEvent actionEvent) {
+        log.info("Hero view opened");
     }
 }

@@ -4,12 +4,15 @@ import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
 import cz.fel.cvut.pjv.dgnmstr.view.View;
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static javafx.scene.text.Font.loadFont;
 
 public class GameApp extends Application {
     private static GameApp instance;
@@ -21,6 +24,7 @@ public class GameApp extends Application {
     public void start(Stage stage) throws IOException {
         instance = this;
         this.stage = stage;
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/PirataOne-Regular.ttf"), 12);
         boolean isLog = getParameters().getRaw().contains("--log=true");
         Logger mainLogger = Logger.getLogger("");
 

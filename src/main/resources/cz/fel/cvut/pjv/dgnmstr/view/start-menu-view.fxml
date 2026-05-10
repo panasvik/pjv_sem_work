@@ -7,10 +7,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.fel.cvut.pjv.dgnmstr.view.StartMenuController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" styleClass="fantasy-background" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.fel.cvut.pjv.dgnmstr.view.StartMenuController">
    <children>
-      <Label alignment="CENTER" text="Dungeon Master" textAlignment="CENTER" />
+      <Label alignment="CENTER" text="Dungeon Master" textAlignment="CENTER" styleClass="fantasy-title" />
       <Button mnemonicParsing="false" onAction="#start" text="Start">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="heroViewButton" mnemonicParsing="false" onAction="#openHeroView" text="Hero View" disable="true">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
@@ -22,7 +27,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
-      <Label fx:id="socketToConnect" text="Here will be your Port to connect to">
+      <Label fx:id="socketToConnect" text="Here will be your Port to connect to" styleClass="info-text">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
