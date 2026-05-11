@@ -110,10 +110,14 @@ public class StartMenuController {
         }
     }
 
+    @FXML
+    public void initialize() {
+        gameManager = GameManager.getInstance();
+    }
+
 
     @FXML
     public void load() {
-        gameManager = GameManager.getInstance();
         profile = PlayerProfile.loadFromJson();
         isProfileLoaded = true;
         heroViewButton.setDisable(false);

@@ -13,9 +13,6 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
     public MeleeMob(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
         super(id, hp, speed, positionX, positionY, damage, reach, gold, faction, level, multiplicator);
     }
-    protected double attackAngle(){
-        return Math.PI/4;
-    }
     protected static final double COOLDOWN_TIME = 1;  // to be balanced
 
 
@@ -75,6 +72,10 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
        if (attackCooldown > 0){
            attackCooldown -= deltaTime;
        }
+    }
+
+    protected double attackAngle(){
+        return Math.PI;
     }
 }
 

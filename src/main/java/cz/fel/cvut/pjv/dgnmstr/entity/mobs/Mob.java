@@ -93,7 +93,7 @@ public abstract class Mob extends Entity implements CanAttack {
         tryStepTo(moveX, moveY);
     }
 
-    protected void retreatFrom(Entity target,  double deltaTime) {
+    protected void retreatFrom(Entity target) {
         if (target == null || !this.isAlive()) {return;}
 
         double dx = getCenterX() - target.getCenterX();

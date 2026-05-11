@@ -37,17 +37,6 @@ public abstract class Boss extends Mob {
         return currPhase;
     }
 
-    public void update(double deltaTime){
-        if (!this.isAlive()){return;}
-
-        Hero target = this.findNearestPlayer();
-        if (target == null){ return;}
-
-        this.setLookTarget(target.getCenterX(), target.getCenterY());
-
-        if (attackCooldown > 0){
-            attackCooldown -= deltaTime;
-        }
-    }
+    public abstract void update(double deltaTime);
 
 }

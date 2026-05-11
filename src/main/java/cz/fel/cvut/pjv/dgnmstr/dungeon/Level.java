@@ -142,8 +142,8 @@ public class Level {
         }
         for (Entity e : allEntities) {
             if (e.isAlive()) {
-                int eGridX = (int) (e.getX() / TILE_SIZE);
-                int eGridY = (int) (e.getY() / TILE_SIZE);
+                int eGridX = (int) (e.getCenterX() / TILE_SIZE);
+                int eGridY = (int) (e.getCenterY() / TILE_SIZE);
 
                 if (eGridX == gridX && eGridY == gridY) {
                     if (e.isSolid()) {

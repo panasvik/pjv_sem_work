@@ -5,13 +5,13 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import java.util.List;
 
 public enum BossStats {
-    ANYSEK_THE_BEHEMOTH(1000, 10, 40, 10, 500, List.of(800, 600, 400, 200)) {
+    ANYSEK_THE_BEHEMOTH(1000, 5, 100, 10, 500, List.of(800, 600, 400, 200)) {
         @Override
         public Boss spawn(int id, double x, double y, Level level) {
             return new AnysekTheBehemoth(id, x, y, level);
         }
     },
-    DWIGHT_THE_LEVIATHAN(800, 10, 60, 400, 500, List.of(600, 400, 200)) {
+    DWIGHT_THE_LEVIATHAN(800, 4, 100, 400, 500, List.of(600, 400, 200)) {
         @Override
         public Boss spawn(int id, double x, double y, Level level) {
             return new DwightTheLeviathan(id, x, y, level);

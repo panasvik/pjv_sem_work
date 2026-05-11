@@ -11,11 +11,11 @@ import java.util.List;
 
 public class AnysekTheBehemoth extends Boss{
     private boolean rage = false;
-    private static final double COOLDOWN_TIME = 3.0;
+    private static final double COOLDOWN_TIME = 0.8;
     private int damageMult = 2;
 
     private double rageTimer = 0.0;
-    private static final double RAGE_DURATION = 5.0; // doladit
+    private static final double RAGE_DURATION = 10.0; // doladit
     public AnysekTheBehemoth(int id, double positionX, double positionY, Level level) {
         super(id, BossStats.ANYSEK_THE_BEHEMOTH.getHp(level.getDifficulty().getStatsMult()),
               BossStats.ANYSEK_THE_BEHEMOTH.getSpeed(),
@@ -77,12 +77,11 @@ public class AnysekTheBehemoth extends Boss{
         checkMoveToward(target);
         double range = getReach();
         double distS = MyMath.calculateDistanceSquared(this, target);
-        double dist = Math.sqrt(distS);
 
-        if (dist <= range){
+        if (distS <= range * range){
            if (attackCooldown <= 0){
                attack();
-               attackCooldown =  COOLDOWN_TIME;
+               attackCooldown = COOLDOWN_TIME;
            }
         }
         if (rage){

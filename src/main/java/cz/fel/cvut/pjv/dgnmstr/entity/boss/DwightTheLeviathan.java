@@ -15,8 +15,8 @@ public class DwightTheLeviathan extends Boss{
     private Hero target = null;
 
 
-    private static final double COOLDOWN_TIME = 3.0;
-    private static final double DANGEROUS_DISTANCE = 0.33;
+    private static final double COOLDOWN_TIME = 1.0;
+    private static final double DANGEROUS_DISTANCE = 0.5;
 
     public DwightTheLeviathan(int id, double positionX, double positionY, Level level) {
         super(id, BossStats.DWIGHT_THE_LEVIATHAN.getHp(level.getDifficulty().getStatsMult()),
@@ -82,7 +82,7 @@ public class DwightTheLeviathan extends Boss{
 
         double dangerous_dist = range * DANGEROUS_DISTANCE;
         if (dist < dangerous_dist){
-            retreatFrom(target, deltaTime);
+            retreatFrom(target);
         } else if(dist > range * 1.25) {
             int speed = getSpeed();
             setSpeed(speed/2);

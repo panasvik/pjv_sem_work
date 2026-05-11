@@ -145,7 +145,6 @@ public class LevelController implements Updatable {
 
     public void checkProgress() {
         if (!level.isBossSpawned()) return;
-        System.out.println("boss sp");
         if (!level.getLevelBoss().isAlive()) {
             checkExit();
         }

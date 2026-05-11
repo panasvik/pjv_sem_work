@@ -46,7 +46,7 @@ public class Ghost extends MeleeMob{
 
     @Override
     protected double attackAngle(){
-        return Math.PI/2;
+        return Math.PI * 2;
     }
 
 
