@@ -7,6 +7,7 @@ import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
@@ -172,7 +173,12 @@ public class StartMenuController {
         isConnected = true;
     }
 
+    @FXML
     public void openHeroView(ActionEvent actionEvent) {
+        HeroView heroView = new HeroView();
+        Parent root = heroView.build(profile);
+        SceneManager.getInstance().registerScreen(View.HERO, root);
+        SceneManager.getInstance().activate(View.HERO);
         log.info("Hero view opened");
     }
 }
