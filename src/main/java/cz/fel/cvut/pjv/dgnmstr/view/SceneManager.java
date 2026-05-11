@@ -89,4 +89,7 @@ public class SceneManager {
     public Scene getMainScene() {
         return mainScene;
     }
+    public void registerScreen(View view, Parent root){
+        screens.put(view, root);
+    }
 }

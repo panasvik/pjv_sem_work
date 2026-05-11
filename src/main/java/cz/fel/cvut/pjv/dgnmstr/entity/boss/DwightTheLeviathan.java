@@ -13,7 +13,7 @@ public class DwightTheLeviathan extends Boss{
 
     private int damageMult = 2;
     private Hero target = null;
-    private Random random = new Random();
+
 
     private static final double COOLDOWN_TIME = 3.0;
     private static final double DANGEROUS_DISTANCE = 0.33;
@@ -51,12 +51,14 @@ public class DwightTheLeviathan extends Boss{
         shotCount++;
         if (shotCount >= 5){
             int stats = 3 * damageMult;
-            getLevel().requestProjectileSpawn(ProjectileType.WATERBALL,this, stats, getDamage(), deltaX, deltaY, stats);
-
-            getLevel().requestProjectileSpawn(ProjectileType.WATERBALL, this, stats, getDamage(), deltaX + 25, deltaY + 25, stats);
-
-            getLevel().requestProjectileSpawn(ProjectileType.WATERBALL, this, stats, getDamage(), deltaX - 25, deltaY - 25, stats);
-
+            double defAngle = Math.atan2(deltaY, deltaX);
+            double offset = Math.toRadians(20);
+            double [] angles = {defAngle - offset, defAngle, defAngle + offset};
+            for (double angle : angles) {
+                double dx = Math.cos(angle);
+                double dy = Math.sin(angle);
+                getLevel().requestProjectileSpawn(ProjectileType.WATERBALL, this, stats, getDamage(), dx, dy, stats);
+            }
             shotCount = 0;
 
         } else {

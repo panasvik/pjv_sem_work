@@ -4,11 +4,14 @@ import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
 import cz.fel.cvut.pjv.dgnmstr.view.View;
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static javafx.scene.text.Font.loadFont;
 
 public class GameApp extends Application {
     private static final Logger log =  Logger.getLogger(GameApp.class.getName());
@@ -16,6 +19,9 @@ public class GameApp extends Application {
 
     @Override
     public void start(Stage stage) {
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/PirataOne-Regular.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/Cinzel-Bold.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/EBGaramond-Bold.ttf"), 12);
         boolean isLog = getParameters().getRaw().contains("--log=true");
         Logger mainLogger = Logger.getLogger("");
 
