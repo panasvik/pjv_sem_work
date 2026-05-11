@@ -25,6 +25,8 @@ public class GameApp extends Application {
         instance = this;
         this.stage = stage;
         Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/PirataOne-Regular.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/Cinzel-Bold.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/EBGaramond-Bold.ttf"), 12);
         boolean isLog = getParameters().getRaw().contains("--log=true");
         Logger mainLogger = Logger.getLogger("");
 

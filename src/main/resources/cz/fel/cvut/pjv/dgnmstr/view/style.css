@@ -1,6 +1,7 @@
 
 .root {
-    -fx-font-family: "Georgia", serif;
+    -fx-font-family: "EB Garamond";
+    -fx-font-weight: bold;
     -fx-base: #1a1a1a;
 }
 
@@ -30,7 +31,7 @@
 
 .fantasy-panel {
     -fx-background-color: rgba(15, 15, 15, 0.9);
-    -fx-border-color: #d4af37;
+    -fx-border-color: #b8860b;
     -fx-border-width: 2;
     -fx-border-radius: 5;
     -fx-background-radius: 7;
@@ -38,7 +39,7 @@
 }
 
 .panel-header {
-    -fx-text-fill: #d4af37;
+    -fx-text-fill: #b8860b;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-border-color: transparent transparent #555555 transparent;
@@ -58,7 +59,7 @@
 
 .list-cell:filled:hover {
     -fx-background-color: #3d3d3d;
-    -fx-text-fill: #d4af37;
+    -fx-text-fill: #cd7f32;
 }
 
 .list-cell:selected {
@@ -69,7 +70,7 @@
 .button {
     -fx-background-color: #333333;
     -fx-text-fill: #e0d7b0;
-    -fx-border-color: #d4af37;
+    -fx-border-color: #b8860b;
     -fx-cursor: hand;
 }
 
@@ -84,10 +85,11 @@
 
 .fantasy-title {
     -fx-font-family: "Pirata One";
-    -fx-text-fill: #d4af37;
-    -fx-font-size: 128px;
+    -fx-text-fill: #b8860b;
+    -fx-font-size: 120px;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(212, 175, 55, 0.6), 20, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.9), 3, 0.7, 4, 4),
+                dropshadow(gaussian, rgba(0, 0, 0, 0.7), 8, 0.4, 6, 6);
 }
 
 .fantasy-subtitle {
@@ -104,11 +106,13 @@
 
 .text-field:focused {
     -fx-background-color: #1a1a1a;
-    -fx-border-color: #d4af37;
+    -fx-border-color: #b8860b;
     -fx-border-width: 2;
     -fx-text-fill: #e0d7b0;
     -fx-faint-focus-color: transparent;
-    -fx-focus-color: #d4af37;
+    -fx-focus-color: #b8860b;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 28px;
 }
 
 .text-field {
@@ -117,9 +121,85 @@
     -fx-border-color: #555555;
     -fx-border-width: 1;
     -fx-prompt-text-fill: #888888;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 28px;
 }
 
 .button:focused {
     -fx-faint-focus-color: transparent;
     -fx-focus-color: transparent;
+}
+
+.start-menu-background {
+    -fx-background-image: url("BackgroundMenu.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+.hero-view-background{
+    -fx-background-image: url("HeroImg.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+.stats-panel {
+    -fx-background-color: rgba(15, 15, 15, 0.85);
+    -fx-border-color: #b8860b;
+    -fx-border-width: 2;
+    -fx-padding: 30;
+}
+
+.hero-title {
+    -fx-font-family: "Cinzel";
+    -fx-font-weight: bold;
+    -fx-font-size: 48px;
+    -fx-text-fill: #daa520;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.9), 3, 0.7, 4, 4),
+                dropshadow(gaussian, rgba(0, 0, 0, 0.7), 8, 0.4, 6, 6);
+}
+
+.gold-label {
+    -fx-font-family: "EB Garamond";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #b8860b;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.9), 3, 0.7, 4, 4),
+                dropshadow(gaussian, rgba(0, 0, 0, 0.7), 8, 0.4, 6, 6);
+}
+
+.section-header {
+    -fx-font-family: "Cinzel";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-fill: #daa520;
+    -fx-padding: 10 0 5 0;
+}
+
+.item-name {
+    -fx-text-fill: #e0d7b0;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, black, 3, 0.5, 1, 1);
+}
+
+.item-stats {
+    -fx-text-fill: #b0a878;
+    -fx-font-size: 16px;
+    -fx-padding: 0 0 0 20;
+}
+
+.stats-panel {
+    -fx-background-color: rgba(0, 0, 0, 0.50);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+}
+
+.stat-value {
+    -fx-text-fill: #b8860b;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
 }
