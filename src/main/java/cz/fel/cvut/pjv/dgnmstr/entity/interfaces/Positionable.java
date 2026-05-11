@@ -4,7 +4,4 @@ public interface Positionable {
     public double getX();
     public double getY();
     public void setPos(double x, double y);
-    default double getCenterX(){return getX();}
-    default double getCenterY(){return getY();}
-
 }

@@ -24,8 +24,8 @@ public abstract class RangedMob extends Mob{
     @Override
     public void attack() {
 
-        double deltaX = target.getCenterX() - getCenterX();
-        double deltaY = target.getCenterY() - getCenterY();
+        double deltaX = target.getX() - getX();
+        double deltaY = target.getY() - getY();
         fireProjectile(deltaX, deltaY);
 
 
@@ -52,7 +52,7 @@ public abstract class RangedMob extends Mob{
 
         if (target == null ) {return;}
 
-        this.setLookTarget(target.getCenterX(), target.getCenterY());
+        this.setLookTarget(target.getX(), target.getY());
 
         double dist = MyMath.calculateDistanceSquared(this, target);
 

@@ -72,7 +72,7 @@ public class AnysekTheBehemoth extends Boss{
         Hero target = this.findNearestPlayer();
         if (target == null){ return;}
 
-        this.setLookTarget(target.getCenterX(), target.getCenterY());
+        this.setLookTarget(target.getX(), target.getY());
 
         checkMoveToward(target);
         double range = getReach();

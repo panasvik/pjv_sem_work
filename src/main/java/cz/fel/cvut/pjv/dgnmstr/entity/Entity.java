@@ -135,8 +135,8 @@ public abstract class Entity implements Updatable, Positionable {
         double newX = this.getX() + moveX;
         double newY = this.getY() + moveY;
 
-        double newCenterX = this.getCenterX() + moveX;
-        double newCenterY = this.getCenterY() + moveY;
+        double newCenterX = this.getX() + moveX;
+        double newCenterY = this.getY() + moveY;
         double half = this.getHalfHitBox();
 
         if (newX < 0 || newY < 0) return;
@@ -148,9 +148,9 @@ public abstract class Entity implements Updatable, Positionable {
 
         if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
             this.setPos(newX, newY);
-        } else if (getLevel().isWalkable(this.getCenterX(), newCenterY, half)){
+        } else if (getLevel().isWalkable(this.getX(), newCenterY, half)){
             this.setPos(this.getX(), newY);
-        } else if (getLevel().isWalkable(newCenterX, this.getCenterY(), half)){
+        } else if (getLevel().isWalkable(newCenterX, this.getY(), half)){
             this.setPos(newX, this.getY());
         }
     }
@@ -192,14 +192,9 @@ public abstract class Entity implements Updatable, Positionable {
     }
 
     public abstract ImgId getImgId();
+
+
     public double getHalfHitBox(){
         return getImgId().getHitBoxSize()/2.0;
-    }
-
-    public double getCenterX(){
-        return getX() + (Level.TILE_SIZE * getImgId().getScale())/2.0;
-    }
-    public double getCenterY(){
-        return getY() + (Level.TILE_SIZE * getImgId().getScale())/2.0;
     }
 }

@@ -24,8 +24,8 @@ public class MyMath {
     }
 
     public static <T extends Positionable> double calculateDistanceSquared(T a, T b) {
-        double dx = a.getCenterX() - b.getCenterX();
-        double dy = a.getCenterY() - b.getCenterY();
+        double dx = a.getX() - b.getX();
+        double dy = a.getY() - b.getY();
         return dx * dx + dy * dy;
     }
 

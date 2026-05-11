@@ -69,7 +69,7 @@ public class ArenaController implements Updatable {
         Hero firstPlayerToEnter = null;
 
         for (Hero player : players) {
-            if (player.isAlive() && arena.isInsideArena(player.getCenterX(), player.getCenterY())) {
+            if (player.isAlive() && arena.isInsideArena(player.getX(), player.getY())) {
                 firstPlayerToEnter = player;
                 break;
             }
@@ -136,7 +136,7 @@ public class ArenaController implements Updatable {
     private void teleportOtherPlayers(Hero firstPlayer, List<Hero> players) {
         for (Hero player : players) {
             if (player != firstPlayer && player.isAlive()) {
-                player.setPos( firstPlayer.getCenterX() + Level.TILE_SIZE, firstPlayer.getCenterY());
+                player.setPos( firstPlayer.getX() + Level.TILE_SIZE, firstPlayer.getY());
             }
         }
     }

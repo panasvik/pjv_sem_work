@@ -45,8 +45,8 @@ public class DwightTheLeviathan extends Boss{
                 return;
             }
         }
-        double deltaX = target.getCenterX() - getCenterX();
-        double deltaY = target.getCenterY() - getCenterY();
+        double deltaX = target.getX() - getX();
+        double deltaY = target.getY() - getY();
 
         shotCount++;
         if (shotCount >= 5){
@@ -76,8 +76,8 @@ public class DwightTheLeviathan extends Boss{
         if (target == null){ return;}
 
         double range = getReach();
-        double dx = target.getCenterX() - this.getCenterX();
-        double dy = target.getCenterY() - this.getCenterY();
+        double dx = target.getX() - this.getX();
+        double dy = target.getY() - this.getY();
         double dist = Math.sqrt(dx * dx + dy * dy);
 
         double dangerous_dist = range * DANGEROUS_DISTANCE;

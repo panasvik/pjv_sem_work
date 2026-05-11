@@ -52,10 +52,10 @@ public class Warrior extends Hero implements CanAttackMelee {
 
     @Override
     public boolean isInAngle(Entity entity, double curX, double curY) {
-        double deltaXE = entity.getCenterX() - getCenterX();
-        double deltaYE = entity.getCenterY() - getCenterY();
-        double deltaXC = curX - getCenterX();
-        double deltaYC = curY - getCenterY();
+        double deltaXE = entity.getX() - getX();
+        double deltaYE = entity.getY() - getY();
+        double deltaXC = curX - getX();
+        double deltaYC = curY - getY();
         double dotProduct = deltaXE * deltaXC + deltaYE * deltaYC;
 
         if (dotProduct < 0) return false;
@@ -100,7 +100,7 @@ public class Warrior extends Hero implements CanAttackMelee {
         if (!isAlive()) return;
 
         if (currentInputs != null) {
-            setLookTarget(currentInputs.mouseX() + getCenterX(), currentInputs.mouseY() + getCenterY());
+            setLookTarget(currentInputs.mouseX() + getX(), currentInputs.mouseY() + getY());
 
             updateMovement(currentInputs);
             updateAttack(currentInputs);

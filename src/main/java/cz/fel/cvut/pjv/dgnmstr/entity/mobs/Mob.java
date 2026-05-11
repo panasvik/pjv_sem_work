@@ -53,7 +53,7 @@ public abstract class Mob extends Entity implements CanAttack {
         if (getLevel() != null){
             log.info(this.getClass().getSimpleName() + "died and dropped " + dropGold + " gold.");
 
-            getLevel().requestGoldSpawn(getCenterX(), getCenterY(), dropGold);
+            getLevel().requestGoldSpawn(getX(), getY(), dropGold);
         }
     }
 
@@ -81,8 +81,8 @@ public abstract class Mob extends Entity implements CanAttack {
     protected void checkMoveToward(Entity target) {
         if (target == null || !this.isAlive()) return;
 
-        double dx = target.getCenterX() - this.getCenterX();
-        double dy = target.getCenterY() - this.getCenterY();
+        double dx = target.getX() - this.getX();
+        double dy = target.getY() - this.getY();
         double distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < 0.1) {return;}
@@ -96,8 +96,8 @@ public abstract class Mob extends Entity implements CanAttack {
     protected void retreatFrom(Entity target) {
         if (target == null || !this.isAlive()) {return;}
 
-        double dx = getCenterX() - target.getCenterX();
-        double dy = getCenterY() - target.getCenterY();
+        double dx = getX() - target.getX();
+        double dy = getY() - target.getY();
         double dist =  Math.sqrt(dx * dx + dy * dy);
 
         if (dist < 0.1) {return;}
@@ -108,15 +108,15 @@ public abstract class Mob extends Entity implements CanAttack {
         double newX = getX() + moveX;
         double newY = getY() + moveY;
 
-        double newCenterX = this.getCenterX() + moveX;
-        double newCenterY = this.getCenterY() + moveY;
+        double newCenterX = this.getX() + moveX;
+        double newCenterY = this.getY() + moveY;
         double half = this.getHalfHitBox();
 
         if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
             setPos(newX, newY);
-        } else if (getLevel().isWalkable(newCenterX, getCenterY(), half)) {
+        } else if (getLevel().isWalkable(newCenterX, getY(), half)) {
             setPos(newX, getY());
-        } else if (getLevel().isWalkable(getCenterX(), newCenterY, half)) {
+        } else if (getLevel().isWalkable(getX(), newCenterY, half)) {
             setPos(getX(), newY);
         }
     }

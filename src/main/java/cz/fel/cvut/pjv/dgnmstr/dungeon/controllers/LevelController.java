@@ -153,7 +153,7 @@ public class LevelController implements Updatable {
     public void checkExit(){
         List<Hero> players = level.getPlayers();
         for (Hero player : players) {
-            if (player.isAlive() && level.isAtExit(player.getCenterX(), player.getCenterY())) {
+            if (player.isAlive() && level.isAtExit(player.getX(), player.getY())) {
                 level.setState(VICTORY);
                 break;
             }
@@ -186,7 +186,7 @@ public class LevelController implements Updatable {
         List<Arena> arenas = level.getArenas();
         for (Arena a: arenas) {
             for (TilePosition p : a.getChestSpawnPoints()) {
-                level.requestChestSpawn(p.x() * TILE_SIZE, p.y() * TILE_SIZE, Inventory.getRandomInventory());
+                level.requestChestSpawn(p.x() * TILE_SIZE + TILE_SIZE / 2.0, p.y() * TILE_SIZE + TILE_SIZE / 2.0, Inventory.getRandomInventory());
             }
         }
     }
@@ -195,7 +195,7 @@ public class LevelController implements Updatable {
         List<Arena> arenas = level.getArenas();
         for (Arena a: arenas) {
             for (TilePosition p : a.getFenceSpawnPoints()) {
-                level.requestFenceSpawn(p.x() * TILE_SIZE, p.y() * TILE_SIZE);
+                level.requestFenceSpawn(p.x() * TILE_SIZE + TILE_SIZE / 2.0, p.y() * TILE_SIZE + TILE_SIZE / 2.0);
             }
         }
     }

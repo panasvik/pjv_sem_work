@@ -82,16 +82,25 @@ public class GameRenderer extends AnimationTimer {
     private void drawEntities(double camX, double camY) {
         List<Entity> entitySnapshot = new ArrayList<>(level.getAllEntities());
         for (Entity e : entitySnapshot){
-            double drawX = e.getX() - camX;
-            double drawY = e.getY() - camY;
-            if (drawX + Level.TILE_SIZE < 0 || drawY + Level.TILE_SIZE < 0 ||
-                    drawX > canvas.getWidth() || drawY > canvas.getHeight()) {
-                continue;
-            }
             if (e.isAlive()) {
                 if (e.getImgId() != null) {
-                    gc.drawImage(ImgLoader.get(e.getImgId()), 0, 0, e.getImgId().getFrameWidth(), e.getImgId().getFrameHeight(), drawX, drawY, Level.TILE_SIZE * e.getImgId().getScale(), Level.TILE_SIZE * e.getImgId().getScale());
+                    ImgId imgId = e.getImgId();
+                    double drawWidth = Level.TILE_SIZE * imgId.getScale();
+                    double drawHeight = Level.TILE_SIZE * imgId.getScale();
+                    double drawX = e.getX() - camX - drawWidth / 2;
+                    double drawY = e.getY() - camY - drawHeight / 2;
+                    if (drawX + drawWidth < 0 || drawY + drawHeight < 0 ||
+                            drawX > canvas.getWidth() || drawY > canvas.getHeight()) {
+                        continue;
+                    }
+                    gc.drawImage(ImgLoader.get(imgId), 0, 0, imgId.getFrameWidth(), imgId.getFrameHeight(), drawX, drawY, drawWidth, drawHeight);
                 } else {
+                    double drawX = e.getX() - camX - Level.TILE_SIZE / 2.0;
+                    double drawY = e.getY() - camY - Level.TILE_SIZE / 2.0;
+                    if (drawX + Level.TILE_SIZE < 0 || drawY + Level.TILE_SIZE < 0 ||
+                            drawX > canvas.getWidth() || drawY > canvas.getHeight()) {
+                        continue;
+                    }
                     gc.setFill(Color.RED);
                     gc.fillRect(drawX, drawY, Level.TILE_SIZE, Level.TILE_SIZE);
                 }

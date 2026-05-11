@@ -33,7 +33,7 @@ public class SimpleSpawner implements EntitySpawner {
     public void spawnProjectile(ProjectileType type, Entity master, int radius, int damage, double deltaX, double deltaY, double velocity) {
         int newId = idGen.getNextId();
 
-        Projectile p = new Projectile(newId, type, radius, master.getCenterX(), master.getCenterY(), master, damage, deltaX, deltaY, velocity);
+        Projectile p = new Projectile(newId, type, radius, master.getX(), master.getY(), master, damage, deltaX, deltaY, velocity);
 
         level.addProjectile(p);
 
@@ -44,8 +44,6 @@ public class SimpleSpawner implements EntitySpawner {
         int newId = idGen.getNextId();
 
         DroppedGold gold = new DroppedGold(newId, x, y, level, amount);
-        double half = Level.TILE_SIZE * gold.getImgId().getScale() / 2.0;
-        gold.setPos(x - half, y - half);
         level.addEntity(gold);
     }
 
@@ -54,9 +52,7 @@ public class SimpleSpawner implements EntitySpawner {
         int newId = idGen.getNextId();
 
         Mob mob = stats.spawnWithMult(newId, x, y, level, mult);
-        double half = Level.TILE_SIZE * mob.getImgId().getScale() / 2.0;
-        mob.setPos(x - half, y - half);
-        if (!level.isWalkable(mob.getCenterX(), mob.getCenterY(), mob.getHalfHitBox())) {
+        if (!level.isWalkable(mob.getX(), mob.getY(), mob.getHalfHitBox())) {
             return null;
         }
         level.addEntity(mob);
@@ -68,8 +64,6 @@ public class SimpleSpawner implements EntitySpawner {
         int newId = idGen.getNextId();
 
         Boss boss = stats.spawn(newId, x, y, level); // Предполагается, что у BossStats есть метод spawn
-        double half = Level.TILE_SIZE * boss.getImgId().getScale() / 2.0;
-        boss.setPos(x - half, y - half);
         level.addEntity(boss);
         return boss;
     }
@@ -78,8 +72,6 @@ public class SimpleSpawner implements EntitySpawner {
     public Grate spawnGrate(double x, double y) {
         int newId = idGen.getNextId();
         Grate grate = new Grate(newId, x, y, level);
-        double half =  Level.TILE_SIZE * grate.getImgId().getScale() / 2.0;
-        grate.setPos(x - half, y - half);
         level.addEntity(grate);
         return grate;
     }
@@ -96,8 +88,6 @@ public class SimpleSpawner implements EntitySpawner {
     public Hero spawnHero(double x, double y, PlayerProfile profile) {
         int newId = idGen.getNextId();
         Hero w1 = new Warrior(newId, profile, x, y, level);
-        double half = Level.TILE_SIZE * w1.getImgId().getScale() / 2.0;
-        w1.setPos(x - half, y - half);
         level.addPlayer(w1);
         return w1;
     }

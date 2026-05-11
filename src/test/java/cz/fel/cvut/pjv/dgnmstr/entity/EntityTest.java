@@ -46,7 +46,7 @@ class EntityTest {
             zombie.tryStepTo(-1, -1);
         }
         System.out.println("x: " + zombie.getX() + " y: " + zombie.getY());
-        assertTrue(zombie.getCenterX() > 0 && zombie.getCenterY() > 0);
+        assertTrue(zombie.getX() > 0 && zombie.getY() > 0);
     }
 
 
