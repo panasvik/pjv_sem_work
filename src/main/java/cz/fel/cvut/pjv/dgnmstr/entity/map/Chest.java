@@ -5,8 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Interactable;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.logging.Logger;
@@ -19,7 +18,7 @@ public class Chest extends Entity implements Interactable {
     private final Inventory inventory;
     private boolean opened = false;
     public Chest(int id, double positionX, double positionY, Level level, Inventory inventory) {
-        super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getFaction(), level);
+        super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getHalfHitBox(), Stats.GOD.getFaction(), level);
         this.inventory = inventory;
     }
 

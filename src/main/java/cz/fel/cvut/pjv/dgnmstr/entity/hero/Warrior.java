@@ -2,22 +2,19 @@ package cz.fel.cvut.pjv.dgnmstr.entity.hero;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttackMelee;
-import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 public class Warrior extends Hero implements CanAttackMelee {
     public static final int HFULimit = 5;
-    private int hitsForUlt;
+    private int hitsForUlt = 0;
     private static final Logger log = Logger.getLogger(Warrior.class.getName());
 
     private double attackCooldown = 0.0;
@@ -31,8 +28,7 @@ public class Warrior extends Hero implements CanAttackMelee {
     private double bladeStormDamage = 0.0;
 
     public Warrior(int id, PlayerProfile profile, double posX, double posY, Level level) {
-        super(id, profile, posX, posY, Role.WARRIOR, Faction.HERO, level);
-        this.hitsForUlt = 0;
+        super(id, profile, posX, posY, Role.WARRIOR.getHalfHitBox(), Role.WARRIOR, Faction.HERO, level);
     }
 
     @Override

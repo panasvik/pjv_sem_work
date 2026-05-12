@@ -17,8 +17,8 @@ public abstract class Mob extends Entity implements CanAttack {
 
     protected double attackCooldown = 0.0;
 
-    public Mob(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
-        super(id,hp  * multiplicator, speed, positionX, positionY, faction, level);
+    public Mob(int id, int hp, int speed, double positionX, double positionY, double halfHitBox, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
+        super(id,hp  * multiplicator, speed, positionX, positionY, halfHitBox, faction, level);
         this.damage = damage * multiplicator;
         this.reach = reach;
         this.gold = gold * multiplicator;

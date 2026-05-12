@@ -10,8 +10,8 @@ import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import java.util.List;
 
 public abstract class MeleeMob extends Mob implements CanAttackMelee {
-    public MeleeMob(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
-        super(id, hp, speed, positionX, positionY, damage, reach, gold, faction, level, multiplicator);
+    public MeleeMob(int id, int hp, int speed, double positionX, double positionY, double halfHitBox, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
+        super(id, hp, speed, positionX, positionY, halfHitBox, damage, reach, gold, faction, level, multiplicator);
     }
     protected static final double COOLDOWN_TIME = 1;  // to be balanced
 

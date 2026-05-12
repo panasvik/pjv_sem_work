@@ -2,7 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 
 public class EvilWizard extends RangedMob{
@@ -10,6 +10,7 @@ public class EvilWizard extends RangedMob{
         super(id, MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
               MobStats.EVIL_WIZARD.getSpeed(),
               positionX, positionY,
+              MobStats.EVIL_WIZARD.getHalfHitBox(),
               MobStats.EVIL_WIZARD.getDamage(level.getDifficulty().getStatsMult()),
               MobStats.EVIL_WIZARD.getReach(),
               MobStats.EVIL_WIZARD.getGold(),
@@ -20,6 +21,8 @@ public class EvilWizard extends RangedMob{
         super(id, MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.EVIL_WIZARD.getSpeed(),
                 positionX, positionY,
+                MobStats.EVIL_WIZARD.getHalfHitBox(),
+
                 MobStats.EVIL_WIZARD.getDamage(level.getDifficulty().getStatsMult()),
                 MobStats.EVIL_WIZARD.getReach(),
                 MobStats.EVIL_WIZARD.getGold(),

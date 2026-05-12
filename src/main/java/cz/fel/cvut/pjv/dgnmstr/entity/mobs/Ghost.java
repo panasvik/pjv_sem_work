@@ -2,18 +2,17 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 
 
 public class Ghost extends MeleeMob{
     public Ghost(int id, double positionX, double positionY, Level level) {
         super( id,
-                MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
+              MobStats.GHOST.getHp(level.getDifficulty().getStatsMult()),
               MobStats.GHOST.getSpeed(),
               positionX,
               positionY,
+              MobStats.GHOST.getHalfHitBox(),
               MobStats.GHOST.getDamage(level.getDifficulty().getStatsMult()),
               MobStats.GHOST.getReach(),
               MobStats.GHOST.getGold(),
@@ -27,6 +26,7 @@ public class Ghost extends MeleeMob{
                 MobStats.GHOST.getSpeed(),
                 positionX,
                 positionY,
+                MobStats.GHOST.getHalfHitBox(),
                 MobStats.GHOST.getDamage(level.getDifficulty().getStatsMult()),
                 MobStats.GHOST.getReach(),
                 MobStats.GHOST.getGold(),

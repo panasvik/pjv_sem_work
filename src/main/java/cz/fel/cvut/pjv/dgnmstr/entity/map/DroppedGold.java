@@ -3,11 +3,10 @@ package cz.fel.cvut.pjv.dgnmstr.entity.map;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
+import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
-import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
-import javafx.scene.image.Image;
 
 import java.util.logging.Logger;
 
@@ -15,10 +14,10 @@ import java.util.logging.Logger;
  * dropped gold after a mob dies
  */
 public class DroppedGold extends Entity {
-    private int value;
+    private final int value;
     private static final double PICKUP_RADIUS = Level.TILE_SIZE;
     public DroppedGold(int id, double positionX, double positionY, Level level, int value) {
-        super(id, 1, 0, positionX, positionY, Faction.NEUTRAL, level);
+        super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getHalfHitBox(), Faction.NEUTRAL, level);
         this.value = value;
     }
     private static final Logger log =  Logger.getLogger(DroppedGold.class.getName());

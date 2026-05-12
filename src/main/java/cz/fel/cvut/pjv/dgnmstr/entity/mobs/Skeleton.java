@@ -2,7 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 
 public class Skeleton extends RangedMob{
@@ -10,6 +10,7 @@ public class Skeleton extends RangedMob{
         super(id,MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
                 positionX, positionY,
+                MobStats.SKELETON.getHalfHitBox(),
                 MobStats.SKELETON.getDamage(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getReach(),
                 MobStats.SKELETON.getGold(),
@@ -20,6 +21,7 @@ public class Skeleton extends RangedMob{
         super(id, MobStats.SKELETON.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getSpeed(),
                 positionX, positionY,
+                MobStats.SKELETON.getHalfHitBox(),
                 MobStats.SKELETON.getDamage(level.getDifficulty().getStatsMult()),
                 MobStats.SKELETON.getReach(),
                 MobStats.SKELETON.getGold(),

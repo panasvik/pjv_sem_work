@@ -22,8 +22,8 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
 
     protected Inputs currentInputs;
 
-    public Hero(int id, PlayerProfile profile, double positionX, double positionY, Role role, Faction faction, Level level) {
-        super(id, profile.getPlayerStats().hp(), profile.getPlayerStats().speed(), positionX, positionY, faction, level);
+    public Hero(int id, PlayerProfile profile, double positionX, double positionY, double halfHitBox, Role role, Faction faction, Level level) {
+        super(id, profile.getPlayerStats().hp(), profile.getPlayerStats().speed(), positionX, positionY, halfHitBox, faction, level);
         PlayerStats stats = profile.getPlayerStats();
         this.damage = stats.damage();
         this.dexterity = stats.dexterity();

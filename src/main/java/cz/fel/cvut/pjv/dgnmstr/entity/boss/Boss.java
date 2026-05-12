@@ -14,8 +14,8 @@ public abstract class Boss extends Mob {
     private int currPhase = 0;
     private static final Logger log =  Logger.getLogger(Boss.class.getName());
 
-    public Boss(int id, int hp, int speed, double positionX, double positionY, int damage, int reach, int gold, Faction faction, Level level, List<Integer> phaseThresholds) {
-        super(id, hp, speed, positionX, positionY, damage, reach, gold, faction, level, 1);
+    public Boss(int id, int hp, int speed, double positionX, double positionY, double halfHitBox, int damage, int reach, int gold, Faction faction, Level level, List<Integer> phaseThresholds) {
+        super(id, hp, speed, positionX, positionY, halfHitBox, damage, reach, gold, faction, level, 1);
         this.phaseThresholds = phaseThresholds;
     }
 

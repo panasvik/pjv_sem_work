@@ -1,5 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.global;
 
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;

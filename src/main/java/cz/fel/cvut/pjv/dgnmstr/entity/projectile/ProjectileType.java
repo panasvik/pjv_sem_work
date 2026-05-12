@@ -1,6 +1,6 @@
 package cz.fel.cvut.pjv.dgnmstr.entity.projectile;
 
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 
 public enum ProjectileType {
     ARROW(ImgId.ARROW),

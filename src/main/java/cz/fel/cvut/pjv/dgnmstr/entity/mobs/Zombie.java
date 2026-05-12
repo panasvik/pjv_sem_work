@@ -2,9 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 
 public class Zombie extends MeleeMob{
     public Zombie(int id,
@@ -14,6 +12,7 @@ public class Zombie extends MeleeMob{
               MobStats.ZOMBIE.getSpeed(),
               positionX,
               positionY,
+              MobStats.ZOMBIE.getHalfHitBox(),
               MobStats.ZOMBIE.getDamage(level.getDifficulty().getStatsMult()),
               MobStats.ZOMBIE.getReach(),
               MobStats.ZOMBIE.getGold(),
@@ -27,6 +26,7 @@ public class Zombie extends MeleeMob{
                 MobStats.ZOMBIE.getSpeed(),
                 positionX,
                 positionY,
+                MobStats.ZOMBIE.getHalfHitBox(),
                 MobStats.ZOMBIE.getDamage(level.getDifficulty().getStatsMult()),
                 MobStats.ZOMBIE.getReach(),
                 MobStats.ZOMBIE.getGold(),

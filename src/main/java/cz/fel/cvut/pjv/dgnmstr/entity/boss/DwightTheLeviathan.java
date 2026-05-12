@@ -3,10 +3,8 @@ package cz.fel.cvut.pjv.dgnmstr.entity.boss;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
-
-import java.util.Random;
 
 public class DwightTheLeviathan extends Boss{
     private int shotCount = 0;
@@ -23,6 +21,7 @@ public class DwightTheLeviathan extends Boss{
                 BossStats.DWIGHT_THE_LEVIATHAN.getSpeed(),
                 positionX,
                 positionY,
+                BossStats.DWIGHT_THE_LEVIATHAN.getHalfHitBox(),
                 BossStats.DWIGHT_THE_LEVIATHAN.getDamage(level.getDifficulty().getStatsMult()),
                 BossStats.DWIGHT_THE_LEVIATHAN.getReach(),
                 BossStats.DWIGHT_THE_LEVIATHAN.getGold(),

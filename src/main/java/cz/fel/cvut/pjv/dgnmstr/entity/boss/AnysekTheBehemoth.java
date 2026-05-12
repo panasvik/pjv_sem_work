@@ -4,7 +4,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
@@ -21,6 +21,7 @@ public class AnysekTheBehemoth extends Boss{
               BossStats.ANYSEK_THE_BEHEMOTH.getSpeed(),
               positionX,
               positionY,
+              BossStats.ANYSEK_THE_BEHEMOTH.getHalfHitBox(),
               BossStats.ANYSEK_THE_BEHEMOTH.getDamage(level.getDifficulty().getStatsMult()),
               BossStats.ANYSEK_THE_BEHEMOTH.getReach(),
               BossStats.ANYSEK_THE_BEHEMOTH.getGold(),

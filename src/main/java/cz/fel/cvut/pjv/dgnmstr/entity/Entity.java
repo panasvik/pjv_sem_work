@@ -3,7 +3,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.CanAttack;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Positionable;
 import cz.fel.cvut.pjv.dgnmstr.entity.interfaces.Updatable;
-import cz.fel.cvut.pjv.dgnmstr.global.ImgId;
+import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 
 import java.util.logging.Logger;
 
@@ -13,13 +13,14 @@ public abstract class Entity implements Updatable, Positionable {
     private int speed;
     private boolean alive;
     private double positionX, positionY;
+    private final double halfSize;
     private double lookX, lookY;
     private final Faction faction;
     private final Level level;
     private final int id;
     private static final Logger log = Logger.getLogger(Entity.class.getName());
 
-    public Entity(int id, int hp, int speed, double positionX, double positionY, Faction faction, Level level) {
+    public Entity(int id, int hp, int speed, double positionX, double positionY, double halfSize, Faction faction, Level level) {
         this.maxHP = hp;
         this.hp = hp;
         this.speed = speed;
@@ -29,6 +30,7 @@ public abstract class Entity implements Updatable, Positionable {
         this.faction = faction;
         this.level = level;
         this.id = id;
+        this.halfSize = halfSize;
     }
 
     public int getId() {
@@ -194,7 +196,7 @@ public abstract class Entity implements Updatable, Positionable {
     public abstract ImgId getImgId();
 
 
-    public double getHalfHitBox(){
-        return getImgId().getHitBoxSize()/2.0;
+    public double getHalfHitBox() {
+        return halfSize;
     }
 }
