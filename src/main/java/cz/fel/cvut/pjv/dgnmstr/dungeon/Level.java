@@ -130,20 +130,60 @@ public class Level {
     }
 
     public boolean isWalkable(double targetWorldX, double targetWorldY, double half) {
-        int gridX = (int) (targetWorldX / TILE_SIZE);
-        int gridY = (int) (targetWorldY / TILE_SIZE);
-
-        if (gridX < 0 || gridY < 0 || gridX >= width || gridY >= height) {
-            return false;
-        }
-        if (map[gridX][gridY] == TileType.WALL) {
-            return false;
-        }
-
-        return isColliding(targetWorldX, targetWorldY, half);
+        return isWalkableTile(targetWorldX, targetWorldY, half) && isWalkableEntity(targetWorldX, targetWorldY, half);
     }
 
-    public boolean isColliding(double targetWorldX, double targetWorldY, double half) {
+    public boolean isWalkableTile(double targetWorldX, double targetWorldY, double half) {
+        double targetMinX = targetWorldX - half;
+        double targetMaxX = targetWorldX + half;
+        double targetMinY = targetWorldY - half;
+        double targetMaxY = targetWorldY + half;
+
+        if (targetMinX < 0 || targetMinY < 0 ||
+                targetMaxX > width * TILE_SIZE || targetMaxY > height * TILE_SIZE) {
+            return false;
+        }
+
+        int minGridX = (int) (targetMinX / TILE_SIZE);
+        int maxGridX = getMaxTileIndex(targetMaxX);
+        int minGridY = (int) (targetMinY / TILE_SIZE);
+        int maxGridY = getMaxTileIndex(targetMaxY);
+
+        for (int x = minGridX; x <= maxGridX; x++) {
+            for (int y = minGridY; y <= maxGridY; y++) {
+                if (map[x][y] != TileType.WALL) {
+                    continue;
+                }
+
+                double tileMinX = x * TILE_SIZE;
+                double tileMaxX = tileMinX + TILE_SIZE;
+                double tileMinY = y * TILE_SIZE;
+                double tileMaxY = tileMinY + TILE_SIZE;
+
+                if (intersectsAabb(targetMinX, targetMaxX, targetMinY, targetMaxY,
+                        tileMinX, tileMaxX, tileMinY, tileMaxY)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private int getMaxTileIndex(double maxWorldCoordinate) {
+        if (maxWorldCoordinate <= 0) {
+            return 0;
+        }
+        return (int) ((maxWorldCoordinate - Double.MIN_VALUE) / TILE_SIZE);
+    }
+
+    private boolean intersectsAabb(double firstMinX, double firstMaxX, double firstMinY, double firstMaxY,
+                                   double secondMinX, double secondMaxX, double secondMinY, double secondMaxY) {
+        return firstMinX < secondMaxX && firstMaxX > secondMinX &&
+                firstMinY < secondMaxY && firstMaxY > secondMinY;
+    }
+
+    public boolean isWalkableEntity(double targetWorldX, double targetWorldY, double half) {
         for (Entity e : allEntities) {
             if (!(e.isAlive() && e.isSolid())) {
                 continue;

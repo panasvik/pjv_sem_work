@@ -139,7 +139,6 @@ public abstract class Entity implements Updatable, Positionable {
 
         double newCenterX = this.getX() + moveX;
         double newCenterY = this.getY() + moveY;
-        double half = this.getHalfHitBox();
 
         if (newX < 0 || newY < 0) return;
 
@@ -148,12 +147,12 @@ public abstract class Entity implements Updatable, Positionable {
             return;
         }
 
-        if (getLevel().isWalkable(newCenterX, newCenterY, half)) {
+        if (getLevel().isWalkable(newCenterX, newCenterY, halfSize)) {
             this.setPos(newX, newY);
-        } else if (getLevel().isWalkable(this.getX(), newCenterY, half)){
-            this.setPos(this.getX(), newY);
-        } else if (getLevel().isWalkable(newCenterX, this.getY(), half)){
-            this.setPos(newX, this.getY());
+        } else if (getLevel().isWalkable(positionX, newCenterY, halfSize)){
+            this.setPos(positionX, newY);
+        } else if (getLevel().isWalkable(newCenterX, positionY, halfSize)){
+            this.setPos(newX, positionY);
         }
     }
 
