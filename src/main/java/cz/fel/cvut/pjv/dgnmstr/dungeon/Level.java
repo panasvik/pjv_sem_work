@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.*;
+import static java.lang.Math.abs;
 
 public class Level {
     private EntitySpawner spawner;
@@ -128,9 +129,7 @@ public class Level {
 
     }
 
-
-
-    public boolean isWalkable(double targetWorldX, double targetWorldY) {
+    public boolean isWalkable(double targetWorldX, double targetWorldY, double half) {
         int gridX = (int) (targetWorldX / TILE_SIZE);
         int gridY = (int) (targetWorldY / TILE_SIZE);
 
@@ -140,29 +139,39 @@ public class Level {
         if (map[gridX][gridY] == TileType.WALL) {
             return false;
         }
-        for (Entity e : allEntities) {
-            if (e.isAlive()) {
-                int eGridX = (int) (e.getX() / TILE_SIZE);
-                int eGridY = (int) (e.getY() / TILE_SIZE);
 
-                if (eGridX == gridX && eGridY == gridY) {
-                    if (e.isSolid()) {
-                        return false;
-                    }
-                }
+        return isColliding(targetWorldX, targetWorldY, half);
+    }
+
+    public boolean isColliding(double targetWorldX, double targetWorldY, double half) {
+        for (Entity e : allEntities) {
+            if (!(e.isAlive() && e.isSolid())) {
+                continue;
+            }
+            if (abs(targetWorldX - e.getX()) < half + e.getHalfHitBox() &&
+                    abs(targetWorldY - e.getY()) < half + e.getHalfHitBox()) {
+                return false;
             }
         }
         return true;
     }
 
-    public boolean isWalkable(double centerX, double centerY, double half) {
-        if (isWalkable(centerX + half, centerY + half) && isWalkable(centerX - half, centerY - half) &&
-            isWalkable(centerX + half, centerY - half) && isWalkable(centerX - half, centerY + half)){
-            return true;
+    public <T extends Positionable> List<Entity> getCollisions(T target, double half) {
+        List<Entity> collisions = new ArrayList<>();
+        for (Entity e : allEntities) {
+            if (!(e.isAlive() && e.isSolid())) {
+                continue;
+            }
+            if (abs(target.getX() - e.getX()) < half + e.getHalfHitBox() &&
+                    abs(target.getY() - e.getY()) < half + e.getHalfHitBox()) {
+                collisions.add(e);
+            }
         }
-        return false;
+        return collisions;
     }
-        public boolean isAtExit(double worldX, double worldY) {
+
+
+    public boolean isAtExit(double worldX, double worldY) {
         int gridX = (int) (worldX / TILE_SIZE);
         int gridY = (int) (worldY / TILE_SIZE);
 

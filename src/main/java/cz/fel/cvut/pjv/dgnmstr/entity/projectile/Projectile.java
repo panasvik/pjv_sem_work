@@ -121,7 +121,7 @@ public class Projectile implements Updatable, Positionable {
         if (!entNear.isEmpty()) {
            explodeOn(entNear);
         }
-        if (!level.isWalkable(posX, posY)) {
+        if (!level.isWalkable(posX, posY, 0)) {
             alive = false;
         }
     }

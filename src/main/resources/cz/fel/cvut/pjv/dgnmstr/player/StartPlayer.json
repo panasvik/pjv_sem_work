@@ -40,7 +40,7 @@
     "price" : 10,
     "damage" : 1000000,
     "dexterity" : 5,
-    "range" : 200,
+    "range" : 2000,
     "type" : "MELEE"
   },
   "inventory" : {

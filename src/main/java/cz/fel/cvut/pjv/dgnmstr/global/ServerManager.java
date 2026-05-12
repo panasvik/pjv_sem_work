@@ -129,7 +129,9 @@ public class ServerManager {
     }
 
     public void stop() {
-        updateExecutor.shutdownNow();
+        if (updateExecutor != null) {
+            updateExecutor.shutdownNow();
+        }
         stopLC();
     }
 

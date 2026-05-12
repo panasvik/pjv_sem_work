@@ -96,8 +96,8 @@ class LevelControllerTest {
         for(int x = 0; x < level.getWidth(); x++) {
             for(int y = 0; y < level.getHeight(); y++) {
                 if (level.getTile(x, y) == cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType.EXIT) {
-                    double targetX = x * Level.TILE_SIZE + Level.TILE_SIZE / 2.0 - (Level.TILE_SIZE * w1.getImgId().getScale()) / 2.0;
-                    double targetY = y * Level.TILE_SIZE + Level.TILE_SIZE / 2.0 - (Level.TILE_SIZE * w1.getImgId().getScale()) / 2.0;
+                    double targetX = x * Level.TILE_SIZE + Level.TILE_SIZE / 2.0;
+                    double targetY = y * Level.TILE_SIZE + Level.TILE_SIZE / 2.0;
                     w1.setPos(targetX, targetY);
                     exitFound = true;
                     break;
