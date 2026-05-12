@@ -15,62 +15,62 @@ public class GameManager {
     }
 
     private GameController gameController;
-    private ClientNetworkManager cnm;
-    private ClientManager cm;
-    private ServerNetworkManager snm;
-    private ServerManager sm;
-    private GameRenderer gm;
-    private InputHandler ih;
+    private ClientNetworkManager clientNetworkManager;
+    private ClientManager clientManager;
+    private ServerNetworkManager serverNetworkManager;
+    private ServerManager serverManager;
+    private GameRenderer gameRenderer;
+    private InputHandler inputHandler;
 
     public GameManager() {
     }
 
-    public ClientNetworkManager getCnm() {
-        return cnm;
+    public ClientNetworkManager getClientNetworkManager() {
+        return clientNetworkManager;
     }
 
-    public ClientManager getCm() {
-        return cm;
+    public ClientManager getClientManager() {
+        return clientManager;
     }
 
-    public ServerNetworkManager getSnm() {
-        return snm;
+    public ServerNetworkManager getServerNetworkManager() {
+        return serverNetworkManager;
     }
 
-    public ServerManager getSm() {
-        return sm;
+    public ServerManager getServerManager() {
+        return serverManager;
     }
 
-    public GameRenderer getGm() {
-        return gm;
+    public GameRenderer getGameRenderer() {
+        return gameRenderer;
     }
 
-    public InputHandler getIh() {
-        return ih;
+    public InputHandler getInputHandler() {
+        return inputHandler;
     }
 
-    public void setCnm(ClientNetworkManager cnm) {
-        this.cnm = cnm;
+    public void setClientNetworkManager(ClientNetworkManager cnm) {
+        this.clientNetworkManager = cnm;
     }
 
-    public void setCm(ClientManager cm) {
-        this.cm = cm;
+    public void setClientManager(ClientManager cm) {
+        this.clientManager = cm;
     }
 
-    public void setSnm(ServerNetworkManager snm) {
-        this.snm = snm;
+    public void setServerNetworkManager(ServerNetworkManager snm) {
+        this.serverNetworkManager = snm;
     }
 
-    public void setSm(ServerManager sm) {
-        this.sm = sm;
+    public void setServerManager(ServerManager sm) {
+        this.serverManager = sm;
     }
 
-    public void setGm(GameRenderer gm) {
-        this.gm = gm;
+    public void setGameRenderer(GameRenderer gm) {
+        this.gameRenderer = gm;
     }
 
-    public void setIh(InputHandler ih) {
-        this.ih = ih;
+    public void setInputHandler(InputHandler ih) {
+        this.inputHandler = ih;
     }
 
     public GameController getGameController() {

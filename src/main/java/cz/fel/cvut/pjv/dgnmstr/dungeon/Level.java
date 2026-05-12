@@ -143,7 +143,9 @@ public class Level {
                 targetMaxX > width * TILE_SIZE || targetMaxY > height * TILE_SIZE) {
             return false;
         }
-
+        // Axis-Aligned Bounding Box (AABB) collision detects overlaps between
+        // two non-rotated rectangles by checking if their edges intersect along both X
+        // and Y axes
         int minGridX = (int) (targetMinX / TILE_SIZE);
         int maxGridX = getMaxTileIndex(targetMaxX);
         int minGridY = (int) (targetMinY / TILE_SIZE);

@@ -141,8 +141,8 @@ public class GameController implements Reappearance {
     }
 
     private boolean tryStartGameSystems() {
-        clientManager = gameManager.getCm();
-        ClientNetworkManager cnm = gameManager.getCnm();
+        clientManager = gameManager.getClientManager();
+        ClientNetworkManager cnm = gameManager.getClientNetworkManager();
         if (cnm == null || clientManager == null || clientManager.getLc() == null || clientManager.getLocalHero() == null) {
             return false;
         }
@@ -154,9 +154,9 @@ public class GameController implements Reappearance {
 
         InputHandler inputHandler = new InputHandler(SceneManager.getInstance().getMainScene());
         clientManager.setInputHandler(inputHandler);
-        gameManager.setIh(inputHandler);
+        gameManager.setInputHandler(inputHandler);
         renderer = new GameRenderer(gameCanvas, clientManager.getLc().getLevel(), clientManager.getLocalHero());
-        gameManager.setGm(renderer);
+        gameManager.setGameRenderer(renderer);
         gameManager.setGameController(this);
         renderer.start();
 

@@ -55,7 +55,6 @@ public class ServerManager {
         running = true;
         updateExecutor = Executors.newSingleThreadScheduledExecutor();
         updateTask = updateExecutor.scheduleAtFixedRate(this::tick, 0, 16, TimeUnit.MILLISECONDS);
-        System.out.println("lc started");
     }
 
     public void stopLC() {

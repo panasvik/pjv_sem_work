@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
-import java.util.concurrent.TimeUnit;
 
 public class StartMenuController {
     private static final Logger log = Logger.getLogger(StartMenuController.class.getName());
@@ -68,15 +67,15 @@ public class StartMenuController {
             serverIP = hostIP.getText();
         }
         ServerManager serverManager = new ServerManager(port);
-        gameManager.setSnm(serverManager.getSnm());
+        gameManager.setServerNetworkManager(serverManager.getSnm());
         serverManager.getSnm().start();
-        gameManager.setSm(serverManager);
+        gameManager.setServerManager(serverManager);
         socketToConnect.setText(serverIP + ":" + port);
         try {
             ClientManager clientManager = new ClientManager(serverIP, port, profile);
-            gameManager.setCm(clientManager);
+            gameManager.setClientManager(clientManager);
             ClientNetworkManager clientNetworkManager = clientManager.getNetworkManager();
-            gameManager.setCnm(clientNetworkManager);
+            gameManager.setClientNetworkManager(clientNetworkManager);
             clientNetworkManager.connect();
         } catch (UnknownHostException | NumberFormatException k) {
             log.severe("HOST DOES NOT EXIST");
@@ -92,9 +91,9 @@ public class StartMenuController {
             log.warning("server is not started. start it first");
             return;
         }
-        ServerNetworkManager serverNetworkManager = gameManager.getSnm();
+        ServerNetworkManager serverNetworkManager = gameManager.getServerNetworkManager();
         if (serverNetworkManager != null) {
-            ServerManager serverManager = gameManager.getSm();
+            ServerManager serverManager = gameManager.getServerManager();
             serverManager.generateNewLevel();
             MyMath.tryWait(200);
             serverNetworkManager.sendSeeds();
@@ -103,7 +102,7 @@ public class StartMenuController {
             serverNetworkManager.setGameStarted(true);
             serverManager.startLC();
         }
-        ClientManager clientManager = gameManager.getCm();
+        ClientManager clientManager = gameManager.getClientManager();
         if (clientManager.isReady()) {
             SceneManager sceneManager = SceneManager.getInstance();
             sceneManager.activate(View.LEVEL);
@@ -153,19 +152,19 @@ public class StartMenuController {
     @FXML
     public void exit() {
         Platform.exit();
-        ClientNetworkManager clientNetworkManager = gameManager.getCnm();
+        ClientNetworkManager clientNetworkManager = gameManager.getClientNetworkManager();
         if (clientNetworkManager != null) {
             clientNetworkManager.disconnect();
         }
-        ClientManager clientManager = gameManager.getCm();
+        ClientManager clientManager = gameManager.getClientManager();
         if (clientManager != null) {
             clientManager.stopManagingInputs();
         }
-        ServerNetworkManager serverNetworkManager = gameManager.getSnm();
+        ServerNetworkManager serverNetworkManager = gameManager.getServerNetworkManager();
         if (serverNetworkManager != null) {
             serverNetworkManager.stop();
         }
-        ServerManager serverManager = gameManager.getSm();
+        ServerManager serverManager = gameManager.getServerManager();
         if (serverManager != null) {
             serverManager.stop();
         }
@@ -193,8 +192,8 @@ public class StartMenuController {
             ClientManager clientManager = new ClientManager(host, port, profile);
             ClientNetworkManager clientNetworkManager = clientManager.getNetworkManager();
             clientNetworkManager.connect();
-            gameManager.setCm(clientManager);
-            gameManager.setCnm(clientNetworkManager);
+            gameManager.setClientManager(clientManager);
+            gameManager.setClientNetworkManager(clientNetworkManager);
         } catch (UnknownHostException e) {
             log.severe("HOST DOES NOT EXIST");
             socketToConnect.setText("HOST DOES NOT EXIST");

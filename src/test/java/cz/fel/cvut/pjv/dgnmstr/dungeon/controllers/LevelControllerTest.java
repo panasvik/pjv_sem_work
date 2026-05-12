@@ -4,14 +4,9 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.SimpleSpawner;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.TestSpawner;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
-import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
-import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
-import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
-import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.global.IDGenerator;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
@@ -20,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +28,7 @@ class LevelControllerTest {
         long testSeed = 12345678L;
         level = generator.generate(DifficultyStats.MEDIUM, testSeed);
         IDGenerator gen = new IDGenerator();
-        SimpleSpawner testSpawner = new SimpleSpawner(level, gen);
+        TestSpawner testSpawner = new TestSpawner(level, gen);
         level.setSpawner(testSpawner);
         lc = new LevelController(level);
     }

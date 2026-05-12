@@ -1,7 +1,5 @@
-package cz.fel.cvut.pjv.dgnmstr.dungeon.service;
+package cz.fel.cvut.pjv.dgnmstr.dungeon;
 
-import cz.fel.cvut.pjv.dgnmstr.dungeon.EntitySpawner;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
@@ -19,12 +17,12 @@ import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
-public class SimpleSpawner implements EntitySpawner {
+public class TestSpawner implements EntitySpawner {
     private final Level level;
     private final IDGenerator idGen;
 
 
-    public SimpleSpawner(Level level, IDGenerator idGen) {
+    public TestSpawner(Level level, IDGenerator idGen) {
         this.level = level;
         this.idGen = idGen;
     }

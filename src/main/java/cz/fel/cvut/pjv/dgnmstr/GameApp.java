@@ -7,38 +7,20 @@ import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
+import java.util.logging.*;
 
 import static javafx.scene.text.Font.loadFont;
 
 public class GameApp extends Application {
-    private static final Logger log =  Logger.getLogger(GameApp.class.getName());
+    private static final Logger log = Logger.getLogger(GameApp.class.getName());
 
 
     @Override
     public void start(Stage stage) {
-        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/PirataOne-Regular.ttf"), 12);
-        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/Cinzel-Bold.ttf"), 12);
-        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/EBGaramond-Bold.ttf"), 12);
+        loadFonts();
         boolean isLog = getParameters().getRaw().contains("--log=true");
-        Logger mainLogger = Logger.getLogger("");
-
-        for(Handler handler : mainLogger.getHandlers()){
-            handler.setLevel(Level.ALL);
-        }
-
-        Logger gameLogger = Logger.getLogger("cz.fel.cvut.pjv.dgnmstr");
-        if (isLog) {
-            mainLogger.setLevel(Level.INFO);
-            gameLogger.setLevel(Level.ALL);
-
-
-            log.info("Logging is on");
-        } else {
-            mainLogger.setLevel(Level.SEVERE);
-        }
+        setLog(isLog);
 
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.init(stage, 1280, 720);
@@ -57,19 +39,50 @@ public class GameApp extends Application {
         GameManager gm = GameManager.getInstance();
 
         // Clean up server threads
-        if (gm.getSm() != null) {
-            gm.getSm().stop();
+        if (gm.getServerManager() != null) {
+            gm.getServerManager().stop();
         }
 
         // Clean up client threads
-        if (gm.getCnm() != null) {
-            gm.getCnm().disconnect();
+        if (gm.getClientNetworkManager() != null) {
+            gm.getClientNetworkManager().disconnect();
         }
-        if (gm.getCm() != null) {
-            gm.getCm().stopManagingInputs();
+        if (gm.getClientManager() != null) {
+            gm.getClientManager().stopManagingInputs();
         }
-
-        // Force the JVM to terminate and kill any lingering threads
     }
 
+    private void setLog(boolean isLog) {
+        Logger mainLogger = Logger.getLogger("");
+
+        for(Handler handler : mainLogger.getHandlers()){
+            handler.setLevel(Level.ALL);
+        }
+
+        Logger gameLogger = Logger.getLogger("cz.fel.cvut.pjv.dgnmstr");
+        if (isLog) {
+            mainLogger.setLevel(Level.INFO);
+            gameLogger.setLevel(Level.ALL);
+
+            try {
+                FileHandler fileHandler = new FileHandler("logs/game.log", true);
+                fileHandler.setFormatter(new SimpleFormatter());
+                mainLogger.addHandler(fileHandler);
+
+            } catch (IOException | SecurityException e) {
+                log.severe("unable to save logs to file!");
+            }
+
+            log.info("Logging is on");
+        } else {
+            mainLogger.setLevel(Level.SEVERE);
+        }
+    }
+
+    public void loadFonts() {
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/PirataOne-Regular.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/Cinzel-Bold.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/cz/fel/cvut/pjv/dgnmstr/view/EBGaramond-Bold.ttf"), 12);
+
+    }
 }

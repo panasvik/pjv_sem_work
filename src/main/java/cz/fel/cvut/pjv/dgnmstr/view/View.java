@@ -18,10 +18,4 @@ public enum View {
         return relativePath;
     }
 
-    @Override
-    public String toString() {
-        return "View{" +
-                "relativePath='" + relativePath + '\'' +
-                '}';
-    }
 }

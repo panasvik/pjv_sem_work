@@ -108,7 +108,7 @@ public class ClientNetworkManager {
         if (udpSocket != null && !udpSocket.isClosed()) {
             udpSocket.close();
         }
-        System.out.println("Disconnected from server.");
+        log.info("disconnected from the server " + serverAddress + ":" + serverUdpPort);
     }
 
     public void sendProfileUpdate(PlayerProfile profile) {

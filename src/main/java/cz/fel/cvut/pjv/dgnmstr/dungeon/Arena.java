@@ -4,7 +4,6 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaType;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TilePosition;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.TileType;
-import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 

@@ -11,7 +11,6 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 

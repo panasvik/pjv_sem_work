@@ -2,7 +2,7 @@ package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.DungeonGenerator;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.dungeon.service.SimpleSpawner;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.TestSpawner;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.LevelController;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
@@ -24,7 +24,7 @@ class EntityTest {
         long testSeed = 12345678L;
         level = generator.generate(DifficultyStats.MEDIUM, testSeed);
         IDGenerator gen = new IDGenerator();
-        SimpleSpawner testSpawner = new SimpleSpawner(level, gen);
+        TestSpawner testSpawner = new TestSpawner(level, gen);
         level.setSpawner(testSpawner);
         lc = new LevelController(level);
         lc.startLevel();
