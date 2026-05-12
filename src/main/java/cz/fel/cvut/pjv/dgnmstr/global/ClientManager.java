@@ -69,11 +69,13 @@ public class ClientManager {
     }
 
     public void setLocalHero(int id) {
-        localHero = (Hero) lc.getLevel().getEntity(id);
-        localHero.setProfile(myProfile);
-        System.out.println("local hero set");
-        System.out.println(localHero);
-        isReady = true;
+        if (lc.getLevel().getEntity(id) instanceof Hero hero) {
+            localHero = hero;
+            localHero.setProfile(myProfile);
+            System.out.println("local hero set");
+            System.out.println(localHero);
+            isReady = true;
+        }
     }
 
     public void spawnMob(SpawnMobPayload payload) {

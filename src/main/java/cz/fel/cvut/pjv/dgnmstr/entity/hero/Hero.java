@@ -30,7 +30,7 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.defence = stats.defence();
         this.reach = stats.range();
         this.role = role;
-        this.gold = 0;
+        this.gold = profile.getGold();
         this.profile = profile;
     }
 
