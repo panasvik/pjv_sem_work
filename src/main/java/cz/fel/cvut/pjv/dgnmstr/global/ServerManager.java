@@ -17,6 +17,11 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ServerManager {
+    private static final int SERVER_TICK_PERIOD_MS = 16;
+    private static final double SERVER_DELTA_TIME_SECONDS = SERVER_TICK_PERIOD_MS / 1000.0;
+    private static final double DEFAULT_HERO_SPAWN_X = 128;
+    private static final double DEFAULT_HERO_SPAWN_Y = 128;
+
     private LevelController lc;
     private final DungeonGenerator generator;
     private ServerNetworkManager snm;
@@ -43,7 +48,7 @@ public class ServerManager {
     }
 
     public int addProfile(PlayerProfile profile) {
-        Hero w1 = lc.getLevel().requestHeroSpawn(128, 128, profile);
+        Hero w1 = lc.getLevel().requestHeroSpawn(DEFAULT_HERO_SPAWN_X, DEFAULT_HERO_SPAWN_Y, profile);
         return w1.getId();
     }
 
@@ -54,7 +59,7 @@ public class ServerManager {
         lc.startLevel();
         running = true;
         updateExecutor = Executors.newSingleThreadScheduledExecutor();
-        updateTask = updateExecutor.scheduleAtFixedRate(this::tick, 0, 16, TimeUnit.MILLISECONDS);
+        updateTask = updateExecutor.scheduleAtFixedRate(this::tick, 0, SERVER_TICK_PERIOD_MS, TimeUnit.MILLISECONDS);
     }
 
     public void stopLC() {
@@ -90,8 +95,7 @@ public class ServerManager {
             return;
         }
 
-        double deltaTime = 0.016;
-        lc.update(deltaTime);
+        lc.update(SERVER_DELTA_TIME_SECONDS);
 
         snm.sendArenaUpdates();
         snm.sendLevelUpdates();

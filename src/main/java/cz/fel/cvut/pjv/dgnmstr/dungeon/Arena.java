@@ -21,12 +21,16 @@ import static cz.fel.cvut.pjv.dgnmstr.dungeon.Level.TILE_SIZE;
  */
 
 public class Arena {
+    public static final int SIZE_TILES = 64;
+    public static final int DOOR_HALF_HEIGHT_TILES = 3;
+    public static final int LEFT_GRATE_OFFSET_TILES = 2;
+
     private ArenaState state = ArenaState.NOT_STARTED;
 
     private final int startX;
     private final int startY;
-    private final int width = 64;
-    private final int height = 64;
+    private final int width = SIZE_TILES;
+    private final int height = SIZE_TILES;
 
     private final Level level;
     private final ArenaType type;
@@ -54,11 +58,11 @@ public class Arena {
 
     public List<TilePosition> getGratePositions() {
         List<TilePosition> positions = new ArrayList<>();
-        int corridorStartY = (startY + height / 2 - 3);
-        int corridorEndY = (startY + height / 2 + 3);
+        int corridorStartY = startY + height / 2 - DOOR_HALF_HEIGHT_TILES;
+        int corridorEndY = startY + height / 2 + DOOR_HALF_HEIGHT_TILES;
 
         for (int y = corridorStartY; y <= corridorEndY; y++) {
-            positions.add(new TilePosition(startX - 2, y));
+            positions.add(new TilePosition(startX - LEFT_GRATE_OFFSET_TILES, y));
             positions.add(new TilePosition(startX + width - 1, y));
         }
         return positions;

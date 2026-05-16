@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 
 public class ServerNetworkManager {
     private static final Logger log = Logger.getLogger(ServerNetworkManager.class.getName());
+    private static final int BUFFER_SIZE = 4096;
 
     private DatagramSocket udpSocket;
     private ServerManager serverManager;
@@ -77,7 +78,7 @@ public class ServerNetworkManager {
     }
 
     private void listenUdpLoop() {
-        byte[] buffer = new byte[4096];
+        byte[] buffer = new byte[BUFFER_SIZE];
         while (isRunning && !udpSocket.isClosed()) {
             try {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

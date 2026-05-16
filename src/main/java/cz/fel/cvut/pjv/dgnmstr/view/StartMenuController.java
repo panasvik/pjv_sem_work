@@ -21,6 +21,9 @@ import java.util.logging.Logger;
 
 public class StartMenuController {
     private static final Logger log = Logger.getLogger(StartMenuController.class.getName());
+    private static final String DEFAULT_HOST = "127.0.0.1";
+    private static final int DEFAULT_PORT = 5000;
+    private static final int SERVER_STARTUP_WAIT_MS = 200;
 
     private GameManager gameManager;
 
@@ -55,14 +58,14 @@ public class StartMenuController {
         int port;
 
         if (hostPort.getText().isEmpty()) {
-            port = 5000;
+            port = DEFAULT_PORT;
         } else {
             port = Integer.parseInt(hostPort.getText());
 
         }
         String serverIP;
         if (hostIP.getText().isEmpty()) {
-            serverIP = "127.0.0.1";
+            serverIP = DEFAULT_HOST;
         } else {
             serverIP = hostIP.getText();
         }
@@ -95,9 +98,9 @@ public class StartMenuController {
         if (serverNetworkManager != null) {
             ServerManager serverManager = gameManager.getServerManager();
             serverManager.generateNewLevel();
-            MyMath.tryWait(200);
+            MyMath.tryWait(SERVER_STARTUP_WAIT_MS);
             serverNetworkManager.sendSeeds();
-            MyMath.tryWait(200);
+            MyMath.tryWait(SERVER_STARTUP_WAIT_MS);
             serverNetworkManager.sendIDs();
             serverNetworkManager.setGameStarted(true);
             serverManager.startLC();

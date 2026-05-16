@@ -35,6 +35,8 @@ import java.util.logging.Logger;
 import static cz.fel.cvut.pjv.dgnmstr.global.MyMath.getClosestChest;
 
 public class ClientManager {
+    private static final int INPUT_POLL_PERIOD_MS = 16;
+
     private LevelController lc;
     private final PlayerProfile myProfile;
     private Hero localHero;
@@ -230,7 +232,7 @@ public class ClientManager {
         if (updateExecutor == null || updateExecutor.isShutdown() || updateExecutor.isTerminated()) {
             updateExecutor = Executors.newSingleThreadScheduledExecutor();
         }
-        inputTask = updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, 16, TimeUnit.MILLISECONDS);
+        inputTask = updateExecutor.scheduleAtFixedRate(this::manageInputs, 0, INPUT_POLL_PERIOD_MS, TimeUnit.MILLISECONDS);
     }
 
     public void manageInputs() {

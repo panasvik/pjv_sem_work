@@ -67,6 +67,8 @@ Logs are written to `logs/game.log`.
 
 ## Architecture
 
+For a detailed technical breakdown, see [ARCHITECTURE.md](ARCHITECTURE.md).
+
 The project is organized under `src/main/java/cz/fel/cvut/pjv/dgnmstr`:
 
 - `GameApp` and `DungeonMasterLauncher` - JavaFX application startup, font loading, logging setup, and shutdown cleanup.

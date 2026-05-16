@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 public class ClientNetworkManager {
     private static final Logger log = Logger.getLogger(ClientNetworkManager.class.getName());
+    private static final int BUFFER_SIZE = 4096;
 
     private DatagramSocket udpSocket;
     private final ClientManager manager;
@@ -29,7 +30,7 @@ public class ClientNetworkManager {
             udpSocket = new DatagramSocket();
             isRunning = true;
 
-            Thread udpThread = new Thread(this::listenUdpLoop, "Client-Network-Thread");
+            Thread udpThread = new Thread(this::listenUdpLoop);
             udpThread.setDaemon(true);
             udpThread.start();
 
@@ -64,7 +65,7 @@ public class ClientNetworkManager {
     }
 
     private void listenUdpLoop() {
-        byte[] buffer = new byte[4096];
+        byte[] buffer = new byte[BUFFER_SIZE];
         while (isRunning && !udpSocket.isClosed()) {
             try {
                 DatagramPacket datagram = new DatagramPacket(buffer, buffer.length);

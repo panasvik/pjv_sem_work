@@ -18,8 +18,10 @@ import java.util.logging.Logger;
  */
 public class DungeonGenerator {
 
-    private static final int ARENA_SIZE = 64;
+    private static final int ARENA_SIZE = Arena.SIZE_TILES;
     private static final int CORRIDOR_LENGTH = 20;
+    private static final int CORRIDOR_COUNT = Level.MAX_ARENA_IDX - 1;
+    private static final int DOOR_HALF_HEIGHT_TILES = Arena.DOOR_HALF_HEIGHT_TILES;
     private Random random;
 
 
@@ -30,7 +32,7 @@ public class DungeonGenerator {
         log.info("Generating Dungeon...");
         Level level = new Level(difficulty);
 
-        int totalWidth = (ARENA_SIZE * 3) + (CORRIDOR_LENGTH * 2);
+        int totalWidth = (ARENA_SIZE * Level.MAX_ARENA_IDX) + (CORRIDOR_LENGTH * CORRIDOR_COUNT);
         int totalHeight = ARENA_SIZE;
 
         TileType[][] map = new TileType[totalWidth][totalHeight];
@@ -55,7 +57,7 @@ public class DungeonGenerator {
 
             currentX += ARENA_SIZE;
 
-            if (i < 2) {
+            if (i < CORRIDOR_COUNT) {
                 pasteCorridor(map, currentX, 0);
                 currentX += CORRIDOR_LENGTH;
             }
@@ -63,7 +65,7 @@ public class DungeonGenerator {
         level.setCurArena(level.getArenas().getFirst());
         int exitY = ARENA_SIZE / 2;
 
-        for (int y = exitY - 3; y < exitY + 3; y++) {
+        for (int y = exitY - DOOR_HALF_HEIGHT_TILES; y < exitY + DOOR_HALF_HEIGHT_TILES; y++) {
             map[totalWidth - 1][y] = TileType.EXIT;
         }
         return level;
@@ -78,8 +80,8 @@ public class DungeonGenerator {
             log.severe("UNABLE to load arena " + type.name() + " from file ");
         }
 
-        int doorStartY = startY + (ARENA_SIZE / 2) - 3;
-        int doorEndY = startY + (ARENA_SIZE / 2) + 3;
+        int doorStartY = startY + (ARENA_SIZE / 2) - DOOR_HALF_HEIGHT_TILES;
+        int doorEndY = startY + (ARENA_SIZE / 2) + DOOR_HALF_HEIGHT_TILES;
 
         if (startX > 0) {
             for (int y = doorStartY; y <= doorEndY; y++) {
@@ -95,8 +97,8 @@ public class DungeonGenerator {
     }
 
     private void pasteCorridor(TileType[][] map, int startX, int startY) {
-        int corridorStartY = startY + (ARENA_SIZE / 2) - 3;
-        int corridorEndY = startY + (ARENA_SIZE / 2) + 3;
+        int corridorStartY = startY + (ARENA_SIZE / 2) - DOOR_HALF_HEIGHT_TILES;
+        int corridorEndY = startY + (ARENA_SIZE / 2) + DOOR_HALF_HEIGHT_TILES;
 
         for (int x = 0; x < CORRIDOR_LENGTH; x++) {
             for (int y = corridorStartY; y <= corridorEndY; y++) {
