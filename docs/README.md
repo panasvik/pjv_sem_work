@@ -5,15 +5,12 @@ Dungeon Master is a 2D dungeon crawler written in Java and JavaFX as a PJV semes
 ## Key Features
 
 - **Procedural dungeon generation** - levels are assembled from text-based arena layouts and generated with deterministic seeds.
-- **Arena progression** - entering an arena locks the player in, spawns enemy waves, and reopens the grates only after the encounter is cleared.
+- **Arena progression** - entering an arena locks the player within the arena, spawns enemy waves, and reopens the grates only after the encounter is cleared.
 - **Boss encounters** - regular arenas can spawn stronger enemies, and the final arena ends with a boss fight.
 - **Combat system** - the Warrior hero supports movement, melee attacks, defensive/parry-oriented stats, and an ultimate ability charged by consecutive hits.
-- **Enemy variety** - mobs include melee and ranged enemy types such as zombies, skeletons, ghosts, goblins, and evil wizards.
 - **Loot and inventory** - players collect gold, open chests, transfer items, and equip weapons and armor.
-- **Profile persistence** - player data is loaded from and saved to JSON using Jackson.
-- **JavaFX UI** - FXML screens, custom fonts, sprite assets, inventory/hero views, and a rendered dungeon view.
+- **Profile load/save** - player data is loaded from and saved to JSON using Jackson.
 - **Networking layer** - server/client managers and serializable packets support level seeds, entity spawns, entity updates, removals, and player profile synchronization.
-- **Logging and tests** - optional file logging and JUnit/Mockito tests for core dungeon, controller, entity, and networking manager behavior.
 
 ## Installation & Setup
 
@@ -48,13 +45,13 @@ Logs are written to `logs/game.log`.
 
 1. Start the application.
 2. Load a player profile:
-   - Use **Load** to load the default profile.
-   - Use **Load from** with a file path to load a custom profile JSON.
+   - Use `Load` to load the default profile.
+   - Use `Load from` with a file path to load a custom profile JSON.
 3. Start networking:
-   - Use **Host** to start a local server and connect the current client to it. If no host or port is entered, the menu uses `127.0.0.1:5000`.
-   - Use **Connect** to connect to an existing host and port.
-4. Press **Start** after the profile is loaded and the client is connected.
-5. Play through arenas, defeat mobs and bosses, collect gold, open chests, and complete the generated level.
+   - Use `Host` to start a local server and connect the current client to it. If no host or port is entered, the menu uses `127.0.0.1:5000`.
+   - Use `Connect` to connect to an existing host and port.
+4. Press `Start` after the profile is loaded and the client is connected.
+5. Play through arenas, defeat mobs and bosses, collect gold, open chests via the gold acquired, and complete the level.
 
 ### Controls
 

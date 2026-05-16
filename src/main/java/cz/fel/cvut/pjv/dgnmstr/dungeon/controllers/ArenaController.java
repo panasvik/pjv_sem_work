@@ -95,7 +95,6 @@ public class ArenaController implements Updatable {
             spawnTime += dTime;
             if (spawnTime >= spawnDelay) {
                 spawnPeriodicMobs();
-                // subtracting instead of nullifying to damp lags
                 spawnTime -= spawnDelay;
             }
         }

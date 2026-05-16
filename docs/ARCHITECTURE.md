@@ -6,16 +6,6 @@ Dungeon Master is a JavaFX dungeon crawler with a client/server-style runtime. E
 - **Client side**: owns JavaFX screens, input capture, rendering, inventory UI, and a local synchronized copy of the level.
 - **Network layer**: sends player input to the server and sends authoritative updates back to clients.
 
-```text
-Start Menu
-   |
-   +--> ClientManager --> ClientNetworkManager
-   |
-   +--> ServerManager --> ServerNetworkManager
-
-Client input -> server simulation -> network updates -> client rendering
-```
-
 ## Main Packages
 
 ### `cz.fel.cvut.pjv.dgnmstr`
@@ -121,13 +111,7 @@ Each tick:
 5. Broadcasts hero, mob, and projectile updates.
 6. Broadcasts removals for entities/projectiles that disappeared.
 
-Client movement is input-driven:
-
-```text
-InputHandler -> ClientManager -> ClientNetworkManager
-    -> ServerNetworkManager -> ServerManager.applyInputs
-    -> server-side Hero update -> broadcast updated Hero state
-```
+Client movement is input-driven.
 
 ## State Machines
 
@@ -196,7 +180,6 @@ The client renders only its synchronized copy of the level.
 
 `GameRenderer`:
 
-- runs as a JavaFX `AnimationTimer`;
 - centers the camera on the local hero;
 - draws visible tiles, entities, and projectiles;
 - updates health and gold UI through `GameController`.
@@ -230,5 +213,3 @@ The application uses several execution threads:
 - Client UDP listener thread.
 - Server scheduled update loop.
 - Client scheduled input polling loop.
-
-Some maps use `ConcurrentHashMap`, but entity/projectile lists are normal lists. Rendering therefore takes snapshots before drawing.
