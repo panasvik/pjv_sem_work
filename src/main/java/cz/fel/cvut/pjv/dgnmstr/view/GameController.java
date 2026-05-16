@@ -115,7 +115,7 @@ public class GameController implements Reappearance {
     }
 
     private void fillList(ListView<Item> itemList) {
-        itemList.setCellFactory(_ -> new ListCell<>() {
+        itemList.setCellFactory(i -> new ListCell<>() {
             @Override
             protected void updateItem(Item item, boolean empty) {
                 super.updateItem(item, empty);
