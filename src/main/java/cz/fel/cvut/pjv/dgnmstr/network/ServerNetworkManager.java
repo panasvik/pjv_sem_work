@@ -27,6 +27,7 @@ public class ServerNetworkManager {
 
     private final Map<InetSocketAddress, PlayerProfile> clients = new ConcurrentHashMap<>();
     private final Map<InetSocketAddress, Integer> clientHeroIds = new ConcurrentHashMap<>();
+    private final Map<Integer, Long> updateCounters = new ConcurrentHashMap<>();
     private final Set<Integer> trackedEntityIds = new HashSet<>();
     private final Set<Integer> trackedProjectileIds = new HashSet<>();
 
@@ -147,7 +148,12 @@ public class ServerNetworkManager {
 
     private void handleClientUpdatePacket(DGNPacket packet, InetSocketAddress source) {
         switch (packet.type()) {
-            case UPDATE_HERO -> handleNewInputs(source, (Inputs) packet.payload());
+            case UPDATE -> {
+                if (packet.subType() != PacketSubType.UPDATE_HERO) {
+                    return;
+                }
+                handleNewInputs(source, (Inputs) packet.payload());
+            }
             case PROFILE_UPDATE -> handleProfileUpdate(source, (PlayerProfilePayload) packet.payload());
             default -> log.info("Received packet: " + packet.type() + " from " + source);
         }
@@ -230,13 +236,16 @@ public class ServerNetworkManager {
     }
 
     public void handleUpdateEjection(Hero hero) {
-        broadcast(new DGNPacket(PacketType.UPDATE_HERO,
+        long newCount = updateCounters.get(hero.getId()) + 1;
+        updateCounters.put(hero.getId(), newCount);
+        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.UPDATE_HERO,
                 new UpdateHeroPayload(
                         hero.getId(),
                         hero.getX(),
                         hero.getY(),
                         hero.getHp(),
-                        hero.getGold()
+                        hero.getGold(),
+                        newCount
                 )));
         if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
             broadcast(new DGNPacket(PacketType.SYNC_STATS,
@@ -245,8 +254,10 @@ public class ServerNetworkManager {
     }
 
     public void handleUpdateEjection(Mob mob) {
-        broadcast(new DGNPacket(PacketType.UPDATE_MOB,
-                new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp())));
+        long newCount = updateCounters.get(mob.getId()) + 1;
+        updateCounters.put(mob.getId(), newCount);
+        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.UPDATE_MOB,
+                new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp(), newCount)));
     }
 
     public void sendEntityUpdates() {
@@ -263,7 +274,7 @@ public class ServerNetworkManager {
 
         for (Integer removedEntityId : trackedEntityIds) {
             if (!currentEntityIds.contains(removedEntityId)) {
-                broadcast(new DGNPacket(PacketType.ENTITY_REMOVE, new EntityRemovePayload(removedEntityId)));
+                broadcast(new DGNPacket(PacketType.REMOVE, PacketSubType.REMOVE_ENTITY, new EntityRemovePayload(removedEntityId)));
             }
         }
         trackedEntityIds.clear();
@@ -281,7 +292,7 @@ public class ServerNetworkManager {
 
         for (Integer removedProjectileId : trackedProjectileIds) {
             if (!currentProjectileIds.contains(removedProjectileId)) {
-                broadcast(new DGNPacket(PacketType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
+                broadcast(new DGNPacket(PacketType.REMOVE, PacketSubType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
             }
         }
 
@@ -299,12 +310,15 @@ public class ServerNetworkManager {
     }
 
     private void sendProjectilePacket(Projectile projectile) {
-        broadcast(new DGNPacket(PacketType.UPDATE_PROJECTILE,
+        long newCount = updateCounters.get(projectile.getId()) + 1;
+        updateCounters.put(projectile.getId(), newCount);
+        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.UPDATE_PROJECTILE,
                 new UpdateProjectilePayload(
                         projectile.getId(),
                         projectile.getX(),
                         projectile.getY(),
-                        projectile.isAlive()
+                        projectile.isAlive(),
+                        newCount
                 )));
     }
 
@@ -317,5 +331,8 @@ public class ServerNetworkManager {
         }
     }
 
+    public void setNewCounter(int id) {
+        updateCounters.put(id, 0L);
+    }
 
 }
