@@ -148,6 +148,7 @@ public class ServerNetworkManager {
         switch (packet.type()) {
             case UPDATE_HERO -> handleNewInputs(source, (Inputs) packet.payload());
             case PROFILE_UPDATE -> handleProfileUpdate(source, (PlayerProfilePayload) packet.payload());
+            case USE_POTION -> handleUsePotion((UsePotionPayload) packet.payload());
             default -> log.info("Received packet: " + packet.type() + " from " + source);
         }
     }
@@ -158,6 +159,13 @@ public class ServerNetworkManager {
         if (heroId != null) {
             clients.get(source).mergeProfileChanges(payload.profile());
             serverManager.updateByProfile(heroId, payload.profile());
+        }
+    }
+
+    private void handleUsePotion(UsePotionPayload payload) {
+        int heroId = payload.heroId();
+        if (serverManager != null) {
+            serverManager.useItemByType(heroId, payload.potionType());
         }
     }
 

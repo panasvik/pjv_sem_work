@@ -300,7 +300,7 @@ public class GameController implements Reappearance {
         updateCurChestList();
     }
 
-    public void updateHeathBar(int currHP, int maxHP) {
+    public void updateHealthBar(int currHP, int maxHP) {
         maxHealth.set(maxHP);
         currentHealth.set(currHP);
     }

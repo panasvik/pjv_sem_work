@@ -118,6 +118,12 @@ public class ClientNetworkManager {
         System.out.println("sent profile with " + profile.getGold() + " gold in it");
     }
 
+    public void sendUsePotion(int heroId, String potionType ) {
+        UsePotionPayload payload = new UsePotionPayload(heroId, potionType);
+        DGNPacket packet = new DGNPacket(PacketType.USE_POTION, payload);
+        sendUDP(packet);
+    }
+
     public ClientManager getManager() {
         return manager;
     }

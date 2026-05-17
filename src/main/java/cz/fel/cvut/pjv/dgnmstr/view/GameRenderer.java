@@ -48,7 +48,7 @@ public class GameRenderer extends AnimationTimer {
         drawLevel(camX, camY);
         drawEntities(camX, camY);
         drawProjectiles(camX, camY);
-        gameManager.getGameController().updateHeathBar(localHero.getHp(), localHero.getMaxHP());
+        gameManager.getGameController().updateHealthBar(localHero.getHp(), localHero.getMaxHP());
         gameManager.getGameController().setGold(localHero.getGold());
 
     }

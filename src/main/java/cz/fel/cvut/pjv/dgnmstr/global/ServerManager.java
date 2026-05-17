@@ -5,6 +5,8 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.*;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.*;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
+import cz.fel.cvut.pjv.dgnmstr.item.Item;
+import cz.fel.cvut.pjv.dgnmstr.item.potions.HealPotion;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerSpawner;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
@@ -15,6 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class ServerManager {
     private LevelController lc;
@@ -27,6 +30,7 @@ public class ServerManager {
     private volatile boolean running = false;
     private long seed;
     private Random random = new Random();
+    private final static Logger log = Logger.getLogger(ServerManager.class.getName());
 
 
 
@@ -71,6 +75,29 @@ public class ServerManager {
         if (lc.getLevel().getEntity(id) instanceof Hero hero) {
             hero.getProfile().mergeProfileChanges(profile);
             hero.syncStats(profile.getPlayerStats());
+        }
+    }
+
+    public void useItemByType(int heroId, String potionType) {
+        if (lc.getLevel().getEntity(heroId) instanceof Hero hero) {
+            var invent = hero.getProfile().getInventory().getInvent();
+            Item match = null;
+            for (Item i : invent) {
+                if(i instanceof HealPotion && i.getClass().getName().equals(potionType)) {
+                    match = i;
+                    break;
+                }
+            }
+            if (match instanceof HealPotion potion) {
+                int amount = (int) (hero.getMaxHP() * potion.getHealPercentage());
+                int before = hero.getHp();
+                hero.setHp(Math.min(hero.getMaxHP(), hero.getHp() + amount));
+                log.fine("HEAL: hero" + heroId + " " + before + " -> " + hero.getHp() + " (max " + hero.getMaxHP() + ")");
+                hero.getProfile().getInventory().remove(match);
+            } else {
+                log.warning("Potion not found, type = " + potionType + " heroId = " + heroId);
+            }
+
         }
     }
 

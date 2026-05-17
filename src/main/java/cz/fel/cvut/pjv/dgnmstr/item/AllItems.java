@@ -1,6 +1,8 @@
 package cz.fel.cvut.pjv.dgnmstr.item;
 
 import cz.fel.cvut.pjv.dgnmstr.item.armor.*;
+import cz.fel.cvut.pjv.dgnmstr.item.materials.*;
+import cz.fel.cvut.pjv.dgnmstr.item.potions.*;
 import cz.fel.cvut.pjv.dgnmstr.item.weapon.*;
 
 import java.util.Random;
@@ -14,6 +16,11 @@ public enum AllItems {
     LWP(LegendaryWarriorPants.class),
     BWS(BasicWarriorSword.class),
     LWS(LegendaryWarriorSword.class),
+    HERB(Herb.class),
+    ESSENCE(Essence.class),
+    CRYSTAL(Crystal.class),
+    SHP(SmallHealPotion.class),
+    BHP(BigHealPotion.class),
     RUBBISH(Rubbish.class);
 
 
