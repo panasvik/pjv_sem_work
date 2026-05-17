@@ -107,3 +107,9 @@ The project is organized under `src/main/java/cz/fel/cvut/pjv/dgnmstr`:
 
 - Viktor Panasiuk - game loop, dungeon/arena state, JavaFX structure, hero mechanics, inventory/profile logic, level generation, network communication, JSON.
 - Filip Marik - enemy AI, bosses, boss mechanics and encounters, networking records/packages, logging infrastructure, loot drops, crafting mechanics, arena layouts, and Javadoc documentation.
+
+## Resources used for images
+- opengameart.org (`src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/map`)
+- itch.io(`src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/mobs`, `src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/hero`)
+- Filip Marik's Design work(`src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/boss`, `src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/projectiles`)
+- Gemini generated images(`src/main/resources/cz/fel/cvut/pjv/dgnmstr/view`)
