@@ -203,6 +203,33 @@ public class GameController implements Reappearance {
         SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, menuToggleHandler);
     }
 
+    private void fillRecipeList() {
+        recipeList.setCellFactory(_ -> new ListCell<>() {
+            @Override
+            protected void updateItem(Recipe recipe, boolean empty) {
+                super.updateItem(recipe, empty);
+                if (empty || recipe == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    StringBuilder sb = new StringBuilder(recipe.getName());
+                    sb.append("  (");
+                    boolean first = true;
+                    for (Map.Entry<Class<? extends Item>, Integer> e : recipe.getIngredients().entrySet()) {
+                        if (!first) sb.append(", ");
+                        sb.append(e.getValue()).append(" ").append(e.getKey().getSimpleName());
+                        first = false;
+                    }
+                    sb.append(")");
+                    setText(sb.toString());
+
+                    boolean canCraft = recipe.isCraftable(clientManager.getMyProfile());
+                    setStyle(canCraft ? "" : "-fx-opacity: 0.4;");
+                }
+            }
+        });
+    }
+
     public void stopGameSystems() {
         if (renderer != null) {
             renderer.stop();
@@ -315,7 +342,7 @@ public class GameController implements Reappearance {
         if (crafter.craft(recipe, profile)) {
             clientManager.getNetworkManager().sendProfileUpdate(profile);
             updateRecipeList();
-            updateInventoryList();
+            heroInventory.updateList();
         }
     }
 
