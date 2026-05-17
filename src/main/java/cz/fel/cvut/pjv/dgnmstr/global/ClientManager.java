@@ -274,6 +274,7 @@ public class ClientManager {
         return result;
     }
 
+
     public void stopManagingInputs() {
         if (inputTask != null) {
             inputTask.cancel(false);

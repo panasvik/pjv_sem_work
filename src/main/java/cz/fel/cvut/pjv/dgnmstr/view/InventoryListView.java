@@ -64,4 +64,8 @@ public class InventoryListView {
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
+
+    public ListView<Item> getItemList() {
+        return itemList;
+    }
 }
