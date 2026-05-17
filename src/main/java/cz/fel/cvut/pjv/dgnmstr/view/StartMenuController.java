@@ -49,6 +49,12 @@ public class StartMenuController {
 
     @FXML
     public void host() {
+        if (isConnected) {
+            log.info("Already connected");
+            socketToConnect.setText("Already connected");
+            return;
+        }
+
         if (!isProfileLoaded) {
             log.warning("Profile is not loaded");
             socketToConnect.setText("Load profile first");
@@ -175,6 +181,12 @@ public class StartMenuController {
 
     @FXML
     public void connect() {
+        if (isConnected) {
+            log.info("Already connected");
+            socketToConnect.setText("Already connected");
+            return;
+        }
+
         if (!isProfileLoaded) {
             log.warning("Profile is not loaded");
             socketToConnect.setText("Load profile first");

@@ -81,6 +81,22 @@ class LevelControllerTest {
     }
 
     @Test
+    void playerDiesOnlyCountsDeadPlayerOnce() {
+        PlayerProfile profile = PlayerProfile.loadFromJson();
+        Hero w1 = level.requestHeroSpawn(128, 128, profile);
+        Hero w2 = level.requestHeroSpawn(160, 128, profile);
+        lc.startLevel();
+
+        lc.playerDies(w1);
+        lc.playerDies(w1);
+
+        assertEquals(1, level.getPlayersAlive());
+        assertFalse(w1.isAlive());
+        assertTrue(w2.isAlive());
+        assertEquals(LevelState.PLAYING, level.getState());
+    }
+
+    @Test
     void checkExit() {
         PlayerProfile profile = PlayerProfile.loadFromJson();
         Hero w1 = level.requestHeroSpawn(128, 128, profile);

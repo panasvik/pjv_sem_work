@@ -63,7 +63,7 @@ class ClientManagerTest {
     void updateMob() {
         SpawnMobPayload spawnPayload = new SpawnMobPayload(2, MobStats.ZOMBIE, 150.0, 150.0, 1);
         clientManager.spawnMob(spawnPayload);
-        UpdateMobPayload updatePayload = new UpdateMobPayload(2, 200.0, 200.0, 10);
+        UpdateMobPayload updatePayload = new UpdateMobPayload(2, 200.0, 200.0, 10, 1);
         clientManager.updateMob(updatePayload);
         Entity mob = clientManager.getLc().getLevel().getEntity(2);
         assertEquals(200.0, mob.getX());
