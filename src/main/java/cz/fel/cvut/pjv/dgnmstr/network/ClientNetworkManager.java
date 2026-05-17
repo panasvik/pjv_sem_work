@@ -53,7 +53,7 @@ public class ClientNetworkManager {
     public void sendInputs(Inputs inputs) {
         if (!isRunning || inputs == null) return;
 
-        sendUDP(new DGNPacket(PacketType.UPDATE, PacketSubType.UPDATE_HERO, inputs));
+        sendUDP(new DGNPacket(PacketType.UPDATE, PacketSubType.HERO, inputs));
     }
 
     private void sendUDP(DGNPacket packet) {
@@ -131,14 +131,14 @@ public class ClientNetworkManager {
 
     private void manageNewSpawn(PacketSubType subtype, DGNPacket packet) {
         switch (subtype) {
-            case SPAWN_HERO -> manager.addPlayer((SpawnHeroPayload) packet.payload());
-            case SPAWN_MOB -> manager.spawnMob((SpawnMobPayload) packet.payload());
-            case SPAWN_BOSS -> manager.spawnBoss((SpawnBossPayload) packet.payload());
-            case SPAWN_PROJECTILE -> manager.spawnProjectile((SpawnProjectilePayload) packet.payload());
-            case SPAWN_GOLD -> manager.spawnGold((SpawnGoldPayload) packet.payload());
-            case SPAWN_GRATE -> manager.spawnGrate((SpawnGratePayload) packet.payload());
-            case SPAWN_CHEST -> manager.spawnChest((SpawnChestPayload) packet.payload());
-            case SPAWN_FENCE -> manager.spawnFence((SpawnFencePayload) packet.payload());
+            case HERO -> manager.addPlayer((SpawnHeroPayload) packet.payload());
+            case MOB -> manager.spawnMob((SpawnMobPayload) packet.payload());
+            case BOSS -> manager.spawnBoss((SpawnBossPayload) packet.payload());
+            case PROJECTILE -> manager.spawnProjectile((SpawnProjectilePayload) packet.payload());
+            case GOLD -> manager.spawnGold((SpawnGoldPayload) packet.payload());
+            case GRATE -> manager.spawnGrate((SpawnGratePayload) packet.payload());
+            case CHEST -> manager.spawnChest((SpawnChestPayload) packet.payload());
+            case FENCE -> manager.spawnFence((SpawnFencePayload) packet.payload());
         }
 
         updateCounters.put(((IDLinked) packet.payload()).id(), 0L);
@@ -151,9 +151,9 @@ public class ClientNetworkManager {
         }
 
         switch (subtype) {
-            case UPDATE_HERO -> manager.updateHero((UpdateHeroPayload) packet.payload());
-            case UPDATE_MOB -> manager.updateMob((UpdateMobPayload) packet.payload());
-            case UPDATE_PROJECTILE -> manager.updateProjectile((UpdateProjectilePayload) packet.payload());
+            case HERO -> manager.updateHero((UpdateHeroPayload) packet.payload());
+            case MOB -> manager.updateMob((UpdateMobPayload) packet.payload());
+            case PROJECTILE -> manager.updateProjectile((UpdateProjectilePayload) packet.payload());
         }
         updateCounters.put(((IDLinked) packet.payload()).id(), update_count);
 
@@ -161,8 +161,8 @@ public class ClientNetworkManager {
 
     private void manageRemove(PacketSubType subtype, DGNPacket packet) {
         switch (subtype) {
-            case REMOVE_ENTITY -> manager.removeEntity((EntityRemovePayload) packet.payload());
-            case REMOVE_PROJECTILE -> manager.removeProjectile(((EntityRemovePayload) packet.payload()));
+            case ENTITY -> manager.removeEntity((EntityRemovePayload) packet.payload());
+            case PROJECTILE -> manager.removeProjectile(((EntityRemovePayload) packet.payload()));
         }
     }
 }

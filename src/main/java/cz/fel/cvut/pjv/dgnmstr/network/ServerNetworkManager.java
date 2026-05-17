@@ -23,7 +23,7 @@ public class ServerNetworkManager {
     private static final int BUFFER_SIZE = 4096;
 
     private DatagramSocket udpSocket;
-    private ServerManager serverManager;
+    private final ServerManager serverManager;
 
     private final Map<InetSocketAddress, PlayerProfile> clients = new ConcurrentHashMap<>();
     private final Map<InetSocketAddress, Integer> clientHeroIds = new ConcurrentHashMap<>();
@@ -149,7 +149,7 @@ public class ServerNetworkManager {
     private void handleClientUpdatePacket(DGNPacket packet, InetSocketAddress source) {
         switch (packet.type()) {
             case UPDATE -> {
-                if (packet.subType() != PacketSubType.UPDATE_HERO) {
+                if (packet.subType() != PacketSubType.HERO) {
                     return;
                 }
                 handleNewInputs(source, (Inputs) packet.payload());
@@ -238,7 +238,7 @@ public class ServerNetworkManager {
     public void handleUpdateEjection(Hero hero) {
         long newCount = updateCounters.get(hero.getId()) + 1;
         updateCounters.put(hero.getId(), newCount);
-        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.UPDATE_HERO,
+        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.HERO,
                 new UpdateHeroPayload(
                         hero.getId(),
                         hero.getX(),
@@ -256,7 +256,7 @@ public class ServerNetworkManager {
     public void handleUpdateEjection(Mob mob) {
         long newCount = updateCounters.get(mob.getId()) + 1;
         updateCounters.put(mob.getId(), newCount);
-        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.UPDATE_MOB,
+        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.MOB,
                 new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp(), newCount)));
     }
 
@@ -274,7 +274,7 @@ public class ServerNetworkManager {
 
         for (Integer removedEntityId : trackedEntityIds) {
             if (!currentEntityIds.contains(removedEntityId)) {
-                broadcast(new DGNPacket(PacketType.REMOVE, PacketSubType.REMOVE_ENTITY, new EntityRemovePayload(removedEntityId)));
+                broadcast(new DGNPacket(PacketType.REMOVE, PacketSubType.ENTITY, new EntityRemovePayload(removedEntityId)));
             }
         }
         trackedEntityIds.clear();
@@ -292,7 +292,7 @@ public class ServerNetworkManager {
 
         for (Integer removedProjectileId : trackedProjectileIds) {
             if (!currentProjectileIds.contains(removedProjectileId)) {
-                broadcast(new DGNPacket(PacketType.REMOVE, PacketSubType.REMOVE_PROJECTILE, new EntityRemovePayload(removedProjectileId)));
+                broadcast(new DGNPacket(PacketType.REMOVE, PacketSubType.PROJECTILE, new EntityRemovePayload(removedProjectileId)));
             }
         }
 
@@ -312,7 +312,7 @@ public class ServerNetworkManager {
     private void sendProjectilePacket(Projectile projectile) {
         long newCount = updateCounters.get(projectile.getId()) + 1;
         updateCounters.put(projectile.getId(), newCount);
-        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.UPDATE_PROJECTILE,
+        broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.PROJECTILE,
                 new UpdateProjectilePayload(
                         projectile.getId(),
                         projectile.getX(),

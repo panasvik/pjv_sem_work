@@ -46,7 +46,7 @@ public class ServerSpawner implements EntitySpawner {
         Projectile p = new Projectile(newId, type, radius, master.getX(), master.getY(), master, damage, deltaX, deltaY, velocity);
 
         level.addProjectile(p);
-        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_PROJECTILE,
+        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.PROJECTILE,
                 new SpawnProjectilePayload(newId, type, radius, master.getX(), master.getY(), master.getId(), damage, deltaX, deltaY, velocity)
         ));
         networkServer.setNewCounter(newId);
@@ -60,7 +60,7 @@ public class ServerSpawner implements EntitySpawner {
         level.addEntity(gold);
 
         networkServer.broadcast(
-                new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_GOLD,
+                new DGNPacket(PacketType.SPAWN, PacketSubType.GOLD,
                         new SpawnGoldPayload(newId, gold.getX(), gold.getY(), amount)
                 ));
         networkServer.setNewCounter(newId);
@@ -77,7 +77,7 @@ public class ServerSpawner implements EntitySpawner {
         level.addEntity(mob);
 
 
-        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_MOB,
+        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.MOB,
                 new SpawnMobPayload(newId, stats, mob.getX(), mob.getY(), mult)
         ));
         networkServer.setNewCounter(newId);
@@ -90,7 +90,7 @@ public class ServerSpawner implements EntitySpawner {
 
         Boss boss = stats.spawn(newId, x, y, level);
         level.addEntity(boss);
-        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_BOSS,
+        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.BOSS,
                 new SpawnBossPayload(newId, boss.getX(), boss.getY(), stats)));
         networkServer.setNewCounter(newId);
         return boss;
@@ -102,7 +102,7 @@ public class ServerSpawner implements EntitySpawner {
         Grate grate = new Grate(newId, x, y, level);
         level.addEntity(grate);
 
-        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_GRATE,
+        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.GRATE,
                 new SpawnGratePayload(newId, grate.getX(), grate.getY())));
         networkServer.setNewCounter(newId);
         return grate;
@@ -115,7 +115,7 @@ public class ServerSpawner implements EntitySpawner {
         level.addEntity(chest);
         level.addChest(chest);
         log.info("send spawning chest with id " + newId);
-        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_CHEST,
+        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.CHEST,
                 new SpawnChestPayload(newId, x, y, inv)));
         networkServer.setNewCounter(newId);
     }
@@ -126,7 +126,7 @@ public class ServerSpawner implements EntitySpawner {
         Hero w1 = new Warrior(newId, profile, x, y, level);
         level.addPlayer(w1);
 
-        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_HERO, new
+        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.HERO, new
                 SpawnHeroPayload(newId, w1.getX(), w1.getY(), profile)));
         networkServer.setNewCounter(newId);
         return w1;
@@ -137,7 +137,7 @@ public class ServerSpawner implements EntitySpawner {
         int newId= idGen.getNextId();
         Fence fence = new Fence(newId, x, y, level);
         level.addEntity(fence);
-        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.SPAWN_FENCE,
+        networkServer.broadcast(new DGNPacket(PacketType.SPAWN, PacketSubType.FENCE,
                 new SpawnFencePayload(newId, x, y)));
         networkServer.setNewCounter(newId);
     }
