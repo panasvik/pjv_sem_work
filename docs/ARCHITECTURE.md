@@ -156,7 +156,22 @@ For each spawn, `ServerSpawner`:
 
 This keeps server and client level copies aligned.
 
+## Fighting
+
+Players are able to attack enemies in +- 90-degree angle from the mouse direction from the player.
+When taking damage, player can dodge(do not take damage at all), parry(deal damage according to weapon damage and not take damage from enemy hit), or defend(reduce damage to be taken in half) 
+It also can use ultimate power.
+In the end of each Arena player will meet a miniboss(simple mob with better stats), and also it will meet a Boss at the end of the level.
+Miniboss is a powerful entity with big stats, faster attacks.
+When fighting a boss, boss can charge it's ultimate.
+
+
 ## Networking
+
+### Handshake:
+When user presses 'Connect' button, ClientNetworkManager sends IP and local profile to the ServerNetworkManager.
+Then ServerNetworkManager stores the ip and profile in a hashmap. When host presses 'Start' button, server sends seed, spawns and local hero ids consequently to each player.
+After that the game starts and server sends LEVEL_PLAYING to all clients, declaring the start of the game.
 
 Networking uses UDP and serialized `DGNPacket` objects.
 
