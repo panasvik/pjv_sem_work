@@ -81,6 +81,9 @@ public class GameController implements Reappearance {
     @FXML
     private Label tutorialMessage;
 
+    private InventoryListView heroInventory;
+    private InventoryListView chestInventory;
+
     private final TutorialText[] tutorialValues = TutorialText.values();
     private int currentTutorialIndex = 0;
 
@@ -109,23 +112,13 @@ public class GameController implements Reappearance {
     @Override
     public void reappear() {
         startWhenClientStateReady();
-        fillList(inventoryList);
-        fillList(chestList);
+        heroInventory = new InventoryListView(inventoryList, inventoryView);
+        heroInventory.setInventory(gameManager.getClientManager().getMyProfile().getInventory());
+        heroInventory.fillList();
+        heroInventory.updateList();
+        chestInventory = new InventoryListView(chestList, chestView);
+        chestInventory.fillList();
         setupListInteractions();
-    }
-
-    private void fillList(ListView<Item> itemList) {
-        itemList.setCellFactory(i -> new ListCell<>() {
-            @Override
-            protected void updateItem(Item item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getName());
-                }
-            }
-        });
     }
 
     private void startWhenClientStateReady() {
@@ -178,14 +171,10 @@ public class GameController implements Reappearance {
         }
         menuToggleHandler = event -> {
             if (event.getCode() == KeyCode.I) {
-                if (inventoryView.isVisible()) {
-                    hideInventory();
-                } else {
-                    showInventory();
-                }
+                heroInventory.toggle();
             } else if (event.getCode() == KeyCode.F) {
                 if (chestView.isVisible()) {
-                    hideChest();
+                    chestInventory.hide();
                 } else {
                     showChest();
                 }
@@ -206,8 +195,8 @@ public class GameController implements Reappearance {
         if (healthBar != null) {
             healthBar.progressProperty().unbind();
         }
-        hideInventory();
-        hideChest();
+        heroInventory.hide();
+        chestInventory.hide();
         currentChest = null;
         closeTutorial();
     }
@@ -220,39 +209,18 @@ public class GameController implements Reappearance {
         swordLabel.setText(localHero.getProfile().getWeapon().getName());
         maxHealth.set(localHero.getMaxHP());
         currentHealth.set(localHero.getHp());
+        heroInventory.updateList();
+        if (currentChest == null) {
+            return;
+        }
+        chestInventory.updateList(currentChest.getInventory());
     }
 
     public void showChest() {
         currentChest = clientManager.openNearestChest();
         if (currentChest == null) return;
-        updateCurChestList();
+        chestInventory.updateList(currentChest.getInventory());
         chestView.setVisible(true);
-    }
-
-    public void hideChest() {
-        chestView.setVisible(false);
-    }
-
-    public void showInventory() {
-        updateInventoryList();
-        inventoryView.setVisible(true);
-    }
-
-    private void updateInventoryList() {
-        Inventory inventory = clientManager.getMyProfile().getInventory();
-        ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
-        inventoryList.setItems(items);
-    }
-
-    private void updateCurChestList() {
-        Inventory inventory = currentChest.getInventory();
-        ObservableList<Item> items = FXCollections.observableArrayList(inventory.getInvent());
-        chestList.setItems(items);
-    }
-
-    @FXML
-    public void hideInventory() {
-        inventoryView.setVisible(false);
     }
 
     private void setupListInteractions() {
@@ -281,23 +249,22 @@ public class GameController implements Reappearance {
 
     public void useItem(Item selectedItem) {
         if (clientManager.useItem(selectedItem)) {
-            updateInventoryList();
             updateUI();
         }
     }
 
     public void takeItemFromChest(Item selectedItem) {
         clientManager.getMyProfile().getInventory().addItem(selectedItem);
-        updateInventoryList();
+        heroInventory.updateList();
         currentChest.getInventory().remove(selectedItem);
-        updateCurChestList();
+        chestInventory.updateList(currentChest.getInventory());
     }
 
     public void storeItemInChest(Item selectedItem) {
         clientManager.getMyProfile().getInventory().remove(selectedItem);
-        updateInventoryList();
+        heroInventory.updateList();
         currentChest.getInventory().addItem(selectedItem);
-        updateCurChestList();
+        chestInventory.updateList(currentChest.getInventory());
     }
 
     public void updateHeathBar(int currHP, int maxHP) {

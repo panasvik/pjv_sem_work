@@ -8,6 +8,7 @@ import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 
 import java.io.*;
 import java.net.*;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
@@ -78,10 +79,12 @@ public class ClientNetworkManager {
                 DatagramPacket datagram = new DatagramPacket(buffer, buffer.length);
                 udpSocket.receive(datagram);
 
-                DGNPacket packet = (DGNPacket) SerializationUtils.deserialize(datagram.getData());
+                DGNPacket packet = (DGNPacket) SerializationUtils.deserialize(buffer);
                 handleIncomingPacket(packet);
             } catch (Exception e) {
-                if (isRunning) log.warning("Error reading UDP stream: " + e.getMessage());
+                if (isRunning) {
+                    log.warning("Error reading UDP stream: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+                }
             }
         }
     }
@@ -113,12 +116,8 @@ public class ClientNetworkManager {
         PlayerProfilePayload payload = new PlayerProfilePayload(profile);
         DGNPacket packet = new DGNPacket(PacketType.PROFILE_UPDATE, payload);
         sendUDP(packet);
-        System.out.println("sent profile with " + profile.getGold() + " gold in it");
     }
 
-    public ClientManager getManager() {
-        return manager;
-    }
 
     private void manageNewLevelState(DGNPacket packet) {
         LevelStatePayload payload = (LevelStatePayload) packet.payload();
@@ -145,8 +144,10 @@ public class ClientNetworkManager {
     }
 
     private void manageUpdate(PacketSubType subtype, DGNPacket packet) {
+        int id = ((IDLinked) packet.payload()).id();
         long update_count = ((UpdateCounter) packet.payload()).counter();
-        if (updateCounters.get(((IDLinked) packet.payload()).id()) > update_count) {
+        long lastUpdate = updateCounters.getOrDefault(id, 0L);
+        if (lastUpdate > update_count) {
             return;
         }
 
@@ -155,7 +156,7 @@ public class ClientNetworkManager {
             case MOB -> manager.updateMob((UpdateMobPayload) packet.payload());
             case PROJECTILE -> manager.updateProjectile((UpdateProjectilePayload) packet.payload());
         }
-        updateCounters.put(((IDLinked) packet.payload()).id(), update_count);
+        updateCounters.put(id, update_count);
 
     }
 
