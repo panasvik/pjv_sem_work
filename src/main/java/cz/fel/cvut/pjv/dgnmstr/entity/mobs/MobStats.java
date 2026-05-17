@@ -1,7 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-
+/**
+ * Enumeration of mob stats.
+ */
 public enum MobStats {
     ZOMBIE(70, 1, 20, 20, 50,26) {
         @Override

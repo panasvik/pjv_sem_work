@@ -7,7 +7,9 @@ import javafx.scene.input.MouseButton;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
-
+/**
+ * Input handler.
+ */
 public class InputHandler {
 
     private final Scene scene;
@@ -22,6 +24,10 @@ public class InputHandler {
 
     private static final Logger log = Logger.getLogger(InputHandler.class.getName());
 
+    /**
+     * Creates a new InputHandler.
+     * @param scene the JavaFX scene
+     */
     public InputHandler(Scene scene) {
         this.scene = scene;
         setInputHandlers();

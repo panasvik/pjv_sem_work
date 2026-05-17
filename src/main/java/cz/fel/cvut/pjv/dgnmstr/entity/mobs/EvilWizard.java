@@ -5,8 +5,18 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 
+/**
+ * Evil wizard.
+ */
 public class EvilWizard extends RangedMob{
-    public EvilWizard(int id,double positionX, double positionY, Level level) {
+    /**
+     * Creates a new EvilWizard.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     */
+    public EvilWizard(int id, double positionX, double positionY, Level level) {
         super(id, MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
               MobStats.EVIL_WIZARD.getSpeed(),
               positionX, positionY,
@@ -17,6 +27,14 @@ public class EvilWizard extends RangedMob{
               Faction.MONSTER,
               level, 1);
     }
+    /**
+     * Creates a new EvilWizard.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     * @param multiplicator multiplicator
+     */
     public EvilWizard(int id, double positionX, double positionY, Level level, int multiplicator) {
         super(id, MobStats.EVIL_WIZARD.getHp(level.getDifficulty().getStatsMult()),
                 MobStats.EVIL_WIZARD.getSpeed(),

@@ -13,7 +13,9 @@ import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 
 import java.util.List;
 import java.util.logging.Logger;
-
+/**
+ * Arena controller.
+ */
 public class ArenaController implements Updatable {
     private double spawnTime = 0;
     private final double spawnDelay;
@@ -26,7 +28,11 @@ public class ArenaController implements Updatable {
     private record MobSpawnData(MobStats mobStats, double x, double y){}
 
     private static final Logger log = Logger.getLogger(ArenaController.class.getName());
-
+    /**
+     * Creates a new ArenaController.
+     * @param arena the arena
+     * @param level the level this belongs to
+     */
 
     public ArenaController(Arena arena, Level level) {
         this.arena = arena;
@@ -35,7 +41,10 @@ public class ArenaController implements Updatable {
     }
 
 
-
+    /**
+     * Shifts state by one game tick.
+     * @param deltaTime delta time
+     */
     @Override
     public void update(double deltaTime) {
         currentMobCount = arena.getActiveMobs().size();

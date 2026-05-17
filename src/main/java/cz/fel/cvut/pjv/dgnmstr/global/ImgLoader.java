@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Img loader.
+ */
 public class ImgLoader {
     private static final Map<ImgId, Image> images = new HashMap<>();
     public static void loadAll(){

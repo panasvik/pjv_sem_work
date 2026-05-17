@@ -4,7 +4,9 @@ import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.view.GameController;
 import cz.fel.cvut.pjv.dgnmstr.view.GameRenderer;
-
+/**
+ * Game manager.
+ */
 public class GameManager {
     private static GameManager instance;
     public static GameManager getInstance() {

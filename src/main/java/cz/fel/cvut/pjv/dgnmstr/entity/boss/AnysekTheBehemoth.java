@@ -15,7 +15,15 @@ public class AnysekTheBehemoth extends Boss{
     private int damageMult = 2;
 
     private double rageTimer = 0.0;
-    private static final double RAGE_DURATION = 10.0; // doladit
+    private static final double RAGE_DURATION = 10.0;
+
+    /**
+     * Creates a new AnysekTheBehemoth.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     */
     public AnysekTheBehemoth(int id, double positionX, double positionY, Level level) {
         super(id, BossStats.ANYSEK_THE_BEHEMOTH.getHp(level.getDifficulty().getStatsMult()),
               BossStats.ANYSEK_THE_BEHEMOTH.getSpeed(),
@@ -66,6 +74,9 @@ public class AnysekTheBehemoth extends Boss{
         this.rage = false;
     }
 
+    /**
+     * viz. Boss.java
+     */
     @Override
     public void update(double deltaTime) {
         if(!isAlive()){return;}

@@ -4,12 +4,26 @@ package cz.fel.cvut.pjv.dgnmstr.item.armor;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
 import cz.fel.cvut.pjv.dgnmstr.item.AddableItem;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
-
+/**
+ * Armor piece.
+ */
 public abstract class ArmorPiece extends AddableItem {
     private int hp, defence, dexterity, speed;
     private final ArmorPieceType type;
     private final Role role;
 
+    /**
+     * Creates a new ArmorPiece.
+     *
+     * @param name display name
+     * @param price price value
+     * @param role the chosen role
+     * @param type the type
+     * @param speed movement speed
+     * @param dexterity dexterity
+     * @param defence defence
+     * @param hp hit points value
+     */
     public ArmorPiece(String name, int price, Role role, ArmorPieceType type, int speed, int dexterity, int defence, int hp) {
         super(name, price);
         this.role = role;

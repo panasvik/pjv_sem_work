@@ -9,7 +9,10 @@ import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
 import java.util.logging.Logger;
-
+/**
+ * A moving attack object (arrow, spell) that travels until
+ * it hits something.
+ */
 public class Projectile implements Updatable, Positionable {
     private final int radius;
     private final Entity master;
@@ -91,6 +94,10 @@ public class Projectile implements Updatable, Positionable {
         return velocity;
     }
 
+    /**
+     * Resolves the projectile's impact on what it hit.
+     * @param targets targets
+     */
     public void explodeOn(List<Entity> targets) {
         if (targets == null) {
             return;

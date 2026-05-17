@@ -17,7 +17,10 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
-
+/**
+ * Server side of the UDP networking — receives client packets
+ * and dispatches them to game logic.
+ */
 public class ServerNetworkManager {
     private static final Logger log = Logger.getLogger(ServerNetworkManager.class.getName());
 
@@ -36,6 +39,11 @@ public class ServerNetworkManager {
     private boolean isGameStarted = false;
     private final int udpPort;
 
+    /**
+     * Creates a new ServerNetworkManager.
+     * @param udpPort udp port
+     * @param serverManager server manager
+     */
     public ServerNetworkManager(int udpPort, ServerManager serverManager) {
         this.udpPort = udpPort;
         this.serverManager = serverManager;

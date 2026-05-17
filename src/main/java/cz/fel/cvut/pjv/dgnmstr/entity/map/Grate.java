@@ -6,8 +6,17 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 
+/**
+ * Grate.
+ */
 public class Grate extends Entity {
-
+    /**
+     * Creates a new Grate.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     */
     public Grate(int id, double positionX, double positionY, Level level) {
         super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getHalfHitBox(), Faction.NEUTRAL, level);
     }

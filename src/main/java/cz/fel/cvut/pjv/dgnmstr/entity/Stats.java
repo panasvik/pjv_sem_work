@@ -1,7 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.entity;
 
 import static cz.fel.cvut.pjv.dgnmstr.entity.Faction.*;
-
+/**
+ * Predefined immutable stat presets for special, non-combat entities.
+ */
 public enum Stats {
     FENCE(50, 0, NEUTRAL, 14),
     GOD(1, 0, NEUTRAL, 10);

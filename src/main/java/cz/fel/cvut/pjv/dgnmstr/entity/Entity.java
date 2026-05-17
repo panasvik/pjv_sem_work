@@ -7,6 +7,12 @@ import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 
 import java.util.logging.Logger;
 
+/**
+ * Base class for every active object in the game world (heroes,
+ * mobs, bosses, projectiles). Holds shared state such as position,
+ * health, faction and the level reference, and defines the common
+ * combat pipeline. Subclasses provide damage handling and sprite id.
+ */
 public abstract class Entity implements Updatable, Positionable {
     private int maxHP;
     private int hp;
@@ -20,6 +26,17 @@ public abstract class Entity implements Updatable, Positionable {
     private final int id;
     private static final Logger log = Logger.getLogger(Entity.class.getName());
 
+    /**
+     * Creates a new Entity.
+     * @param id unique identifier
+     * @param hp hit points value
+     * @param speed movement speed
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param halfSize half the collision box size
+     * @param faction side this belongs to
+     * @param level the level this belongs to
+     */
     public Entity(int id, int hp, int speed, double positionX, double positionY, double halfSize, Faction faction, Level level) {
         this.maxHP = hp;
         this.hp = hp;

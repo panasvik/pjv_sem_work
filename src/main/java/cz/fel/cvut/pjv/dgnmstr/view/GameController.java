@@ -33,6 +33,10 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 
+/**
+ * JavaFX controller for the in-level screen. Wires keyboard
+ * input and the inventory/chest/crafting panels to game logic.
+ */
 public class GameController implements Reappearance {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
     private final GameManager gameManager;

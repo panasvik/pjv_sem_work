@@ -15,14 +15,22 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Game renderer.
+ */
 public class GameRenderer extends AnimationTimer {
-    // this class should render level view
     private final Level level;
     private final Canvas canvas;
     private final GraphicsContext gc;
     private final Hero localHero;
     private final GameManager gameManager;
 
+    /**
+     * Creates a new GameRenderer.
+     * @param canvas canvas
+     * @param level the level this belongs to
+     * @param localHero local hero
+     */
     public GameRenderer(Canvas canvas, Level level, Hero localHero) {
         this.canvas = canvas;
         this.level = level;

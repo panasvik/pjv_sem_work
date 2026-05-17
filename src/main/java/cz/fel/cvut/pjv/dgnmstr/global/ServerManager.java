@@ -18,7 +18,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
-
+/**
+ * Server-side authority over game state. The server owns the
+ * truth for HP and applies item/heal effects.
+ */
 public class ServerManager {
     private LevelController lc;
     private final DungeonGenerator generator;
@@ -33,7 +36,10 @@ public class ServerManager {
     private final static Logger log = Logger.getLogger(ServerManager.class.getName());
 
 
-
+    /**
+     * Creates a new ServerManager.
+     * @param port the network port
+     */
     public ServerManager(int port) {
         generator = new DungeonGenerator();
         this.snm = new ServerNetworkManager(port, this);

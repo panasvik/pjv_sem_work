@@ -23,7 +23,7 @@ import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import java.util.logging.Logger;
 
 /**
- *
+ *Server spawner
  */
 public class ServerSpawner implements EntitySpawner {
     private final Level level;
@@ -33,6 +33,12 @@ public class ServerSpawner implements EntitySpawner {
 
     private final ServerNetworkManager networkServer;
 
+    /**
+     * Server spawner.
+     * @param level the level this belongs to
+     * @param idGen id gen
+     * @param networkServer network server
+     */
     public ServerSpawner(Level level, IDGenerator idGen, ServerNetworkManager networkServer) {
         this.level = level;
         this.idGen = idGen;

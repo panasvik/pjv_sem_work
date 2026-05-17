@@ -11,7 +11,9 @@ import java.util.logging.Logger;
 
 
 import static cz.fel.cvut.pjv.dgnmstr.entity.map.Chest.MAX_DIST_TO_OPEN;
-
+/**
+ * My math.
+ */
 public class MyMath {
 
     private static final Logger log = Logger.getLogger(MyMath.class.getName());

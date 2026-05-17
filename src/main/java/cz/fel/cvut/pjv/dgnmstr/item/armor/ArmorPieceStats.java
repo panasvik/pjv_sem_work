@@ -1,7 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.item.armor;
 
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Role;
-
+/**
+ * Enumeration of armor piece stats.
+ */
 public enum ArmorPieceStats {
     BASIC_WARRIOR_CHESTPLATE(100, 20, 0, 10, 20, Role.WARRIOR,"Basic Warrior Chestplate"),
     BASIC_WARRIOR_HELMET(70, 10, 0, 15, 20, Role.WARRIOR, "Basic Warrior Helmet"),

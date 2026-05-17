@@ -8,8 +8,25 @@ import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
-
+/**
+ * Mob that attacks by touching the player at close range.
+ */
 public abstract class MeleeMob extends Mob implements CanAttackMelee {
+    /**
+     * Creates a new MeleeMob.
+     * @param id unique identifier
+     * @param hp hit points value
+     * @param speed movement speed
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param halfHitBox half the collision box size
+     * @param damage amount of damage
+     * @param reach reach
+     * @param gold amount of gold
+     * @param faction side this belongs to
+     * @param level the level this belongs to
+     * @param multiplicator multiplicator
+     */
     public MeleeMob(int id, int hp, int speed, double positionX, double positionY, double halfHitBox, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
         super(id, hp, speed, positionX, positionY, halfHitBox, damage, reach, gold, faction, level, multiplicator);
     }
@@ -23,6 +40,13 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
         return distance <= (double) this.getReach() * this.getReach();
     }
 
+    /**
+     * Whether the target lies within the attack arc.
+     * @param entity the entity
+     * @param curX cur x
+     * @param curY cur y
+     * @return true on success, false otherwise
+     */
     @Override
     public boolean isInAngle(Entity entity, double curX, double curY) {
         double ang1 = Math.atan2(curY - this.getY(), curX - this.getX());

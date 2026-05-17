@@ -9,7 +9,9 @@ public enum DifficultyStats {
     private final int timePeriod;
     private final int totalSpawns;
     private final int statsMult;
-
+    /**
+     * Enumeration of difficulty stats.
+     */
     DifficultyStats(int mobCap, int initCap, int spawnRate, int timePeriod, int totalSpawns, int statsMult) {
         this.mobCap = mobCap;
         this.initCap = initCap;

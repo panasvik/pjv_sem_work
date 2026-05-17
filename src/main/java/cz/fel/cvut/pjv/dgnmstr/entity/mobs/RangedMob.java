@@ -8,7 +8,9 @@ import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 
 import java.util.List;
 import java.util.Random;
-
+/**
+ * Mob that attacks from a distance by firing projectiles.
+ */
 public abstract class RangedMob extends Mob{
 
     protected Hero target = null;
@@ -16,7 +18,21 @@ public abstract class RangedMob extends Mob{
 
     protected static final double COOLDOWN_TIME = 2.0;
     protected static final double DANGEROUS_DISTANCE = 0.5;
-
+    /**
+     * Creates a new RangedMob.
+     * @param id unique identifier
+     * @param hp hit points value
+     * @param speed movement speed
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param halfHitBox half the collision box size
+     * @param damage amount of damage
+     * @param reach reach
+     * @param gold amount of gold
+     * @param faction side this belongs to
+     * @param level the level this belongs to
+     * @param multiplicator multiplicator
+     */
     public RangedMob(int id, int hp, int speed, double positionX, double positionY, double halfHitBox, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
         super(id, hp, speed, positionX, positionY, halfHitBox, damage, reach, gold, faction, level, multiplicator);
     }

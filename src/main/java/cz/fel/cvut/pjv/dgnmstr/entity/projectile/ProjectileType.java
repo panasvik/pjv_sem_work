@@ -1,7 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.entity.projectile;
 
 import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
-
+/**
+ * Enumeration of projectile type.
+ */
 public enum ProjectileType {
     ARROW(ImgId.ARROW),
     FIREBALL(ImgId.FIREBALL),

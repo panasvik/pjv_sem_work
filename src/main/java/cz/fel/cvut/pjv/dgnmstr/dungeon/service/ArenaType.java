@@ -1,13 +1,14 @@
 package cz.fel.cvut.pjv.dgnmstr.dungeon.service;
 
-import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
-import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
+
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
-import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Zombie;
+
 
 import java.util.List;
 import java.util.logging.Logger;
-
+/**
+ * Enumeration of arena type.
+ */
 public enum ArenaType {
     GOBLIN_CAMP(List.of(
             new MobSpawnRate(MobStats.ZOMBIE, 0.3),
@@ -44,7 +45,11 @@ public enum ArenaType {
     ArenaType(List<MobSpawnRate> mobSpawnRates) {
         this.mobSpawnRates = mobSpawnRates;
     }
-
+    
+    /**
+     * Get random mob stats.
+     * @return the random mob stats
+     */
     public MobStats getRandomMobStats() {
         double chance = Math.random();
         double sum = 0;
@@ -54,6 +59,6 @@ public enum ArenaType {
                 return rate.type();
             }
         }
-        return MobStats.ZOMBIE; // Фолбек
+        return MobStats.ZOMBIE;
     }
 }
