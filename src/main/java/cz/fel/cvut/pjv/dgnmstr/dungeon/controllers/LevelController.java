@@ -32,6 +32,8 @@ public class LevelController implements Updatable {
     public void startLevel() {
         level.setState(LevelState.PLAYING);
         level.setPlayersAlive(level.getPlayers().size());
+        log.info("players alive: " + level.getPlayersAlive());
+
         spawnChests();
         spawnFences();
         activateNextArena();
@@ -77,8 +79,8 @@ public class LevelController implements Updatable {
     }
 
     private void checkPlayers() {
-        for (int i = level.getPlayers().size() - 1; i >= 0; i--) {
-            checkPlayer(level.getPlayers().get(i));
+        for (Hero hero: level.getPlayers()) {
+            checkPlayer(hero);
         }
     }
 
@@ -91,7 +93,7 @@ public class LevelController implements Updatable {
 
     public void playerDies(Hero deadPlayer) {
         deadPlayer.die();
-        level.setPlayersAlive(level.getPlayersAlive() - 1);
+        level.setPlayersAlive(countAlivePlayers());
         log.info("Player dead, active players:" + level.getPlayersAlive());
 
         if (level.getPlayersAlive() <= 0) {
@@ -99,6 +101,16 @@ public class LevelController implements Updatable {
         } else {
             level.removeEntity(deadPlayer);
         }
+    }
+
+    private int countAlivePlayers() {
+        int alivePlayers = 0;
+        for (Hero hero : level.getPlayers()) {
+            if (hero.isAlive()) {
+                alivePlayers++;
+            }
+        }
+        return alivePlayers;
     }
 
     private void spawnBoss() {
