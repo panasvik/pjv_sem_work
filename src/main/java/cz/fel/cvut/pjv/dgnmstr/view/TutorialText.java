@@ -11,6 +11,8 @@ public enum TutorialText {
     CHESTS("You can open a nearby chest for " + Chest.PRICE_TO_OPEN_CHEST + " gold by pressing F. Once a chest is unlocked, it does not cost gold to open it again.", "CHESTS"),
     ITEMS("Transfer items between an open chest and your inventory by double-clicking on them. Both your inventory and chests have a maximum capacity of " + Inventory.MAX_SIZE + " items.", "ITEM INTERACTION"),
     ARMOR_WEAPON("When your inventory is open (and no chest is open), you can equip weapons and armor by double-clicking on the item.", "EQUIPMENT"),
+    CRAFTING("When you press the 'C' key, you can craft potions by items in your inventory. Crafting is only possible when you have enough resources in your inventory.", "CRAFTING"),
+    CRAFT("You can craft by double-clicking the recipe, on which you have enough resources", "CRAFTING"),
     ARENA("When you enter an Arena, the grates will close, trapping you inside! To progress, you must defeat all the enemies. Once all regular enemies are cleared, a powerful enemy will spawn. Defeat it to reopen the grates.", "ARENA COMPLETION"),
     LEVEL("After all arenas are cleared, the final Boss will spawn in the last Arena. Defeat the Boss to complete the level by stepping on the exit tiles at the far end.", "LEVEL COMPLETION");
 

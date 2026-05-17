@@ -62,6 +62,7 @@ Logs are written to `logs/game.log`.
 - `E` - activate the ultimate ability
 - `F` - interact with nearby chests
 - `I` - open the inventory
+- `C` - open crafting
 - Double-click items - transfer items between inventory and chest, or equip gear when no chest is open
 ## Architecture
 
