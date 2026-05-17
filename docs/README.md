@@ -51,8 +51,10 @@ Logs are written to `logs/game.log`.
    - Use `Host` to start a local server and connect the current client to it. If no host or port is entered, the menu uses `127.0.0.1:5000`.
    - Use `Connect` to connect to an existing host and port.
 4. Press `Start` after the profile is loaded and the client is connected.
-5. Play through arenas, defeat mobs and bosses, collect gold, open chests via the gold acquired, and complete the level.
-
+5. Look through Tutorial to see precise instructions on how to play
+6. Play through arenas, defeat mobs and bosses, collect gold, open chests via the gold acquired, and complete the level.
+![start-menu.png](start-menu.png)
+![level.png](level.png)
 ### Controls
 
 - `W`, `A`, `S`, `D` - move 
@@ -61,7 +63,6 @@ Logs are written to `logs/game.log`.
 - `F` - interact with nearby chests
 - `I` - open the inventory
 - Double-click items - transfer items between inventory and chest, or equip gear when no chest is open
-
 ## Architecture
 
 For a detailed technical breakdown, see [ARCHITECTURE.md](ARCHITECTURE.md).

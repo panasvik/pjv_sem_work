@@ -23,7 +23,6 @@ Runtime coordination.
 - `ServerManager` creates the authoritative level, starts the server update loop, applies inputs, and triggers network updates.
 - `ClientManager` maintains the client-side level copy, handles incoming packets, sends inputs, and sends profile changes.
 - `InputHandler` converts JavaFX keyboard/mouse events into `Inputs`.
-
 ### `view`
 
 JavaFX UI and rendering.
@@ -41,7 +40,8 @@ World structure.
 - `Arena` represents one room with bounds, type, grates, active mobs, and arena state.
 - `DungeonGenerator` builds a deterministic level from a seed and text arena templates.
 - `EntitySpawner` abstracts entity creation.
-
+![level-arch.png](level-arch.png)
+![dungeon.png](dungeon.png)
 ### `dungeon.controllers`
 
 Game state machines.
@@ -55,7 +55,7 @@ Runtime game objects.
 
 - `Entity` is the base class for HP, position, faction, collision-aware movement, damage handling, and rendering ID.
 - Subpackages contain heroes, mobs, bosses, projectiles, map objects, and behavior interfaces.
-
+![entity.png](entity.png)
 ### `item` and `player`
 
 Player state and equipment.
@@ -63,7 +63,7 @@ Player state and equipment.
 - `PlayerProfile` stores role, armor, weapon, inventory, and gold.
 - `PlayerStats` is derived from the profile and synchronized into the hero.
 - `Inventory`, weapons, armor, and item classes define loot and equipment behavior.
-
+![item-inventory-profile.png](item-inventory-profile.png)
 ### `network`
 
 UDP packet synchronization.
@@ -73,7 +73,8 @@ UDP packet synchronization.
 - `ClientNetworkManager` sends handshake/input/profile packets and dispatches incoming packets to `ClientManager`.
 - `ServerSpawner` creates server-side entities and broadcasts matching spawn packets.
 - `payloads` contains packet records for seeds, IDs, spawns, updates, removals, states, and profile/stat sync.
-
+  ![client.png](client.png)
+- ![server.png](server.png)
 ## Startup Flow
 
 1. `DungeonMasterLauncher` launches `GameApp`.
