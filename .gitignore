@@ -15,3 +15,4 @@ target/
 *.ipr
 
 /logs/game.log
+/dependency-reduced-pom.xml
