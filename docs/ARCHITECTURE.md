@@ -34,35 +34,44 @@ JavaFX UI and rendering.
 
 ### `dungeon`
 
-World structure.
+World structure and runtime collections.
 
-- `Level` stores the tile map, arenas, entities, players, projectiles, chests, current state, and lookup maps.
+- `Level` is the central aggregate holding the simulation state. It maintains collections of `Entity`, `Hero`, `Arena`, `Projectile`, and `Chest`. For rapid access during network synchronization, it also tracks entities and projectiles in `ConcurrentHashMap`s keyed by their ID. It provides crucial geometric and collision checks (e.g., `isWalkable`, `getCollisions`, `isWalkableEntity`) utilizing bounding box intersections (AABB).
 - `Arena` represents one room with bounds, type, grates, active mobs, and arena state.
 - `DungeonGenerator` builds a deterministic level from a seed and text arena templates.
-- `EntitySpawner` abstracts entity creation.
+- `EntitySpawner` abstracts entity creation, resolving dependencies to inject models properly and issuing network requests for synchronized spawns.
+- `DifficultyStats` configures scaling (e.g., mob spawn rates, boss spawn probabilities).
 ![level-arch.png](level-arch.png)
 ![dungeon.png](dungeon.png)
+
 ### `dungeon.controllers`
 
 Game state machines.
 
 - `LevelController` updates entities/projectiles, checks player death, activates arenas, spawns the final boss, and detects victory.
-- `ArenaController` starts arena fights, closes/open grates, spawns waves, spawns miniboss enemies, and marks arenas cleared.
+- `ArenaController` starts arena fights, closes/opens grates, spawns waves, spawns miniboss enemies, and marks arenas cleared.
 
 ### `entity`
 
-Runtime game objects.
+Runtime game objects. 
 
-- `Entity` is the base class for HP, position, faction, collision-aware movement, damage handling, and rendering ID.
-- Subpackages contain heroes, mobs, bosses, projectiles, map objects, and behavior interfaces.
+- `Entity` is the base abstract class extending `Updatable` and `Positionable`. It encapsulates core attributes: HP, maxHP, position, bounding box (halfSize), movement speed, faction (e.g., Neutral, Enemy, Hero), and rendering ID. It resolves taking damage natively, allowing entities to parry or defend (based on overrides) and handles collisions.
+- Subpackages define specific behaviors:
+  - `hero`: Implementations of playable characters (e.g., `Hero`, `Warrior`). They rely on stats derived from `PlayerProfile`.
+  - `mobs` / `boss`: AI-controlled antagonists. Bosses manage specific encounter mechanics and specialized loot/drops.
+  - `projectile`: `Projectile` and `ProjectileType` govern trajectory, speed, radius, and damage upon impact.
+  - `map`: Static objects like `Chest`, `Grate`, and `Fence`.
+  - `interfaces`: Behavior composition (`CanAttack`, `CanDefend`, `CanUltimate`, `Interactable`).
 ![entity.png](entity.png)
+
 ### `item` and `player`
 
-Player state and equipment.
+Player state, inventory management, and equipment.
 
-- `PlayerProfile` stores role, armor, weapon, inventory, and gold.
-- `PlayerStats` is derived from the profile and synchronized into the hero.
-- `Inventory`, weapons, armor, and item classes define loot and equipment behavior.
+- `PlayerProfile` represents the persistent player data. It tracks `Role`, `gold`, `Inventory`, and equipped `ArmorPiece`s mapped by `ArmorPieceType` (Helmet, Chestplate, Pants), and `Weapon`. It can be serialized and deserialized using Jackson (`loadFromJson`, `saveToJson`).
+- `PlayerStats` is derived dynamically from `PlayerProfile`. It aggregates defense, dexterity, speed, and health bonuses from equipped armor, and damage, range, and dexterity from equipped weapons. This structure is injected directly into `Hero` child instances during gameplay.
+- `Item` is the abstract representation of loot. Subclasses define `Weapon` and `ArmorPiece`, providing strict rules about when and how they are equipped (e.g., verifying if the player's role matches the equipment type before replacing previous gear).
+- `Inventory` manages collections of `Item` instances, controlling addition and removal up to a configured maximum capacity.
 ![item-inventory-profile.png](item-inventory-profile.png)
 ### `network`
 
@@ -73,8 +82,6 @@ UDP packet synchronization.
 - `ClientNetworkManager` sends handshake/input/profile packets and dispatches incoming packets to `ClientManager`.
 - `ServerSpawner` creates server-side entities and broadcasts matching spawn packets.
 - `payloads` contains packet records for seeds, IDs, spawns, updates, removals, states, and profile/stat sync.
-  ![client.png](client.png)
-- ![server.png](server.png)
 ## Startup Flow
 
 1. `DungeonMasterLauncher` launches `GameApp`.
@@ -93,13 +100,13 @@ UDP packet synchronization.
 The generated level contains:
 
 - Three `64 x 64` arenas.
-- Two corridors between arenas.
+- Two `20 x 7` corridors between arenas.
 - Arena templates loaded from `src/main/resources/cz/fel/cvut/pjv/dgnmstr/dungeon`.
 - Tile markers for walls, floors, spawn points, chests, fences, and exit tiles.
 
 Only the base map is reproduced from the seed. Entities are synchronized separately through network spawn packets.
 
-## Server Simulation Loop
+## Server Loop
 
 `ServerManager` runs the authoritative update loop every 16 ms.
 
@@ -112,6 +119,13 @@ Each tick:
 5. Broadcasts hero, mob, and projectile updates.
 6. Broadcasts removals for entities/projectiles that disappeared.
 
+ClientNetworkManager also runs a listen loop, where it accepts profile and input packets and updates the server-side model accordingly
+
+## Client Loop
+Client loop runs in tree separate threads.
+1. ClientNetworkManager runs listenUdpLoop and gives them to ClientManager, that updates the model accordingly.
+2. ClientManager sends inputs from InputHandler to the server
+3. Renderer renders current model with AnimationTimer.
 Client movement is input-driven.
 
 ## State Machines
@@ -189,6 +203,9 @@ Server to client:
 - `UPDATE_*` synchronizes hero, mob, and projectile state.
 - `ENTITY_REMOVE` and `REMOVE_PROJECTILE` remove deleted objects.
 - `LEVEL_STATE`, `ARENA_STATE`, and `SYNC_STATS` synchronize game state and derived stats.
+
+  ![client.png](client.png)
+- ![server.png](server.png)
 
 ## Rendering and UI
 
