@@ -1,6 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.crafting.AllRecipes;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.crafting.Crafter;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.crafting.Recipe;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
@@ -11,6 +14,7 @@ import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.item.Item;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -25,6 +29,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -81,6 +86,12 @@ public class GameController implements Reappearance {
     @FXML
     private Label tutorialMessage;
 
+    @FXML
+    private VBox craftingView;
+
+    @FXML
+    private ListView<Recipe> recipeList;
+
     private final TutorialText[] tutorialValues = TutorialText.values();
     private int currentTutorialIndex = 0;
 
@@ -94,6 +105,8 @@ public class GameController implements Reappearance {
     }
 
     private ClientManager clientManager;
+
+    private final Crafter crafter = new Crafter();
 
     @FXML
     public void initialize() {
@@ -112,6 +125,7 @@ public class GameController implements Reappearance {
         fillList(inventoryList);
         fillList(chestList);
         setupListInteractions();
+        fillRecipeList();
     }
 
     private void fillList(ListView<Item> itemList) {
@@ -123,6 +137,32 @@ public class GameController implements Reappearance {
                     setText(null);
                 } else {
                     setText(item.getName());
+                }
+            }
+        });
+    }
+    private void fillRecipeList() {
+        recipeList.setCellFactory(_ -> new ListCell<>() {
+            @Override
+            protected void updateItem(Recipe recipe, boolean empty) {
+                super.updateItem(recipe, empty);
+                if (empty || recipe == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    StringBuilder sb = new StringBuilder(recipe.getName());
+                    sb.append("  (");
+                    boolean first = true;
+                    for (Map.Entry<Class<? extends Item>, Integer> e : recipe.getIngredients().entrySet()) {
+                        if (!first) sb.append(", ");
+                        sb.append(e.getValue()).append(" ").append(e.getKey().getSimpleName());
+                        first = false;
+                    }
+                    sb.append(")");
+                    setText(sb.toString());
+
+                    boolean canCraft = recipe.isCraftable(clientManager.getMyProfile());
+                    setStyle(canCraft ? "" : "-fx-opacity: 0.4;");
                 }
             }
         });
@@ -189,6 +229,12 @@ public class GameController implements Reappearance {
                 } else {
                     showChest();
                 }
+            } else if (event.getCode() == KeyCode.C) {
+                if (craftingView.isVisible()) {
+                    hideCrafting();
+                } else {
+                    showCrafting();
+                }
             }
         };
         SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, menuToggleHandler);
@@ -231,6 +277,19 @@ public class GameController implements Reappearance {
 
     public void hideChest() {
         chestView.setVisible(false);
+    }
+    public void showCrafting() {
+        updateRecipeList();
+        craftingView.setVisible(true);
+    }
+
+    public void hideCrafting() {
+        craftingView.setVisible(false);
+    }
+
+    private void updateRecipeList() {
+        ObservableList<Recipe> recipes = FXCollections.observableArrayList(AllRecipes.allRecipes());
+        recipeList.setItems(recipes);
     }
 
     public void showInventory() {
@@ -277,6 +336,15 @@ public class GameController implements Reappearance {
                 }
             }
         });
+
+        recipeList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Recipe selected = recipeList.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    craftRecipe(selected);
+                }
+            }
+        });
     }
 
     public void useItem(Item selectedItem) {
@@ -298,6 +366,15 @@ public class GameController implements Reappearance {
         updateInventoryList();
         currentChest.getInventory().addItem(selectedItem);
         updateCurChestList();
+    }
+
+    public void craftRecipe(Recipe recipe) {
+        PlayerProfile profile = clientManager.getMyProfile();
+        if (crafter.craft(recipe, profile)) {
+            clientManager.getNetworkManager().sendProfileUpdate(profile);
+            updateRecipeList();
+            updateInventoryList();
+        }
     }
 
     public void updateHealthBar(int currHP, int maxHP) {

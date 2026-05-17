@@ -98,4 +98,13 @@ public class Inventory implements Serializable {
         inventory.setInvent(newInv);
         return inventory;
     }
+    public int getCount(Class<? extends Item> type) {
+        int count = 0;
+        for (Item i : invent) {
+            if (i.getClass().equals(type)) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

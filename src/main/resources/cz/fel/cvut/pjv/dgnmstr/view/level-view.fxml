@@ -78,5 +78,9 @@
       <Label styleClass="panel-header" text="TREASURE CHEST" />
       <ListView fx:id="chestList" prefHeight="400.0" />
    </VBox>
+   <VBox fx:id="craftingView" alignment="TOP_CENTER" maxHeight="200.0" maxWidth="350.0" spacing="10.0" styleClass="fantasy-panel" visible="false" StackPane.alignment="TOP_LEFT">
+      <Label styleClass="panel-header" text="CRAFTING" />
+      <ListView fx:id="recipeList" prefHeight="400.0" />
+   </VBox>
 
 </StackPane>
