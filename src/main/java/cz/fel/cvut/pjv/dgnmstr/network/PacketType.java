@@ -12,5 +12,6 @@ public enum PacketType implements Serializable {
     PLAYER_PROFILE,
     CLIENT_ID,
     SEED,
-    PROFILE_UPDATE;
+    PROFILE_UPDATE,
+    USE_POTION;
 }

@@ -16,6 +16,7 @@ import cz.fel.cvut.pjv.dgnmstr.entity.map.Fence;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Grate;
 import cz.fel.cvut.pjv.dgnmstr.entity.mobs.Mob;
 import cz.fel.cvut.pjv.dgnmstr.item.Item;
+import cz.fel.cvut.pjv.dgnmstr.item.potions.HealPotion;
 import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.ArenaStatePayload;
 import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
@@ -266,6 +267,12 @@ public class ClientManager {
     }
 
     public boolean useItem(Item item) {
+        if (item instanceof HealPotion) {
+            networkManager.sendProfileUpdate(myProfile);
+            networkManager.sendUsePotion(localHero.getId(), item.getClass().getName());
+            myProfile.getInventory().remove(item);
+            return true;
+        }
         boolean result = item.acceptUsing(myProfile);
         if (result) {
             localHero.syncStats(myProfile.getPlayerStats());

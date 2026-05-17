@@ -165,5 +165,13 @@ public class ClientNetworkManager {
             case ENTITY -> manager.removeEntity((EntityRemovePayload) packet.payload());
             case PROJECTILE -> manager.removeProjectile(((EntityRemovePayload) packet.payload()));
         }
+    public void sendUsePotion(int heroId, String potionType ) {
+        UsePotionPayload payload = new UsePotionPayload(heroId, potionType);
+        DGNPacket packet = new DGNPacket(PacketType.USE_POTION, payload);
+        sendUDP(packet);
+    }
+
+    public ClientManager getManager() {
+        return manager;
     }
 }

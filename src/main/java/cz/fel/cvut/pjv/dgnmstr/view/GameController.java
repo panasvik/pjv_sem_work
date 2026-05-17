@@ -1,6 +1,9 @@
 package cz.fel.cvut.pjv.dgnmstr.view;
 
 
+import cz.fel.cvut.pjv.dgnmstr.dungeon.crafting.AllRecipes;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.crafting.Crafter;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.crafting.Recipe;
 import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.entity.map.Chest;
 import cz.fel.cvut.pjv.dgnmstr.global.ImgLoader;
@@ -11,6 +14,7 @@ import cz.fel.cvut.pjv.dgnmstr.network.ClientNetworkManager;
 import cz.fel.cvut.pjv.dgnmstr.global.GameManager;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.item.Item;
+import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -25,6 +29,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -81,6 +86,12 @@ public class GameController implements Reappearance {
     @FXML
     private Label tutorialMessage;
 
+    @FXML
+    private VBox craftingView;
+
+    @FXML
+    private ListView<Recipe> recipeList;
+
     private InventoryListView heroInventory;
     private InventoryListView chestInventory;
 
@@ -97,6 +108,8 @@ public class GameController implements Reappearance {
     }
 
     private ClientManager clientManager;
+
+    private final Crafter crafter = new Crafter();
 
     @FXML
     public void initialize() {
@@ -119,6 +132,7 @@ public class GameController implements Reappearance {
         chestInventory = new InventoryListView(chestList, chestView);
         chestInventory.fillList();
         setupListInteractions();
+        fillRecipeList();
     }
 
     private void startWhenClientStateReady() {
@@ -178,6 +192,12 @@ public class GameController implements Reappearance {
                 } else {
                     showChest();
                 }
+            } else if (event.getCode() == KeyCode.C) {
+                if (craftingView.isVisible()) {
+                    hideCrafting();
+                } else {
+                    showCrafting();
+                }
             }
         };
         SceneManager.getInstance().getMainScene().addEventFilter(KeyEvent.KEY_PRESSED, menuToggleHandler);
@@ -223,6 +243,20 @@ public class GameController implements Reappearance {
         chestView.setVisible(true);
     }
 
+    public void showCrafting() {
+        updateRecipeList();
+        craftingView.setVisible(true);
+    }
+
+    public void hideCrafting() {
+        craftingView.setVisible(false);
+    }
+
+    private void updateRecipeList() {
+        ObservableList<Recipe> recipes = FXCollections.observableArrayList(AllRecipes.allRecipes());
+        recipeList.setItems(recipes);
+    }
+
     private void setupListInteractions() {
         chestList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) { // Trigger on double-click
@@ -242,6 +276,15 @@ public class GameController implements Reappearance {
                     } else {
                         useItem(selectedItem);
                     }
+                }
+            }
+        });
+
+        recipeList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Recipe selected = recipeList.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    craftRecipe(selected);
                 }
             }
         });
@@ -267,7 +310,16 @@ public class GameController implements Reappearance {
         chestInventory.updateList(currentChest.getInventory());
     }
 
-    public void updateHeathBar(int currHP, int maxHP) {
+    public void craftRecipe(Recipe recipe) {
+        PlayerProfile profile = clientManager.getMyProfile();
+        if (crafter.craft(recipe, profile)) {
+            clientManager.getNetworkManager().sendProfileUpdate(profile);
+            updateRecipeList();
+            updateInventoryList();
+        }
+    }
+
+    public void updateHealthBar(int currHP, int maxHP) {
         maxHealth.set(maxHP);
         currentHealth.set(currHP);
     }
