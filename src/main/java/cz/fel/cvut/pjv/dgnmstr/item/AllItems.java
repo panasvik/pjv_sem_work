@@ -7,6 +7,10 @@ import cz.fel.cvut.pjv.dgnmstr.item.weapon.*;
 
 import java.util.Random;
 
+/**
+ * Factory enum listing every item type, also used for random
+ * chest loot generation.
+ */
 public enum AllItems {
     BWC(BasicWarriorChestplate.class),
     BWH(BasicWarriorHelmet.class),

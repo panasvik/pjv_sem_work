@@ -3,8 +3,18 @@ package cz.fel.cvut.pjv.dgnmstr.entity.mobs;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
-
+/**
+ * Zombie.
+ */
 public class Zombie extends MeleeMob{
+    /**
+     * Creates a new Zombie.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     * @param multiplicator multiplicator
+     */
     public Zombie(int id,
                   double positionX, double positionY, Level level, int multiplicator) {
         super(id,
@@ -19,6 +29,13 @@ public class Zombie extends MeleeMob{
               Faction.MONSTER,
               level, multiplicator);
     }
+    /**
+     * Creates a new Zombie.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     */
     public Zombie(int id,
                   double positionX, double positionY, Level level) {
         super(id,

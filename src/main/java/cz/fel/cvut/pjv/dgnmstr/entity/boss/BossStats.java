@@ -4,6 +4,9 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 
 import java.util.List;
 
+/**
+ * Enumeration of boss stats.
+ */
 public enum BossStats {
     ANYSEK_THE_BEHEMOTH(1000, 5, 100, 10, 500, 48, List.of(800, 600, 400, 200)) {
         @Override

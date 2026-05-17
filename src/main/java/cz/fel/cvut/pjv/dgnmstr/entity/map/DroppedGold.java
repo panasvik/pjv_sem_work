@@ -11,11 +11,20 @@ import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import java.util.logging.Logger;
 
 /**
- * dropped gold after a mob dies
+ * Dropped gold after a mob dies
  */
 public class DroppedGold extends Entity {
     private final int value;
     private static final double PICKUP_RADIUS = Level.TILE_SIZE;
+
+    /**
+     * Dropped gold.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     * @param value the value to set
+     */
     public DroppedGold(int id, double positionX, double positionY, Level level, int value) {
         super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getHalfHitBox(), Faction.NEUTRAL, level);
         this.value = value;

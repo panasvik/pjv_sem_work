@@ -10,7 +10,9 @@ import cz.fel.cvut.pjv.dgnmstr.entity.mobs.MobStats;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
-
+/**
+ * Contract for EntitySpawner.
+ */
 public interface EntitySpawner {
         void spawnProjectile(ProjectileType type, Entity master, int radius, int damage, double deltaX, double deltaY, double velocity);
         void spawnGold(double x, double y, int amount);

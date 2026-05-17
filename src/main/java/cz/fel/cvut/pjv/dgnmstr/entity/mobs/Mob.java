@@ -9,6 +9,10 @@ import cz.fel.cvut.pjv.dgnmstr.network.ServerNetworkManager;
 
 import java.util.logging.Logger;
 
+/**
+ * Base class for enemy creatures. Handles aggro, simple movement
+ * towards the player and gold drop on death.
+ */
 public abstract class Mob extends Entity implements CanAttack {
     private final int damage;
     private final int reach;
@@ -16,7 +20,21 @@ public abstract class Mob extends Entity implements CanAttack {
     private static final Logger log = Logger.getLogger(Mob.class.getName());
 
     protected double attackCooldown = 0.0;
-
+    /**
+     * Creates a new Mob.
+     * @param id unique identifier
+     * @param hp hit points value
+     * @param speed movement speed
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param halfHitBox half the collision box size
+     * @param damage amount of damage
+     * @param reach reach
+     * @param gold amount of gold
+     * @param faction side this belongs to
+     * @param level the level this belongs to
+     * @param multiplicator multiplicator
+     */
     public Mob(int id, int hp, int speed, double positionX, double positionY, double halfHitBox, int damage, int reach, int gold, Faction faction, Level level, int multiplicator) {
         super(id,hp  * multiplicator, speed, positionX, positionY, halfHitBox, faction, level);
         this.damage = damage * multiplicator;

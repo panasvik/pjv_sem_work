@@ -12,7 +12,10 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
-
+/**
+ * Client side of the UDP networking — serializes player actions
+ * and sends them to the server.
+ */
 public class ClientNetworkManager {
     private static final Logger log = Logger.getLogger(ClientNetworkManager.class.getName());
     private static final int BUFFER_SIZE = 4096;
@@ -26,6 +29,12 @@ public class ClientNetworkManager {
     private final Map<Integer, Long> updateCounters = new ConcurrentHashMap<>();
 
 
+    /**
+     * Creates a new ClientNetworkManager.
+     * @param serverIp server ip
+     * @param serverUdpPort server udp port
+     * @param manager the manager
+     */
     public ClientNetworkManager(String serverIp, int serverUdpPort, ClientManager manager) throws UnknownHostException {
         this.serverAddress = InetAddress.getByName(serverIp);
         this.serverUdpPort = serverUdpPort;

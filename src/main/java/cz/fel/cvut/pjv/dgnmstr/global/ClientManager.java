@@ -35,6 +35,10 @@ import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.global.MyMath.getClosestChest;
 
+/**
+ * Client-side game coordinator: owns the local hero and profile
+ * and forwards player actions to the server.
+ */
 public class ClientManager {
     private static final int INPUT_POLL_PERIOD_MS = 16;
 
@@ -48,7 +52,12 @@ public class ClientManager {
     private ClientNetworkManager networkManager;
     private boolean isReady = false;
 
-
+    /**
+     * Creates a new ClientManager.
+     * @param serverIp server ip
+     * @param serverUdpPort server udp port
+     * @param profile the player profile
+     */
     public ClientManager(String serverIp, int serverUdpPort, PlayerProfile profile) throws java.net.UnknownHostException {
         this.myProfile = profile;
         this.networkManager = new ClientNetworkManager(serverIp, serverUdpPort, this);

@@ -11,6 +11,11 @@ import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import cz.fel.cvut.pjv.dgnmstr.global.MyMath;
 import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 
+/**
+ * Player-controlled entity. Wraps a {@link cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile}
+ * which carries persistent data (stats, gold, inventory) while the
+ * Hero itself holds the live in-world state.
+ */
 public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUltimate {
     private int damage;
     private int dexterity;
@@ -21,7 +26,17 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
     private PlayerProfile profile;
 
     protected Inputs currentInputs;
-
+    /**
+     * Creates a new Hero.
+     * @param id unique identifier
+     * @param profile the player profile
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param halfHitBox half the collision box size
+     * @param role the chosen role
+     * @param faction side this belongs to
+     * @param level the level this belongs to
+     */
     public Hero(int id, PlayerProfile profile, double positionX, double positionY, double halfHitBox, Role role, Faction faction, Level level) {
         super(id, profile.getPlayerStats().hp(), profile.getPlayerStats().speed(), positionX, positionY, halfHitBox, faction, level);
         PlayerStats stats = profile.getPlayerStats();
@@ -38,6 +53,13 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.currentInputs = inputs;
     }
 
+    /**
+     * Heros specific parry. A dexterity check can fully parry and
+     * counter-attack within reach; otherwise a speed check decides
+     * whether the blow is dodged.
+     * @param source the attacking entity
+     * @return true if the attack was parried (no damage taken)
+     */
     @Override
     protected boolean handleParry(Entity source) {
         if (!(source instanceof CanAttack attackSource)) {
@@ -50,11 +72,23 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return speedCheck(attackSource.getDamage());
     }
 
+    /**
+     * * Whether the hero's defence is high enough to halve this hit
+     * (defence must be at least twice the incoming damage).
+     * @param damage incoming raw damage
+     * @return true if the damage will be reduced
+     */
     @Override
     public boolean defenceCheck(int damage) {
         return this.defence >= damage * 2;
     }
 
+    /**
+     * Reduces incoming damage by half when {@link #defenceCheck(int)}
+     * passes, otherwise lets it through unchanged.
+     * @param damage raw incoming damage
+     * @return damage after defence
+     */
     @Override
     protected int applyDefence(int damage) {
         if (defenceCheck(damage)) return damage / 2;
@@ -117,6 +151,12 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return gold;
     }
 
+    /**
+     * Overwrites the hero's combat stats from a server-provided
+     * snapshot. Used to keep the client hero in sync with the
+     * authoritative server state.
+     * @param stats the stat snapshot to apply
+     */
     public void syncStats(PlayerStats stats) {
         this.setMaxHP(stats.hp());
         this.setDamage(stats.damage());
@@ -132,6 +172,10 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         return profile;
     }
 
+    /**
+     * Advances movement by one game tick.
+     * @param inputs inputs
+     */
     protected void updateMovement(Inputs inputs) {
         double moveX = 0;
         double moveY = 0;

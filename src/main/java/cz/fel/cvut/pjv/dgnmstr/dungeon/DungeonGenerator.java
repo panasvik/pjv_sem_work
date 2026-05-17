@@ -26,7 +26,12 @@ public class DungeonGenerator {
 
 
     private static final Logger log =  Logger.getLogger(DungeonGenerator.class.getName());
-
+    /**
+     * Generate.
+     * @param difficulty difficulty level
+     * @param seed random seed
+     * @return the generated level
+     */
     public Level generate(DifficultyStats difficulty, long seed) {
         this.random = new Random(seed);
         log.info("Generating Dungeon...");

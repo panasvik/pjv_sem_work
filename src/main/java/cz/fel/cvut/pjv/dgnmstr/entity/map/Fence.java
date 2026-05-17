@@ -5,9 +5,18 @@ import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.Faction;
 import cz.fel.cvut.pjv.dgnmstr.entity.Stats;
 import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
-
+/**
+ * Fence.
+ */
 public class Fence extends Entity {
 
+    /**
+     * Creates a new Fence.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     */
     public Fence(int id,double positionX, double positionY, Level level) {
         super(id, Stats.FENCE.getHealth(), Stats.FENCE.getSpeed(), positionX, positionY, Stats.FENCE.getHalfHitBox(), Faction.NEUTRAL, level);
     }

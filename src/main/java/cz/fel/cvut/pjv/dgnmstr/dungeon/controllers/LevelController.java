@@ -18,13 +18,20 @@ import java.util.logging.Logger;
 
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.Level.TILE_SIZE;
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.VICTORY;
-
+/**
+ * Level controller.
+ */
 public class LevelController implements Updatable {
     private final Level level;
     private int curArenaIDX = 0;
     private ArenaController arenaController;
     private static final Logger log = Logger.getLogger(LevelController.class.getName());
 
+    /**
+     * Creates a new LevelController.
+     *
+     * @param level the level this belongs to
+     */
     public LevelController(Level level) {
         this.level = level;
     }
@@ -40,6 +47,10 @@ public class LevelController implements Updatable {
         log.info("Level started");
     }
 
+    /**
+     * Shifts state by one game tick.
+     * @param deltaTime delta time
+     */
     @Override
     public void update(double deltaTime) {
         updateEntities(deltaTime);
@@ -53,6 +64,12 @@ public class LevelController implements Updatable {
         checkProgress();
         checkLevelComplete();
     }
+
+
+    /**
+     * Shifts entities(updateEntities) and then projectiles(updateProjectiles) by one game tick.
+     * @param deltaTime delta time
+     */
 
     public void updateEntities(double deltaTime) {
         List<Entity> entities = level.getAllEntities();

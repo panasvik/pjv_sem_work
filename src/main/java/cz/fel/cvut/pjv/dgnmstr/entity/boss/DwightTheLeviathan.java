@@ -6,6 +6,9 @@ import cz.fel.cvut.pjv.dgnmstr.entity.hero.Hero;
 import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.ProjectileType;
 
+/**
+ * Dwight the leviathan.
+ */
 public class DwightTheLeviathan extends Boss{
     private int shotCount = 0;
 
@@ -16,6 +19,14 @@ public class DwightTheLeviathan extends Boss{
     private static final double COOLDOWN_TIME = 1.0;
     private static final double DANGEROUS_DISTANCE = 0.5;
 
+    /**
+     * Creates a new DwightTheLeviathan.
+     *
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     */
     public DwightTheLeviathan(int id, double positionX, double positionY, Level level) {
         super(id, BossStats.DWIGHT_THE_LEVIATHAN.getHp(level.getDifficulty().getStatsMult()),
                 BossStats.DWIGHT_THE_LEVIATHAN.getSpeed(),
@@ -36,6 +47,9 @@ public class DwightTheLeviathan extends Boss{
         damageMult++;
     }
 
+    /**
+     * Performs attack, every fifth shot is tripleshot
+     */
     @Override
     public void attack() {
         if (target == null || !target.isAlive()) {
@@ -67,6 +81,10 @@ public class DwightTheLeviathan extends Boss{
         }
     }
 
+    /**
+     * Same as Boss.java
+     * @param deltaTime delta time
+     */
     @Override
     public void update(double deltaTime){
         if(!isAlive()){return;}

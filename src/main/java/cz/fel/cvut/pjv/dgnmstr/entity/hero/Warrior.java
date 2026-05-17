@@ -12,6 +12,10 @@ import cz.fel.cvut.pjv.dgnmstr.global.Inputs;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * Concrete melee hero implementation with its own attack and
+ * defence behaviour.
+ */
 public class Warrior extends Hero implements CanAttackMelee {
     public static final int HFULimit = 5;
     private int hitsForUlt = 0;
@@ -27,6 +31,14 @@ public class Warrior extends Hero implements CanAttackMelee {
     public static final double B_STORM_RADIUS_MUL = 5.0;
     private double bladeStormDamage = 0.0;
 
+    /**
+     * Creates a new Warrior.
+     * @param id unique identifier
+     * @param profile the player profile
+     * @param posX pos x
+     * @param posY pos y
+     * @param level the level this belongs to
+     */
     public Warrior(int id, PlayerProfile profile, double posX, double posY, Level level) {
         super(id, profile, posX, posY, Role.WARRIOR.getHalfHitBox(), Role.WARRIOR, Faction.HERO, level);
     }
@@ -46,6 +58,13 @@ public class Warrior extends Hero implements CanAttackMelee {
         return getReach() * getReach() > MyMath.calculateDistanceSquared(this, entity);
     }
 
+    /**
+     * Whether the target lies within the attack arc.
+     * @param entity the entity
+     * @param curX cur x
+     * @param curY cur y
+     * @return true on success, false otherwise
+     */
     @Override
     public boolean isInAngle(Entity entity, double curX, double curY) {
         double deltaXE = entity.getX() - getX();
@@ -91,6 +110,10 @@ public class Warrior extends Hero implements CanAttackMelee {
         hitsForUlt = 0;
     }
 
+    /**
+     * Advances state by one game tick.
+     * @param deltaTime delta time
+     */
     @Override
     public void update(double deltaTime) {
         if (!isAlive()) return;

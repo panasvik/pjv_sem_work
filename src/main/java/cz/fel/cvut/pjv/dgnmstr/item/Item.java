@@ -11,10 +11,19 @@ import java.io.Serializable;
         include = JsonTypeInfo.As.PROPERTY,
         property = "@class"
 )
+/**
+ * Base class for everything that can exist as an item. Uses double
+ * dispatch (addTo/removeFrom/acceptUsing) for inventory operations.
+ */
 public abstract class Item implements Serializable {
     private String name;
     private int price;
 
+    /**
+     * Creates a new Item.
+     * @param name display name
+     * @param price price value
+     */
     public Item(String name, int price) {
         this.name = name;
         this.price = price;

@@ -9,7 +9,10 @@ import cz.fel.cvut.pjv.dgnmstr.view.ImgId;
 import cz.fel.cvut.pjv.dgnmstr.player.Inventory;
 
 import java.util.logging.Logger;
-
+/**
+ * Static container placed in the level that holds an inventory the
+ * player can take items from.
+ */
 public class Chest extends Entity implements Interactable {
     private static final Logger log =  Logger.getLogger(Chest.class.getName());
 
@@ -17,6 +20,15 @@ public class Chest extends Entity implements Interactable {
     public static final int PRICE_TO_OPEN_CHEST = 100;
     private final Inventory inventory;
     private boolean opened = false;
+
+    /**
+     * Creates a new Chest.
+     * @param id unique identifier
+     * @param positionX initial X coordinate
+     * @param positionY initial Y coordinate
+     * @param level the level this belongs to
+     * @param inventory the inventory
+     */
     public Chest(int id, double positionX, double positionY, Level level, Inventory inventory) {
         super(id, Stats.GOD.getHealth(), Stats.GOD.getSpeed(), positionX, positionY, Stats.GOD.getHalfHitBox(), Stats.GOD.getFaction(), level);
         this.inventory = inventory;

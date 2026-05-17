@@ -23,6 +23,10 @@ import java.util.logging.Logger;
 import static cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState.*;
 import static java.lang.Math.abs;
 
+/**
+ * A single playable level: holds the tile map and all entities,
+ * and drives their per-tick updates.
+ */
 public class Level {
     private EntitySpawner spawner;
     public static final int MAX_ARENA_IDX = 3;
@@ -49,7 +53,10 @@ public class Level {
     private final List<BossSpawnRate> bossSpawnRate;
     private Boss levelBoss;
     private boolean bossSpawned = false;
-
+    /**
+     * Creates a new Level.
+     * @param difficulty difficulty level
+     */
     public Level(DifficultyStats difficulty) {
         this.allEntities = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -71,7 +78,12 @@ public class Level {
         return entityMap.get(id);
     }
 
-
+    /**
+     * Registers an entity in the level. Ignores nulls and entities
+     * whose id is already present, so the same entity is never added
+     * twice.
+     * @param entity the entity to add
+     */
     public void addEntity(Entity entity) {
         if (entity != null && !entityMap.containsKey(entity.getId())) {
             allEntities.add(entity);
@@ -84,7 +96,11 @@ public class Level {
         this.width = width;
         this.height = height;
     }
-
+    /**
+     * Adds a hero to the level, both into the player list and the
+     * shared entity registry, and refreshes the alive-player count.
+     * @param player the hero to add
+     */
     public void addPlayer(Hero player) {
         this.players.add(player);
         this.addEntity(player);
@@ -97,6 +113,14 @@ public class Level {
         this.arenas.add(arena);
     }
 
+    /**
+     * Returns all entities within range of the given center,
+     * excluding the center itself. Uses squared distance to avoid
+     * square roots.
+     * @param center the point to search around
+     * @param range search radius in world units
+     * @return entities inside the radius
+     */
     public <T extends Positionable> List<Entity> getEntitiesAround(T center, double range) {
         double rangeSquared = range * range;
         return allEntities.stream()
@@ -129,10 +153,19 @@ public class Level {
 
     }
 
+    /**
+     * Tests whether a hitbox centered at the given world point can
+     * occupy that spot — it must clear both the tile map and any
+     * solid entities.
+     * @return true if the position is free to move into
+     */
     public boolean isWalkable(double targetWorldX, double targetWorldY, double half) {
         return isWalkableTile(targetWorldX, targetWorldY, half) && isWalkableEntity(targetWorldX, targetWorldY, half);
     }
 
+    /**
+     * Whether the tile at the given position is walkable.
+     */
     public boolean isWalkableTile(double targetWorldX, double targetWorldY, double half) {
         double targetMinX = targetWorldX - half;
         double targetMaxX = targetWorldX + half;
@@ -184,7 +217,9 @@ public class Level {
         return firstMinX < secondMaxX && firstMaxX > secondMinX &&
                 firstMinY < secondMaxY && firstMaxY > secondMinY;
     }
-
+    /**
+     * Whether no solid entity blocks the given position.
+     */
     public boolean isWalkableEntity(double targetWorldX, double targetWorldY, double half) {
         for (Entity e : allEntities) {
             if (!(e.isAlive() && e.isSolid())) {
