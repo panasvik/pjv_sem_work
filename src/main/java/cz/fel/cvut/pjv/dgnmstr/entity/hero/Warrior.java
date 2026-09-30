@@ -136,6 +136,7 @@ public class Warrior extends Hero implements CanAttackMelee {
     private void updateAttack(Inputs inputs) {
         if (inputs.attack() && attackCooldown <= 0){
             attack();
+            registerAttack();
             log.info("attacking");
             attackCooldown = COOLDOWN_TIME;
         }
@@ -171,6 +172,16 @@ public class Warrior extends Hero implements CanAttackMelee {
         } else {
             bladeStormDamage = 0.0;
         }
+    }
+
+    @Override
+    public boolean isUltimateActive() {
+        return ultActive > 0;
+    }
+
+    @Override
+    public void setUltimateActive(boolean active) {
+        ultActive = active ? Math.max(ultActive, COOLDOWN_TIME) : 0.0;
     }
 
     private void updateCooldowns(double deltaTime) {

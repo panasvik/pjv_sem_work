@@ -61,6 +61,19 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <!-- Cross-platform release jar: ./mvnw -Pdist clean package -->
+        <profile>
+            <id>dist</id>
+            <dependencies>
+                <dependency><groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId><version>21.0.6</version><classifier>win</classifier></dependency>
+                <dependency><groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId><version>21.0.6</version><classifier>linux</classifier></dependency>
+                <dependency><groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId><version>21.0.6</version><classifier>mac</classifier></dependency>
+                <dependency><groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId><version>21.0.6</version><classifier>mac-aarch64</classifier></dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>

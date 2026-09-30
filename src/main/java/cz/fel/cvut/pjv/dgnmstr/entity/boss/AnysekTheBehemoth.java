@@ -93,6 +93,7 @@ public class AnysekTheBehemoth extends Boss{
         if (distS <= range * range){
            if (attackCooldown <= 0){
                attack();
+               registerAttack();
                attackCooldown = COOLDOWN_TIME;
            }
         }

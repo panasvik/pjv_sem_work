@@ -24,6 +24,7 @@ public abstract class Entity implements Updatable, Positionable {
     private final Faction faction;
     private final Level level;
     private final int id;
+    private int attackCount;
     private static final Logger log = Logger.getLogger(Entity.class.getName());
 
     /**
@@ -214,5 +215,21 @@ public abstract class Entity implements Updatable, Positionable {
 
     public double getHalfHitBox() {
         return halfSize;
+    }
+
+    /**
+     * Marks that this entity has just performed an attack. The counter is
+     * sent to clients so they can play the matching attack animation.
+     */
+    protected void registerAttack() {
+        attackCount++;
+    }
+
+    public int getAttackCount() {
+        return attackCount;
+    }
+
+    public void setAttackCount(int attackCount) {
+        this.attackCount = attackCount;
     }
 }

@@ -92,6 +92,7 @@ public class DwightTheLeviathan extends Boss{
         Hero target = this.findNearestPlayer();
         if (target == null){ return;}
 
+        this.setLookTarget(target.getX(), target.getY());
         double range = getReach();
         double dx = target.getX() - this.getX();
         double dy = target.getY() - this.getY();
@@ -108,6 +109,7 @@ public class DwightTheLeviathan extends Boss{
         }
         if (dist <= range && attackCooldown <= 0) {
             attack();
+            registerAttack();
             attackCooldown = COOLDOWN_TIME;
         }
 

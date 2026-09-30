@@ -85,6 +85,7 @@ public abstract class RangedMob extends Mob{
 
         if (attackCooldown <= 0 && dist <= sqReach){
             this.attack();
+            registerAttack();
             attackCooldown = COOLDOWN_TIME;
         }
 

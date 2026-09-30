@@ -71,6 +71,10 @@ public class Chest extends Entity implements Interactable {
 
     }
 
+    public boolean isOpened() {
+        return opened;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }

@@ -5,6 +5,7 @@ import cz.fel.cvut.pjv.dgnmstr.dungeon.Level;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.controllers.LevelController;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.ArenaState;
 import cz.fel.cvut.pjv.dgnmstr.dungeon.service.DifficultyStats;
+import cz.fel.cvut.pjv.dgnmstr.dungeon.service.LevelState;
 import cz.fel.cvut.pjv.dgnmstr.entity.Entity;
 import cz.fel.cvut.pjv.dgnmstr.entity.projectile.Projectile;
 import cz.fel.cvut.pjv.dgnmstr.entity.boss.Boss;
@@ -23,6 +24,7 @@ import cz.fel.cvut.pjv.dgnmstr.network.payloads.*;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerProfile;
 import cz.fel.cvut.pjv.dgnmstr.player.PlayerStats;
 import javafx.application.Platform;
+import cz.fel.cvut.pjv.dgnmstr.view.GameController;
 import cz.fel.cvut.pjv.dgnmstr.view.SceneManager;
 import cz.fel.cvut.pjv.dgnmstr.view.View;
 
@@ -144,6 +146,9 @@ public class ClientManager {
         hero.setPos(payload.x(), payload.y());
         hero.setHp(payload.hp());
         hero.setGold(payload.gold());
+        hero.setLookTarget(payload.lookX(), payload.lookY());
+        hero.setAttackCount(payload.attackCount());
+        hero.setUltimateActive(payload.ultimateActive());
     }
 
     public void updateMob(UpdateMobPayload payload) {
@@ -152,6 +157,8 @@ public class ClientManager {
         if (!(entity instanceof Mob mob)) return;
         mob.setPos(payload.x(), payload.y());
         mob.setHp(payload.hp());
+        mob.setLookTarget(payload.lookX(), payload.lookY());
+        mob.setAttackCount(payload.attackCount());
     }
 
     public void updateProjectile(UpdateProjectilePayload payload) {
@@ -188,19 +195,27 @@ public class ClientManager {
 
         switch (payload.state()) {
             case PLAYING -> lc.startLevel();
-            case VICTORY, GAME_OVER -> stopLocal();
+            case VICTORY, GAME_OVER -> stopLocal(payload.state() == LevelState.VICTORY);
         }
     }
 
-    private void stopLocal() {
+    private void stopLocal(boolean victory) {
         stopManagingInputs();
         localHero = null;
         Platform.runLater(() -> {
             GameManager gameManager = GameManager.getInstance();
-            if (gameManager.getGameController() != null) {
-                gameManager.getGameController().stopGameSystems();
+            GameController controller = gameManager.getGameController();
+            Runnable backToMenu = () -> {
+                if (controller != null) {
+                    controller.stopGameSystems();
+                }
+                SceneManager.getInstance().activate(View.START_MENU);
+            };
+            if (controller != null) {
+                controller.playOutro(victory, backToMenu);
+            } else {
+                backToMenu.run();
             }
-            SceneManager.getInstance().activate(View.START_MENU);
         });
         isReady = false;
     }

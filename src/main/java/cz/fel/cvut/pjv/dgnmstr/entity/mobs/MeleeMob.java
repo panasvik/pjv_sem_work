@@ -87,6 +87,7 @@ public abstract class MeleeMob extends Mob implements CanAttackMelee {
        if (this.isInRange(target)) {
            if (attackCooldown <= 0) {
                this.attack();
+               registerAttack();
                attackCooldown = COOLDOWN_TIME;
            }
        }  else {

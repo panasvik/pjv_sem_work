@@ -46,15 +46,15 @@ public class InventoryListView {
     }
 
     public void show() {
-        view.setVisible(true);
+        UiTransitions.show(view);
     }
 
     public void hide() {
-        view.setVisible(false);
+        UiTransitions.hide(view);
     }
 
     public void toggle() {
-        if (view.isVisible()) {
+        if (UiTransitions.isShown(view)) {
             hide();
         } else {
             show();

@@ -10,6 +10,7 @@ Dungeon Master is a 2D dungeon crawler written in Java and JavaFX as a PJV semes
 - **Combat system** - the Warrior hero supports movement, melee attacks, defensive/parry-oriented stats, and an ultimate ability charged by consecutive hits.
 - **Loot and inventory** - players collect gold, open chests, transfer items, and equip weapons and armor.
 - **Profile load/save** - player data is loaded from and saved to JSON using Jackson.
+- **Animated rendering** - sprite-sheet animations with smooth state transitions (idle, walk, attack combos, hurt, death), spawn/death effects, particles, dynamic lighting, themed arenas and fade transitions between screens.
 - **Networking layer** - server/client managers and serializable packets support level seeds, entity spawns, entity updates, removals, and player profile synchronization.
 
 ## Installation & Setup
@@ -114,3 +115,4 @@ The project is organized under `src/main/java/cz/fel/cvut/pjv/dgnmstr`:
 - itch.io(`src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/mobs`, `src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/hero`)
 - Filip Marik's Design work(`src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/boss`, `src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/projectiles`)
 - Gemini generated images(`src/main/resources/cz/fel/cvut/pjv/dgnmstr/view`)
+- Procedurally generated pixel-art dungeon tiles, torches, decorations, portcullis and barricade (`src/main/resources/cz/fel/cvut/pjv/dgnmstr/entity/map/dungeon`)

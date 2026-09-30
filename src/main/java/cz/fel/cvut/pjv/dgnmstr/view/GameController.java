@@ -39,6 +39,7 @@ import java.util.logging.Logger;
  */
 public class GameController implements Reappearance {
     private static final Logger log = Logger.getLogger(GameController.class.getName());
+    private static final double HEALTH_BAR_EASING = 0.18;
     private final GameManager gameManager;
 
 
@@ -191,13 +192,13 @@ public class GameController implements Reappearance {
             if (event.getCode() == KeyCode.I) {
                 heroInventory.toggle();
             } else if (event.getCode() == KeyCode.F) {
-                if (chestView.isVisible()) {
+                if (UiTransitions.isShown(chestView)) {
                     chestInventory.hide();
                 } else {
                     showChest();
                 }
             } else if (event.getCode() == KeyCode.C) {
-                if (craftingView.isVisible()) {
+                if (UiTransitions.isShown(craftingView)) {
                     hideCrafting();
                 } else {
                     showCrafting();
@@ -246,10 +247,28 @@ public class GameController implements Reappearance {
         if (healthBar != null) {
             healthBar.progressProperty().unbind();
         }
-        heroInventory.hide();
-        chestInventory.hide();
+        UiTransitions.hideNow(inventoryView);
+        UiTransitions.hideNow(chestView);
+        UiTransitions.hideNow(craftingView);
         currentChest = null;
-        closeTutorial();
+        UiTransitions.hideNow(tutorialBox);
+        currentTutorialIndex = 0;
+    }
+
+    /**
+     * Plays the end-of-level screen and then runs the callback.
+     * @param victory whether the level was won
+     * @param onDone what to do afterwards (usually going back to the menu)
+     */
+    public void playOutro(boolean victory, Runnable onDone) {
+        if (renderer == null) {
+            onDone.run();
+            return;
+        }
+        UiTransitions.hide(inventoryView);
+        UiTransitions.hide(chestView);
+        UiTransitions.hide(craftingView);
+        renderer.playOutro(victory, onDone);
     }
 
     private void updateUI() {
@@ -271,16 +290,16 @@ public class GameController implements Reappearance {
         currentChest = clientManager.openNearestChest();
         if (currentChest == null) return;
         chestInventory.updateList(currentChest.getInventory());
-        chestView.setVisible(true);
+        UiTransitions.show(chestView);
     }
 
     public void showCrafting() {
         updateRecipeList();
-        craftingView.setVisible(true);
+        UiTransitions.show(craftingView);
     }
 
     public void hideCrafting() {
-        craftingView.setVisible(false);
+        UiTransitions.hide(craftingView);
     }
 
     private void updateRecipeList() {
@@ -302,7 +321,7 @@ public class GameController implements Reappearance {
             if (event.getClickCount() == 2) {
                 Item selectedItem = inventoryList.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
-                    if (chestView.isVisible()) {
+                    if (UiTransitions.isShown(chestView)) {
                         storeItemInChest(selectedItem);
                     } else {
                         useItem(selectedItem);
@@ -351,8 +370,13 @@ public class GameController implements Reappearance {
     }
 
     public void updateHealthBar(int currHP, int maxHP) {
+        if (maxHealth == null || currentHealth == null) {
+            return;
+        }
         maxHealth.set(maxHP);
-        currentHealth.set(currHP);
+        double shown = currentHealth.get();
+        double eased = shown + (currHP - shown) * HEALTH_BAR_EASING;
+        currentHealth.set(Math.abs(currHP - eased) < 0.5 ? currHP : eased);
     }
 
     public void setGold(int gold) {
@@ -373,7 +397,7 @@ public class GameController implements Reappearance {
 
     @FXML
     void closeTutorial() {
-        tutorialBox.setVisible(false);
+        UiTransitions.hide(tutorialBox);
         currentTutorialIndex = 0;
     }
 

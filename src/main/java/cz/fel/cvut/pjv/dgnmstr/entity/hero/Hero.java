@@ -200,6 +200,21 @@ public abstract class Hero extends Entity implements CanAttack, CanDefend, CanUl
         this.gold = gold;
     }
 
+    /**
+     * Whether the hero's ultimate ability is currently running.
+     * @return true while the ultimate is active
+     */
+    public boolean isUltimateActive() {
+        return false;
+    }
+
+    /**
+     * Client-side mirror of the server ultimate state, used only for rendering.
+     * @param active whether the ultimate is active
+     */
+    public void setUltimateActive(boolean active) {
+    }
+
     public void setProfile(PlayerProfile profile) {
         this.profile = profile;
         syncStats(profile.getPlayerStats());

@@ -261,6 +261,10 @@ public class ServerNetworkManager {
                         hero.getY(),
                         hero.getHp(),
                         hero.getGold(),
+                        hero.getLookX(),
+                        hero.getLookY(),
+                        hero.getAttackCount(),
+                        hero.isUltimateActive(),
                         newCount
                 )));
         if (hero.getMaxHP() != hero.getProfile().getPlayerStats().hp()) {
@@ -273,7 +277,8 @@ public class ServerNetworkManager {
         long newCount = updateCounters.get(mob.getId()) + 1;
         updateCounters.put(mob.getId(), newCount);
         broadcast(new DGNPacket(PacketType.UPDATE, PacketSubType.MOB,
-                new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp(), newCount)));
+                new UpdateMobPayload(mob.getId(), mob.getX(), mob.getY(), mob.getHp(),
+                        mob.getLookX(), mob.getLookY(), mob.getAttackCount(), newCount)));
     }
 
     public void sendEntityUpdates() {
